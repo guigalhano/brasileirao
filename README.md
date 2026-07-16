@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Brasileirão Analytics
 
 Modelo preditivo do Campeonato Brasileiro Série A 2026 + ferramenta de escalação do Cartola FC,
@@ -104,3 +105,7 @@ modelo de partidas (Dixon-Coles → Elo-Odds híbrido) → backtest de estratég
 cruzamento com dados oficiais do Cartola FC → ferramenta de escalação → integração de valor de
 mercado do Transfermarkt → automação. Os scripts em `scripts/` refletem essa evolução e têm
 comentários explicando o raciocínio e as validações feitas em cada etapa.
+=======
+# brasileirao
+dados do Brasileirao
+>>>>>>> f365bc04f8ddf2354acff2410d28c512b06e0bfe

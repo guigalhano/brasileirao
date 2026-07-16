@@ -1,0 +1,86 @@
+{
+  "home_advantage_log": 0.26445152947741524,
+  "note": "Dixon-Coles com peso extra (6x) para jogos sob tecnico confirmado como novo (data oficial via Transfermarkt), aplicado so aos times com troca de tecnico confirmada em 2026 (9 times). Boost calibrado por sensibilidade para aproximar o GF/GA implicado da realidade recente do Chapecoense (0.87/1.95 modelo vs 0.89/2.00 real).",
+  "teams": {
+    "Palmeiras": {
+      "attack": 0.2553,
+      "defense": 0.6208
+    },
+    "Flamengo": {
+      "attack": 0.7509,
+      "defense": 0.3054
+    },
+    "Fluminense": {
+      "attack": 0.2144,
+      "defense": 0.128
+    },
+    "Atletico-PR": {
+      "attack": 0.1526,
+      "defense": 0.2571
+    },
+    "Bragantino": {
+      "attack": 0.2001,
+      "defense": 0.1134
+    },
+    "Bahia": {
+      "attack": 0.1883,
+      "defense": 0.0172
+    },
+    "Coritiba": {
+      "attack": 0.2808,
+      "defense": 0.1064
+    },
+    "Sao Paulo": {
+      "attack": 0.2376,
+      "defense": -0.0235
+    },
+    "Atletico-MG": {
+      "attack": -0.0954,
+      "defense": 0.281
+    },
+    "Corinthians": {
+      "attack": 0.1897,
+      "defense": 0.1727
+    },
+    "Cruzeiro": {
+      "attack": 0.0904,
+      "defense": -0.3493
+    },
+    "Botafogo": {
+      "attack": 0.5643,
+      "defense": 0.0812
+    },
+    "Vitoria": {
+      "attack": -0.0782,
+      "defense": 0.0075
+    },
+    "Internacional": {
+      "attack": 0.2533,
+      "defense": 0.1857
+    },
+    "Santos": {
+      "attack": 0.1948,
+      "defense": 0.0365
+    },
+    "Gremio": {
+      "attack": 0.1209,
+      "defense": -0.0633
+    },
+    "Vasco": {
+      "attack": 0.0869,
+      "defense": 0.0329
+    },
+    "Remo": {
+      "attack": -0.1197,
+      "defense": 0.0351
+    },
+    "Mirassol": {
+      "attack": 0.156,
+      "defense": -0.0181
+    },
+    "Chapecoense": {
+      "attack": -0.28,
+      "defense": -0.5257
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "method": "ELO-Odds (Wunderlich & Memmert 2018), k=250, home_advantage=60, c=10, d=400",
+  "note": "Elo ratings driven by de-vigged market odds instead of match results. Validated out-of-sample vs Dixon-Coles/ELO-Result/ELO-Goals on 3597 held-out matches (2017-2026): log-loss 1.0216 vs market 1.0008 (best non-market model, though not stat. significantly better than Dixon-Coles at p=0.18).",
+  "omega_home_advantage": 60,
+  "k": 250,
+  "logit_classes": [
+    "A",
+    "D",
+    "H"
+  ],
+  "logit_coef": [
+    -0.004096078497766547,
+    -0.0003099761157177017,
+    0.0044060546134710695
+  ],
+  "logit_intercept": [
+    -0.07924748736514504,
+    -0.11358131727126212,
+    0.1928288046364261
+  ],
+  "team_ratings": {
+    "Flamengo": 1185.88,
+    "Palmeiras": 1110.68,
+    "Cruzeiro": 1106.7,
+    "Corinthians": 1105.46,
+    "Fluminense": 1084.4,
+    "Sao Paulo": 1081.25,
+    "Bragantino": 1075.17,
+    "Vasco": 1071.82,
+    "Internacional": 1069.09,
+    "Bahia": 1063.12,
+    "Santos": 1059.54,
+    "Atletico-PR": 1048.33,
+    "Atletico-MG": 1043.17,
+    "Botafogo": 1039.79,
+    "Gremio": 1026.76,
+    "Mirassol": 1026.5,
+    "Coritiba": 1008.49,
+    "Remo": 995.49,
+    "Vitoria": 986.34,
+    "Chapecoense": 922.12
+  }
+}

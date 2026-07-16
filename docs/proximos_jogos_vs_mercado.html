@@ -1,0 +1,293 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pitch-0:#0E1912;
+    --pitch-1:#152417;
+    --pitch-2:#1D301F;
+    --line:#33452F;
+    --gold:#CBA135;
+    --gold-dim:#8A7024;
+    --cream:#EFEAD9;
+    --cream-dim:#A7AB9C;
+    --model-c:#CBA135;
+    --market-c:#5B8FBF;
+    --edge-pos:#5FA772;
+    --edge-neg:#C15A3E;
+    --font-display:'Bebas Neue', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+    --font-body:'Inter', sans-serif;
+  }
+  .rj-wrap{
+    font-family:var(--font-body);
+    background:var(--pitch-0);
+    color:var(--cream);
+    border-radius:14px;
+    padding:24px 20px;
+    max-width:700px;
+    margin:0 auto;
+  }
+  .rj-h1{
+    font-family:var(--font-display);
+    letter-spacing:0.06em;
+    font-size:26px;
+    color:var(--gold);
+    margin:0 0 2px;
+  }
+  .rj-sub{
+    font-size:12px;
+    color:var(--cream-dim);
+    margin:0 0 18px;
+    font-family:var(--font-mono);
+  }
+  .rj-legend{
+    display:flex;
+    gap:18px;
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--cream-dim);
+    margin-bottom:16px;
+  }
+  .rj-legend span{display:flex;align-items:center;gap:5px;}
+  .rj-dot{width:9px;height:9px;border-radius:2px;display:inline-block;}
+  .rj-card{
+    background:var(--pitch-1);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:10px;
+  }
+  .rj-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:10px;
+  }
+  .rj-teams{
+    font-size:15px;
+    font-weight:600;
+  }
+  .rj-when{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--cream-dim);
+  }
+  .rj-row{
+    display:grid;
+    grid-template-columns:26px 1fr 1fr 1fr;
+    gap:8px;
+    align-items:center;
+    margin-bottom:5px;
+  }
+  .rj-rowlabel{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--cream-dim);
+  }
+  .rj-bars{position:relative;height:16px;background:var(--pitch-2);border-radius:4px;overflow:hidden;}
+  .rj-barfill{position:absolute;top:0;left:0;height:100%;border-radius:4px;}
+  .rj-barval{
+    position:absolute;
+    right:5px;top:0;
+    font-family:var(--font-mono);
+    font-size:9.5px;
+    line-height:16px;
+    color:var(--pitch-0);
+    font-weight:600;
+  }
+  .rj-edge{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    text-align:center;
+  }
+  .rj-foot{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    padding-top:8px;
+    border-top:1px solid var(--line);
+    font-family:var(--font-mono);
+    font-size:10px;
+    color:var(--cream-dim);
+  }
+  .rj-noodds{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--gold-dim);
+    text-align:center;
+    padding:6px 0 2px;
+  }
+  .rj-runin-row{
+    display:grid;
+    grid-template-columns:24px 110px 1fr 40px;
+    align-items:center;
+    gap:8px;
+    padding:5px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .rj-runin-rank{
+    font-family:var(--font-mono);
+    font-size:10px;
+    color:var(--cream-dim);
+  }
+  .rj-runin-team{
+    font-size:12.5px;
+    font-weight:600;
+  }
+  .rj-runin-opps{
+    font-family:var(--font-mono);
+    font-size:9.5px;
+    color:var(--cream-dim);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .rj-runin-val{
+    font-family:var(--font-mono);
+    font-size:11px;
+    text-align:right;
+  }
+  .rj-note{
+    font-family:var(--font-mono);
+    font-size:10px;
+    color:var(--cream-dim);
+    line-height:1.6;
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+  }
+</style>
+
+<div class="rj-wrap">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Comparacao entre as probabilidades do modelo Dixon-Coles e as odds do mercado de apostas para os proximos jogos do Brasileirao, rodada 19.</h2>
+  <div class="rj-h1">PROXIMOS JOGOS &middot; MODELO VS MERCADO</div>
+  <div class="rj-sub">RODADA 19 (E JOGO ATRASADO DA RODADA 4) &middot; VOLTA APOS A PAUSA DA COPA DO MUNDO</div>
+  <div class="rj-legend">
+    <span><span class="rj-dot" style="background:var(--model-c);"></span>Modelo (Dixon-Coles)</span>
+    <span><span class="rj-dot" style="background:var(--market-c);"></span>Mercado (odds medias, sem vig)</span>
+  </div>
+
+  <div id="rj-cards"></div>
+
+  <div class="rj-h1" style="font-size:20px;margin-top:22px;">CALENDARIO: FACIL VS DIFICIL</div>
+  <div class="rj-sub">MEDIA DO RATING ELO-ODDS DOS PROXIMOS 5 ADVERSARIOS (RODADAS 19-23)</div>
+  <div id="rj-runin"></div>
+
+  <div class="rj-note">
+    Calendario: media do rating Elo-Odds dos 5 proximos adversarios de cada time (rodadas 19-23). Verde = calendario mais facil (adversarios mais fracos pela frente), vermelho = mais dificil. Baseado na tabela oficial da CBF (pode haver pequenos ajustes de data/mando em rodadas futuras).<br><br>
+    Mercado: odds medias 1X2 coletadas em 14-15/07, convertidas em probabilidade e normalizadas para remover a margem da casa (overround). Diferenca (edge) = modelo menos mercado; nao e recomendacao de aposta, so mostra onde o modelo diverge do consenso do mercado &mdash; que ja incorpora informacao de escalacao, lesoes e noticias que o modelo nao ve (ex: Neymar e Gabigol fora do Santos). 3 jogos ainda sem odds fechadas no momento da consulta.
+  </div>
+</div>
+
+<script>
+(function(){
+  var DISPLAY = {
+    "Atletico-PR":"Athletico-PR","Atletico-MG":"Atletico-MG","Sao Paulo":"Sao Paulo",
+    "Gremio":"Gremio","Vitoria":"Vitoria","Vasco":"Vasco da Gama","Chapecoense":"Chapecoense-SC"
+  };
+  function label(t){ return DISPLAY[t] || t; }
+
+  var DATA = [{"home": "Botafogo", "away": "Santos", "day": "Qui 16/07", "time": "19:30", "model": [0.6239, 0.2068, 0.1693], "xg": [2.04, 0.96], "odds": [2.04, 3.62, 3.7], "market": [0.4728, 0.2665, 0.2607]}, {"home": "Vitoria", "away": "Vasco", "day": "Qui 16/07", "time": "19:30", "model": [0.4728, 0.2503, 0.2769], "xg": [1.57, 1.14], "odds": [2.38, 3.3, 3.21], "market": [0.4061, 0.2929, 0.3011]}, {"home": "Bahia", "away": "Chapecoense", "day": "Sex 17/07", "time": "19:30", "model": [0.7165, 0.1721, 0.1112], "xg": [2.33, 0.8], "odds": [1.46, 5.0, 7.5], "market": [0.6726, 0.1964, 0.1309]}, {"home": "Fluminense", "away": "Bragantino", "day": "Sex 17/07", "time": "20:00", "model": [0.5234, 0.2558, 0.2208], "xg": [1.55, 0.91], "odds": [1.98, 3.45, 4.2], "market": [0.4889, 0.2806, 0.2305]}, {"home": "Mirassol", "away": "Gremio", "day": "Sex 17/07", "time": "20:00", "model": [0.5488, 0.2386, 0.2125], "xg": [1.71, 0.97], "odds": [2.02, 3.45, 4.15], "market": [0.4826, 0.2825, 0.2349]}, {"home": "Atletico-MG", "away": "Bahia", "day": "Ter 21/07", "time": "19:30", "model": [0.4874, 0.2562, 0.2564], "xg": [1.53, 1.04], "odds": [2.2, 3.5, 3.6], "market": [0.4465, 0.2807, 0.2729]}, {"home": "Coritiba", "away": "Palmeiras", "day": "Qua 22/07", "time": "19:30", "model": [0.226, 0.2484, 0.5256], "xg": [0.97, 1.62], "odds": [3.75, 3.3, 2.17], "market": [0.2588, 0.2941, 0.4472]}, {"home": "Sao Paulo", "away": "Atletico-PR", "day": "Qua 22/07", "time": "21:30", "model": [0.4529, 0.2863, 0.2609], "xg": [1.28, 0.9], "odds": [2.05, 3.4, 4.1], "market": [0.4755, 0.2867, 0.2378]}, {"home": "Internacional", "away": "Cruzeiro", "day": "Qua 22/07", "time": "21:30", "model": [0.4211, 0.2847, 0.2941], "xg": [1.25, 1.0]}, {"home": "Chapecoense", "away": "Flamengo", "day": "Qua 22/07", "time": "21:30", "model": [0.1311, 0.1891, 0.6798], "xg": [0.83, 2.17]}, {"home": "Corinthians", "away": "Remo", "day": "Qua 22/07", "time": "19:30", "model": [0.5663, 0.2386, 0.1951], "xg": [1.71, 0.89]}];
+
+  function pct(x){ return (x*100).toFixed(0)+'%'; }
+
+  function buildBar(modelVal, marketVal){
+    var m = (modelVal*100).toFixed(0);
+    var mk = marketVal!=null ? (marketVal*100).toFixed(0) : null;
+    var html = '<div class="rj-bars">';
+    html += '<div class="rj-barfill" style="width:'+m+'%;background:var(--model-c);opacity:0.9;"></div>';
+    html += '<div class="rj-barval">'+m+'%</div>';
+    html += '</div>';
+    if(mk!==null){
+      html += '<div class="rj-bars" style="margin-top:2px;">';
+      html += '<div class="rj-barfill" style="width:'+mk+'%;background:var(--market-c);opacity:0.85;"></div>';
+      html += '<div class="rj-barval">'+mk+'%</div>';
+      html += '</div>';
+    }
+    return html;
+  }
+
+  var container = document.getElementById('rj-cards');
+  DATA.forEach(function(f){
+    var card = document.createElement('div');
+    card.className = 'rj-card';
+    var head = document.createElement('div');
+    head.className = 'rj-head';
+    head.innerHTML = '<div class="rj-teams">'+label(f.home)+' <span style="color:var(--cream-dim);font-weight:400;">vs</span> '+label(f.away)+'</div>' +
+      '<div class="rj-when">'+f.day+' &middot; '+f.time+'</div>';
+    card.appendChild(head);
+
+    var labels = ['CASA','EMPATE','FORA'];
+    for(var i=0;i<3;i++){
+      var row = document.createElement('div');
+      row.className = 'rj-row';
+      var marketVal = f.market ? f.market[i] : null;
+      var edge = '';
+      if(f.market){
+        var diff = (f.model[i]-f.market[i])*100;
+        var sign = diff>=0?'+':'';
+        var color = diff>=0 ? 'var(--edge-pos)' : 'var(--edge-neg)';
+        edge = '<span style="color:'+color+';">'+sign+diff.toFixed(0)+'pp</span>';
+      }
+      row.innerHTML = '<div class="rj-rowlabel">'+labels[i]+'</div><div style="grid-column:2/4;">'+buildBar(f.model[i], marketVal)+'</div><div class="rj-edge">'+edge+'</div>';
+      card.appendChild(row);
+    }
+
+    if(!f.market){
+      var no = document.createElement('div');
+      no.className = 'rj-noodds';
+      no.textContent = 'Odds do mercado ainda nao confirmadas para este jogo';
+      card.appendChild(no);
+    }
+
+    var foot = document.createElement('div');
+    foot.className = 'rj-foot';
+    var xgText = 'xG modelo: ' + f.xg[0].toFixed(2) + ' - ' + f.xg[1].toFixed(2);
+    var oddsText = f.odds ? ('Odds: ' + f.odds[0] + ' / ' + f.odds[1] + ' / ' + f.odds[2]) : '';
+    foot.innerHTML = '<span>'+xgText+'</span><span>'+oddsText+'</span>';
+    card.appendChild(foot);
+
+    container.appendChild(card);
+  });
+
+  var RUNIN = [
+    {team:"Vasco", avg:1012, opps:["Vitoria","Mirassol","Chapecoense","Bahia","Santos"]},
+    {team:"Flamengo", avg:1017, opps:["Chapecoense","Sao Paulo","Internacional","Vitoria","Mirassol"]},
+    {team:"Santos", avg:1033, opps:["Botafogo","Chapecoense","Sao Paulo","Atletico-PR","Vasco"]},
+    {team:"Palmeiras", avg:1038, opps:["Coritiba","Atletico-MG","Vitoria","Internacional","Fluminense"]},
+    {team:"Bahia", avg:1045, opps:["Atletico-MG","Corinthians","Fluminense","Vasco","Chapecoense"]},
+    {team:"Remo", avg:1046, opps:["Corinthians","Vitoria","Mirassol","Atletico-MG","Internacional"]},
+    {team:"Cruzeiro", avg:1050, opps:["Internacional","Botafogo","Coritiba","Mirassol","Corinthians"]},
+    {team:"Botafogo", avg:1053, opps:["Santos","Cruzeiro","Gremio","Fluminense","Vitoria"]},
+    {team:"Atletico-MG", avg:1054, opps:["Bahia","Palmeiras","Bragantino","Remo","Gremio"]},
+    {team:"Gremio", avg:1055, opps:["Mirassol","Fluminense","Botafogo","Sao Paulo","Atletico-MG"]},
+    {team:"Corinthians", avg:1058, opps:["Remo","Bahia","Atletico-PR","Bragantino","Cruzeiro"]},
+    {team:"Bragantino", avg:1058, opps:["Fluminense","Coritiba","Atletico-MG","Corinthians","Atletico-PR"]},
+    {team:"Coritiba", avg:1059, opps:["Palmeiras","Bragantino","Cruzeiro","Chapecoense","Sao Paulo"]},
+    {team:"Fluminense", avg:1063, opps:["Bragantino","Gremio","Bahia","Botafogo","Palmeiras"]},
+    {team:"Sao Paulo", avg:1066, opps:["Atletico-PR","Flamengo","Santos","Gremio","Coritiba"]},
+    {team:"Mirassol", avg:1077, opps:["Gremio","Vasco","Remo","Cruzeiro","Flamengo"]},
+    {team:"Chapecoense", avg:1078, opps:["Flamengo","Santos","Vasco","Coritiba","Bahia"]},
+    {team:"Atletico-PR", avg:1078, opps:["Sao Paulo","Internacional","Corinthians","Santos","Bragantino"]},
+    {team:"Vitoria", avg:1081, opps:["Vasco","Remo","Palmeiras","Flamengo","Botafogo"]},
+    {team:"Internacional", avg:1089, opps:["Cruzeiro","Atletico-PR","Flamengo","Palmeiras","Remo"]}
+  ];
+  var minAvg = Math.min.apply(null, RUNIN.map(function(r){return r.avg;}));
+  var maxAvg = Math.max.apply(null, RUNIN.map(function(r){return r.avg;}));
+  var runinContainer = document.getElementById('rj-runin');
+  RUNIN.forEach(function(r, idx){
+    var t = (r.avg - minAvg) / (maxAvg - minAvg);
+    var color = t < 0.5
+      ? 'var(--edge-pos)'
+      : (t < 0.75 ? 'var(--gold)' : 'var(--edge-neg)');
+    var row = document.createElement('div');
+    row.className = 'rj-runin-row';
+    row.innerHTML =
+      '<div class="rj-runin-rank">' + (idx+1) + '</div>' +
+      '<div class="rj-runin-team">' + label(r.team) + '</div>' +
+      '<div class="rj-runin-opps">' + r.opps.map(label).join(' &middot; ') + '</div>' +
+      '<div class="rj-runin-val" style="color:' + color + ';">' + r.avg + '</div>';
+    runinContainer.appendChild(row);
+  });
+})();
+</script>

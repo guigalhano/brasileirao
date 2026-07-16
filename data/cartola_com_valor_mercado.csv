@@ -1,0 +1,570 @@
+apelido,apelido_norm,team,pos,preco,media,valor_tm_milhoes,nome_tm_matched,match_tipo
+Breno Lopes,breno lopes,Coritiba,ATA,9.47,6.18,,,sem_match
+Patrick,patrick,Remo,MEI,5.99,3.54,0.6,Patrick,exato
+Gerson,gerson,Cruzeiro,MEI,8.98,4.21,18.0,Gerson,exato
+Igor Formiga,igor formiga,Mirassol,LAT,7.89,4.52,,,sem_match
+Marllon,marllon,Remo,ZAG,6.15,3.08,,,sem_match
+Léo Andrade,leo andrade,Remo,ZAG,4.79,2.95,,,sem_match
+Gabriel Paulista,gabriel paulista,Corinthians,ZAG,9.3,4.76,,,sem_match
+Preciado,preciado,Atletico-MG,LAT,7.2,4.0,,,sem_match
+Victor Hugo,victor hugo,Atletico-MG,MEI,6.6,3.8,7.0,Victor Hugo,exato
+Villagra,villagra,Internacional,MEI,5.18,2.08,,,sem_match
+Gabriel,gabriel,Vitoria,GOL,5.02,0.9,0.45,Gabriel,exato
+Tetê,tete,Gremio,ATA,9.01,3.83,,,sem_match
+Rafael Monti,rafael monti,Remo,ATA,3.56,0.0,,,sem_match
+Milans,milans,Corinthians,LAT,8.96,6.03,,,sem_match
+Luiz Gustavo,luiz gustavo,Athletico-PR,MEI,6.78,3.75,0.2,Luiz Gustavo,exato
+Emmanuel Martínez,emmanuel martinez,Vitoria,MEI,6.16,3.48,,,sem_match
+Cassierra,cassierra,Atletico-MG,ATA,5.4,2.08,,,sem_match
+José Welison,jose welison,Remo,MEI,4.43,2.47,,,sem_match
+Gustavo,gustavo,Coritiba,MEI,3.3,0.9,,,sem_match
+Gilberto Junior,gilberto junior,Athletico-PR,LAT,6.76,5.54,2.0,Gilberto Junior,exato
+Dell,dell,Bahia,ATA,1.82,0.65,4.0,Dell,exato
+Everton Galdino,everton galdino,Mirassol,ATA,2.73,1.2,,,sem_match
+Picco,picco,Remo,MEI,6.03,3.28,,tico,aproximado_fuzzy
+Cufré,cufre,Remo,LAT,3.45,-0.3,,,sem_match
+Matheus Pereira,matheus pereira,Corinthians,MEI,3.46,1.12,,,sem_match
+Vitor Bueno,vitor bueno,Remo,MEI,7.26,4.01,,,sem_match
+Edu,edu,Vitoria,ZAG,4.13,1.5,0.8,Edu Ribeiro,aproximado_contains
+Marinho,marinho,Vitoria,ATA,4.73,1.75,3.0,matheuzinho,aproximado_fuzzy
+Marino Hinestroza,marino hinestroza,Vasco,ATA,5.76,1.93,,,sem_match
+Arthur,arthur,Palmeiras,LAT,4.99,4.44,3.0,Arthur Gabriel,aproximado_contains
+Tiaguinho,tiaguinho,Gremio,MEI,0.93,0.0,0.5,Tiaguinho,exato
+Luis Pacheco,luis pacheco,Palmeiras,MEI,1.98,0.0,,,sem_match
+Brenner,brenner,Vasco,ATA,7.07,2.98,,,sem_match
+Cissé,cisse,Atletico-MG,MEI,2.14,1.91,,,sem_match
+Riquelme Fillipi,riquelme fillipi,Palmeiras,ATA,2.04,2.2,,,sem_match
+Fabri,fabri,Vitoria,ATA,5.27,2.66,0.9,Fabri,exato
+Walter,walter,Mirassol,GOL,5.18,2.89,0.15,Walter,exato
+Riquelme,riquelme,Athletico-PR,MEI,0.91,0.58,,,sem_match
+Fabinho,fabinho,Coritiba,ATA,1.43,-0.03,,,sem_match
+Zé Breno,ze breno,Vitoria,MEI,2.04,0.6,,,sem_match
+Allex,allex,Internacional,MEI,2.38,1.55,1.0,Allex,exato
+Kauan Toledo,kauan toledo,Botafogo,ATA,1.95,1.77,,,sem_match
+JP,jp,Vasco,MEI,1.41,0.95,2.0,Jptm,aproximado_contains
+Fernando Pradella,fernando pradella,Santos,ATA,0.82,0.0,,,sem_match
+Pedro Ferreira,pedro ferreira,Sao Paulo,MEI,1.51,1.2,,Pedro Ferreira,exato
+Kaio César,kaio cesar,Corinthians,ATA,10.33,5.43,,,sem_match
+Andrey Fernandes,andrey fernandes,Vasco,ATA,1.41,1.7,,,sem_match
+João Vitor,joao vitor,Vasco,ATA,3.49,3.13,,,sem_match
+Chico da Costa,chico da costa,Cruzeiro,ATA,3.81,1.24,,,sem_match
+Garcez,garcez,Chapecoense,ATA,3.12,1.22,,,sem_match
+Herrera,herrera,Bragantino,ATA,4.31,2.17,,,sem_match
+Alerrandro,alerrandro,Internacional,ATA,6.43,3.85,8.0,alexandro,aproximado_fuzzy
+Catarozzi,catarozzi,Remo,MEI,5.41,0.9,,,sem_match
+Cuiabano,cuiabano,Vasco,LAT,13.25,7.47,10.0,Cuiabano,exato
+Roger,roger,Gremio,MEI,1.5,1.2,,,sem_match
+Chico Kim,chico kim,Mirassol,MEI,3.63,0.6,,,sem_match
+Marquinhos,marquinhos,Botafogo,MEI,0.85,0.0,,,sem_match
+Leonel Pérez,leonel perez,Gremio,MEI,4.43,2.52,,,sem_match
+Enzo Vagner,enzo vagner,Coritiba,ATA,1.04,0.5,,,sem_match
+Vinicius,vinicius,Chapecoense,ZAG,1.63,0.1,0.4,Vinicius Balieiro,aproximado_contains
+Wesley Natã,wesley nata,Fluminense,ATA,0.8,-0.3,,,sem_match
+Spinelli,spinelli,Vasco,ATA,6.18,3.16,,,sem_match
+Justino,justino,Botafogo,ZAG,2.32,1.25,,,sem_match
+Lucas Silva,lucas silva,Vitoria,ATA,2.8,-0.17,,,sem_match
+Jhon Arias,jhon arias,Palmeiras,MEI,13.77,6.49,,,sem_match
+Nardoni,nardoni,Gremio,MEI,6.42,2.04,,,sem_match
+Djhordney,djhordney,Sao Paulo,MEI,0.79,-0.2,,,sem_match
+Moisés,moises,Santos,ATA,4.78,2.35,,,sem_match
+Jhoan Hernández,jhoan hernandez,Botafogo,LAT,3.69,0.0,4.0,nathan fernandes,aproximado_fuzzy
+Matheus Bahia,matheus bahia,Internacional,LAT,6.41,3.59,,,sem_match
+João Ananias,joao ananias,Santos,ZAG,2.62,2.2,0.5,Joao Ananias,exato
+Gabriel Mec,gabriel mec,Gremio,ATA,4.45,2.82,16.0,Gabriel Mec,exato
+Tomás Pérez,tomas perez,Atletico-MG,MEI,4.03,1.43,6.0,tomas,aproximado_fuzzy
+Medina,medina,Botafogo,MEI,7.74,4.13,,,sem_match
+Jajá,jaja,Remo,ATA,6.66,5.3,,,sem_match
+Labyad,labyad,Corinthians,MEI,4.44,1.99,,,sem_match
+Lucas Veríssimo,lucas verissimo,Santos,ZAG,8.84,4.2,,,sem_match
+Jefinho,jefinho,Gremio,MEI,1.46,1.5,,,sem_match
+Eduardo Domínguez,eduardo dominguez,Atletico-MG,TEC,11.03,5.37,,,sem_match
+Leonardo Jardim,leonardo jardim,Flamengo,TEC,13.76,7.11,12.0,leonardo pereira,aproximado_fuzzy
+Oliva,oliva,Santos,MEI,7.03,3.44,,,sem_match
+Huguinho,huguinho,Botafogo,MEI,6.02,5.13,0.3,Huguinho,exato
+Léo Condé,leo conde,Remo,TEC,8.55,4.69,,,sem_match
+Luciano Juba,luciano juba,Bahia,LAT,11.65,7.73,14.0,luciano,aproximado_fuzzy
+Tchamba,tchamba,Remo,ZAG,5.11,2.08,,,sem_match
+Millán,millan,Fluminense,ZAG,4.86,1.0,,,sem_match
+Anderson Pato,anderson pato,Vitoria,ATA,3.12,1.38,,,sem_match
+Rodrigo Castillo,rodrigo castillo,Fluminense,ATA,6.98,3.65,,,sem_match
+Gabriel Pires,gabriel pires,Mirassol,MEI,5.77,3.63,,,sem_match
+Lingard,lingard,Corinthians,ATA,4.63,1.95,,,sem_match
+Bruno Lopes,bruno lopes,Vasco,ATA,1.57,1.7,,,sem_match
+Bernardo Zortea,bernardo zortea,Gremio,MEI,0.77,0.13,,,sem_match
+Marcos Victor,marcos victor,Bahia,ZAG,2.72,0.0,0.45,Marcos Victor,exato
+Kauê,kaue,Corinthians,GOL,6.41,9.2,0.3,Kaue,exato
+Nicolas,nicolas,Sao Paulo,LAT,2.79,5.0,,Nicolas,exato
+David Martins,david martins,Bahia,MEI,0.72,-0.15,1.5,david duarte,aproximado_fuzzy
+Ryan Augusto,ryan augusto,Bragantino,LAT,3.78,3.7,,,sem_match
+Caio Roque,caio roque,Botafogo,LAT,5.72,4.0,,Caio Roque,exato
+Vinícius Balieiro,vinicius balieiro,Chapecoense,MEI,3.95,1.67,0.4,Vinicius Balieiro,exato
+Claudinho,claudinho,Athletico-PR,LAT,7.39,9.27,,,sem_match
+Cuca,cuca,Santos,TEC,10.35,5.62,,,sem_match
+Pedro Gabriel,pedro gabriel,Gremio,LAT,5.12,3.91,2.0,Pedro Gabriel,exato
+Artur Jorge,artur jorge,Cruzeiro,TEC,11.87,6.32,,,sem_match
+Gabriel Taliari,gabriel taliari,Remo,ATA,10.88,7.3,,,sem_match
+Luis Eduardo,luis eduardo,Gremio,ZAG,1.45,-0.3,,Luis Eduardo,exato
+Tarzia,tarzia,Vitoria,ATA,4.7,2.93,,,sem_match
+Gabriel Poveda,gabriel poveda,Remo,ATA,3.01,0.73,,,sem_match
+Zé Vitor,ze vitor,Vitoria,MEI,6.35,4.07,0.5,Ze Vitor,exato
+Caio Suassuna,caio suassuna,Bahia,ATA,2.64,2.0,,,sem_match
+Renê,rene,Vitoria,ATA,11.11,8.04,,,sem_match
+Rafael Gonzaga,rafael gonzaga,Santos,LAT,2.79,2.4,,,sem_match
+Matheus Alexandre,matheus alexandre,Remo,LAT,4.67,1.8,,,sem_match
+Mayk,mayk,Remo,LAT,6.54,3.15,0.5,Mayk,exato
+Tetê,tete,Sao Paulo,ATA,0.65,-0.4,,,sem_match
+Avellar,avellar,Vasco,LAT,1.49,1.5,,,sem_match
+Kevin Ramírez,kevin ramirez,Chapecoense,ATA,3.0,0.85,,,sem_match
+David Braga,david braga,Remo,MEI,3.11,1.52,,,sem_match
+Franclim Carvalho,franclim carvalho,Botafogo,TEC,11.21,5.07,,,sem_match
+Jhuan Nunes,jhuan nunes,Bragantino,ATA,1.83,2.3,,,sem_match
+David,david,Coritiba,ATA,0.92,0.0,,,sem_match
+Cauã Soares,caua soares,Atletico-MG,ATA,1.24,0.64,,,sem_match
+Jemmes,jemmes,Fluminense,ZAG,7.38,3.63,3.0,Jemmes,exato
+Osorio,osorio,Sao Paulo,ZAG,0.73,-0.2,,,sem_match
+Samuel Pierri,samuel pierri,Santos,MEI,1.88,0.45,,,sem_match
+Alex Santana,alex santana,Corinthians,MEI,4.02,0.8,1.0,Alex Santana,exato
+Benjamin Arhin,benjamin arhin,Internacional,MEI,1.73,-0.3,,,sem_match
+Breno,breno,Bragantino,ZAG,2.8,3.35,,,sem_match
+Ramon Rique,ramon rique,Vasco,MEI,2.73,3.1,,,sem_match
+Luiz Felipe,luiz felipe,Internacional,LAT,0.92,0.0,,,sem_match
+Vitor Ramon,vitor ramon,Gremio,LAT,1.0,0.2,,,sem_match
+Hugo Leonardo,hugo leonardo,Sao Paulo,MEI,0.91,0.0,,Hugo Leonardo,exato
+Davizinho,davizinho,Santos,LAT,0.81,0.0,0.5,gustavinho,aproximado_fuzzy
+Lukas Zuccarello,lukas zuccarello,Vasco,MEI,2.32,1.3,,,sem_match
+Gabriel Menegon,gabriel menegon,Gremio,GOL,1.81,0.0,,,sem_match
+Martinelli,martinelli,Fluminense,MEI,5.53,1.95,16.0,Martinelli,exato
+Alef Manga,alef manga,Remo,ATA,8.46,4.72,,,sem_match
+Villalba,villalba,Cruzeiro,ZAG,6.65,2.21,,,sem_match
+Arthur Cabral,arthur cabral,Botafogo,ATA,10.58,6.69,,,sem_match
+Erick,erick,Vitoria,ATA,8.67,4.68,2.5,Erick,exato
+Lucas Paquetá,lucas paqueta,Flamengo,MEI,14.86,6.46,,,sem_match
+Santos,santos,Athletico-PR,GOL,8.85,3.7,0.4,Santos,exato
+Léo Jardim,leo jardim,Vasco,GOL,6.5,2.76,7.0,Leo Jardim,exato
+Rafael,rafael,Sao Paulo,GOL,7.38,3.55,,,sem_match
+Vitinho,vitinho,Botafogo,LAT,9.63,4.9,9.0,Vitinho,exato
+Gabriel Brazão,gabriel brazao,Santos,GOL,6.33,2.62,,,sem_match
+Everson,everson,Atletico-MG,GOL,10.67,4.47,0.9,Everson,exato
+Matheuzinho,matheuzinho,Corinthians,LAT,10.2,5.03,8.0,Matheuzinho,exato
+Fabrício Bruno,fabricio bruno,Cruzeiro,ZAG,5.92,2.09,12.0,Fabricio Bruno,exato
+Renan Lodi,renan lodi,Atletico-MG,LAT,11.22,5.22,,,sem_match
+Alan Patrick,alan patrick,Internacional,MEI,7.43,4.02,2.0,Alan Patrick,exato
+Fábio,fabio,Fluminense,GOL,9.11,4.39,0.07,Fabio,exato
+Enzo Díaz,enzo diaz,Sao Paulo,LAT,9.04,3.9,3.0,enzo,aproximado_fuzzy
+Yago Pikachu,yago pikachu,Remo,MEI,5.25,2.44,,,sem_match
+Ronaldo,ronaldo,Bahia,GOL,7.66,4.93,2.0,Ronaldo,exato
+Willian José,willian jose,Bahia,ATA,8.04,2.84,1.2,Willian Jose,exato
+Rochet,rochet,Internacional,GOL,6.28,3.33,,,sem_match
+Neymar,neymar,Santos,MEI,18.96,8.42,8.0,Neymar,exato
+Erick Pulga,erick pulga,Bahia,ATA,7.55,4.06,11.0,Erick Pulga,exato
+David Duarte,david duarte,Bahia,ZAG,7.01,3.64,1.5,David Duarte,exato
+Iago,iago,Bahia,LAT,5.57,3.03,3.5,Iago,exato
+Cássio,cassio,Cruzeiro,GOL,6.89,1.32,0.25,Cassio,exato
+Alexander Barboza,alexander barboza,Palmeiras,ZAG,10.68,5.12,5.0,alexander,aproximado_fuzzy
+Erick,erick,Bahia,MEI,6.47,3.87,4.0,Erick,exato
+Kanu,kanu,Bahia,ZAG,3.68,0.83,3.0,Kanu,exato
+Alex Sandro,alex sandro,Flamengo,LAT,8.8,3.74,1.0,Alex Sandro,exato
+João Paulo,joao paulo,Santos,GOL,5.2,0.15,2.0,Joao Paulo,exato
+Jean Lucas,jean lucas,Bahia,MEI,9.55,5.58,13.0,Jean Lucas,exato
+Carrascal,carrascal,Flamengo,MEI,9.1,4.23,,,sem_match
+Gilberto,gilberto,Athletico-PR,LAT,6.71,2.94,2.2,Gilberto,exato
+Zé Guilherme,ze guilherme,Bahia,LAT,4.27,4.0,0.4,Ze Guilherme,exato
+Cristian Olivera,cristian olivera,Bahia,ATA,7.16,4.1,5.0,cristian,aproximado_fuzzy
+Santiago Mingo,santiago mingo,Bahia,ZAG,4.98,1.96,12.0,santiago,aproximado_fuzzy
+Kayky,kayky,Internacional,ATA,3.63,1.27,5.0,Kayky,exato
+Ademir,ademir,Bahia,ATA,5.58,1.65,1.2,Ademir,exato
+Raniele,raniele,Corinthians,MEI,7.72,4.17,4.0,Raniele,exato
+Acevedo,acevedo,Bahia,MEI,6.55,4.69,0.35,everaldo,aproximado_fuzzy
+Michel Araújo,michel araujo,Bahia,MEI,2.93,0.91,2.5,michel,aproximado_fuzzy
+Caio Alexandre,caio alexandre,Bahia,MEI,3.97,1.19,7.0,Caio Alexandre,exato
+Rodrigo Nestor,rodrigo nestor,Bahia,MEI,4.5,1.16,,,sem_match
+Sanabria,sanabria,Bahia,ATA,6.07,3.04,12.0,santiago,aproximado_fuzzy
+Cauly,cauly,Sao Paulo,MEI,6.58,2.91,3.0,Cauly,exato
+Bastos,bastos,Botafogo,ZAG,3.75,0.78,0.6,Bastos,exato
+Alex Telles,alex telles,Botafogo,LAT,9.08,3.72,,,sem_match
+Danilo,danilo,Botafogo,MEI,15.14,9.08,32.0,Danilo,exato
+Joaquín Correa,joaquin correa,Botafogo,ATA,5.11,1.17,1.5,joaquin,aproximado_fuzzy
+Rogério Ceni,rogerio ceni,Bahia,TEC,10.75,5.52,,,sem_match
+Raul,raul,Botafogo,GOL,5.49,3.71,0.4,Raul,exato
+Marçal,marcal,Botafogo,LAT,6.79,2.77,0.2,Marcal,exato
+Mateo Ponte,mateo ponte,Botafogo,LAT,5.53,2.8,,,sem_match
+Savarino,savarino,Fluminense,MEI,9.0,5.0,,,sem_match
+Nathan Fernandes,nathan fernandes,Botafogo,ATA,5.61,3.17,4.0,Nathan Fernandes,exato
+Santi Rodríguez,santi rodriguez,Botafogo,MEI,6.04,2.4,,,sem_match
+Matheus Martins,matheus martins,Botafogo,ATA,7.2,4.88,6.0,Matheus Martins,exato
+Ythallo,ythallo,Botafogo,ZAG,3.5,0.2,,,sem_match
+Artur,artur,Sao Paulo,ATA,9.24,5.62,8.0,Artur,exato
+Montoro,montoro,Botafogo,MEI,7.1,2.73,,,sem_match
+Gabriel,gabriel,Bragantino,MEI,5.17,3.17,0.9,Gabriel,exato
+Allan,allan,Botafogo,MEI,4.48,2.03,1.0,Allan,exato
+Cleiton,cleiton,Bragantino,GOL,6.19,2.56,5.0,Cleiton,exato
+Newton,newton,Sao Paulo,MEI,4.18,1.94,,,sem_match
+Chris Ramos,chris ramos,Botafogo,ATA,5.37,0.37,,,sem_match
+Eric Ramires,eric ramires,Bragantino,MEI,2.32,0.47,3.5,Eric Ramires,exato
+Vagner Mancini,vagner mancini,Bragantino,TEC,8.78,5.58,,,sem_match
+Barrera,barrera,Botafogo,MEI,6.45,2.62,,,sem_match
+Juninho Capixaba,juninho capixaba,Bragantino,LAT,13.92,7.52,,,sem_match
+Luan Cândido,luan candido,Vitoria,LAT,6.49,4.45,,,sem_match
+Eduardo Sasha,eduardo sasha,Bragantino,ATA,4.14,1.06,,,sem_match
+Kadir,kadir,Botafogo,ATA,5.06,2.4,2.0,Kadir,exato
+Villalba,villalba,Botafogo,ATA,4.27,1.78,,,sem_match
+Isidro Pitta,isidro pitta,Bragantino,ATA,6.22,4.2,7.5,isidro,aproximado_fuzzy
+Sant'Anna,sant'anna,Bragantino,LAT,8.88,6.23,,,sem_match
+Gustavo Marques,gustavo marques,Bragantino,ZAG,6.8,4.33,,,sem_match
+Pedro Henrique,pedro henrique,Bragantino,ZAG,6.71,3.21,3.5,Pedro Henrique,exato
+Alix Vinicius,alix vinicius,Bragantino,ZAG,5.18,2.9,,,sem_match
+Matheus Fernandes,matheus fernandes,Bragantino,MEI,4.32,2.54,1.0,Matheus Fernandes,exato
+Nathan Mendes,nathan mendes,Vitoria,LAT,7.52,5.02,1.5,Nathan Mendes,exato
+Fernando,fernando,Bragantino,ATA,6.69,5.0,1.5,Fernando,exato
+Gustavinho,gustavinho,Bragantino,MEI,5.7,2.78,,,sem_match
+Eduardo Santos,eduardo santos,Bragantino,ZAG,4.6,1.4,,,sem_match
+Vanderlan,vanderlan,Bragantino,LAT,4.41,-0.3,3.0,Vanderlan,exato
+Fabinho,fabinho,Bragantino,MEI,2.04,-0.08,5.0,Fabinho,exato
+Lucas Barbosa,lucas barbosa,Bragantino,ATA,10.4,6.67,6.0,Lucas Barbosa,exato
+Andrés Hurtado,andres hurtado,Bragantino,LAT,5.62,3.45,,,sem_match
+Henry Mosquera,henry mosquera,Bragantino,ATA,6.33,3.84,,,sem_match
+Ignacio Sosa,ignacio sosa,Bragantino,MEI,3.65,1.58,1.0,ignacio,aproximado_fuzzy
+Lyanco,lyanco,Atletico-MG,ZAG,9.5,3.8,4.5,Lyanco,exato
+Vitor Hugo,vitor hugo,Atletico-MG,ZAG,8.67,4.5,0.5,Vitor Hugo,exato
+Davi Gomes,davi gomes,Bragantino,ATA,5.19,4.25,0.4,Davi Gomes,exato
+Vinicinho,vinicinho,Bragantino,ATA,4.27,2.48,3.5,Vinicinho,exato
+Cuello,cuello,Atletico-MG,ATA,8.88,5.99,,,sem_match
+Bernard,bernard,Atletico-MG,MEI,5.29,2.66,0.6,Bernard,exato
+Alan Franco,alan franco,Atletico-MG,MEI,4.99,2.42,,,sem_match
+Charles,charles,Corinthians,MEI,3.53,1.03,0.9,Charles,exato
+Natanael,natanael,Atletico-MG,LAT,9.33,5.15,4.5,Natanael,exato
+Dudu,dudu,Atletico-MG,ATA,6.58,2.78,0.8,Dudu,exato
+Ruan,ruan,Atletico-MG,ZAG,4.79,2.67,4.0,Ruan,exato
+Dorival Júnior,dorival junior,Sao Paulo,TEC,9.36,4.17,,,sem_match
+Rony,rony,Santos,ATA,5.55,2.22,4.5,Rony,exato
+Gustavo Henrique,gustavo henrique,Corinthians,ZAG,8.01,3.56,0.7,Gustavo Henrique,exato
+Igor Gomes,igor gomes,Atletico-MG,MEI,3.72,-0.14,2.5,Igor Gomes,exato
+Gabriel Menino,gabriel menino,Santos,MEI,9.21,5.24,7.0,Gabriel Menino,exato
+Reinier,reinier,Atletico-MG,MEI,4.52,2.71,2.0,Reinier,exato
+Iván Román,ivan roman,Atletico-MG,ZAG,8.96,5.92,,,sem_match
+Júnior Santos,junior santos,Botafogo,ATA,4.55,2.24,3.0,Junior Santos,exato
+Carrillo,carrillo,Corinthians,MEI,4.24,1.32,,,sem_match
+André Ramalho,andre ramalho,Corinthians,ZAG,5.3,2.16,0.8,Andre Ramalho,exato
+Alexsander,alexsander,Atletico-MG,MEI,5.7,1.05,5.5,Alexsander,exato
+Angileri,angileri,Corinthians,LAT,4.73,2.45,4.0,raniele,aproximado_fuzzy
+Matheus Bidu,matheus bidu,Corinthians,LAT,12.83,7.73,,,sem_match
+Hugo Souza,hugo souza,Corinthians,GOL,8.79,4.01,11.0,Hugo Souza,exato
+Cacá,caca,Vitoria,ZAG,6.06,3.09,1.5,Caca,exato
+Garro,garro,Corinthians,MEI,10.78,5.27,,,sem_match
+Aguirre,aguirre,Internacional,LAT,6.28,3.78,,,sem_match
+Vitinho,vitinho,Corinthians,ATA,5.06,2.13,0.8,Vitinho,exato
+Breno Bidon,breno bidon,Corinthians,MEI,9.18,3.99,,,sem_match
+Memphis Depay,memphis depay,Corinthians,ATA,9.56,1.99,7.0,memphis,aproximado_fuzzy
+Félix Torres,felix torres,Internacional,ZAG,5.58,3.43,,,sem_match
+Gustavo Scarpa,gustavo scarpa,Atletico-MG,MEI,7.06,3.09,4.5,gustavo,aproximado_fuzzy
+Pedro Raul,pedro raul,Corinthians,ATA,2.63,0.01,2.5,Pedro Raul,exato
+Fagner,fagner,Cruzeiro,LAT,5.28,2.46,0.2,Fagner,exato
+Gui Negão,gui negao,Corinthians,ATA,3.97,1.35,7.0,Gui Negao,exato
+João Pedro,joao pedro,Corinthians,ZAG,8.84,7.7,,,sem_match
+Dieguinho,dieguinho,Corinthians,MEI,3.26,1.46,4.0,Dieguinho,exato
+Kayke,kayke,Corinthians,ATA,3.64,1.65,1.5,Kayke,exato
+Lucas Romero,lucas romero,Cruzeiro,MEI,8.33,4.09,,,sem_match
+Matheus Pereira,matheus pereira,Cruzeiro,MEI,15.27,6.07,,,sem_match
+Matheus Cunha,matheus cunha,Cruzeiro,GOL,4.64,3.23,,,sem_match
+André,andre,Corinthians,MEI,8.45,4.26,,,sem_match
+Matheus Henrique,matheus henrique,Cruzeiro,MEI,5.2,1.81,4.5,Matheus Henrique,exato
+Jonathan Jesus,jonathan jesus,Cruzeiro,ZAG,6.74,4.34,8.0,Jonathan Jesus,exato
+Kauã Moraes,kaua moraes,Cruzeiro,LAT,7.33,5.07,2.0,Kaua Moraes,exato
+Lucas Silva,lucas silva,Cruzeiro,MEI,3.62,0.3,,,sem_match
+Wanderson,wanderson,Cruzeiro,ATA,4.07,1.29,3.0,Wanderson,exato
+João Marcelo,joao marcelo,Cruzeiro,ZAG,3.81,1.92,3.0,Joao Marcelo,exato
+William,william,Cruzeiro,LAT,8.51,3.57,3.0,William,exato
+Arroyo,arroyo,Cruzeiro,ATA,5.26,3.31,,,sem_match
+Otávio,otavio,Cruzeiro,GOL,2.07,1.16,0.5,Otavio Costa,aproximado_contains
+Sinisterra,sinisterra,Cruzeiro,ATA,5.61,3.1,,,sem_match
+Villarreal,villarreal,Cruzeiro,ATA,9.24,5.95,,,sem_match
+Léo Pereira,leo pereira,Flamengo,ZAG,9.31,4.17,12.0,leonardo pereira,aproximado_fuzzy
+Luiz Araújo,luiz araujo,Flamengo,ATA,7.88,2.99,7.0,Luiz Araujo,exato
+Ayrton Lucas,ayrton lucas,Flamengo,LAT,9.54,4.52,4.0,Ayrton Lucas,exato
+Varela,varela,Flamengo,LAT,8.29,4.94,,,sem_match
+Japa,japa,Mirassol,MEI,5.93,5.2,1.0,Japa,exato
+Kaique Kenji,kaique kenji,Cruzeiro,ATA,2.43,1.44,3.0,Kaique Kenji,exato
+Bruno Henrique,bruno henrique,Flamengo,ATA,5.45,1.6,0.75,Bruno Henrique,exato
+Erick Pulgar,erick pulgar,Flamengo,MEI,5.84,1.34,,,sem_match
+Danilo,danilo,Flamengo,ZAG,5.57,0.48,2.0,Danilo,exato
+Emerson Royal,emerson royal,Flamengo,LAT,7.61,4.9,,,sem_match
+Léo Ortiz,leo ortiz,Flamengo,ZAG,9.12,4.11,12.0,Leo Ortiz,exato
+Arrascaeta,arrascaeta,Flamengo,MEI,16.62,6.41,,,sem_match
+Samuel Lino,samuel lino,Flamengo,ATA,13.59,7.08,15.0,Samuel Lino,exato
+Saúl,saul,Flamengo,MEI,6.28,2.43,1.0,Saúl,exato
+Evertton Araújo,evertton araujo,Flamengo,MEI,2.75,1.5,10.0,Evertton Araujo,exato
+Jorginho,jorginho,Flamengo,MEI,10.02,4.3,4.0,Jorginho,exato
+Everton,everton,Flamengo,ATA,5.52,1.35,7.0,Everton,exato
+Allan,allan,Corinthians,MEI,2.98,0.83,2.5,Allan,exato
+De la Cruz,de la cruz,Flamengo,MEI,4.77,1.06,,,sem_match
+Plata,plata,Flamengo,ATA,11.0,7.4,,,sem_match
+Wallace Yan,wallace yan,Flamengo,ATA,2.57,0.13,5.0,Wallace Yan,exato
+João Victor,joao victor,Flamengo,ZAG,4.34,6.5,,,sem_match
+Renê,rene,Fluminense,LAT,9.88,5.9,0.4,Rene,exato
+Joshua,joshua,Flamengo,MEI,2.6,-0.3,,,sem_match
+Everaldo,everaldo,Bahia,ATA,6.29,4.04,0.35,Everaldo,exato
+Luis Zubeldía,luis zubeldia,Fluminense,TEC,10.0,5.56,,,sem_match
+Ganso,ganso,Fluminense,MEI,3.27,0.85,0.3,Ganso,exato
+Cano,cano,Fluminense,ATA,4.29,0.7,,,sem_match
+Otávio,otavio,Fluminense,MEI,2.51,0.32,1.2,Otavio,exato
+Thiago Santos,thiago santos,Coritiba,ZAG,4.35,3.2,0.1,Thiago Santos,exato
+Guga,guga,Fluminense,LAT,6.01,3.27,2.0,Guga,exato
+Soteldo,soteldo,Fluminense,ATA,3.59,1.05,,,sem_match
+Samuel Xavier,samuel xavier,Fluminense,LAT,7.21,3.33,0.2,Samuel Xavier,exato
+Guilherme Arana,guilherme arana,Fluminense,LAT,7.52,3.5,6.0,guilherme,aproximado_fuzzy
+Keno,keno,Coritiba,ATA,4.12,0.73,0.3,Keno,exato
+John Kennedy,john kennedy,Fluminense,ATA,10.92,7.3,,,sem_match
+Nonato,nonato,Fluminense,MEI,5.96,2.78,2.0,Nonato,exato
+Marcos Rocha,marcos rocha,Gremio,LAT,5.95,0.8,0.2,Marcos Rocha,exato
+Canobbio,canobbio,Fluminense,ATA,12.77,7.94,,,sem_match
+Serna,serna,Fluminense,ATA,6.92,2.96,,,sem_match
+Ignácio,ignacio,Fluminense,ZAG,5.58,2.23,2.0,Ignacio,exato
+Riquelme Felipe,riquelme felipe,Fluminense,ATA,3.53,0.7,6.0,riquelme,aproximado_fuzzy
+Freytes,freytes,Fluminense,ZAG,4.63,2.5,,,sem_match
+Willian,willian,Gremio,MEI,3.74,1.06,0.4,Willian,exato
+Hércules,hercules,Fluminense,MEI,6.85,4.01,15.0,Hercules,exato
+Luís Castro,luis castro,Gremio,TEC,9.22,4.76,,luis eduardo,aproximado_fuzzy
+Edenílson,edenilson,Botafogo,MEI,6.15,3.2,0.25,Edenilson,exato
+Carlos Vinícius,carlos vinicius,Gremio,ATA,13.93,5.61,7.0,Carlos Vinicius,exato
+Wagner Leonardo,wagner leonardo,Gremio,ZAG,5.36,2.78,3.0,Wagner Leonardo,exato
+Raykkonen,raykkonen,Internacional,ATA,2.63,0.5,1.0,Raykkonen,exato
+João Pedro,joao pedro,Gremio,LAT,3.11,0.72,1.5,Joao Pedro,exato
+Balbuena,balbuena,Gremio,ZAG,6.98,3.94,,,sem_match
+Thiago Beltrame,thiago beltrame,Gremio,GOL,2.08,0.7,,Thiago Beltrame,exato
+Dodi,dodi,Gremio,MEI,3.04,0.13,0.7,Dodi,exato
+Amuzu,amuzu,Gremio,ATA,7.07,4.16,,,sem_match
+Mercado,mercado,Internacional,ZAG,5.65,3.91,,,sem_match
+Marlon,marlon,Gremio,LAT,10.32,6.62,4.0,Marlon,exato
+Ivan,ivan,Remo,GOL,7.58,10.2,1.0,Ivan,exato
+Pavón,pavon,Gremio,ATA,7.76,3.91,,,sem_match
+Bruno Henrique,bruno henrique,Internacional,MEI,4.52,1.91,0.3,Bruno Henrique,exato
+Caio Paulista,caio paulista,Gremio,LAT,5.62,3.43,2.0,Caio Paulista,exato
+Esquivel,esquivel,Athletico-PR,LAT,7.51,4.67,,,sem_match
+Monsalve,monsalve,Gremio,MEI,3.12,0.64,,,sem_match
+Gustavo Martins,gustavo martins,Gremio,ZAG,6.29,3.25,4.0,Gustavo Martins,exato
+Anthoni,anthoni,Internacional,GOL,4.74,3.3,3.0,Anthoni,exato
+Juninho,juninho,Internacional,ZAG,5.92,2.67,0.7,Juninho,exato
+Riquelme,riquelme,Gremio,MEI,2.42,-1.45,2.0,Riquelme,exato
+Carbonero,carbonero,Internacional,ATA,8.53,5.12,,,sem_match
+Vitinho,vitinho,Internacional,ATA,7.38,4.5,5.0,Vitinho,exato
+Paulo Pezzolano,paulo pezzolano,Internacional,TEC,7.47,4.91,,,sem_match
+Marcelo Lomba,marcelo lomba,Palmeiras,GOL,7.08,8.9,0.07,Marcelo Lomba,exato
+Tiago Volpi,tiago volpi,Bragantino,GOL,10.45,5.95,,,sem_match
+Felipe Anderson,felipe anderson,Palmeiras,MEI,6.97,2.74,1.5,Felipe Anderson,exato
+Weverton,weverton,Gremio,GOL,7.67,4.89,0.7,Weverton,exato
+Bruno Gomes,bruno gomes,Internacional,MEI,6.83,3.65,6.0,Bruno Gomes,exato
+Ronaldo,ronaldo,Internacional,MEI,3.83,2.49,2.0,Ronaldo,exato
+Thiago Maia,thiago maia,Internacional,MEI,3.6,0.92,2.5,Thiago Maia,exato
+Lucas Evangelista,lucas evangelista,Palmeiras,MEI,4.33,1.3,,,sem_match
+Paulinho,paulinho,Palmeiras,ATA,11.1,3.44,9.0,Paulinho,exato
+Gustavo Gómez,gustavo gomez,Palmeiras,ZAG,10.86,4.82,3.5,gustavo,aproximado_fuzzy
+Victor Gabriel,victor gabriel,Internacional,ZAG,4.39,2.54,5.0,Victor Gabriel,exato
+Marlon Freitas,marlon freitas,Palmeiras,MEI,6.02,2.71,6.0,Marlon Freitas,exato
+Murilo,murilo,Palmeiras,ZAG,7.18,3.52,5.0,Murilo,exato
+Carlos Miguel,carlos miguel,Palmeiras,GOL,8.86,5.06,7.0,Carlos Miguel,exato
+Bruno Fuchs,bruno fuchs,Palmeiras,ZAG,8.5,4.21,4.0,bruno,aproximado_fuzzy
+Maurício,mauricio,Palmeiras,MEI,6.14,2.59,15.0,Mauricio,exato
+Piquerez,piquerez,Palmeiras,LAT,11.43,6.43,,,sem_match
+Murilo Rhikman,murilo rhikman,Cruzeiro,MEI,2.95,0.5,0.5,Murilo Rhikman,exato
+Abel Ferreira,abel ferreira,Palmeiras,TEC,12.22,6.5,,,sem_match
+Khellven,khellven,Palmeiras,LAT,5.86,2.72,6.0,Khellven,exato
+Flaco López,flaco lopez,Palmeiras,ATA,14.91,6.74,,,sem_match
+Giay,giay,Palmeiras,LAT,7.52,4.71,,,sem_match
+Allan,allan,Palmeiras,MEI,12.0,6.2,20.0,Allan,exato
+Alan Rodríguez,alan rodriguez,Internacional,MEI,3.27,0.58,,,sem_match
+Luighi,luighi,Palmeiras,ATA,3.06,1.32,4.0,Luighi,exato
+Jefté,jefte,Palmeiras,LAT,4.16,2.47,4.0,Jefte,exato
+Bruno Rodrigues,bruno rodrigues,Cruzeiro,ATA,3.0,1.68,1.2,Bruno Rodrigues,exato
+Daniel Borges,daniel borges,Mirassol,LAT,5.75,4.04,0.3,Daniel Borges,exato
+Lucas Ramon,lucas ramon,Sao Paulo,LAT,10.43,5.89,0.7,Lucas Ramon,exato
+Emiliano Martínez,emiliano martinez,Palmeiras,MEI,4.64,2.03,6.5,emiliano,aproximado_fuzzy
+Carlos Eduardo,carlos eduardo,Mirassol,ATA,5.18,3.39,0.5,Carlos Eduardo,exato
+Alesson,alesson,Mirassol,ATA,9.29,5.13,2.5,Alesson,exato
+Ramón Sosa,ramon sosa,Palmeiras,ATA,5.72,2.53,10.0,ramon,aproximado_fuzzy
+João Victor,joao victor,Mirassol,ZAG,4.48,2.0,1.5,Joao Victor,exato
+Aldo Filho,aldo filho,Mirassol,MEI,4.17,2.26,,,sem_match
+Benedetti,benedetti,Palmeiras,ZAG,5.42,4.85,,,sem_match
+Rafael Guanaes,rafael guanaes,Mirassol,TEC,7.04,4.16,,,sem_match
+Neto Moura,neto moura,Mirassol,MEI,3.31,1.56,2.0,Neto Moura,exato
+Felipe Jonatan,felipe jonatan,Coritiba,LAT,4.88,2.59,2.0,Felipe Jonatan,exato
+André Luis,andre luis,Mirassol,ATA,3.24,1.13,,,sem_match
+Gabriel,gabriel,Santos,ATA,9.26,5.04,,,sem_match
+Nathan Fogaça,nathan fogaca,Mirassol,ATA,4.85,2.88,,,sem_match
+Shaylon,shaylon,Mirassol,MEI,4.23,1.85,1.0,Shaylon,exato
+Luan Peres,luan peres,Santos,ZAG,4.07,1.99,0.7,Luan Peres,exato
+Negueba,negueba,Mirassol,ATA,8.57,5.23,3.0,Negueba,exato
+Edson Carioca,edson carioca,Mirassol,ATA,4.2,2.08,1.5,Edson Carioca,exato
+Escobar,escobar,Santos,LAT,10.22,6.44,,,sem_match
+Igor Vinícius,igor vinicius,Santos,LAT,9.34,6.19,2.0,Igor Vinicius,exato
+João Schmidt,joao schmidt,Santos,MEI,4.61,1.52,0.7,Joao Schmidt,exato
+Willian Arão,willian arao,Santos,MEI,6.08,2.7,0.8,willian,aproximado_fuzzy
+Renato Marques,renato marques,Coritiba,ATA,2.64,0.65,1.0,Renato Marques,exato
+Adonis Frías,adonis frias,Santos,ZAG,5.66,3.59,3.0,adonis,aproximado_fuzzy
+Mayke,mayke,Santos,LAT,5.16,2.33,1.5,Mayke,exato
+Diógenes,diogenes,Santos,GOL,5.0,5.55,0.2,Diogenes,exato
+Tiquinho Soares,tiquinho soares,Mirassol,ATA,5.28,1.74,0.8,Tiquinho Soares,exato
+Gabriel Bontempo,gabriel bontempo,Santos,MEI,4.71,3.54,,,sem_match
+Zé Rafael,ze rafael,Santos,MEI,8.07,4.28,1.5,Ze Rafael,exato
+Rafael Tolói,rafael toloi,Sao Paulo,ZAG,8.24,4.82,,,sem_match
+Rollheiser,rollheiser,Santos,MEI,5.6,2.71,,,sem_match
+Thaciano,thaciano,Santos,MEI,6.63,2.95,1.0,Thaciano,exato
+Zé Ivaldo,ze ivaldo,Santos,ZAG,5.75,1.9,2.0,Ze Ivaldo,exato
+Calleri,calleri,Sao Paulo,ATA,11.7,5.87,,,sem_match
+Wendell,wendell,Sao Paulo,LAT,8.26,4.23,1.5,Wendell,exato
+Vini Lira,vini lira,Santos,LAT,3.79,2.42,4.0,vinicius lira,aproximado_fuzzy
+Sabino,sabino,Sao Paulo,ZAG,6.95,4.05,1.0,Sabino,exato
+Ferraresi,ferraresi,Botafogo,ZAG,5.26,2.5,,,sem_match
+Lucas Moura,lucas moura,Sao Paulo,MEI,7.5,2.32,2.0,Lucas Moura,exato
+Danielzinho,danielzinho,Sao Paulo,MEI,6.34,2.81,1.0,Danielzinho,exato
+Lautaro Díaz,lautaro diaz,Santos,ATA,5.26,2.28,,,sem_match
+Robinho Jr.,robinho jr.,Santos,ATA,2.76,0.62,5.0,robinho junior,aproximado_fuzzy
+Marcos Antônio,marcos antonio,Sao Paulo,MEI,6.14,2.6,12.0,Marcos Antonio,exato
+Cédric Soares,cedric soares,Sao Paulo,LAT,3.73,0.94,0.5,cedric,aproximado_fuzzy
+Alisson,alisson,Fluminense,MEI,3.52,0.96,0.8,Alisson,exato
+Arboleda,arboleda,Sao Paulo,ZAG,8.95,3.98,,,sem_match
+Ferreira,ferreira,Sao Paulo,ATA,7.41,4.3,,Pedro Ferreira,aproximado_contains
+Bobadilla,bobadilla,Sao Paulo,MEI,9.15,4.33,,,sem_match
+Thiago Mendes,thiago mendes,Vasco,MEI,7.83,4.39,,,sem_match
+Lucca,lucca,Sao Paulo,ATA,2.05,0.23,3.0,Lucca,exato
+Pablo Maia,pablo maia,Sao Paulo,MEI,4.14,1.27,5.0,Pablo Maia,exato
+Rodriguinho,rodriguinho,Bragantino,MEI,6.55,3.18,6.0,Rodriguinho,exato
+Tapia,tapia,Sao Paulo,ATA,4.06,1.46,,,sem_match
+Carlos Cuesta,carlos cuesta,Vasco,ZAG,5.11,1.88,,,sem_match
+Paulo Henrique,paulo henrique,Vasco,LAT,7.25,2.94,6.0,Paulo Henrique,exato
+André Silva,andre silva,Sao Paulo,ATA,3.66,0.42,3.0,andre,aproximado_fuzzy
+Isaac,isaac,Athletico-PR,ATA,1.86,0.0,1.2,Isaac,exato
+Maik,maik,Sao Paulo,LAT,5.52,3.48,1.5,Maik,exato
+Adson,adson,Vasco,MEI,6.45,3.51,2.5,Adson,exato
+Lucas Piton,lucas piton,Vasco,LAT,5.08,2.14,,,sem_match
+Andrés Gómez,andres gomez,Vasco,ATA,11.97,7.3,11.0,andres,aproximado_fuzzy
+Tchê Tchê,tche tche,Vasco,MEI,4.21,1.78,0.8,Tche Tche,exato
+Robert Renan,robert renan,Vasco,ZAG,4.65,2.06,10.0,Robert Renan,exato
+Barros,barros,Vasco,MEI,8.85,4.96,5.0,Cauan Barros,aproximado_contains
+Jair Ventura,jair ventura,Vitoria,TEC,8.87,5.46,,,sem_match
+Victor Luis,victor luis,Mirassol,LAT,3.65,1.2,0.3,Victor Luis,exato
+Matheuzinho,matheuzinho,Vitoria,MEI,6.68,3.46,3.0,Matheuzinho,exato
+David,david,Vasco,ATA,4.48,2.36,1.5,David,exato
+Puma Rodríguez,puma rodriguez,Vasco,LAT,8.19,5.35,,,sem_match
+Hugo Moura,hugo moura,Vasco,MEI,3.74,2.48,,,sem_match
+Lucas Freitas,lucas freitas,Vasco,ZAG,4.77,2.5,1.0,Lucas Freitas,exato
+Baralhas,baralhas,Vitoria,MEI,9.16,5.37,2.5,Baralhas,exato
+Lucas Arcanjo,lucas arcanjo,Vitoria,GOL,9.99,5.99,2.5,Lucas Arcanjo,exato
+Ramon,ramon,Vitoria,LAT,8.73,5.41,2.0,Ramon,exato
+Nuno Moreira,nuno moreira,Vasco,MEI,5.37,2.3,,,sem_match
+Renato Kayzer,renato kayzer,Vitoria,ATA,7.01,3.52,1.0,renato,aproximado_fuzzy
+Osvaldo,osvaldo,Vitoria,ATA,4.07,0.4,0.07,Osvaldo,exato
+Cantalapiedra,cantalapiedra,Vitoria,MEI,4.26,1.09,,,sem_match
+Caíque,caique,Vitoria,MEI,4.29,2.1,,,sem_match
+Jadson,jadson,Athletico-PR,MEI,4.95,2.92,3.5,gaston,aproximado_fuzzy
+Mendoza,mendoza,Athletico-PR,ATA,8.61,5.05,,,sem_match
+Noriega,noriega,Gremio,ZAG,7.6,4.31,,,sem_match
+Camutanga,camutanga,Vitoria,ZAG,6.71,3.95,0.25,Camutanga,exato
+Odair Hellmann,odair hellmann,Athletico-PR,TEC,9.28,5.46,,,sem_match
+Terán,teran,Athletico-PR,ZAG,5.88,3.5,,,sem_match
+Benavídez,benavidez,Athletico-PR,LAT,7.23,4.42,,,sem_match
+Felipinho,felipinho,Athletico-PR,MEI,5.57,3.17,1.0,Felipinho,exato
+Dudu,dudu,Vitoria,MEI,5.01,3.95,0.6,Dudu,exato
+Mateus Silva,mateus silva,Vitoria,LAT,4.95,4.85,,,sem_match
+Jamerson,jamerson,Vitoria,LAT,6.14,4.17,0.8,Jamerson,exato
+Edenílson,edenilson,Vitoria,MEI,3.28,1.74,,,sem_match
+Léo Derik,leo derik,Athletico-PR,LAT,4.57,3.11,2.5,Leo Derik,exato
+Fernando Diniz,fernando diniz,Corinthians,TEC,9.26,5.39,,,sem_match
+Léo,leo,Athletico-PR,ZAG,6.77,4.9,1.2,leotm,aproximado_fuzzy
+Zapelli,zapelli,Athletico-PR,MEI,4.23,1.37,,,sem_match
+Aguirre,aguirre,Athletico-PR,ZAG,6.57,3.41,,,sem_match
+Viveros,viveros,Athletico-PR,ATA,13.09,8.41,,,sem_match
+Renan Peixoto,renan peixoto,Athletico-PR,ATA,2.73,0.9,1.5,Renan Peixoto,exato
+Leozinho,leozinho,Athletico-PR,ATA,2.16,0.7,0.75,Leozinho,exato
+Maicon,maicon,Coritiba,ZAG,4.14,2.08,0.1,Maicon,exato
+Willian Oliveira,willian oliveira,Coritiba,MEI,4.62,1.84,0.3,Willian Oliveira,exato
+Larson,larson,Palmeiras,MEI,2.1,0.48,0.4,Larson,exato
+João Cruz,joao cruz,Athletico-PR,MEI,6.45,3.47,2.0,Joao Cruz,exato
+Felipe Chiqueti,felipe chiqueti,Athletico-PR,MEI,2.07,1.35,3.0,chiqueti,aproximado_fuzzy
+Dudu,dudu,Athletico-PR,MEI,2.12,1.84,,,sem_match
+Josué,josue,Coritiba,MEI,5.42,3.57,0.35,Josue,exato
+Tinga,tinga,Coritiba,LAT,6.53,3.67,1.5,tiago,aproximado_fuzzy
+Jacy,jacy,Coritiba,ZAG,5.44,4.02,2.5,Jacy,exato
+Portilla,portilla,Athletico-PR,MEI,2.62,1.22,,,sem_match
+Pedro Rangel,pedro rangel,Coritiba,GOL,7.01,4.64,1.0,Pedro Rangel,exato
+Rodrigo Moledo,rodrigo moledo,Coritiba,ZAG,7.4,7.75,0.1,Rodrigo Moledo,exato
+Lucas Ronier,lucas ronier,Coritiba,ATA,10.73,7.04,6.0,Lucas Ronier,exato
+Pedro Morisco,pedro morisco,Coritiba,GOL,8.04,5.0,5.0,Pedro Morisco,exato
+Fernando Seabra,fernando seabra,Coritiba,TEC,7.63,5.22,,,sem_match
+Pedro Rocha,pedro rocha,Coritiba,ATA,6.33,3.63,1.5,Pedro Rocha,exato
+Bruno Melo,bruno melo,Coritiba,LAT,5.62,3.83,0.25,Bruno Melo,exato
+Fernando Sobral,fernando sobral,Coritiba,MEI,4.34,1.0,,,sem_match
+Vini Paulista,vini paulista,Coritiba,MEI,3.8,2.4,1.0,Vini Paulista,exato
+Wallisson,wallisson,Coritiba,MEI,4.36,2.33,0.9,Wallisson,exato
+Sebastián Gómez,sebastian gomez,Coritiba,MEI,4.29,2.53,1.8,sebastian,aproximado_fuzzy
+Lavega,lavega,Coritiba,ATA,5.22,3.63,,,sem_match
+Marcelinho,marcelinho,Remo,LAT,7.71,5.44,0.6,Marcelinho,exato
+Lucas Taverna,lucas taverna,Coritiba,LAT,2.58,2.1,6.0,lucas ronier,aproximado_fuzzy
+João Almeida,joao almeida,Coritiba,LAT,0.92,0.0,0.4,Joao Almeida,exato
+Tiago Cóser,tiago coser,Coritiba,ZAG,3.28,2.37,,,sem_match
+Marcelo Rangel,marcelo rangel,Remo,GOL,6.86,3.97,0.05,Marcelo Rangel,exato
+Jáderson,jaderson,Remo,MEI,2.64,0.97,0.75,Jaderson,exato
+Eduardo Melo,eduardo melo,Remo,ATA,2.13,1.4,0.07,Eduardo Melo,exato
+Zé Ricardo,ze ricardo,Remo,MEI,4.72,2.5,,,sem_match
+Giovanni Pavani,giovanni pavani,Remo,MEI,2.82,0.75,0.35,Giovanni Pavani,exato
+Léo Vieira,leo vieira,Bahia,GOL,6.82,5.02,0.2,Leo Vieira,exato
+João Lucas,joao lucas,Remo,LAT,4.59,2.82,1.5,Joao Lucas,exato
+Anderson,anderson,Chapecoense,GOL,5.87,3.45,,,sem_match
+Giovanni Augusto,giovanni augusto,Chapecoense,MEI,3.44,1.2,0.15,Giovanni Augusto,exato
+Rafael Santos,rafael santos,Chapecoense,GOL,4.94,3.75,0.07,Rafael Santos,exato
+Everton,everton,Chapecoense,LAT,3.6,1.87,0.3,Everton,exato
+Marcinho,marcinho,Chapecoense,ATA,4.71,2.9,0.65,Marcinho,exato
+Neto Pessoa,neto pessoa,Chapecoense,ATA,4.7,3.73,0.35,Neto Pessoa,exato
+Victor Caetano,victor caetano,Chapecoense,ZAG,3.19,1.6,0.7,Victor Caetano,exato
+Rafael Thyere,rafael thyere,Chapecoense,ZAG,3.2,-0.15,0.07,rafael santos,aproximado_fuzzy
+Marcos Vinícius,marcos vinicius,Chapecoense,LAT,2.78,1.48,,,sem_match
+Bruno Leonardo,bruno leonardo,Chapecoense,ZAG,2.74,1.33,0.4,Bruno Leonardo,exato
+Camilo,camilo,Chapecoense,MEI,5.62,3.13,2.0,Camilo,exato
+Eduardo Doma,eduardo doma,Chapecoense,ZAG,3.94,2.33,,,sem_match
+Vitão,vitao,Flamengo,ZAG,7.78,2.7,10.0,Vitao,exato
+João Paulo,joao paulo,Chapecoense,ZAG,4.8,3.3,0.7,Joao Paulo,exato
+Ênio,enio,Chapecoense,ATA,5.61,3.62,,,sem_match
+Rafael Carvalheira,rafael carvalheira,Chapecoense,MEI,5.7,2.72,2.5,carvalheira,aproximado_fuzzy
+Arthur Dias,arthur dias,Athletico-PR,ZAG,6.04,3.75,3.0,arthur,aproximado_fuzzy
+Ítalo,italo,Chapecoense,ATA,2.71,1.71,1.0,Italo Vargas,aproximado_contains
+Rubens,rubens,Chapecoense,ATA,2.66,1.63,0.25,Rubens,exato
+Lucho Acosta,lucho acosta,Fluminense,MEI,11.02,5.76,,,sem_match
+Everton Ribeiro,everton ribeiro,Bahia,MEI,9.27,5.24,1.0,Everton Ribeiro,exato
+David,david,Chapecoense,MEI,1.46,1.08,0.2,David Antunes,aproximado_contains
+Robert,robert,Chapecoense,MEI,3.51,3.0,1.0,Robert Santos,aproximado_contains
+Rossi,rossi,Flamengo,GOL,9.17,5.06,,,sem_match
+Eduardo,eduardo,Mirassol,MEI,5.57,2.78,0.6,Eduardo,exato
+Andreas Pereira,andreas pereira,Palmeiras,MEI,12.78,5.28,14.0,andreas,aproximado_fuzzy
+Felipe Negrucci,felipe negrucci,Sao Paulo,MEI,1.61,-0.6,1.0,Felipe Negrucci,exato
+Barreal,barreal,Santos,MEI,11.27,4.55,,,sem_match
+Yuri Alberto,yuri alberto,Corinthians,ATA,11.71,3.36,23.0,Yuri Alberto,exato
+Reinaldo,reinaldo,Mirassol,LAT,7.76,2.2,0.35,Reinaldo,exato
+Miguelito,miguelito,Santos,MEI,7.41,4.88,5.0,Miguelito,exato
+Bernabei,bernabei,Internacional,LAT,9.66,6.64,,,sem_match
+Braithwaite,braithwaite,Gremio,ATA,5.91,0.35,,,sem_match
+Hulk,hulk,Fluminense,ATA,11.8,4.55,1.0,Hulk,exato
+Mateus Xavier,mateus xavier,Santos,ATA,2.33,1.2,0.4,Mateus Xavier,exato
+Gustavo Henrique,gustavo henrique,Santos,MEI,2.48,1.5,,,sem_match
+Luciano,luciano,Sao Paulo,ATA,14.14,5.44,1.3,Luciano,exato
+Kaio Jorge,kaio jorge,Cruzeiro,ATA,12.24,4.6,25.0,Kaio Jorge,exato
+Pedro,pedro,Flamengo,ATA,18.5,8.82,20.0,Pedro,exato
+Rhuan Gabriel,rhuan gabriel,Cruzeiro,MEI,1.39,1.2,,,sem_match
+Enamorado,enamorado,Gremio,ATA,6.81,3.5,,,sem_match
+Johan Rojas,johan rojas,Vasco,MEI,4.09,1.63,,,sem_match
+Caballero,caballero,Santos,ATA,3.83,1.6,,,sem_match
+Bolasie,bolasie,Chapecoense,ATA,4.53,2.08,,,sem_match
+JP Chermont,jp chermont,Coritiba,LAT,4.89,2.95,4.0,Jp Chermont,exato
+Vitor Roque,vitor roque,Palmeiras,ATA,17.01,7.6,38.0,Vitor Roque,exato
+Saldivia,saldivia,Vasco,ZAG,4.79,2.01,,,sem_match
+Maycon,maycon,Atletico-MG,MEI,6.1,3.24,2.0,Maycon,exato
+Willian Machado,willian machado,Mirassol,ZAG,5.36,3.73,,,sem_match
+Denilson,denilson,Mirassol,MEI,5.21,3.04,,,sem_match
+Galeano,galeano,Mirassol,ATA,4.42,1.19,,,sem_match
+Cauê,caue,Bragantino,LAT,4.23,3.47,,,sem_match
+Paulinho,paulinho,Internacional,MEI,4.27,2.33,1.0,Paulinho Paula,aproximado_contains
+Marcelinho,marcelinho,Bragantino,MEI,2.95,2.22,0.4,Marcelinho Braz,aproximado_contains
+Lucas Oliveira,lucas oliveira,Mirassol,ZAG,5.2,3.41,1.0,Lucas Oliveira,exato
+Luan,luan,Sao Paulo,MEI,2.69,0.96,1.0,Luan,exato
+Román Gómez,roman gomez,Bahia,LAT,7.75,4.77,,,sem_match
+Bruno Pacheco,bruno pacheco,Chapecoense,LAT,6.42,4.49,,,sem_match
+Minda,minda,Atletico-MG,ATA,7.36,4.04,,indio,aproximado_fuzzy
+Kauã Pascini,kaua pascini,Atletico-MG,LAT,3.55,2.8,,,sem_match

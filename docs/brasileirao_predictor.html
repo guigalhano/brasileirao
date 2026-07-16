@@ -1,0 +1,372 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pitch-0:#0E1912;
+    --pitch-1:#152417;
+    --pitch-2:#1D301F;
+    --line:#33452F;
+    --gold:#CBA135;
+    --gold-dim:#8A7024;
+    --cream:#EFEAD9;
+    --cream-dim:#A7AB9C;
+    --good:#5FA772;
+    --bad:#C15A3E;
+    --font-display:'Bebas Neue', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+    --font-body:'Inter', sans-serif;
+  }
+  .bp-wrap{
+    font-family:var(--font-body);
+    background:var(--pitch-0);
+    color:var(--cream);
+    border-radius:14px;
+    padding:28px 24px 24px;
+    max-width:680px;
+    margin:0 auto;
+  }
+  .bp-h1{
+    font-family:var(--font-display);
+    letter-spacing:0.06em;
+    font-size:30px;
+    color:var(--gold);
+    margin:0 0 2px;
+  }
+  .bp-sub{
+    font-size:12.5px;
+    color:var(--cream-dim);
+    margin:0 0 20px;
+    font-family:var(--font-mono);
+  }
+  .bp-pickrow{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    gap:10px;
+    align-items:end;
+    margin-bottom:18px;
+  }
+  .bp-picklabel{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--cream-dim);
+    margin-bottom:6px;
+    display:block;
+  }
+  .bp-select{
+    width:100%;
+    background:var(--pitch-2);
+    border:1px solid var(--line);
+    color:var(--cream);
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14px;
+    padding:10px 10px;
+    border-radius:6px;
+  }
+  .bp-select:focus{outline:none;border-color:var(--gold-dim);}
+  .bp-vs{
+    font-family:var(--font-display);
+    color:var(--gold-dim);
+    font-size:20px;
+    padding-bottom:9px;
+  }
+  .bp-swap{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--cream-dim);
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:0.08em;
+    padding:4px 10px;
+    border-radius:5px;
+    cursor:pointer;
+    margin-bottom:18px;
+  }
+  .bp-swap:hover{border-color:var(--gold-dim);color:var(--gold);}
+  .bp-board{
+    background:var(--pitch-1);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:16px;
+  }
+  .bp-boardhead{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--cream-dim);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  .bp-probrow{
+    display:grid;
+    grid-template-columns:80px 1fr 54px;
+    align-items:center;
+    gap:10px;
+    margin-bottom:9px;
+  }
+  .bp-problabel{font-size:13px;font-weight:500;}
+  .bp-probtrack{
+    height:10px;
+    background:var(--pitch-2);
+    border-radius:5px;
+    overflow:hidden;
+  }
+  .bp-probfill{height:100%;border-radius:5px;background:var(--gold);}
+  .bp-probval{
+    font-family:var(--font-mono);
+    font-size:14px;
+    font-weight:600;
+    text-align:right;
+    color:var(--gold);
+  }
+  .bp-statgrid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:16px;
+  }
+  .bp-stat{
+    background:var(--pitch-2);
+    border-radius:8px;
+    padding:10px 8px;
+    text-align:center;
+  }
+  .bp-statval{
+    font-family:var(--font-display);
+    font-size:22px;
+    color:var(--cream);
+    letter-spacing:0.03em;
+  }
+  .bp-statlabel{
+    font-family:var(--font-mono);
+    font-size:9px;
+    color:var(--cream-dim);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-top:2px;
+  }
+  .bp-section-title{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--cream-dim);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin:18px 0 10px;
+  }
+  .bp-scoretable{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .bp-scorerow{
+    display:grid;
+    grid-template-columns:60px 1fr 50px;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+  }
+  .bp-scorelabel{color:var(--cream);font-weight:600;}
+  .bp-scorebar{height:7px;background:var(--pitch-2);border-radius:4px;overflow:hidden;}
+  .bp-scorebarfill{height:100%;background:var(--good);border-radius:4px;}
+  .bp-scorepct{color:var(--cream-dim);text-align:right;}
+  .bp-note{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--cream-dim);
+    line-height:1.6;
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+  }
+  .bp-note a{color:var(--gold-dim);}
+</style>
+
+<div class="bp-wrap">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Brasileirao Serie A match predictor: pick two teams to see win, draw and goal probabilities from a hybrid Elo-Odds and Dixon-Coles model.</h2>
+  <div class="bp-h1">BRASILEIRAO PREDICTOR</div>
+  <div class="bp-sub">MODELO HIBRIDO &middot; ELO-ODDS (RESULTADO) + DIXON-COLES (GOLS)</div>
+
+  <div class="bp-pickrow">
+    <div>
+      <label class="bp-picklabel">Mandante (home)</label>
+      <select class="bp-select" id="bp-home"></select>
+    </div>
+    <div class="bp-vs">VS</div>
+    <div>
+      <label class="bp-picklabel">Visitante (away)</label>
+      <select class="bp-select" id="bp-away"></select>
+    </div>
+  </div>
+  <button class="bp-swap" id="bp-swap-btn">SWAP SIDES</button>
+
+  <div class="bp-board">
+    <div class="bp-boardhead"><span>Resultado &middot; modelo Elo-Odds</span><span id="bp-lambdas"></span></div>
+    <div class="bp-probrow">
+      <div class="bp-problabel" id="bp-homelabel">Home</div>
+      <div class="bp-probtrack"><div class="bp-probfill" id="bp-bar-home"></div></div>
+      <div class="bp-probval" id="bp-val-home"></div>
+    </div>
+    <div class="bp-probrow">
+      <div class="bp-problabel">Draw</div>
+      <div class="bp-probtrack"><div class="bp-probfill" id="bp-bar-draw" style="background:var(--cream-dim);"></div></div>
+      <div class="bp-probval" id="bp-val-draw" style="color:var(--cream-dim);"></div>
+    </div>
+    <div class="bp-probrow">
+      <div class="bp-problabel" id="bp-awaylabel">Away</div>
+      <div class="bp-probtrack"><div class="bp-probfill" id="bp-bar-away" style="background:var(--bad);"></div></div>
+      <div class="bp-probval" id="bp-val-away" style="color:var(--bad);"></div>
+    </div>
+
+    <div class="bp-section-title" style="margin:16px 0 8px;">Gols esperados &middot; modelo Dixon-Coles</div>
+    <div class="bp-statgrid">
+      <div class="bp-stat"><div class="bp-statval" id="bp-xg-home"></div><div class="bp-statlabel" id="bp-xg-home-lbl">xG home</div></div>
+      <div class="bp-stat"><div class="bp-statval" id="bp-xg-away"></div><div class="bp-statlabel" id="bp-xg-away-lbl">xG away</div></div>
+      <div class="bp-stat"><div class="bp-statval" id="bp-over25"></div><div class="bp-statlabel">Over 2.5</div></div>
+      <div class="bp-stat"><div class="bp-statval" id="bp-btts"></div><div class="bp-statlabel">BTTS yes</div></div>
+    </div>
+  </div>
+
+  <div class="bp-section-title">Placares mais provaveis (Dixon-Coles)</div>
+  <div class="bp-scoretable" id="bp-scorelines"></div>
+
+  <div class="bp-note">
+    Resultado (vitoria/empate/derrota): Elo-Odds &mdash; rating Elo atualizado pelas odds de fechamento do mercado (nao pelo placar), seguindo Wunderlich &amp; Memmert (2018). Validado fora da amostra em 3597 jogos (2017-2026): log-loss 1.022 vs. 1.001 do mercado puro &mdash; o melhor modelo nao-mercado testado, superando Dixon-Coles, Elo-Resultado e Elo-Gols.<br>
+    Gols esperados e placar: Dixon-Coles Poisson, ajustado em resultados de 2012 a 01/06/2026 (decaimento temporal, meia-vida 450 dias). Esse modelo erra mais o vencedor mas ainda estima gols melhor que o Elo-Odds, que nao usa gols.<br>
+    Os dois modelos sao independentes e podem discordar levemente entre si. Probabilidades sao estimativas, nao certezas.
+  </div>
+</div>
+
+<script>
+(function(){
+  var RATINGS = {"home_advantage_log": 0.3584981281303073, "teams": {"Flamengo": {"attack": 0.499, "defense": 0.3866}, "Palmeiras": {"attack": 0.4159, "defense": 0.4982}, "Botafogo": {"attack": 0.3552, "defense": 0.1773}, "Mirassol": {"attack": 0.2521, "defense": 0.182}, "Bahia": {"attack": 0.2104, "defense": 0.0722}, "Fluminense": {"attack": 0.1733, "defense": 0.2464}, "Vasco": {"attack": 0.1599, "defense": -0.0807}, "Gremio": {"attack": 0.1514, "defense": 0.0714}, "Bragantino": {"attack": 0.1496, "defense": 0.094}, "Internacional": {"attack": 0.144, "defense": 0.138}, "Atletico-MG": {"attack": 0.1395, "defense": 0.1755}, "Santos": {"attack": 0.1348, "defense": 0.001}, "Cruzeiro": {"attack": 0.1332, "defense": 0.279}, "Sao Paulo": {"attack": 0.1178, "defense": 0.2046}, "Coritiba": {"attack": 0.1073, "defense": -0.0651}, "Atletico-PR": {"attack": 0.0949, "defense": 0.2308}, "Remo": {"attack": 0.0886, "defense": -0.0932}, "Corinthians": {"attack": 0.0838, "defense": 0.2015}, "Vitoria": {"attack": 0.0148, "defense": 0.0247}, "Chapecoense": {"attack": -0.1551, "defense": -0.2756}}};
+
+  var ELO = {"omega": 60, "classes": ["A","D","H"], "coef": [-0.004096078497766547, -0.0003099761157177017, 0.0044060546134710695], "intercept": [-0.07924748736514504, -0.11358131727126212, 0.1928288046364261], "ratings": {"Flamengo": 1185.88, "Palmeiras": 1110.68, "Cruzeiro": 1106.7, "Corinthians": 1105.46, "Fluminense": 1084.4, "Sao Paulo": 1081.25, "Bragantino": 1075.17, "Vasco": 1071.82, "Internacional": 1069.09, "Bahia": 1063.12, "Santos": 1059.54, "Atletico-PR": 1048.33, "Atletico-MG": 1043.17, "Botafogo": 1039.79, "Gremio": 1026.76, "Mirassol": 1026.5, "Coritiba": 1008.49, "Remo": 995.49, "Vitoria": 986.34, "Chapecoense": 922.12}};
+
+  function eloOddsPredict(home, away){
+    var H = ELO.ratings[home], A = ELO.ratings[away];
+    var diff = H - A + ELO.omega;
+    var z = ELO.classes.map(function(c,i){ return ELO.intercept[i] + ELO.coef[i]*diff; });
+    var maxZ = Math.max.apply(null, z);
+    var ez = z.map(function(v){ return Math.exp(v-maxZ); });
+    var sum = ez.reduce(function(a,b){return a+b;},0);
+    var probs = {};
+    ELO.classes.forEach(function(c,i){ probs[c] = ez[i]/sum; });
+    return probs;
+  }
+
+  var DISPLAY = {
+    "Atletico-PR":"Athletico-PR","Atletico-MG":"Atletico-MG","Sao Paulo":"Sao Paulo",
+    "Gremio":"Gremio","Vitoria":"Vitoria","Vasco":"Vasco da Gama","Chapecoense":"Chapecoense-SC"
+  };
+
+  var teams = Object.keys(RATINGS.teams).sort(function(a,b){
+    return RATINGS.teams[b].attack - RATINGS.teams[a].attack;
+  });
+
+  function label(t){ return DISPLAY[t] || t; }
+
+  function poissonPmf(k, lambda){
+    var logp = -lambda + k*Math.log(lambda) - lgamma(k+1);
+    return Math.exp(logp);
+  }
+  function lgamma(x){
+    var g=7, c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+    if(x<0.5) return Math.log(Math.PI/Math.sin(Math.PI*x)) - lgamma(1-x);
+    x-=1;
+    var a=c[0];
+    var t=x+g+0.5;
+    for(var i=1;i<g+2;i++) a+=c[i]/(x+i);
+    return 0.5*Math.log(2*Math.PI) + (x+0.5)*Math.log(t) - t + Math.log(a);
+  }
+
+  function predictGoals(home, away){
+    var th = RATINGS.teams[home], ta = RATINGS.teams[away];
+    var lamH = Math.exp(th.attack - ta.defense + RATINGS.home_advantage_log);
+    var lamA = Math.exp(ta.attack - th.defense);
+    var maxG = 9;
+    var ph = [], pa = [];
+    for(var i=0;i<=maxG;i++){ ph.push(poissonPmf(i,lamH)); pa.push(poissonPmf(i,lamA)); }
+    var over25=0, btts=0;
+    var grid = [];
+    for(var i=0;i<=maxG;i++){
+      var row=[];
+      for(var j=0;j<=maxG;j++){
+        var p = ph[i]*pa[j];
+        row.push(p);
+        if(i+j>2.5) over25+=p;
+        if(i>0 && j>0) btts+=p;
+      }
+      grid.push(row);
+    }
+    var scorelines = [];
+    for(var i=0;i<=6;i++) for(var j=0;j<=6;j++) scorelines.push({h:i,a:j,p:grid[i][j]});
+    scorelines.sort(function(a,b){return b.p-a.p;});
+    return {lamH:lamH, lamA:lamA, over25:over25, btts:btts, top:scorelines.slice(0,5)};
+  }
+
+  var homeSel = document.getElementById('bp-home');
+  var awaySel = document.getElementById('bp-away');
+  teams.forEach(function(t){
+    var o1=document.createElement('option'); o1.value=t; o1.textContent=label(t); homeSel.appendChild(o1);
+    var o2=document.createElement('option'); o2.value=t; o2.textContent=label(t); awaySel.appendChild(o2);
+  });
+  homeSel.value = "Flamengo";
+  awaySel.value = "Palmeiras";
+
+  function pct(x){ return (x*100).toFixed(1)+'%'; }
+
+  function render(){
+    var home = homeSel.value, away = awaySel.value;
+    var outcome = eloOddsPredict(home, away);
+    var g = predictGoals(home, away);
+
+    document.getElementById('bp-homelabel').textContent = label(home);
+    document.getElementById('bp-awaylabel').textContent = label(away);
+    document.getElementById('bp-lambdas').textContent = 'Elo ' + Math.round(ELO.ratings[home]) + ' - ' + Math.round(ELO.ratings[away]);
+
+    document.getElementById('bp-bar-home').style.width = pct(outcome.H);
+    document.getElementById('bp-bar-draw').style.width = pct(outcome.D);
+    document.getElementById('bp-bar-away').style.width = pct(outcome.A);
+    document.getElementById('bp-val-home').textContent = pct(outcome.H);
+    document.getElementById('bp-val-draw').textContent = pct(outcome.D);
+    document.getElementById('bp-val-away').textContent = pct(outcome.A);
+
+    document.getElementById('bp-xg-home').textContent = g.lamH.toFixed(2);
+    document.getElementById('bp-xg-away').textContent = g.lamA.toFixed(2);
+    document.getElementById('bp-xg-home-lbl').textContent = 'xG ' + label(home).split(' ')[0];
+    document.getElementById('bp-xg-away-lbl').textContent = 'xG ' + label(away).split(' ')[0];
+    document.getElementById('bp-over25').textContent = pct(g.over25);
+    document.getElementById('bp-btts').textContent = pct(g.btts);
+
+    var container = document.getElementById('bp-scorelines');
+    container.innerHTML = '';
+    var maxP = g.top[0].p;
+    g.top.forEach(function(s){
+      var row = document.createElement('div');
+      row.className = 'bp-scorerow';
+      row.innerHTML =
+        '<div class="bp-scorelabel">' + s.h + ' - ' + s.a + '</div>' +
+        '<div class="bp-scorebar"><div class="bp-scorebarfill" style="width:' + (s.p/maxP*100).toFixed(0) + '%;"></div></div>' +
+        '<div class="bp-scorepct">' + pct(s.p) + '</div>';
+      container.appendChild(row);
+    });
+  }
+
+  homeSel.addEventListener('change', render);
+  awaySel.addEventListener('change', render);
+  document.getElementById('bp-swap-btn').addEventListener('click', function(){
+    var h = homeSel.value;
+    homeSel.value = awaySel.value;
+    awaySel.value = h;
+    render();
+  });
+
+  render();
+})();
+</script>

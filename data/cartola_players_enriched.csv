@@ -1,0 +1,570 @@
+atleta_id,name,pos,team,price,media,status,desvio,ult5
+93988,Breno Lopes,ATA,Coritiba,9.47,6.18,Provável,6.46,9.26
+83433,Patrick,MEI,Remo,5.99,3.54,Provável,3.47,6.459999999999999
+89256,Gerson,MEI,Cruzeiro,8.98,4.21,Provável,2.96,4.46
+106708,Igor Formiga,LAT,Mirassol,7.89,4.52,Nulo,3.5,3.3
+70666,Marllon,ZAG,Remo,6.15,3.08,Provável,2.58,2.34
+100342,Léo Andrade,ZAG,Remo,4.79,2.95,Nulo,1.59,2.9499999999999997
+69208,Gabriel Paulista,ZAG,Corinthians,9.3,4.76,Provável,4.84,3.5799999999999996
+106302,Preciado,LAT,Atletico-MG,7.2,4.0,Nulo,3.88,5.22
+116034,Victor Hugo,MEI,Atletico-MG,6.6,3.8,Provável,3.95,1.9200000000000004
+105157,Villagra,MEI,Internacional,5.18,2.08,Provável,1.51,1.32
+70449,Gabriel,GOL,Vitoria,5.02,0.9,Nulo,5.12,0.9
+105089,Tetê,ATA,Gremio,9.01,3.83,Nulo,3.42,3.6199999999999997
+147864,Rafael Monti,ATA,Remo,3.56,0.0,Nulo,0.0,0.0
+123689,Milans,LAT,Corinthians,8.96,6.03,Nulo,1.06,6.033333333333334
+71536,Luiz Gustavo,MEI,Athletico-PR,6.78,3.75,Nulo,4.06,4.42
+103388,Emmanuel Martínez,MEI,Vitoria,6.16,3.48,Nulo,2.56,2.12
+95362,Cassierra,ATA,Atletico-MG,5.4,2.08,Provável,4.01,5.16
+86859,José Welison,MEI,Remo,4.43,2.47,Provável,3.27,4.4799999999999995
+110633,Gustavo,MEI,Coritiba,3.3,0.9,Nulo,1.12,0.8999999999999999
+146374,Gilberto Junior,LAT,Athletico-PR,6.76,5.54,Nulo,3.82,5.54
+142265,Dell,ATA,Bahia,1.82,0.65,Nulo,1.59,0.65
+89918,Everton Galdino,ATA,Mirassol,2.73,1.2,Nulo,2.04,1.34
+113125,Picco,MEI,Remo,6.03,3.28,Nulo,3.5,1.3199999999999998
+114308,Cufré,LAT,Remo,3.45,-0.3,Nulo,0.0,-0.3
+90370,Matheus Pereira,MEI,Corinthians,3.46,1.12,Nulo,1.65,0.9
+87552,Vitor Bueno,MEI,Remo,7.26,4.01,Provável,5.26,4.86
+105842,Edu,ZAG,Vitoria,4.13,1.5,Contundido,0.0,1.5
+68952,Marinho,ATA,Vitoria,4.73,1.75,Nulo,1.58,1.3800000000000001
+110598,Marino Hinestroza,ATA,Vasco,5.76,1.93,Nulo,2.39,2.2
+145404,Arthur,LAT,Palmeiras,4.99,4.44,Provável,3.54,6.04
+140496,Tiaguinho,MEI,Gremio,0.93,0.0,Nulo,0.0,0.0
+146623,Luis Pacheco,MEI,Palmeiras,1.98,0.0,Nulo,1.3,0.0
+99789,Brenner,ATA,Vasco,7.07,2.98,Nulo,2.78,2.4200000000000004
+147088,Cissé,MEI,Atletico-MG,2.14,1.91,Nulo,3.14,2.4
+130608,Riquelme Fillipi,ATA,Palmeiras,2.04,2.2,Nulo,3.54,2.2
+104134,Fabri,ATA,Vitoria,5.27,2.66,Nulo,2.91,1.1
+51413,Walter,GOL,Mirassol,5.18,2.89,Nulo,2.4,2.46
+130906,Riquelme,MEI,Athletico-PR,0.91,0.58,Nulo,1.56,0.575
+101729,Fabinho,ATA,Coritiba,1.43,-0.03,Contundido,0.85,0.04
+130847,Zé Breno,MEI,Vitoria,2.04,0.6,Nulo,0.85,0.6
+124270,Allex,MEI,Internacional,2.38,1.55,Nulo,1.41,1.04
+142086,Kauan Toledo,ATA,Botafogo,1.95,1.77,Nulo,1.42,1.7666666666666666
+129666,JP,MEI,Vasco,1.41,0.95,Nulo,0.07,0.95
+145036,Fernando Pradella,ATA,Santos,0.82,0.0,Nulo,0.0,0.0
+141615,Pedro Ferreira,MEI,Sao Paulo,1.51,1.2,Nulo,0.99,1.2
+118844,Kaio César,ATA,Corinthians,10.33,5.43,Provável,3.97,4.659999999999999
+141406,Andrey Fernandes,ATA,Vasco,1.41,1.7,Nulo,0.0,1.7
+147883,João Vitor,ATA,Vasco,3.49,3.13,Nulo,5.01,3.125
+90608,Chico da Costa,ATA,Cruzeiro,3.81,1.24,Nulo,2.62,0.13999999999999999
+108131,Garcez,ATA,Chapecoense,3.12,1.22,Nulo,1.26,0.86
+123738,Herrera,ATA,Bragantino,4.31,2.17,Nulo,2.56,0.9
+101715,Alerrandro,ATA,Internacional,6.43,3.85,Provável,5.19,6.720000000000001
+112939,Catarozzi,MEI,Remo,5.41,0.9,Nulo,0.0,0.9
+116065,Cuiabano,LAT,Vasco,13.25,7.47,Nulo,4.91,5.4799999999999995
+147546,Roger,MEI,Gremio,1.5,1.2,Nulo,0.0,1.2
+82407,Chico Kim,MEI,Mirassol,3.63,0.6,Nulo,1.27,0.6
+146410,Marquinhos,MEI,Botafogo,0.85,0.0,Nulo,0.0,0.0
+143173,Leonel Pérez,MEI,Gremio,4.43,2.52,Nulo,2.82,4.0600000000000005
+141165,Enzo Vagner,ATA,Coritiba,1.04,0.5,Nulo,0.0,0.5
+148124,Vinicius,ZAG,Chapecoense,1.63,0.1,Nulo,1.98,0.09999999999999998
+143463,Wesley Natã,ATA,Fluminense,0.8,-0.3,Nulo,0.0,-0.3
+110144,Spinelli,ATA,Vasco,6.18,3.16,Nulo,3.14,4.22
+146430,Justino,ZAG,Botafogo,2.32,1.25,Nulo,1.07,1.3
+97911,Lucas Silva,ATA,Vitoria,2.8,-0.17,Nulo,0.76,-0.16666666666666666
+99815,Jhon Arias,MEI,Palmeiras,13.77,6.49,Provável,4.75,5.04
+108162,Nardoni,MEI,Gremio,6.42,2.04,Contundido,3.2,1.2400000000000002
+148215,Djhordney,MEI,Sao Paulo,0.79,-0.2,Nulo,1.98,-0.20000000000000007
+104666,Moisés,ATA,Santos,4.78,2.35,Nulo,3.3,0.54
+131964,Jhoan Hernández,LAT,Botafogo,3.69,0.0,Nulo,0.0,0.0
+97899,Matheus Bahia,LAT,Internacional,6.41,3.59,Provável,2.7,5.1
+145563,João Ananias,ZAG,Santos,2.62,2.2,Nulo,2.0,2.2
+141595,Gabriel Mec,ATA,Gremio,4.45,2.82,Nulo,4.55,6.640000000000001
+126189,Tomás Pérez,MEI,Atletico-MG,4.03,1.43,Nulo,2.2,0.6799999999999999
+109987,Medina,MEI,Botafogo,7.74,4.13,Nulo,5.4,6.56
+105048,Jajá,ATA,Remo,6.66,5.3,Provável,3.39,7.140000000000001
+104036,Labyad,MEI,Corinthians,4.44,1.99,Nulo,2.81,2.3200000000000003
+93368,Lucas Veríssimo,ZAG,Santos,8.84,4.2,Nulo,3.63,3.04
+147545,Jefinho,MEI,Gremio,1.46,1.5,Nulo,0.0,1.5
+92747,Eduardo Domínguez,TEC,Atletico-MG,11.03,5.37,Provável,3.38,5.628
+88963,Leonardo Jardim,TEC,Flamengo,13.76,7.11,Provável,3.25,5.937999999999999
+101807,Oliva,MEI,Santos,7.03,3.44,Nulo,2.88,2.48
+141400,Huguinho,MEI,Botafogo,6.02,5.13,Nulo,4.84,5.133333333333333
+37457,Léo Condé,TEC,Remo,8.55,4.69,Provável,2.07,5.572
+107093,Luciano Juba,LAT,Bahia,11.65,7.73,Contundido,5.97,8.080000000000002
+100804,Tchamba,ZAG,Remo,5.11,2.08,Provável,3.26,2.48
+124219,Millán,ZAG,Fluminense,4.86,1.0,Nulo,1.81,1.0
+147268,Anderson Pato,ATA,Vitoria,3.12,1.38,Nulo,0.25,1.375
+124424,Rodrigo Castillo,ATA,Fluminense,6.98,3.65,Nulo,4.94,4.26
+71898,Gabriel Pires,MEI,Mirassol,5.77,3.63,Nulo,2.51,4.2
+81720,Lingard,ATA,Corinthians,4.63,1.95,Dúvida,2.15,3.1599999999999997
+133690,Bruno Lopes,ATA,Vasco,1.57,1.7,Nulo,0.0,1.7
+142260,Bernardo Zortea,MEI,Gremio,0.77,0.13,Nulo,0.81,0.13333333333333333
+115537,Marcos Victor,ZAG,Bahia,2.72,0.0,Provável,0.0,0.0
+121823,Kauê,GOL,Corinthians,6.41,9.2,Nulo,6.22,9.2
+145659,Nicolas,LAT,Sao Paulo,2.79,5.0,Nulo,0.0,5.0
+140726,David Martins,MEI,Bahia,0.72,-0.15,Nulo,0.21,-0.15
+148125,Ryan Augusto,LAT,Bragantino,3.78,3.7,Nulo,4.39,3.7
+130232,Caio Roque,LAT,Botafogo,5.72,4.0,Nulo,3.12,4.0
+110605,Vinícius Balieiro,MEI,Chapecoense,3.95,1.67,Dúvida,2.08,1.6666666666666667
+147192,Claudinho,LAT,Athletico-PR,7.39,9.27,Nulo,8.26,9.266666666666666
+42411,Cuca,TEC,Santos,10.35,5.62,Nulo,2.28,5.58
+141594,Pedro Gabriel,LAT,Gremio,5.12,3.91,Nulo,2.2,3.8599999999999994
+127273,Artur Jorge,TEC,Cruzeiro,11.87,6.32,Provável,2.07,5.450000000000001
+95131,Gabriel Taliari,ATA,Remo,10.88,7.3,Contundido,6.64,8.580000000000002
+142257,Luis Eduardo,ZAG,Gremio,1.45,-0.3,Nulo,0.0,-0.3
+143153,Tarzia,ATA,Vitoria,4.7,2.93,Nulo,4.03,6.44
+102877,Gabriel Poveda,ATA,Remo,3.01,0.73,Nulo,0.99,0.9800000000000001
+107256,Zé Vitor,MEI,Vitoria,6.35,4.07,Nulo,4.96,5.62
+147560,Caio Suassuna,ATA,Bahia,2.64,2.0,Nulo,0.0,2.0
+130209,Renê,ATA,Vitoria,11.11,8.04,Nulo,5.86,11.48
+149715,Rafael Gonzaga,LAT,Santos,2.79,2.4,Nulo,0.0,2.4
+103347,Matheus Alexandre,LAT,Remo,4.67,1.8,Nulo,2.77,1.1800000000000002
+101820,Mayk,LAT,Remo,6.54,3.15,Provável,2.44,2.8600000000000003
+148717,Tetê,ATA,Sao Paulo,0.65,-0.4,Nulo,0.62,-0.4
+141405,Avellar,LAT,Vasco,1.49,1.5,Nulo,0.0,1.5
+94034,Kevin Ramírez,ATA,Chapecoense,3.0,0.85,Nulo,0.49,0.85
+123016,David Braga,MEI,Remo,3.11,1.52,Nulo,2.09,1.3800000000000001
+149990,Franclim Carvalho,TEC,Botafogo,11.21,5.07,Nulo,1.74,4.16
+149994,Jhuan Nunes,ATA,Bragantino,1.83,2.3,Nulo,0.0,2.3
+149991,David,ATA,Coritiba,0.92,0.0,Nulo,0.0,0.0
+147089,Cauã Soares,ATA,Atletico-MG,1.24,0.64,Nulo,0.88,0.64
+132553,Jemmes,ZAG,Fluminense,7.38,3.63,Nulo,3.22,3.38
+150197,Osorio,ZAG,Sao Paulo,0.73,-0.2,Nulo,1.98,-0.20000000000000007
+150757,Samuel Pierri,MEI,Santos,1.88,0.45,Nulo,0.64,0.45
+85465,Alex Santana,MEI,Corinthians,4.02,0.8,Nulo,0.0,0.8
+146701,Benjamin Arhin,MEI,Internacional,1.73,-0.3,Nulo,0.0,-0.3
+150825,Breno,ZAG,Bragantino,2.8,3.35,Nulo,4.74,3.35
+150180,Ramon Rique,MEI,Vasco,2.73,3.1,Nulo,2.26,3.1
+145660,Luiz Felipe,LAT,Internacional,0.92,0.0,Nulo,0.0,0.0
+148092,Vitor Ramon,LAT,Gremio,1.0,0.2,Nulo,0.0,0.2
+141606,Hugo Leonardo,MEI,Sao Paulo,0.91,0.0,Nulo,0.0,0.0
+150959,Davizinho,LAT,Santos,0.81,0.0,Nulo,0.0,0.0
+130279,Lukas Zuccarello,MEI,Vasco,2.32,1.3,Nulo,0.0,1.3
+147544,Gabriel Menegon,GOL,Gremio,1.81,0.0,Nulo,0.0,0.0
+109573,Martinelli,MEI,Fluminense,5.53,1.95,Nulo,2.44,2.1599999999999997
+101254,Alef Manga,ATA,Remo,8.46,4.72,Provável,4.59,5.18
+106593,Villalba,ZAG,Cruzeiro,6.65,2.21,Nulo,2.74,3.4599999999999995
+92171,Arthur Cabral,ATA,Botafogo,10.58,6.69,Nulo,6.79,9.34
+97810,Erick,ATA,Vitoria,8.67,4.68,Nulo,4.68,5.9399999999999995
+94930,Lucas Paquetá,MEI,Flamengo,14.86,6.46,Dúvida,4.45,6.94
+69012,Santos,GOL,Athletico-PR,8.85,3.7,Provável,3.63,4.36
+87008,Léo Jardim,GOL,Vasco,6.5,2.76,Nulo,2.69,4.46
+68928,Rafael,GOL,Sao Paulo,7.38,3.55,Provável,2.51,2.0
+100898,Vitinho,LAT,Botafogo,9.63,4.9,Nulo,2.54,3.8600000000000003
+103056,Gabriel Brazão,GOL,Santos,6.33,2.62,Nulo,4.97,1.1400000000000001
+72294,Everson,GOL,Atletico-MG,10.67,4.47,Provável,5.17,4.56
+101727,Matheuzinho,LAT,Corinthians,10.2,5.03,Provável,3.61,6.38
+90768,Fabrício Bruno,ZAG,Cruzeiro,5.92,2.09,Provável,2.62,1.2000000000000002
+96591,Renan Lodi,LAT,Atletico-MG,11.22,5.22,Provável,3.9,6.58
+68685,Alan Patrick,MEI,Internacional,7.43,4.02,Nulo,4.18,3.16
+37656,Fábio,GOL,Fluminense,9.11,4.39,Nulo,3.53,4.58
+104758,Enzo Díaz,LAT,Sao Paulo,9.04,3.9,Provável,3.89,2.5799999999999996
+80196,Yago Pikachu,MEI,Remo,5.25,2.44,Provável,2.84,3.6
+91101,Ronaldo,GOL,Bahia,7.66,4.93,Provável,3.18,4.62
+68996,Willian José,ATA,Bahia,8.04,2.84,Provável,3.39,2.54
+105949,Rochet,GOL,Internacional,6.28,3.33,Nulo,2.6,3.9
+63007,Neymar,MEI,Santos,18.96,8.42,Nulo,5.0,7.0
+109401,Erick Pulga,ATA,Bahia,7.55,4.06,Provável,2.2,5.08
+91772,David Duarte,ZAG,Bahia,7.01,3.64,Provável,4.13,3.66
+97868,Iago,LAT,Bahia,5.57,3.03,Nulo,3.15,3.0333333333333337
+42234,Cássio,GOL,Cruzeiro,6.89,1.32,Contundido,4.61,1.3199999999999998
+99274,Alexander Barboza,ZAG,Palmeiras,10.68,5.12,Nulo,4.02,4.04
+98022,Erick,MEI,Bahia,6.47,3.87,Nulo,4.74,4.9799999999999995
+98484,Kanu,ZAG,Bahia,3.68,0.83,Provável,2.42,0.8333333333333334
+61987,Alex Sandro,LAT,Flamengo,8.8,3.74,Dúvida,3.75,3.38
+85425,João Paulo,GOL,Santos,5.2,0.15,Nulo,1.48,0.6499999999999999
+98517,Jean Lucas,MEI,Bahia,9.55,5.58,Provável,3.43,5.819999999999999
+105436,Carrascal,MEI,Flamengo,9.1,4.23,Suspenso,5.41,4.54
+80313,Gilberto,LAT,Athletico-PR,6.71,2.94,Nulo,2.02,2.48
+123717,Zé Guilherme,LAT,Bahia,4.27,4.0,Provável,0.0,4.0
+113397,Cristian Olivera,ATA,Bahia,7.16,4.1,Nulo,3.23,1.3800000000000001
+105990,Santiago Mingo,ZAG,Bahia,4.98,1.96,Nulo,3.17,1.2799999999999998
+111829,Kayky,ATA,Internacional,3.63,1.27,Contundido,1.57,1.52
+101314,Ademir,ATA,Bahia,5.58,1.65,Nulo,1.62,1.44
+95556,Raniele,MEI,Corinthians,7.72,4.17,Provável,3.7,5.36
+104783,Acevedo,MEI,Bahia,6.55,4.69,Provável,3.02,5.220000000000001
+107173,Michel Araújo,MEI,Bahia,2.93,0.91,Nulo,1.64,1.98
+106323,Caio Alexandre,MEI,Bahia,3.97,1.19,Nulo,1.75,0.6
+106822,Rodrigo Nestor,MEI,Bahia,4.5,1.16,Nulo,2.16,1.34
+136955,Sanabria,ATA,Bahia,6.07,3.04,Provável,3.39,2.9799999999999995
+123360,Cauly,MEI,Sao Paulo,6.58,2.91,Nulo,2.74,2.7199999999999998
+98280,Bastos,ZAG,Botafogo,3.75,0.78,Contundido,1.19,0.78
+72493,Alex Telles,LAT,Botafogo,9.08,3.72,Nulo,3.9,1.6
+107231,Danilo,MEI,Botafogo,15.14,9.08,Nulo,6.37,9.66
+96353,Joaquín Correa,ATA,Botafogo,5.11,1.17,Suspenso,2.5,1.4999999999999996
+97341,Rogério Ceni,TEC,Bahia,10.75,5.52,Provável,1.94,5.038000000000001
+104191,Raul,GOL,Botafogo,5.49,3.71,Nulo,2.41,4.12
+97468,Marçal,LAT,Botafogo,6.79,2.77,Nulo,4.21,3.025
+124481,Mateo Ponte,LAT,Botafogo,5.53,2.8,Nulo,2.74,3.3
+98672,Savarino,MEI,Fluminense,9.0,5.0,Nulo,4.38,4.24
+124757,Nathan Fernandes,ATA,Botafogo,5.61,3.17,Nulo,2.84,3.1666666666666665
+105214,Santi Rodríguez,MEI,Botafogo,6.04,2.4,Nulo,1.99,2.1399999999999997
+111831,Matheus Martins,ATA,Botafogo,7.2,4.88,Nulo,5.87,7.460000000000001
+126013,Ythallo,ZAG,Botafogo,3.5,0.2,Nulo,0.0,0.2
+95799,Artur,ATA,Sao Paulo,9.24,5.62,Provável,3.69,6.7
+142890,Montoro,MEI,Botafogo,7.1,2.73,Nulo,2.42,0.7
+78605,Gabriel,MEI,Bragantino,5.17,3.17,Nulo,3.05,3.8599999999999994
+69140,Allan,MEI,Botafogo,4.48,2.03,Contundido,1.81,2.1399999999999997
+93882,Cleiton,GOL,Bragantino,6.19,2.56,Nulo,3.51,0.7999999999999998
+104693,Newton,MEI,Sao Paulo,4.18,1.94,Nulo,2.29,1.44
+103179,Chris Ramos,ATA,Botafogo,5.37,0.37,Nulo,1.1,0.3666666666666667
+103295,Eric Ramires,MEI,Bragantino,2.32,0.47,Nulo,1.05,0.5
+39850,Vagner Mancini,TEC,Bragantino,8.78,5.58,Nulo,2.72,6.172
+142484,Barrera,MEI,Botafogo,6.45,2.62,Nulo,3.52,3.1799999999999997
+94968,Juninho Capixaba,LAT,Bragantino,13.92,7.52,Nulo,4.82,6.8
+100848,Luan Cândido,LAT,Vitoria,6.49,4.45,Nulo,3.86,4.4799999999999995
+70360,Eduardo Sasha,ATA,Bragantino,4.14,1.06,Nulo,1.76,-0.6
+146375,Kadir,ATA,Botafogo,5.06,2.4,Nulo,2.01,3.0799999999999996
+142877,Villalba,ATA,Botafogo,4.27,1.78,Nulo,4.22,2.2800000000000002
+108133,Isidro Pitta,ATA,Bragantino,6.22,4.2,Nulo,5.76,4.9799999999999995
+105213,Sant'Anna,LAT,Bragantino,8.88,6.23,Nulo,4.66,4.32
+110750,Gustavo Marques,ZAG,Bragantino,6.8,4.33,Nulo,2.98,3.6599999999999993
+87225,Pedro Henrique,ZAG,Bragantino,6.71,3.21,Nulo,1.88,3.2399999999999998
+111246,Alix Vinicius,ZAG,Bragantino,5.18,2.9,Nulo,3.5,3.839999999999999
+94067,Matheus Fernandes,MEI,Bragantino,4.32,2.54,Nulo,1.85,3.04
+113157,Nathan Mendes,LAT,Vitoria,7.52,5.02,Contundido,4.08,6.859999999999999
+100695,Fernando,ATA,Bragantino,6.69,5.0,Nulo,5.7,7.640000000000001
+122394,Gustavinho,MEI,Bragantino,5.7,2.78,Nulo,3.78,1.7
+106434,Eduardo Santos,ZAG,Bragantino,4.6,1.4,Nulo,2.42,1.4000000000000001
+107236,Vanderlan,LAT,Bragantino,4.41,-0.3,Nulo,0.0,-0.3
+111760,Fabinho,MEI,Bragantino,2.04,-0.08,Nulo,2.52,-0.07999999999999999
+112886,Lucas Barbosa,ATA,Bragantino,10.4,6.67,Nulo,4.92,8.059999999999999
+110715,Andrés Hurtado,LAT,Bragantino,5.62,3.45,Nulo,3.34,4.34
+124239,Henry Mosquera,ATA,Bragantino,6.33,3.84,Nulo,3.04,3.7399999999999998
+132274,Ignacio Sosa,MEI,Bragantino,3.65,1.58,Nulo,2.29,2.0599999999999996
+92087,Lyanco,ZAG,Atletico-MG,9.5,3.8,Provável,4.91,2.2199999999999998
+72605,Vitor Hugo,ZAG,Atletico-MG,8.67,4.5,Nulo,5.01,5.0
+140906,Davi Gomes,ATA,Bragantino,5.19,4.25,Contundido,2.76,4.25
+132580,Vinicinho,ATA,Bragantino,4.27,2.48,Nulo,2.12,3.3599999999999994
+98909,Cuello,ATA,Atletico-MG,8.88,5.99,Provável,4.55,5.4799999999999995
+72460,Bernard,MEI,Atletico-MG,5.29,2.66,Provável,3.16,4.76
+39656,Alan Franco,MEI,Atletico-MG,4.99,2.42,Nulo,2.61,1.78
+96342,Charles,MEI,Corinthians,3.53,1.03,Nulo,1.17,1.0333333333333334
+107554,Natanael,LAT,Atletico-MG,9.33,5.15,Provável,6.02,4.74
+68920,Dudu,ATA,Atletico-MG,6.58,2.78,Nulo,3.94,3.22
+100842,Ruan,ZAG,Atletico-MG,4.79,2.67,Provável,3.34,1.02
+40990,Dorival Júnior,TEC,Sao Paulo,9.36,4.17,Provável,2.11,3.5
+91607,Rony,ATA,Santos,5.55,2.22,Nulo,1.68,2.18
+78248,Gustavo Henrique,ZAG,Corinthians,8.01,3.56,Provável,3.29,3.2800000000000002
+100084,Igor Gomes,MEI,Atletico-MG,3.72,-0.14,Nulo,0.52,-0.13999999999999999
+103767,Gabriel Menino,MEI,Santos,9.21,5.24,Nulo,5.34,3.5200000000000005
+105068,Reinier,MEI,Atletico-MG,4.52,2.71,Nulo,4.11,2.3
+124661,Iván Román,ZAG,Atletico-MG,8.96,5.92,Suspenso,5.79,5.38
+101002,Júnior Santos,ATA,Botafogo,4.55,2.24,Contundido,3.13,3.1
+77485,Carrillo,MEI,Corinthians,4.24,1.32,Nulo,2.06,0.96
+92440,André Ramalho,ZAG,Corinthians,5.3,2.16,Nulo,1.73,2.16
+118774,Alexsander,MEI,Atletico-MG,5.7,1.05,Nulo,0.82,1.05
+98720,Angileri,LAT,Corinthians,4.73,2.45,Nulo,1.65,2.44
+105531,Matheus Bidu,LAT,Corinthians,12.83,7.73,Provável,6.13,4.98
+101574,Hugo Souza,GOL,Corinthians,8.79,4.01,Provável,4.81,1.7400000000000002
+102340,Cacá,ZAG,Vitoria,6.06,3.09,Nulo,4.2,1.78
+117632,Garro,MEI,Corinthians,10.78,5.27,Suspenso,4.55,7.9799999999999995
+110510,Aguirre,LAT,Internacional,6.28,3.78,Nulo,2.25,5.54
+78435,Vitinho,ATA,Corinthians,5.06,2.13,Contundido,1.22,2.36
+117910,Breno Bidon,MEI,Corinthians,9.18,3.99,Provável,4.13,5.48
+85048,Memphis Depay,ATA,Corinthians,9.56,1.99,Dúvida,3.51,1.9600000000000002
+97642,Félix Torres,ZAG,Internacional,5.58,3.43,Dúvida,3.26,4.959999999999999
+87999,Gustavo Scarpa,MEI,Atletico-MG,7.06,3.09,Contundido,3.27,4.08
+98225,Pedro Raul,ATA,Corinthians,2.63,0.01,Nulo,0.31,-0.13999999999999999
+42500,Fagner,LAT,Cruzeiro,5.28,2.46,Provável,2.81,1.86
+133543,Gui Negão,ATA,Corinthians,3.97,1.35,Nulo,1.56,1.35
+125488,João Pedro,ZAG,Corinthians,8.84,7.7,Contundido,1.7,7.7
+141995,Dieguinho,MEI,Corinthians,3.26,1.46,Nulo,3.04,1.7600000000000002
+121824,Kayke,ATA,Corinthians,3.64,1.65,Contundido,1.66,1.6800000000000002
+84558,Lucas Romero,MEI,Cruzeiro,8.33,4.09,Suspenso,3.5,3.1000000000000005
+96610,Matheus Pereira,MEI,Cruzeiro,15.27,6.07,Provável,4.55,6.44
+111690,Matheus Cunha,GOL,Cruzeiro,4.64,3.23,Nulo,4.11,4.46
+145744,André,MEI,Corinthians,8.45,4.26,Provável,5.79,3.04
+100742,Matheus Henrique,MEI,Cruzeiro,5.2,1.81,Provável,1.94,2.16
+124912,Jonathan Jesus,ZAG,Cruzeiro,6.74,4.34,Provável,2.99,6.0
+143600,Kauã Moraes,LAT,Cruzeiro,7.33,5.07,Nulo,4.3,4.779999999999999
+79701,Lucas Silva,MEI,Cruzeiro,3.62,0.3,Nulo,0.83,0.059999999999999984
+93478,Wanderson,ATA,Cruzeiro,4.07,1.29,Nulo,2.39,0.86
+105047,João Marcelo,ZAG,Cruzeiro,3.81,1.92,Nulo,3.09,1.9200000000000004
+89275,William,LAT,Cruzeiro,8.51,3.57,Nulo,3.19,4.619999999999999
+132264,Arroyo,ATA,Cruzeiro,5.26,3.31,Provável,4.0,5.340000000000001
+117404,Otávio,GOL,Cruzeiro,2.07,1.16,Provável,2.44,1.1600000000000001
+114405,Sinisterra,ATA,Cruzeiro,5.61,3.1,Provável,3.77,3.3800000000000003
+131967,Villarreal,ATA,Cruzeiro,9.24,5.95,Nulo,5.26,4.720000000000001
+83528,Léo Pereira,ZAG,Flamengo,9.31,4.17,Dúvida,4.42,3.7199999999999998
+82627,Luiz Araújo,ATA,Flamengo,7.88,2.99,Dúvida,5.21,2.08
+88393,Ayrton Lucas,LAT,Flamengo,9.54,4.52,Dúvida,4.04,5.340000000000001
+84816,Varela,LAT,Flamengo,8.29,4.94,Dúvida,3.03,4.62
+122660,Japa,MEI,Mirassol,5.93,5.2,Nulo,2.48,5.2
+137542,Kaique Kenji,ATA,Cruzeiro,2.43,1.44,Nulo,3.0,2.02
+90285,Bruno Henrique,ATA,Flamengo,5.45,1.6,Dúvida,2.01,2.42
+91473,Erick Pulgar,MEI,Flamengo,5.84,1.34,Provável,1.99,1.2600000000000002
+69783,Danilo,ZAG,Flamengo,5.57,0.48,Nulo,0.71,0.475
+96870,Emerson Royal,LAT,Flamengo,7.61,4.9,Dúvida,3.65,5.42
+97867,Léo Ortiz,ZAG,Flamengo,9.12,4.11,Provável,3.81,3.12
+87863,Arrascaeta,MEI,Flamengo,16.62,6.41,Nulo,4.35,6.24
+98873,Samuel Lino,ATA,Flamengo,13.59,7.08,Provável,7.05,8.32
+80061,Saúl,MEI,Flamengo,6.28,2.43,Nulo,2.93,1.6199999999999999
+115914,Evertton Araújo,MEI,Flamengo,2.75,1.5,Provável,3.07,2.7
+84735,Jorginho,MEI,Flamengo,10.02,4.3,Contundido,4.88,7.0200000000000005
+86757,Everton,ATA,Flamengo,5.52,1.35,Contundido,1.4,0.44000000000000006
+96652,Allan,MEI,Corinthians,2.98,0.83,Nulo,2.27,0.9600000000000002
+99228,De la Cruz,MEI,Flamengo,4.77,1.06,Nulo,1.36,0.8400000000000001
+109096,Plata,ATA,Flamengo,11.0,7.4,Dúvida,4.72,6.8
+122573,Wallace Yan,ATA,Flamengo,2.57,0.13,Nulo,0.52,0.22000000000000003
+140492,João Victor,ZAG,Flamengo,4.34,6.5,Nulo,0.0,6.5
+78445,Renê,LAT,Fluminense,9.88,5.9,Nulo,4.18,4.32
+143295,Joshua,MEI,Flamengo,2.6,-0.3,Nulo,0.0,-0.3
+78117,Everaldo,ATA,Bahia,6.29,4.04,Nulo,5.45,3.0
+99366,Luis Zubeldía,TEC,Fluminense,10.0,5.56,Nulo,1.94,4.202
+62977,Ganso,MEI,Fluminense,3.27,0.85,Nulo,1.59,0.4600000000000001
+79631,Cano,ATA,Fluminense,4.29,0.7,Nulo,0.82,0.7
+82463,Otávio,MEI,Fluminense,2.51,0.32,Nulo,1.27,0.32000000000000006
+78855,Thiago Santos,ZAG,Coritiba,4.35,3.2,Provável,3.3,3.96
+101319,Guga,LAT,Fluminense,6.01,3.27,Nulo,4.58,4.84
+87258,Soteldo,ATA,Fluminense,3.59,1.05,Nulo,1.07,1.24
+73384,Samuel Xavier,LAT,Fluminense,7.21,3.33,Nulo,2.74,1.48
+87228,Guilherme Arana,LAT,Fluminense,7.52,3.5,Nulo,3.14,3.16
+86485,Keno,ATA,Coritiba,4.12,0.73,Nulo,1.58,0.725
+110759,John Kennedy,ATA,Fluminense,10.92,7.3,Nulo,5.18,8.5
+100987,Nonato,MEI,Fluminense,5.96,2.78,Nulo,2.93,2.0599999999999996
+63013,Marcos Rocha,LAT,Gremio,5.95,0.8,Nulo,0.98,0.8
+102928,Canobbio,ATA,Fluminense,12.77,7.94,Nulo,5.76,7.460000000000001
+132071,Serna,ATA,Fluminense,6.92,2.96,Nulo,3.37,4.640000000000001
+103523,Ignácio,ZAG,Fluminense,5.58,2.23,Nulo,3.29,0.9400000000000001
+140484,Riquelme Felipe,ATA,Fluminense,3.53,0.7,Nulo,0.87,0.7000000000000001
+113034,Freytes,ZAG,Fluminense,4.63,2.5,Nulo,2.43,1.7600000000000002
+42135,Willian,MEI,Gremio,3.74,1.06,Nulo,1.77,0.72
+116447,Hércules,MEI,Fluminense,6.85,4.01,Nulo,3.94,0.43999999999999995
+88037,Luís Castro,TEC,Gremio,9.22,4.76,Nulo,1.91,4.337999999999999
+63289,Edenílson,MEI,Botafogo,6.15,3.2,Nulo,5.31,0.36
+105563,Carlos Vinícius,ATA,Gremio,13.93,5.61,Nulo,7.38,4.659999999999999
+104994,Wagner Leonardo,ZAG,Gremio,5.36,2.78,Nulo,3.07,2.7
+143488,Raykkonen,ATA,Internacional,2.63,0.5,Nulo,0.0,0.5
+89273,João Pedro,LAT,Gremio,3.11,0.72,Nulo,0.83,0.72
+87887,Balbuena,ZAG,Gremio,6.98,3.94,Nulo,3.57,4.319999999999999
+116067,Thiago Beltrame,GOL,Gremio,2.08,0.7,Suspenso,0.0,0.7
+89883,Dodi,MEI,Gremio,3.04,0.13,Nulo,1.44,0.37999999999999995
+142004,Amuzu,ATA,Gremio,7.07,4.16,Nulo,3.84,2.7
+72951,Mercado,ZAG,Internacional,5.65,3.91,Dúvida,4.2,3.2399999999999998
+91706,Marlon,LAT,Gremio,10.32,6.62,Contundido,6.25,7.019999999999999
+88136,Ivan,GOL,Remo,7.58,10.2,Provável,0.0,10.2
+91908,Pavón,ATA,Gremio,7.76,3.91,Contundido,3.55,4.4399999999999995
+70944,Bruno Henrique,MEI,Internacional,4.52,1.91,Provável,1.71,3.1399999999999997
+102318,Caio Paulista,LAT,Gremio,5.62,3.43,Nulo,3.04,4.0
+110668,Esquivel,LAT,Athletico-PR,7.51,4.67,Provável,3.49,3.7599999999999993
+109966,Monsalve,MEI,Gremio,3.12,0.64,Nulo,1.15,0.72
+111309,Gustavo Martins,ZAG,Gremio,6.29,3.25,Contundido,3.9,4.1
+111683,Anthoni,GOL,Internacional,4.74,3.3,Provável,4.07,4.44
+92182,Juninho,ZAG,Internacional,5.92,2.67,Provável,2.02,2.6666666666666665
+130889,Riquelme,MEI,Gremio,2.42,-1.45,Nulo,1.63,-1.45
+107989,Carbonero,ATA,Internacional,8.53,5.12,Provável,6.1,8.620000000000001
+101960,Vitinho,ATA,Internacional,7.38,4.5,Provável,2.58,4.46
+115479,Paulo Pezzolano,TEC,Internacional,7.47,4.91,Provável,2.26,5.526
+68872,Marcelo Lomba,GOL,Palmeiras,7.08,8.9,Nulo,0.0,8.9
+72018,Tiago Volpi,GOL,Bragantino,10.45,5.95,Nulo,5.17,7.5200000000000005
+70592,Felipe Anderson,MEI,Palmeiras,6.97,2.74,Provável,3.32,3.88
+71631,Weverton,GOL,Gremio,7.67,4.89,Nulo,4.95,6.08
+106202,Bruno Gomes,MEI,Internacional,6.83,3.65,Provável,2.79,4.659999999999999
+92981,Ronaldo,MEI,Internacional,3.83,2.49,Nulo,4.75,1.02
+89637,Thiago Maia,MEI,Internacional,3.6,0.92,Nulo,0.75,1.24
+84674,Lucas Evangelista,MEI,Palmeiras,4.33,1.3,Nulo,1.26,1.48
+99818,Paulinho,ATA,Palmeiras,11.1,3.44,Suspenso,4.2,3.44
+71684,Gustavo Gómez,ZAG,Palmeiras,10.86,4.82,Dúvida,4.4,2.92
+111466,Victor Gabriel,ZAG,Internacional,4.39,2.54,Nulo,2.39,2.4
+93790,Marlon Freitas,MEI,Palmeiras,6.02,2.71,Provável,4.78,1.6600000000000001
+97653,Murilo,ZAG,Palmeiras,7.18,3.52,Provável,4.22,3.0
+104084,Carlos Miguel,GOL,Palmeiras,8.86,5.06,Provável,2.92,5.2
+104085,Bruno Fuchs,ZAG,Palmeiras,8.5,4.21,Dúvida,3.01,4.720000000000001
+105647,Maurício,MEI,Palmeiras,6.14,2.59,Provável,3.16,1.64
+102130,Piquerez,LAT,Palmeiras,11.43,6.43,Nulo,3.44,6.659999999999999
+143350,Murilo Rhikman,MEI,Cruzeiro,2.95,0.5,Nulo,0.0,0.5
+110506,Abel Ferreira,TEC,Palmeiras,12.22,6.5,Provável,2.01,5.918000000000001
+105175,Khellven,LAT,Palmeiras,5.86,2.72,Nulo,2.83,3.2399999999999998
+113103,Flaco López,ATA,Palmeiras,14.91,6.74,Nulo,4.07,7.780000000000001
+124526,Giay,LAT,Palmeiras,7.52,4.71,Provável,4.01,6.58
+141451,Allan,MEI,Palmeiras,12.0,6.2,Suspenso,5.53,6.68
+123744,Alan Rodríguez,MEI,Internacional,3.27,0.58,Contundido,1.24,0.82
+130612,Luighi,ATA,Palmeiras,3.06,1.32,Dúvida,1.29,1.8399999999999999
+111832,Jefté,LAT,Palmeiras,4.16,2.47,Contundido,4.05,3.5799999999999996
+92811,Bruno Rodrigues,ATA,Cruzeiro,3.0,1.68,Nulo,2.29,3.06
+73318,Daniel Borges,LAT,Mirassol,5.75,4.04,Nulo,2.48,4.04
+82775,Lucas Ramon,LAT,Sao Paulo,10.43,5.89,Provável,4.96,5.36
+108683,Emiliano Martínez,MEI,Palmeiras,4.64,2.03,Nulo,1.82,2.44
+90917,Carlos Eduardo,ATA,Mirassol,5.18,3.39,Nulo,4.64,5.36
+97321,Alesson,ATA,Mirassol,9.29,5.13,Nulo,3.81,5.96
+112863,Ramón Sosa,ATA,Palmeiras,5.72,2.53,Dúvida,3.39,4.24
+97460,João Victor,ZAG,Mirassol,4.48,2.0,Nulo,2.19,1.6
+105903,Aldo Filho,MEI,Mirassol,4.17,2.26,Nulo,2.44,2.76
+133679,Benedetti,ZAG,Palmeiras,5.42,4.85,Contundido,0.21,4.85
+104027,Rafael Guanaes,TEC,Mirassol,7.04,4.16,Nulo,1.78,4.922
+87742,Neto Moura,MEI,Mirassol,3.31,1.56,Nulo,2.21,1.2600000000000002
+101708,Felipe Jonatan,LAT,Coritiba,4.88,2.59,Nulo,2.69,3.22
+81005,André Luis,ATA,Mirassol,3.24,1.13,Nulo,2.33,2.06
+83257,Gabriel,ATA,Santos,9.26,5.04,Nulo,5.71,4.5600000000000005
+102667,Nathan Fogaça,ATA,Mirassol,4.85,2.88,Nulo,4.17,1.24
+97520,Shaylon,MEI,Mirassol,4.23,1.85,Nulo,2.77,1.3800000000000001
+84847,Luan Peres,ZAG,Santos,4.07,1.99,Nulo,2.91,0.9200000000000002
+98384,Negueba,ATA,Mirassol,8.57,5.23,Contundido,3.61,3.62
+104204,Edson Carioca,ATA,Mirassol,4.2,2.08,Nulo,2.67,2.98
+102975,Escobar,LAT,Santos,10.22,6.44,Nulo,3.92,4.94
+95466,Igor Vinícius,LAT,Santos,9.34,6.19,Nulo,4.47,4.999999999999999
+77777,João Schmidt,MEI,Santos,4.61,1.52,Nulo,1.57,1.2600000000000002
+78478,Willian Arão,MEI,Santos,6.08,2.7,Nulo,2.51,2.7399999999999998
+117403,Renato Marques,ATA,Coritiba,2.64,0.65,Nulo,2.07,0.36
+108469,Adonis Frías,ZAG,Santos,5.66,3.59,Nulo,5.36,5.04
+81150,Mayke,LAT,Santos,5.16,2.33,Nulo,1.55,2.3333333333333335
+113690,Diógenes,GOL,Santos,5.0,5.55,Nulo,6.58,5.55
+84042,Tiquinho Soares,ATA,Mirassol,5.28,1.74,Nulo,1.09,1.58
+141754,Gabriel Bontempo,MEI,Santos,4.71,3.54,Nulo,3.86,5.0600000000000005
+82455,Zé Rafael,MEI,Santos,8.07,4.28,Nulo,4.51,4.279999999999999
+63008,Rafael Tolói,ZAG,Sao Paulo,8.24,4.82,Provável,4.67,4.82
+102256,Rollheiser,MEI,Santos,5.6,2.71,Nulo,4.88,6.5600000000000005
+87470,Thaciano,MEI,Santos,6.63,2.95,Nulo,3.6,3.1999999999999997
+91866,Zé Ivaldo,ZAG,Santos,5.75,1.9,Nulo,3.35,1.9
+89840,Calleri,ATA,Sao Paulo,11.7,5.87,Provável,4.43,2.58
+80570,Wendell,LAT,Sao Paulo,8.26,4.23,Nulo,4.92,5.1
+141868,Vini Lira,LAT,Santos,3.79,2.42,Nulo,1.34,2.4250000000000003
+104075,Sabino,ZAG,Sao Paulo,6.95,4.05,Dúvida,3.55,3.2399999999999998
+105300,Ferraresi,ZAG,Botafogo,5.26,2.5,Nulo,3.5,3.2600000000000002
+70164,Lucas Moura,MEI,Sao Paulo,7.5,2.32,Contundido,3.39,0.7200000000000001
+85403,Danielzinho,MEI,Sao Paulo,6.34,2.81,Provável,2.46,2.16
+118775,Lautaro Díaz,ATA,Santos,5.26,2.28,Nulo,3.53,2.4
+142867,Robinho Jr.,ATA,Santos,2.76,0.62,Nulo,1.25,0.625
+106294,Marcos Antônio,MEI,Sao Paulo,6.14,2.6,Nulo,3.04,1.8199999999999998
+77656,Cédric Soares,LAT,Sao Paulo,3.73,0.94,Nulo,0.83,0.74
+81845,Alisson,MEI,Fluminense,3.52,0.96,Nulo,1.99,1.2
+91573,Arboleda,ZAG,Sao Paulo,8.95,3.98,Dúvida,3.07,3.28
+101290,Ferreira,ATA,Sao Paulo,7.41,4.3,Provável,7.06,4.58
+107873,Bobadilla,MEI,Sao Paulo,9.15,4.33,Provável,4.02,5.12
+71123,Thiago Mendes,MEI,Vasco,7.83,4.39,Nulo,3.8,4.08
+141609,Lucca,ATA,Sao Paulo,2.05,0.23,Nulo,0.67,0.22499999999999998
+113359,Pablo Maia,MEI,Sao Paulo,4.14,1.27,Nulo,2.06,1.1800000000000002
+118563,Rodriguinho,MEI,Bragantino,6.55,3.18,Nulo,3.4,3.0
+108588,Tapia,ATA,Sao Paulo,4.06,1.46,Nulo,1.49,0.34
+97095,Carlos Cuesta,ZAG,Vasco,5.11,1.88,Nulo,3.48,2.5800000000000005
+93716,Paulo Henrique,LAT,Vasco,7.25,2.94,Nulo,3.3,1.78
+131617,André Silva,ATA,Sao Paulo,3.66,0.42,Provável,1.09,0.8600000000000001
+122439,Isaac,ATA,Athletico-PR,1.86,0.0,Nulo,0.0,0.0
+141611,Maik,LAT,Sao Paulo,5.52,3.48,Nulo,2.52,3.4799999999999995
+111682,Adson,MEI,Vasco,6.45,3.51,Nulo,2.43,4.34
+105584,Lucas Piton,LAT,Vasco,5.08,2.14,Nulo,3.87,3.8600000000000003
+116706,Andrés Gómez,ATA,Vasco,11.97,7.3,Nulo,4.74,4.4
+86686,Tchê Tchê,MEI,Vasco,4.21,1.78,Nulo,2.78,1.7200000000000002
+117330,Robert Renan,ZAG,Vasco,4.65,2.06,Nulo,2.75,3.6599999999999993
+122485,Barros,MEI,Vasco,8.85,4.96,Nulo,5.01,2.54
+92180,Jair Ventura,TEC,Vitoria,8.87,5.46,Nulo,2.54,5.872
+86410,Victor Luis,LAT,Mirassol,3.65,1.2,Nulo,2.56,1.3800000000000001
+90703,Matheuzinho,MEI,Vitoria,6.68,3.46,Nulo,2.93,4.38
+90309,David,ATA,Vasco,4.48,2.36,Nulo,3.1,1.42
+99213,Puma Rodríguez,LAT,Vasco,8.19,5.35,Nulo,4.6,6.22
+101594,Hugo Moura,MEI,Vasco,3.74,2.48,Nulo,3.19,4.04
+115141,Lucas Freitas,ZAG,Vasco,4.77,2.5,Nulo,3.54,2.5
+99440,Baralhas,MEI,Vitoria,9.16,5.37,Nulo,4.08,3.2600000000000002
+104118,Lucas Arcanjo,GOL,Vitoria,9.99,5.99,Nulo,4.15,4.7
+101597,Ramon,LAT,Vitoria,8.73,5.41,Nulo,3.41,5.720000000000001
+142279,Nuno Moreira,MEI,Vasco,5.37,2.3,Nulo,2.66,1.6800000000000002
+92696,Renato Kayzer,ATA,Vitoria,7.01,3.52,Nulo,4.39,3.0799999999999996
+42222,Osvaldo,ATA,Vitoria,4.07,0.4,Nulo,0.57,0.4
+93411,Cantalapiedra,MEI,Vitoria,4.26,1.09,Nulo,1.67,0.52
+90588,Caíque,MEI,Vitoria,4.29,2.1,Suspenso,1.41,1.72
+80129,Jadson,MEI,Athletico-PR,4.95,2.92,Provável,4.64,5.04
+90031,Mendoza,ATA,Athletico-PR,8.61,5.05,Provável,3.99,5.0
+130048,Noriega,ZAG,Gremio,7.6,4.31,Nulo,4.51,2.8600000000000003
+96793,Camutanga,ZAG,Vitoria,6.71,3.95,Contundido,4.58,3.4799999999999995
+92273,Odair Hellmann,TEC,Athletico-PR,9.28,5.46,Provável,2.42,5.95
+107985,Terán,ZAG,Athletico-PR,5.88,3.5,Nulo,4.64,4.279999999999999
+113113,Benavídez,LAT,Athletico-PR,7.23,4.42,Provável,3.62,4.459999999999999
+112017,Felipinho,MEI,Athletico-PR,5.57,3.17,Provável,4.04,4.14
+104330,Dudu,MEI,Vitoria,5.01,3.95,Contundido,6.01,3.9499999999999997
+111879,Mateus Silva,LAT,Vitoria,4.95,4.85,Nulo,6.86,4.85
+116461,Jamerson,LAT,Vitoria,6.14,4.17,Nulo,3.02,3.7
+130620,Edenílson,MEI,Vitoria,3.28,1.74,Nulo,2.13,2.0200000000000005
+120433,Léo Derik,LAT,Athletico-PR,4.57,3.11,Nulo,3.6,2.98
+72391,Fernando Diniz,TEC,Corinthians,9.26,5.39,Provável,1.93,5.958
+85626,Léo,ZAG,Athletico-PR,6.77,4.9,Nulo,0.28,4.9
+125926,Zapelli,MEI,Athletico-PR,4.23,1.37,Contundido,2.15,0.12
+123869,Aguirre,ZAG,Athletico-PR,6.57,3.41,Provável,3.59,4.1
+143193,Viveros,ATA,Athletico-PR,13.09,8.41,Provável,6.38,12.02
+105518,Renan Peixoto,ATA,Athletico-PR,2.73,0.9,Nulo,1.32,1.06
+123101,Leozinho,ATA,Athletico-PR,2.16,0.7,Nulo,0.83,0.7
+71227,Maicon,ZAG,Coritiba,4.14,2.08,Nulo,2.52,1.12
+81952,Willian Oliveira,MEI,Coritiba,4.62,1.84,Nulo,2.33,0.82
+136156,Larson,MEI,Palmeiras,2.1,0.48,Nulo,0.88,0.475
+128431,João Cruz,MEI,Athletico-PR,6.45,3.47,Dúvida,3.43,4.54
+127970,Felipe Chiqueti,MEI,Athletico-PR,2.07,1.35,Nulo,0.95,1.1
+125746,Dudu,MEI,Athletico-PR,2.12,1.84,Nulo,4.18,0.8000000000000002
+84626,Josué,MEI,Coritiba,5.42,3.57,Provável,4.42,5.44
+82628,Tinga,LAT,Coritiba,6.53,3.67,Nulo,3.15,5.279999999999999
+97878,Jacy,ZAG,Coritiba,5.44,4.02,Provável,4.15,4.0200000000000005
+131832,Portilla,MEI,Athletico-PR,2.62,1.22,Provável,2.3,0.7799999999999999
+110708,Pedro Rangel,GOL,Coritiba,7.01,4.64,Dúvida,4.8,2.7399999999999998
+63354,Rodrigo Moledo,ZAG,Coritiba,7.4,7.75,Nulo,0.35,7.75
+123648,Lucas Ronier,ATA,Coritiba,10.73,7.04,Provável,4.88,4.220000000000001
+125803,Pedro Morisco,GOL,Coritiba,8.04,5.0,Dúvida,4.52,5.0
+126977,Fernando Seabra,TEC,Coritiba,7.63,5.22,Provável,2.49,4.944
+90302,Pedro Rocha,ATA,Coritiba,6.33,3.63,Suspenso,3.88,2.84
+84339,Bruno Melo,LAT,Coritiba,5.62,3.83,Provável,3.4,2.5
+84428,Fernando Sobral,MEI,Coritiba,4.34,1.0,Nulo,1.73,1.0
+112576,Vini Paulista,MEI,Coritiba,3.8,2.4,Nulo,2.28,1.34
+101405,Wallisson,MEI,Coritiba,4.36,2.33,Nulo,2.25,1.8799999999999997
+104811,Sebastián Gómez,MEI,Coritiba,4.29,2.53,Provável,1.95,3.1399999999999997
+117930,Lavega,ATA,Coritiba,5.22,3.63,Provável,4.37,5.279999999999999
+97795,Marcelinho,LAT,Remo,7.71,5.44,Provável,5.02,7.279999999999999
+141337,Lucas Taverna,LAT,Coritiba,2.58,2.1,Nulo,2.67,2.1
+124358,João Almeida,LAT,Coritiba,0.92,0.0,Nulo,0.0,0.0
+109127,Tiago Cóser,ZAG,Coritiba,3.28,2.37,Provável,3.16,1.0400000000000003
+82730,Marcelo Rangel,GOL,Remo,6.86,3.97,Contundido,3.35,6.4
+98224,Jáderson,MEI,Remo,2.64,0.97,Nulo,1.33,1.3
+107700,Eduardo Melo,ATA,Remo,2.13,1.4,Nulo,0.0,1.4
+102911,Zé Ricardo,MEI,Remo,4.72,2.5,Nulo,3.15,1.24
+97735,Giovanni Pavani,MEI,Remo,2.82,0.75,Nulo,1.06,0.75
+71043,Léo Vieira,GOL,Bahia,6.82,5.02,Contundido,3.93,3.3800000000000003
+104257,João Lucas,LAT,Remo,4.59,2.82,Nulo,2.77,2.94
+102906,Anderson,GOL,Chapecoense,5.87,3.45,Provável,4.72,1.8400000000000003
+68938,Giovanni Augusto,MEI,Chapecoense,3.44,1.2,Nulo,0.99,1.3
+68822,Rafael Santos,GOL,Chapecoense,4.94,3.75,Nulo,3.29,3.7499999999999996
+104470,Everton,LAT,Chapecoense,3.6,1.87,Provável,2.1,1.58
+95332,Marcinho,ATA,Chapecoense,4.71,2.9,Provável,2.93,2.9799999999999995
+88293,Neto Pessoa,ATA,Chapecoense,4.7,3.73,Nulo,4.92,5.14
+97432,Victor Caetano,ZAG,Chapecoense,3.19,1.6,Contundido,2.0,0.48
+83048,Rafael Thyere,ZAG,Chapecoense,3.2,-0.15,Contundido,0.21,-0.15
+97969,Marcos Vinícius,LAT,Chapecoense,2.78,1.48,Nulo,2.33,0.9400000000000001
+95620,Bruno Leonardo,ZAG,Chapecoense,2.74,1.33,Provável,2.46,1.08
+104519,Camilo,MEI,Chapecoense,5.62,3.13,Provável,1.89,3.6400000000000006
+101393,Eduardo Doma,ZAG,Chapecoense,3.94,2.33,Provável,3.29,-0.15999999999999998
+97900,Vitão,ZAG,Flamengo,7.78,2.7,Dúvida,3.38,1.94
+107453,João Paulo,ZAG,Chapecoense,4.8,3.3,Provável,5.29,2.56
+107516,Ênio,ATA,Chapecoense,5.61,3.62,Provável,2.69,3.2600000000000002
+109336,Rafael Carvalheira,MEI,Chapecoense,5.7,2.72,Contundido,3.82,3.3200000000000003
+130843,Arthur Dias,ZAG,Athletico-PR,6.04,3.75,Provável,2.98,3.46
+123625,Ítalo,ATA,Chapecoense,2.71,1.71,Nulo,1.59,1.28
+116066,Rubens,ATA,Chapecoense,2.66,1.63,Nulo,2.88,0.68
+89837,Lucho Acosta,MEI,Fluminense,11.02,5.76,Nulo,4.55,2.4200000000000004
+51772,Everton Ribeiro,MEI,Bahia,9.27,5.24,Provável,4.08,6.300000000000001
+140438,David,MEI,Chapecoense,1.46,1.08,Nulo,1.44,1.0750000000000002
+130414,Robert,MEI,Chapecoense,3.51,3.0,Contundido,0.0,3.0
+99552,Rossi,GOL,Flamengo,9.17,5.06,Provável,4.28,4.7
+68708,Eduardo,MEI,Mirassol,5.57,2.78,Nulo,2.94,2.5
+89274,Andreas Pereira,MEI,Palmeiras,12.78,5.28,Provável,5.34,3.2600000000000002
+124674,Felipe Negrucci,MEI,Sao Paulo,1.61,-0.6,Nulo,0.0,-0.6
+126471,Barreal,MEI,Santos,11.27,4.55,Nulo,4.64,6.159999999999999
+100652,Yuri Alberto,ATA,Corinthians,11.71,3.36,Provável,4.36,4.92
+78850,Reinaldo,LAT,Mirassol,7.76,2.2,Nulo,2.96,4.859999999999999
+115025,Miguelito,MEI,Santos,7.41,4.88,Nulo,6.49,6.880000000000001
+110426,Bernabei,LAT,Internacional,9.66,6.64,Provável,6.0,8.72
+89368,Braithwaite,ATA,Gremio,5.91,0.35,Nulo,0.64,0.16
+39148,Hulk,ATA,Fluminense,11.8,4.55,Nulo,4.03,2.86
+133673,Mateus Xavier,ATA,Santos,2.33,1.2,Nulo,0.0,1.2
+141776,Gustavo Henrique,MEI,Santos,2.48,1.5,Nulo,1.67,1.5
+80287,Luciano,ATA,Sao Paulo,14.14,5.44,Nulo,4.86,7.44
+103445,Kaio Jorge,ATA,Cruzeiro,12.24,4.6,Provável,4.4,5.08
+94583,Pedro,ATA,Flamengo,18.5,8.82,Provável,7.3,8.7
+146991,Rhuan Gabriel,MEI,Cruzeiro,1.39,1.2,Nulo,0.0,1.2
+106104,Enamorado,ATA,Gremio,6.81,3.5,Nulo,2.27,2.06
+128433,Johan Rojas,MEI,Vasco,4.09,1.63,Nulo,1.81,1.3800000000000001
+122781,Caballero,ATA,Santos,3.83,1.6,Nulo,0.0,1.6
+86292,Bolasie,ATA,Chapecoense,4.53,2.08,Provável,3.06,4.32
+131516,JP Chermont,LAT,Coritiba,4.89,2.95,Provável,4.03,0.62
+114802,Vitor Roque,ATA,Palmeiras,17.01,7.6,Nulo,7.44,8.24
+118655,Saldivia,ZAG,Vasco,4.79,2.01,Nulo,1.39,1.8599999999999999
+94154,Maycon,MEI,Atletico-MG,6.1,3.24,Provável,3.48,4.359999999999999
+101908,Willian Machado,ZAG,Mirassol,5.36,3.73,Suspenso,3.53,5.3999999999999995
+115986,Denilson,MEI,Mirassol,5.21,3.04,Nulo,4.37,5.0200000000000005
+108713,Galeano,ATA,Mirassol,4.42,1.19,Nulo,1.51,1.3800000000000001
+145400,Cauê,LAT,Bragantino,4.23,3.47,Nulo,3.1,3.466666666666667
+126182,Paulinho,MEI,Internacional,4.27,2.33,Nulo,2.88,1.7599999999999998
+126120,Marcelinho,MEI,Bragantino,2.95,2.22,Nulo,3.2,2.225
+94514,Lucas Oliveira,ZAG,Mirassol,5.2,3.41,Nulo,4.11,4.4
+102909,Luan,MEI,Sao Paulo,2.69,0.96,Nulo,0.94,1.0399999999999998
+132412,Román Gómez,LAT,Bahia,7.75,4.77,Nulo,6.74,4.766666666666667
+90061,Bruno Pacheco,LAT,Chapecoense,6.42,4.49,Provável,5.2,6.3
+114040,Minda,ATA,Atletico-MG,7.36,4.04,Provável,4.52,5.720000000000001
+147090,Kauã Pascini,LAT,Atletico-MG,3.55,2.8,Nulo,2.45,2.8

@@ -1,0 +1,86 @@
+{
+  "generated_note": "Dixon-Coles Poisson model fit on football-data.co.uk BRA.csv (2012-06/2026, time-decayed, half-life 450 days). Validated against closing market odds: mean abs error ~6.5% (home), correlation 0.82.",
+  "home_advantage_log": 0.3584981281303073,
+  "teams": {
+    "Flamengo": {
+      "attack": 0.499,
+      "defense": 0.3866
+    },
+    "Palmeiras": {
+      "attack": 0.4159,
+      "defense": 0.4982
+    },
+    "Botafogo": {
+      "attack": 0.3552,
+      "defense": 0.1773
+    },
+    "Mirassol": {
+      "attack": 0.2521,
+      "defense": 0.182
+    },
+    "Bahia": {
+      "attack": 0.2104,
+      "defense": 0.0722
+    },
+    "Fluminense": {
+      "attack": 0.1733,
+      "defense": 0.2464
+    },
+    "Vasco": {
+      "attack": 0.1599,
+      "defense": -0.0807
+    },
+    "Gremio": {
+      "attack": 0.1514,
+      "defense": 0.0714
+    },
+    "Bragantino": {
+      "attack": 0.1496,
+      "defense": 0.094
+    },
+    "Internacional": {
+      "attack": 0.144,
+      "defense": 0.138
+    },
+    "Atletico-MG": {
+      "attack": 0.1395,
+      "defense": 0.1755
+    },
+    "Santos": {
+      "attack": 0.1348,
+      "defense": 0.001
+    },
+    "Cruzeiro": {
+      "attack": 0.1332,
+      "defense": 0.279
+    },
+    "Sao Paulo": {
+      "attack": 0.1178,
+      "defense": 0.2046
+    },
+    "Coritiba": {
+      "attack": 0.1073,
+      "defense": -0.0651
+    },
+    "Atletico-PR": {
+      "attack": 0.0949,
+      "defense": 0.2308
+    },
+    "Remo": {
+      "attack": 0.0886,
+      "defense": -0.0932
+    },
+    "Corinthians": {
+      "attack": 0.0838,
+      "defense": 0.2015
+    },
+    "Vitoria": {
+      "attack": 0.0148,
+      "defense": 0.0247
+    },
+    "Chapecoense": {
+      "attack": -0.1551,
+      "defense": -0.2756
+    }
+  }
+}

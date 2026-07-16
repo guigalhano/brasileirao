@@ -1453,7 +1453,19 @@
     TEAM_FIXTURE[f.home] = {lamFor: f.xg[0], lamAgainst: f.xg[1], isHome: true, opponent: f.away};
     TEAM_FIXTURE[f.away] = {lamFor: f.xg[1], lamAgainst: f.xg[0], isHome: false, opponent: f.home};
   });
-  var AVG_LAM = 1.33;
+  // AVG_LAM NAO pode ser um numero fixo: toda vez que o modelo e recalibrado
+  // (ex: recalibrar_com_whoscored.py), a media real de gols esperados muda,
+  // e um valor antigo aqui descalibra attackFactor/defenseFactor um contra
+  // o outro -- foi isso que causava zagueiro de um time E atacante do
+  // adversario aparecendo favorecidos ao mesmo tempo (defenseFactor usando
+  // uma media "de referencia" bem mais alta do que os lambdas reais do
+  // modelo atual, entao quase todo mundo parecia ter defesa ótima).
+  // Calcula a media real a partir dos proprios confrontos carregados em DATA.
+  var lamValues = [];
+  Object.keys(TEAM_FIXTURE).forEach(function(t){ lamValues.push(TEAM_FIXTURE[t].lamFor); });
+  var AVG_LAM = lamValues.length
+    ? lamValues.reduce(function(a,b){ return a+b; }, 0) / lamValues.length
+    : 1.33; // fallback se DATA estiver vazio por algum motivo
   var AVG_CLEANSHEET = poissonPmf(0, AVG_LAM);
 
   function matchupProjection(p){

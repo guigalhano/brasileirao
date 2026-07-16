@@ -555,7 +555,7 @@
         <option value="media">Media da temporada (18 rodadas)</option>
         <option value="ult5">Forma recente (media das ultimas 5 rodadas)</option>
         <option value="consistencia">Consistencia (media alta, menor variacao)</option>
-        <option value="combinado">Combinado (65% previsao do modelo + 35% media dos outros 3 criterios)</option>
+        <option value="combinado">Combinado (30% previsao do modelo + 70% media dos outros 3 criterios)</option>
       </select>
 
       <button class="bp-swap" id="ct-build-btn" style="width:100%;margin-top:10px;padding:9px;text-align:center;">MONTAR TIME</button>
@@ -1480,16 +1480,19 @@
     if(criteria === 'ult5') return p.ult5;
     if(criteria === 'consistencia') return p.media - (p.desvio || 0) * 0.5;
     if(criteria === 'combinado'){
-      // 65% pro resultado previsto pelo modelo (matchup do proximo jogo),
-      // 35% dividido igualmente entre os outros 3 criterios existentes.
-      // Todos os 4 componentes ja estao na mesma escala (pontos medios do
-      // Cartola), entao a media ponderada funciona direto, sem normalizar.
+      // 30% pro resultado previsto pelo modelo (matchup do proximo jogo),
+      // 70% dividido igualmente entre os outros 3 criterios existentes.
+      // Peso ajustado de 65% para 30% apos backtest nas 18 rodadas de 2026:
+      // com 65% a correlacao com a pontuacao real caia bastante (Spearman
+      // 0.24 vs ~0.26 com pesos baixos); 30% fica mais proximo da faixa
+      // que o backtest indicou como melhor (5%-20%), mantendo alguma
+      // influencia do modelo sem deixar ele dominar o criterio.
       var previsaoModelo = matchupProjection(p);
       var media = p.media;
       var formaRecente = p.ult5;
       var consistencia = p.media - (p.desvio || 0) * 0.5;
       var outrosTres = (media + formaRecente + consistencia) / 3;
-      return 0.65 * previsaoModelo + 0.35 * outrosTres;
+      return 0.30 * previsaoModelo + 0.70 * outrosTres;
     }
     return p.media;
   }

@@ -1,0 +1,18 @@
+atleta_id,name_cartola,team,xg90,match_tipo
+105563,Carlos Vinícius,Gremio,0.71,exato
+107231,Danilo,Botafogo,0.68,contains
+89840,Calleri,Sao Paulo,0.51,contains
+143193,Viveros,Atletico-PR,0.52,contains
+69140,Allan,Botafogo,0.46,contains
+102928,Canobbio,Fluminense,0.47,contains
+110759,John Kennedy,Fluminense,0.52,exato
+114802,Vitor Roque,Palmeiras,0.98,exato
+116706,Andrés Gómez,Vasco,0.38,exato
+90302,Pedro Rocha,Coritiba,0.39,contains
+90031,Mendoza,Atletico-PR,0.42,contains
+93988,Breno Lopes,Coritiba,0.43,exato
+63007,Neymar,Santos,0.83,exato
+122485,Barros,Vasco,0.52,contains
+51413,Walter,Mirassol,0.37,contains
+117404,Otávio,Cruzeiro,0.75,contains
+107989,Carbonero,Internacional,0.39,contains

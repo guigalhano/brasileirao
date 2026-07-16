@@ -556,6 +556,7 @@
         <option value="ult5">Forma recente (media das ultimas 5 rodadas)</option>
         <option value="consistencia">Consistencia (media alta, menor variacao)</option>
         <option value="combinado">Combinado (65% previsao do modelo + 35% media dos outros 3 criterios)</option>
+        <option value="ameaca_gol">Ameaca real de gol (xG individual real, quando disponivel)</option>
       </select>
 
       <button class="bp-swap" id="ct-build-btn" style="width:100%;margin-top:10px;padding:9px;text-align:center;">MONTAR TIME</button>
@@ -849,7 +850,7 @@
 
   // ================= CARTOLA FC INTERACTIVE TEAM BUILDER =================
   var PLAYERS = [
-    {name:"Breno Lopes", pos:"ATA", team:"Coritiba", price:9.47, media:6.18, status:"Provável", ult5:9.26, desvio:6.46},
+    {name:"Breno Lopes", pos:"ATA", team:"Coritiba", price:9.47, media:6.18, status:"Provável", ult5:9.26, desvio:6.46, xg90:0.43},
     {name:"Patrick", pos:"MEI", team:"Remo", price:5.99, media:3.54, status:"Provável", ult5:6.459999999999999, desvio:3.47},
     {name:"Gerson", pos:"MEI", team:"Cruzeiro", price:8.98, media:4.21, status:"Provável", ult5:4.46, desvio:2.96},
     {name:"Igor Formiga", pos:"LAT", team:"Mirassol", price:7.89, media:4.52, status:"Nulo", ult5:3.3, desvio:3.5},
@@ -885,7 +886,7 @@
     {name:"Cissé", pos:"MEI", team:"Atletico-MG", price:2.14, media:1.91, status:"Nulo", ult5:2.4, desvio:3.14},
     {name:"Riquelme Fillipi", pos:"ATA", team:"Palmeiras", price:2.04, media:2.2, status:"Nulo", ult5:2.2, desvio:3.54},
     {name:"Fabri", pos:"ATA", team:"Vitoria", price:5.27, media:2.66, status:"Nulo", ult5:1.1, desvio:2.91},
-    {name:"Walter", pos:"GOL", team:"Mirassol", price:5.18, media:2.89, status:"Nulo", ult5:2.46, desvio:2.4},
+    {name:"Walter", pos:"GOL", team:"Mirassol", price:5.18, media:2.89, status:"Nulo", ult5:2.46, desvio:2.4, xg90:0.37},
     {name:"Riquelme", pos:"MEI", team:"Atletico-PR", price:0.91, media:0.58, status:"Nulo", ult5:0.575, desvio:1.56},
     {name:"Fabinho", pos:"ATA", team:"Coritiba", price:1.43, media:-0.03, status:"Contundido", ult5:0.04, desvio:0.85},
     {name:"Zé Breno", pos:"MEI", team:"Vitoria", price:2.04, media:0.6, status:"Nulo", ult5:0.6, desvio:0.85},
@@ -1005,7 +1006,7 @@
     {name:"Ronaldo", pos:"GOL", team:"Bahia", price:7.66, media:4.93, status:"Provável", ult5:4.62, desvio:3.18},
     {name:"Willian José", pos:"ATA", team:"Bahia", price:8.04, media:2.84, status:"Provável", ult5:2.54, desvio:3.39},
     {name:"Rochet", pos:"GOL", team:"Internacional", price:6.28, media:3.33, status:"Nulo", ult5:3.9, desvio:2.6},
-    {name:"Neymar", pos:"MEI", team:"Santos", price:18.96, media:8.42, status:"Nulo", ult5:7.0, desvio:5.0},
+    {name:"Neymar", pos:"MEI", team:"Santos", price:18.96, media:8.42, status:"Nulo", ult5:7.0, desvio:5.0, xg90:0.83},
     {name:"Erick Pulga", pos:"ATA", team:"Bahia", price:7.55, media:4.06, status:"Provável", ult5:5.08, desvio:2.2},
     {name:"David Duarte", pos:"ZAG", team:"Bahia", price:7.01, media:3.64, status:"Provável", ult5:3.66, desvio:4.13},
     {name:"Iago", pos:"LAT", team:"Bahia", price:5.57, media:3.03, status:"Nulo", ult5:3.0333333333333337, desvio:3.15},
@@ -1032,7 +1033,7 @@
     {name:"Cauly", pos:"MEI", team:"Sao Paulo", price:6.58, media:2.91, status:"Nulo", ult5:2.72, desvio:2.74},
     {name:"Bastos", pos:"ZAG", team:"Botafogo", price:3.75, media:0.78, status:"Contundido", ult5:0.78, desvio:1.19},
     {name:"Alex Telles", pos:"LAT", team:"Botafogo", price:9.08, media:3.72, status:"Nulo", ult5:1.6, desvio:3.9},
-    {name:"Danilo", pos:"MEI", team:"Botafogo", price:15.14, media:9.08, status:"Nulo", ult5:9.66, desvio:6.37},
+    {name:"Danilo", pos:"MEI", team:"Botafogo", price:15.14, media:9.08, status:"Nulo", ult5:9.66, desvio:6.37, xg90:0.68},
     {name:"Joaquín Correa", pos:"ATA", team:"Botafogo", price:5.11, media:1.17, status:"Suspenso", ult5:1.4999999999999996, desvio:2.5},
     {name:"Rogério Ceni", pos:"TEC", team:"Bahia", price:10.75, media:5.52, status:"Provável", ult5:5.038000000000001, desvio:1.94},
     {name:"Raul", pos:"GOL", team:"Botafogo", price:5.49, media:3.71, status:"Nulo", ult5:4.12, desvio:2.41},
@@ -1046,7 +1047,7 @@
     {name:"Artur", pos:"ATA", team:"Sao Paulo", price:9.24, media:5.62, status:"Provável", ult5:6.7, desvio:3.69},
     {name:"Montoro", pos:"MEI", team:"Botafogo", price:7.1, media:2.73, status:"Nulo", ult5:0.7, desvio:2.42},
     {name:"Gabriel", pos:"MEI", team:"Bragantino", price:5.17, media:3.17, status:"Nulo", ult5:3.86, desvio:3.05},
-    {name:"Allan", pos:"MEI", team:"Botafogo", price:4.48, media:2.03, status:"Contundido", ult5:2.14, desvio:1.81},
+    {name:"Allan", pos:"MEI", team:"Botafogo", price:4.48, media:2.03, status:"Contundido", ult5:2.14, desvio:1.81, xg90:0.46},
     {name:"Cleiton", pos:"GOL", team:"Bragantino", price:6.19, media:2.56, status:"Nulo", ult5:0.7999999999999998, desvio:3.51},
     {name:"Newton", pos:"MEI", team:"Sao Paulo", price:4.18, media:1.94, status:"Nulo", ult5:1.44, desvio:2.29},
     {name:"Chris Ramos", pos:"ATA", team:"Botafogo", price:5.37, media:0.37, status:"Nulo", ult5:0.3666666666666667, desvio:1.1},
@@ -1125,7 +1126,7 @@
     {name:"João Marcelo", pos:"ZAG", team:"Cruzeiro", price:3.81, media:1.92, status:"Nulo", ult5:1.9200000000000004, desvio:3.09},
     {name:"William", pos:"LAT", team:"Cruzeiro", price:8.51, media:3.57, status:"Nulo", ult5:4.619999999999999, desvio:3.19},
     {name:"Arroyo", pos:"ATA", team:"Cruzeiro", price:5.26, media:3.31, status:"Provável", ult5:5.340000000000001, desvio:4.0},
-    {name:"Otávio", pos:"GOL", team:"Cruzeiro", price:2.07, media:1.16, status:"Provável", ult5:1.16, desvio:2.44},
+    {name:"Otávio", pos:"GOL", team:"Cruzeiro", price:2.07, media:1.16, status:"Provável", ult5:1.16, desvio:2.44, xg90:0.75},
     {name:"Sinisterra", pos:"ATA", team:"Cruzeiro", price:5.61, media:3.1, status:"Provável", ult5:3.3800000000000003, desvio:3.77},
     {name:"Villarreal", pos:"ATA", team:"Cruzeiro", price:9.24, media:5.95, status:"Nulo", ult5:4.720000000000001, desvio:5.26},
     {name:"Léo Pereira", pos:"ZAG", team:"Flamengo", price:9.31, media:4.17, status:"Dúvida", ult5:3.72, desvio:4.42},
@@ -1163,10 +1164,10 @@
     {name:"Samuel Xavier", pos:"LAT", team:"Fluminense", price:7.21, media:3.33, status:"Nulo", ult5:1.48, desvio:2.74},
     {name:"Guilherme Arana", pos:"LAT", team:"Fluminense", price:7.52, media:3.5, status:"Nulo", ult5:3.16, desvio:3.14},
     {name:"Keno", pos:"ATA", team:"Coritiba", price:4.12, media:0.73, status:"Nulo", ult5:0.725, desvio:1.58},
-    {name:"John Kennedy", pos:"ATA", team:"Fluminense", price:10.92, media:7.3, status:"Nulo", ult5:8.5, desvio:5.18},
+    {name:"John Kennedy", pos:"ATA", team:"Fluminense", price:10.92, media:7.3, status:"Nulo", ult5:8.5, desvio:5.18, xg90:0.52},
     {name:"Nonato", pos:"MEI", team:"Fluminense", price:5.96, media:2.78, status:"Nulo", ult5:2.06, desvio:2.93},
     {name:"Marcos Rocha", pos:"LAT", team:"Gremio", price:5.95, media:0.8, status:"Nulo", ult5:0.8, desvio:0.98},
-    {name:"Canobbio", pos:"ATA", team:"Fluminense", price:12.77, media:7.94, status:"Nulo", ult5:7.460000000000001, desvio:5.76},
+    {name:"Canobbio", pos:"ATA", team:"Fluminense", price:12.77, media:7.94, status:"Nulo", ult5:7.460000000000001, desvio:5.76, xg90:0.47},
     {name:"Serna", pos:"ATA", team:"Fluminense", price:6.92, media:2.96, status:"Nulo", ult5:4.640000000000001, desvio:3.37},
     {name:"Ignácio", pos:"ZAG", team:"Fluminense", price:5.58, media:2.23, status:"Nulo", ult5:0.94, desvio:3.29},
     {name:"Riquelme Felipe", pos:"ATA", team:"Fluminense", price:3.53, media:0.7, status:"Nulo", ult5:0.7000000000000001, desvio:0.87},
@@ -1175,7 +1176,7 @@
     {name:"Hércules", pos:"MEI", team:"Fluminense", price:6.85, media:4.01, status:"Nulo", ult5:0.4399999999999999, desvio:3.94},
     {name:"Luís Castro", pos:"TEC", team:"Gremio", price:9.22, media:4.76, status:"Nulo", ult5:4.337999999999999, desvio:1.91},
     {name:"Edenílson", pos:"MEI", team:"Botafogo", price:6.15, media:3.2, status:"Nulo", ult5:0.36, desvio:5.31},
-    {name:"Carlos Vinícius", pos:"ATA", team:"Gremio", price:13.93, media:5.61, status:"Nulo", ult5:4.659999999999999, desvio:7.38},
+    {name:"Carlos Vinícius", pos:"ATA", team:"Gremio", price:13.93, media:5.61, status:"Nulo", ult5:4.659999999999999, desvio:7.38, xg90:0.71},
     {name:"Wagner Leonardo", pos:"ZAG", team:"Gremio", price:5.36, media:2.78, status:"Nulo", ult5:2.7, desvio:3.07},
     {name:"Raykkonen", pos:"ATA", team:"Internacional", price:2.63, media:0.5, status:"Nulo", ult5:0.5, desvio:0.0},
     {name:"João Pedro", pos:"LAT", team:"Gremio", price:3.11, media:0.72, status:"Nulo", ult5:0.72, desvio:0.83},
@@ -1195,7 +1196,7 @@
     {name:"Anthoni", pos:"GOL", team:"Internacional", price:4.74, media:3.3, status:"Provável", ult5:4.44, desvio:4.07},
     {name:"Juninho", pos:"ZAG", team:"Internacional", price:5.92, media:2.67, status:"Provável", ult5:2.6666666666666665, desvio:2.02},
     {name:"Riquelme", pos:"MEI", team:"Gremio", price:2.42, media:-1.45, status:"Nulo", ult5:-1.45, desvio:1.63},
-    {name:"Carbonero", pos:"ATA", team:"Internacional", price:8.53, media:5.12, status:"Provável", ult5:8.620000000000001, desvio:6.1},
+    {name:"Carbonero", pos:"ATA", team:"Internacional", price:8.53, media:5.12, status:"Provável", ult5:8.620000000000001, desvio:6.1, xg90:0.39},
     {name:"Vitinho", pos:"ATA", team:"Internacional", price:7.38, media:4.5, status:"Provável", ult5:4.46, desvio:2.58},
     {name:"Paulo Pezzolano", pos:"TEC", team:"Internacional", price:7.47, media:4.91, status:"Provável", ult5:5.526, desvio:2.26},
     {name:"Marcelo Lomba", pos:"GOL", team:"Palmeiras", price:7.08, media:8.9, status:"Nulo", ult5:8.9, desvio:0.0},
@@ -1259,7 +1260,7 @@
     {name:"Rollheiser", pos:"MEI", team:"Santos", price:5.6, media:2.71, status:"Nulo", ult5:6.5600000000000005, desvio:4.88},
     {name:"Thaciano", pos:"MEI", team:"Santos", price:6.63, media:2.95, status:"Nulo", ult5:3.2, desvio:3.6},
     {name:"Zé Ivaldo", pos:"ZAG", team:"Santos", price:5.75, media:1.9, status:"Nulo", ult5:1.9, desvio:3.35},
-    {name:"Calleri", pos:"ATA", team:"Sao Paulo", price:11.7, media:5.87, status:"Provável", ult5:2.58, desvio:4.43},
+    {name:"Calleri", pos:"ATA", team:"Sao Paulo", price:11.7, media:5.87, status:"Provável", ult5:2.58, desvio:4.43, xg90:0.51},
     {name:"Wendell", pos:"LAT", team:"Sao Paulo", price:8.26, media:4.23, status:"Nulo", ult5:5.1, desvio:4.92},
     {name:"Vini Lira", pos:"LAT", team:"Santos", price:3.79, media:2.42, status:"Nulo", ult5:2.4250000000000003, desvio:1.34},
     {name:"Sabino", pos:"ZAG", team:"Sao Paulo", price:6.95, media:4.05, status:"Dúvida", ult5:3.24, desvio:3.55},
@@ -1286,10 +1287,10 @@
     {name:"Maik", pos:"LAT", team:"Sao Paulo", price:5.52, media:3.48, status:"Nulo", ult5:3.4799999999999995, desvio:2.52},
     {name:"Adson", pos:"MEI", team:"Vasco", price:6.45, media:3.51, status:"Nulo", ult5:4.34, desvio:2.43},
     {name:"Lucas Piton", pos:"LAT", team:"Vasco", price:5.08, media:2.14, status:"Nulo", ult5:3.86, desvio:3.87},
-    {name:"Andrés Gómez", pos:"ATA", team:"Vasco", price:11.97, media:7.3, status:"Nulo", ult5:4.4, desvio:4.74},
+    {name:"Andrés Gómez", pos:"ATA", team:"Vasco", price:11.97, media:7.3, status:"Nulo", ult5:4.4, desvio:4.74, xg90:0.38},
     {name:"Tchê Tchê", pos:"MEI", team:"Vasco", price:4.21, media:1.78, status:"Nulo", ult5:1.7200000000000002, desvio:2.78},
     {name:"Robert Renan", pos:"ZAG", team:"Vasco", price:4.65, media:2.06, status:"Nulo", ult5:3.6599999999999993, desvio:2.75},
-    {name:"Barros", pos:"MEI", team:"Vasco", price:8.85, media:4.96, status:"Nulo", ult5:2.54, desvio:5.01},
+    {name:"Barros", pos:"MEI", team:"Vasco", price:8.85, media:4.96, status:"Nulo", ult5:2.54, desvio:5.01, xg90:0.52},
     {name:"Jair Ventura", pos:"TEC", team:"Vitoria", price:8.87, media:5.46, status:"Nulo", ult5:5.872, desvio:2.54},
     {name:"Victor Luis", pos:"LAT", team:"Mirassol", price:3.65, media:1.2, status:"Nulo", ult5:1.38, desvio:2.56},
     {name:"Matheuzinho", pos:"MEI", team:"Vitoria", price:6.68, media:3.46, status:"Nulo", ult5:4.38, desvio:2.93},
@@ -1306,7 +1307,7 @@
     {name:"Cantalapiedra", pos:"MEI", team:"Vitoria", price:4.26, media:1.09, status:"Nulo", ult5:0.52, desvio:1.67},
     {name:"Caíque", pos:"MEI", team:"Vitoria", price:4.29, media:2.1, status:"Suspenso", ult5:1.72, desvio:1.41},
     {name:"Jadson", pos:"MEI", team:"Atletico-PR", price:4.95, media:2.92, status:"Provável", ult5:5.04, desvio:4.64},
-    {name:"Mendoza", pos:"ATA", team:"Atletico-PR", price:8.61, media:5.05, status:"Provável", ult5:5.0, desvio:3.99},
+    {name:"Mendoza", pos:"ATA", team:"Atletico-PR", price:8.61, media:5.05, status:"Provável", ult5:5.0, desvio:3.99, xg90:0.42},
     {name:"Noriega", pos:"ZAG", team:"Gremio", price:7.6, media:4.31, status:"Nulo", ult5:2.8600000000000003, desvio:4.51},
     {name:"Camutanga", pos:"ZAG", team:"Vitoria", price:6.71, media:3.95, status:"Contundido", ult5:3.4799999999999995, desvio:4.58},
     {name:"Odair Hellmann", pos:"TEC", team:"Atletico-PR", price:9.28, media:5.46, status:"Provável", ult5:5.95, desvio:2.42},
@@ -1322,7 +1323,7 @@
     {name:"Léo", pos:"ZAG", team:"Atletico-PR", price:6.77, media:4.9, status:"Nulo", ult5:4.9, desvio:0.28},
     {name:"Zapelli", pos:"MEI", team:"Atletico-PR", price:4.23, media:1.37, status:"Contundido", ult5:0.12, desvio:2.15},
     {name:"Aguirre", pos:"ZAG", team:"Atletico-PR", price:6.57, media:3.41, status:"Provável", ult5:4.1, desvio:3.59},
-    {name:"Viveros", pos:"ATA", team:"Atletico-PR", price:13.09, media:8.41, status:"Provável", ult5:12.02, desvio:6.38},
+    {name:"Viveros", pos:"ATA", team:"Atletico-PR", price:13.09, media:8.41, status:"Provável", ult5:12.02, desvio:6.38, xg90:0.52},
     {name:"Renan Peixoto", pos:"ATA", team:"Atletico-PR", price:2.73, media:0.9, status:"Nulo", ult5:1.06, desvio:1.32},
     {name:"Leozinho", pos:"ATA", team:"Atletico-PR", price:2.16, media:0.7, status:"Nulo", ult5:0.7, desvio:0.83},
     {name:"Maicon", pos:"ZAG", team:"Coritiba", price:4.14, media:2.08, status:"Nulo", ult5:1.12, desvio:2.52},
@@ -1340,7 +1341,7 @@
     {name:"Lucas Ronier", pos:"ATA", team:"Coritiba", price:10.73, media:7.04, status:"Provável", ult5:4.220000000000001, desvio:4.88},
     {name:"Pedro Morisco", pos:"GOL", team:"Coritiba", price:8.04, media:5.0, status:"Dúvida", ult5:5.0, desvio:4.52},
     {name:"Fernando Seabra", pos:"TEC", team:"Coritiba", price:7.63, media:5.22, status:"Provável", ult5:4.944, desvio:2.49},
-    {name:"Pedro Rocha", pos:"ATA", team:"Coritiba", price:6.33, media:3.63, status:"Suspenso", ult5:2.84, desvio:3.88},
+    {name:"Pedro Rocha", pos:"ATA", team:"Coritiba", price:6.33, media:3.63, status:"Suspenso", ult5:2.84, desvio:3.88, xg90:0.39},
     {name:"Bruno Melo", pos:"LAT", team:"Coritiba", price:5.62, media:3.83, status:"Provável", ult5:2.5, desvio:3.4},
     {name:"Fernando Sobral", pos:"MEI", team:"Coritiba", price:4.34, media:1.0, status:"Nulo", ult5:1.0, desvio:1.73},
     {name:"Vini Paulista", pos:"MEI", team:"Coritiba", price:3.8, media:2.4, status:"Nulo", ult5:1.34, desvio:2.28},
@@ -1403,7 +1404,7 @@
     {name:"Caballero", pos:"ATA", team:"Santos", price:3.83, media:1.6, status:"Nulo", ult5:1.6, desvio:0.0},
     {name:"Bolasie", pos:"ATA", team:"Chapecoense", price:4.53, media:2.08, status:"Provável", ult5:4.32, desvio:3.06},
     {name:"JP Chermont", pos:"LAT", team:"Coritiba", price:4.89, media:2.95, status:"Provável", ult5:0.62, desvio:4.03},
-    {name:"Vitor Roque", pos:"ATA", team:"Palmeiras", price:17.01, media:7.6, status:"Nulo", ult5:8.24, desvio:7.44},
+    {name:"Vitor Roque", pos:"ATA", team:"Palmeiras", price:17.01, media:7.6, status:"Nulo", ult5:8.24, desvio:7.44, xg90:0.98},
     {name:"Saldivia", pos:"ZAG", team:"Vasco", price:4.79, media:2.01, status:"Nulo", ult5:1.86, desvio:1.39},
     {name:"Maycon", pos:"MEI", team:"Atletico-MG", price:6.1, media:3.24, status:"Provável", ult5:4.359999999999999, desvio:3.48},
     {name:"Willian Machado", pos:"ZAG", team:"Mirassol", price:5.36, media:3.73, status:"Suspenso", ult5:5.4, desvio:3.53},
@@ -1493,6 +1494,22 @@
       var consistencia = p.media - (p.desvio || 0) * 0.5;
       var outrosTres = (media + formaRecente + consistencia) / 3;
       return 0.65 * previsaoModelo + 0.35 * outrosTres;
+    }
+    if(criteria === 'ameaca_gol'){
+      // Parte do criterio Combinado (media+forma+consistencia+modelo de
+      // partida) e, quando o jogador tem xG individual REAL medido (do
+      // FootyStats, baseado em chutes+pressao ofensiva -- so cobrimos os
+      // ~25 maiores artilheiros da liga, a maioria fica sem esse dado),
+      // aplica um bonus/penalidade proporcional ao quanto ele cria/finaliza
+      // acima ou abaixo de um ATA/MEI mediano (xG/90 de referencia: 0.35).
+      // Escala: 8 pontos por xG adicional a cada 90min, calibrado pelo
+      // valor do scout "G" (gol) na pontuacao do Cartola.
+      var base = criteriaScore(p, 'combinado');
+      if((p.pos === 'ATA' || p.pos === 'MEI') && typeof p.xg90 === 'number'){
+        var bonus = (p.xg90 - 0.35) * 8;
+        return base + bonus;
+      }
+      return base;
     }
     return p.media;
   }

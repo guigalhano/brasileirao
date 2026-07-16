@@ -73,8 +73,12 @@ def match_probs(lam_home, lam_away, max_goals=10):
 def expected_goals(ratings, home_adv, home_team, away_team):
     h = ratings[home_team]
     a = ratings[away_team]
-    lam_home = math.exp(h["attack"] + a["defense"] + home_adv)
-    lam_away = math.exp(a["attack"] + h["defense"])
+    # CONVENCAO: attack MENOS defense do adversario (igual a fit_model_v2.py,
+    # refit_with_coach_boost.py, sweep_half_life.py e cold_start_market_value_prior.py).
+    # Usar "+ defense" aqui e' um bug -- como a maioria dos valores de defense
+    # e' positiva, somar em vez de subtrair infla o xg previsto em ~2x.
+    lam_home = math.exp(h["attack"] - a["defense"] + home_adv)
+    lam_away = math.exp(a["attack"] - h["defense"])
     return lam_home, lam_away
 
 

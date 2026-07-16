@@ -13,12 +13,12 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 105089,Tetê,ATA,Gremio,9.01,3.83,Nulo,3.42,3.6199999999999997
 147864,Rafael Monti,ATA,Remo,3.56,0.0,Nulo,0.0,0.0
 123689,Milans,LAT,Corinthians,8.96,6.03,Nulo,1.06,6.033333333333334
-71536,Luiz Gustavo,MEI,Athletico-PR,6.78,3.75,Nulo,4.06,4.42
+71536,Luiz Gustavo,MEI,Atletico-PR,6.78,3.75,Nulo,4.06,4.42
 103388,Emmanuel Martínez,MEI,Vitoria,6.16,3.48,Nulo,2.56,2.12
 95362,Cassierra,ATA,Atletico-MG,5.4,2.08,Provável,4.01,5.16
 86859,José Welison,MEI,Remo,4.43,2.47,Provável,3.27,4.4799999999999995
 110633,Gustavo,MEI,Coritiba,3.3,0.9,Nulo,1.12,0.8999999999999999
-146374,Gilberto Junior,LAT,Athletico-PR,6.76,5.54,Nulo,3.82,5.54
+146374,Gilberto Junior,LAT,Atletico-PR,6.76,5.54,Nulo,3.82,5.54
 142265,Dell,ATA,Bahia,1.82,0.65,Nulo,1.59,0.65
 89918,Everton Galdino,ATA,Mirassol,2.73,1.2,Nulo,2.04,1.34
 113125,Picco,MEI,Remo,6.03,3.28,Nulo,3.5,1.3199999999999998
@@ -36,7 +36,7 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 130608,Riquelme Fillipi,ATA,Palmeiras,2.04,2.2,Nulo,3.54,2.2
 104134,Fabri,ATA,Vitoria,5.27,2.66,Nulo,2.91,1.1
 51413,Walter,GOL,Mirassol,5.18,2.89,Nulo,2.4,2.46
-130906,Riquelme,MEI,Athletico-PR,0.91,0.58,Nulo,1.56,0.575
+130906,Riquelme,MEI,Atletico-PR,0.91,0.58,Nulo,1.56,0.575
 101729,Fabinho,ATA,Coritiba,1.43,-0.03,Contundido,0.85,0.04
 130847,Zé Breno,MEI,Vitoria,2.04,0.6,Nulo,0.85,0.6
 124270,Allex,MEI,Internacional,2.38,1.55,Nulo,1.41,1.04
@@ -98,7 +98,7 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 148125,Ryan Augusto,LAT,Bragantino,3.78,3.7,Nulo,4.39,3.7
 130232,Caio Roque,LAT,Botafogo,5.72,4.0,Nulo,3.12,4.0
 110605,Vinícius Balieiro,MEI,Chapecoense,3.95,1.67,Dúvida,2.08,1.6666666666666667
-147192,Claudinho,LAT,Athletico-PR,7.39,9.27,Nulo,8.26,9.266666666666666
+147192,Claudinho,LAT,Atletico-PR,7.39,9.27,Nulo,8.26,9.266666666666666
 42411,Cuca,TEC,Santos,10.35,5.62,Nulo,2.28,5.58
 141594,Pedro Gabriel,LAT,Gremio,5.12,3.91,Nulo,2.2,3.8599999999999994
 127273,Artur Jorge,TEC,Cruzeiro,11.87,6.32,Provável,2.07,5.450000000000001
@@ -139,7 +139,7 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 92171,Arthur Cabral,ATA,Botafogo,10.58,6.69,Nulo,6.79,9.34
 97810,Erick,ATA,Vitoria,8.67,4.68,Nulo,4.68,5.9399999999999995
 94930,Lucas Paquetá,MEI,Flamengo,14.86,6.46,Dúvida,4.45,6.94
-69012,Santos,GOL,Athletico-PR,8.85,3.7,Provável,3.63,4.36
+69012,Santos,GOL,Atletico-PR,8.85,3.7,Provável,3.63,4.36
 87008,Léo Jardim,GOL,Vasco,6.5,2.76,Nulo,2.69,4.46
 68928,Rafael,GOL,Sao Paulo,7.38,3.55,Provável,2.51,2.0
 100898,Vitinho,LAT,Botafogo,9.63,4.9,Nulo,2.54,3.8600000000000003
@@ -167,7 +167,7 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 85425,João Paulo,GOL,Santos,5.2,0.15,Nulo,1.48,0.6499999999999999
 98517,Jean Lucas,MEI,Bahia,9.55,5.58,Provável,3.43,5.819999999999999
 105436,Carrascal,MEI,Flamengo,9.1,4.23,Suspenso,5.41,4.54
-80313,Gilberto,LAT,Athletico-PR,6.71,2.94,Nulo,2.02,2.48
+80313,Gilberto,LAT,Atletico-PR,6.71,2.94,Nulo,2.02,2.48
 123717,Zé Guilherme,LAT,Bahia,4.27,4.0,Provável,0.0,4.0
 113397,Cristian Olivera,ATA,Bahia,7.16,4.1,Nulo,3.23,1.3800000000000001
 105990,Santiago Mingo,ZAG,Bahia,4.98,1.96,Nulo,3.17,1.2799999999999998
@@ -339,7 +339,7 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 91908,Pavón,ATA,Gremio,7.76,3.91,Contundido,3.55,4.4399999999999995
 70944,Bruno Henrique,MEI,Internacional,4.52,1.91,Provável,1.71,3.1399999999999997
 102318,Caio Paulista,LAT,Gremio,5.62,3.43,Nulo,3.04,4.0
-110668,Esquivel,LAT,Athletico-PR,7.51,4.67,Provável,3.49,3.7599999999999993
+110668,Esquivel,LAT,Atletico-PR,7.51,4.67,Provável,3.49,3.7599999999999993
 109966,Monsalve,MEI,Gremio,3.12,0.64,Nulo,1.15,0.72
 111309,Gustavo Martins,ZAG,Gremio,6.29,3.25,Contundido,3.9,4.1
 111683,Anthoni,GOL,Internacional,4.74,3.3,Provável,4.07,4.44
@@ -432,7 +432,7 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 97095,Carlos Cuesta,ZAG,Vasco,5.11,1.88,Nulo,3.48,2.5800000000000005
 93716,Paulo Henrique,LAT,Vasco,7.25,2.94,Nulo,3.3,1.78
 131617,André Silva,ATA,Sao Paulo,3.66,0.42,Provável,1.09,0.8600000000000001
-122439,Isaac,ATA,Athletico-PR,1.86,0.0,Nulo,0.0,0.0
+122439,Isaac,ATA,Atletico-PR,1.86,0.0,Nulo,0.0,0.0
 141611,Maik,LAT,Sao Paulo,5.52,3.48,Nulo,2.52,3.4799999999999995
 111682,Adson,MEI,Vasco,6.45,3.51,Nulo,2.43,4.34
 105584,Lucas Piton,LAT,Vasco,5.08,2.14,Nulo,3.87,3.8600000000000003
@@ -455,36 +455,36 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 42222,Osvaldo,ATA,Vitoria,4.07,0.4,Nulo,0.57,0.4
 93411,Cantalapiedra,MEI,Vitoria,4.26,1.09,Nulo,1.67,0.52
 90588,Caíque,MEI,Vitoria,4.29,2.1,Suspenso,1.41,1.72
-80129,Jadson,MEI,Athletico-PR,4.95,2.92,Provável,4.64,5.04
-90031,Mendoza,ATA,Athletico-PR,8.61,5.05,Provável,3.99,5.0
+80129,Jadson,MEI,Atletico-PR,4.95,2.92,Provável,4.64,5.04
+90031,Mendoza,ATA,Atletico-PR,8.61,5.05,Provável,3.99,5.0
 130048,Noriega,ZAG,Gremio,7.6,4.31,Nulo,4.51,2.8600000000000003
 96793,Camutanga,ZAG,Vitoria,6.71,3.95,Contundido,4.58,3.4799999999999995
-92273,Odair Hellmann,TEC,Athletico-PR,9.28,5.46,Provável,2.42,5.95
-107985,Terán,ZAG,Athletico-PR,5.88,3.5,Nulo,4.64,4.279999999999999
-113113,Benavídez,LAT,Athletico-PR,7.23,4.42,Provável,3.62,4.459999999999999
-112017,Felipinho,MEI,Athletico-PR,5.57,3.17,Provável,4.04,4.14
+92273,Odair Hellmann,TEC,Atletico-PR,9.28,5.46,Provável,2.42,5.95
+107985,Terán,ZAG,Atletico-PR,5.88,3.5,Nulo,4.64,4.279999999999999
+113113,Benavídez,LAT,Atletico-PR,7.23,4.42,Provável,3.62,4.459999999999999
+112017,Felipinho,MEI,Atletico-PR,5.57,3.17,Provável,4.04,4.14
 104330,Dudu,MEI,Vitoria,5.01,3.95,Contundido,6.01,3.9499999999999997
 111879,Mateus Silva,LAT,Vitoria,4.95,4.85,Nulo,6.86,4.85
 116461,Jamerson,LAT,Vitoria,6.14,4.17,Nulo,3.02,3.7
 130620,Edenílson,MEI,Vitoria,3.28,1.74,Nulo,2.13,2.0200000000000005
-120433,Léo Derik,LAT,Athletico-PR,4.57,3.11,Nulo,3.6,2.98
+120433,Léo Derik,LAT,Atletico-PR,4.57,3.11,Nulo,3.6,2.98
 72391,Fernando Diniz,TEC,Corinthians,9.26,5.39,Provável,1.93,5.958
-85626,Léo,ZAG,Athletico-PR,6.77,4.9,Nulo,0.28,4.9
-125926,Zapelli,MEI,Athletico-PR,4.23,1.37,Contundido,2.15,0.12
-123869,Aguirre,ZAG,Athletico-PR,6.57,3.41,Provável,3.59,4.1
-143193,Viveros,ATA,Athletico-PR,13.09,8.41,Provável,6.38,12.02
-105518,Renan Peixoto,ATA,Athletico-PR,2.73,0.9,Nulo,1.32,1.06
-123101,Leozinho,ATA,Athletico-PR,2.16,0.7,Nulo,0.83,0.7
+85626,Léo,ZAG,Atletico-PR,6.77,4.9,Nulo,0.28,4.9
+125926,Zapelli,MEI,Atletico-PR,4.23,1.37,Contundido,2.15,0.12
+123869,Aguirre,ZAG,Atletico-PR,6.57,3.41,Provável,3.59,4.1
+143193,Viveros,ATA,Atletico-PR,13.09,8.41,Provável,6.38,12.02
+105518,Renan Peixoto,ATA,Atletico-PR,2.73,0.9,Nulo,1.32,1.06
+123101,Leozinho,ATA,Atletico-PR,2.16,0.7,Nulo,0.83,0.7
 71227,Maicon,ZAG,Coritiba,4.14,2.08,Nulo,2.52,1.12
 81952,Willian Oliveira,MEI,Coritiba,4.62,1.84,Nulo,2.33,0.82
 136156,Larson,MEI,Palmeiras,2.1,0.48,Nulo,0.88,0.475
-128431,João Cruz,MEI,Athletico-PR,6.45,3.47,Dúvida,3.43,4.54
-127970,Felipe Chiqueti,MEI,Athletico-PR,2.07,1.35,Nulo,0.95,1.1
-125746,Dudu,MEI,Athletico-PR,2.12,1.84,Nulo,4.18,0.8000000000000002
+128431,João Cruz,MEI,Atletico-PR,6.45,3.47,Dúvida,3.43,4.54
+127970,Felipe Chiqueti,MEI,Atletico-PR,2.07,1.35,Nulo,0.95,1.1
+125746,Dudu,MEI,Atletico-PR,2.12,1.84,Nulo,4.18,0.8000000000000002
 84626,Josué,MEI,Coritiba,5.42,3.57,Provável,4.42,5.44
 82628,Tinga,LAT,Coritiba,6.53,3.67,Nulo,3.15,5.279999999999999
 97878,Jacy,ZAG,Coritiba,5.44,4.02,Provável,4.15,4.0200000000000005
-131832,Portilla,MEI,Athletico-PR,2.62,1.22,Provável,2.3,0.7799999999999999
+131832,Portilla,MEI,Atletico-PR,2.62,1.22,Provável,2.3,0.7799999999999999
 110708,Pedro Rangel,GOL,Coritiba,7.01,4.64,Dúvida,4.8,2.7399999999999998
 63354,Rodrigo Moledo,ZAG,Coritiba,7.4,7.75,Nulo,0.35,7.75
 123648,Lucas Ronier,ATA,Coritiba,10.73,7.04,Provável,4.88,4.220000000000001
@@ -524,7 +524,7 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 107453,João Paulo,ZAG,Chapecoense,4.8,3.3,Provável,5.29,2.56
 107516,Ênio,ATA,Chapecoense,5.61,3.62,Provável,2.69,3.2600000000000002
 109336,Rafael Carvalheira,MEI,Chapecoense,5.7,2.72,Contundido,3.82,3.3200000000000003
-130843,Arthur Dias,ZAG,Athletico-PR,6.04,3.75,Provável,2.98,3.46
+130843,Arthur Dias,ZAG,Atletico-PR,6.04,3.75,Provável,2.98,3.46
 123625,Ítalo,ATA,Chapecoense,2.71,1.71,Nulo,1.59,1.28
 116066,Rubens,ATA,Chapecoense,2.66,1.63,Nulo,2.88,0.68
 89837,Lucho Acosta,MEI,Fluminense,11.02,5.76,Nulo,4.55,2.4200000000000004

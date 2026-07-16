@@ -28,7 +28,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data"
 
 CANON_MAP = {
-    "Athlético-PR": "Athletico-PR", "Atlético-MG": "Atletico-MG", "Bahia": "Bahia",
+    "Athlético-PR": "Atletico-PR", "Atlético-MG": "Atletico-MG", "Bahia": "Bahia",
     "Botafogo": "Botafogo", "Bragantino": "Bragantino", "Chapecoense": "Chapecoense",
     "Corinthians": "Corinthians", "Coritiba": "Coritiba", "Cruzeiro": "Cruzeiro",
     "Flamengo": "Flamengo", "Fluminense": "Fluminense", "Grêmio": "Gremio",

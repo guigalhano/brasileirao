@@ -96,7 +96,13 @@ def main():
 
     repo = Path(args.repo_dir)
     index_path = repo / "index.html"
-    ratings_path = repo / "data" / "team_ratings_final_v2.json"
+    ratings_path = repo / "data" / "team_ratings_calibrado.json"
+    if not ratings_path.exists():
+        ratings_path = repo / "data" / "team_ratings_final_v2.json"
+        print("AVISO: nao encontrei team_ratings_calibrado.json, usando "
+              "team_ratings_final_v2.json (sem correcao de xG do WhoScored).")
+    else:
+        print(f"Usando ratings calibrados com WhoScored: {ratings_path.name}")
 
     ratings_doc = json.loads(ratings_path.read_text(encoding="utf-8"))
     ratings = ratings_doc["teams"]

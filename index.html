@@ -1549,13 +1549,19 @@
     var score = criteriaScoreBase(p, criteria);
     // Risco de rotacao: fracao das ultimas 5 rodadas em que o jogador NAO
     // entrou em campo (ver scripts/compute_advanced_signals.py), mesmo que
-    // o status atual seja "Provavel". Penalidade suave (ate 30% pro caso
-    // extremo de 5/5 ausencias) -- nao queremos zerar o jogador so por isso,
-    // status "Provavel"/"Duvida" ja carrega parte desse sinal, isso aqui e
-    // um reforco pra pegar jogadores que voltam de rotacao mas ainda nao
-    // mudaram de status oficialmente.
+    // o status atual seja "Provavel". Isso pega casos como o do Rafael
+    // Tolói (16/07): status "Provavel", mas 0 participacoes nas ultimas 5
+    // rodadas -- um sinal de risco real que o status oficial nao capturou.
+    //
+    // Curva NAO-linear (ajustada em 16/07, a penalidade linear antiga so
+    // ia ate 30% mesmo pra quem faltou as 5 ultimas rodadas, o que era
+    // fraco demais pra um caso tao extremo):
+    //   risco=0.2 (faltou 1 de 5): ~6% de corte -- continua leve
+    //   risco=0.6 (faltou 3 de 5): ~25% de corte -- moderado
+    //   risco=1.0 (faltou 5 de 5): ~85% de corte -- praticamente exclui
     if(typeof p.riscoRotacao === 'number'){
-      score *= (1 - 0.3 * p.riscoRotacao);
+      var r = p.riscoRotacao;
+      score *= Math.max(0, 1 - 0.3 * r - 0.55 * Math.pow(r, 4));
     }
     return score;
   }

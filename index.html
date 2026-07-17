@@ -1514,11 +1514,18 @@
       // ~25 maiores artilheiros da liga, a maioria fica sem esse dado),
       // aplica um bonus/penalidade proporcional ao quanto ele cria/finaliza
       // acima ou abaixo de um ATA/MEI mediano (xG/90 de referencia: 0.35).
-      // Escala: 8 pontos por xG adicional a cada 90min, calibrado pelo
-      // valor do scout "G" (gol) na pontuacao do Cartola.
+      // Escala: 1.1 pontos por xG adicional a cada 90min. Esse numero foi
+      // corrigido em 16/07 -- o valor original (8) era um chute baseado em
+      // memoria generica da pontuacao oficial do Cartola, sem checar contra
+      // os dados reais deste projeto. Uma regressao linear de pontos_num
+      // contra os scouts em cartola_historico_2026_completo.csv (ATA/MEI)
+      // recuperou o peso real do scout G: ~1.10 (ATA) / ~0.97 (MEI), nao 8.
+      // Ressalva: essa regressao so explica ~20% da variancia (R2 baixo),
+      // entao o valor exato tem incerteza real, mas a ordem de grandeza
+      // (~1, nao ~8) e uma correcao solida.
       var base = criteriaScore(p, 'combinado');
       if((p.pos === 'ATA' || p.pos === 'MEI') && typeof p.xg90 === 'number'){
-        var bonus = (p.xg90 - 0.35) * 8;
+        var bonus = (p.xg90 - 0.35) * 1.1;
         return base + bonus;
       }
       return base;

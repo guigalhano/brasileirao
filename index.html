@@ -796,6 +796,8 @@
   const seasons = Array.from(new Set(DATA.map(r=>r[2]))).sort((a,b)=>a-b);
   const seasonSel = root.querySelector('#seasonFilter');
   seasonSel.innerHTML = '<option value="all">Todas</option>' + seasons.map(s=>`<option value="${s}">${s}</option>`).join('');
+  var mostRecentSeason = seasons[seasons.length - 1];
+  seasonSel.value = String(mostRecentSeason);
 
   const logSel = root.querySelector('#logModelSelect');
   logSel.innerHTML = MODELS.map(m=>`<option value="${m.key}">${m.label}</option>`).join('');

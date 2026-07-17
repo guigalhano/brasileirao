@@ -159,6 +159,28 @@
     </div>
   </div>
 
+  <div class="panel" id="bestModelPanel">
+    <div class="panel-title">Qual &eacute; o melhor modelo?</div>
+    <div class="panel-desc" style="margin-bottom:14px">Nossa leitura: <b style="color:var(--c-poi)">Poisson (gols)</b> &eacute; o modelo mais confi&aacute;vel do grupo &mdash; n&atilde;o por ter o maior lucro no backtest, mas por ser o mais s&oacute;lido estatisticamente.</div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:14px; margin-bottom:14px">
+      <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:14px 16px;">
+        <div style="font-family:'Arial Narrow','Helvetica Neue',sans-serif; font-weight:700; font-size:13px; color:var(--c-fav); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;">Por que n&atilde;o o Favorito</div>
+        <div style="font-size:12.5px; color:var(--text-dim); line-height:1.6;">Teve o maior ROI (~+2,3%), mas &eacute; um resultado simples demais pra ser confi&aacute;vel &mdash; prov&aacute;vel ru&iacute;do estat&iacute;stico do per&iacute;odo, sem l&oacute;gica causal por tr&aacute;s. Cl&aacute;ssico risco de overfitting em backtest.</div>
+      </div>
+      <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:14px 16px;">
+        <div style="font-family:'Arial Narrow','Helvetica Neue',sans-serif; font-weight:700; font-size:13px; color:var(--c-pin); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;">Por que n&atilde;o os Value Bets</div>
+        <div style="font-size:12.5px; color:var(--text-dim); line-height:1.6;">Comparam uma fonte de odds contra outra &mdash; dependem inteiramente da qualidade das cotas de terceiros e ficam com amostra pequena e mais vari&acirc;ncia quando o filtro de EM &eacute; mais exigente.</div>
+      </div>
+      <div style="background:var(--panel-2); border:1px solid var(--c-poi); border-radius:8px; padding:14px 16px;">
+        <div style="font-family:'Arial Narrow','Helvetica Neue',sans-serif; font-weight:700; font-size:13px; color:var(--c-poi); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;">Por que o Poisson se destaca</div>
+        <div style="font-size:12.5px; color:var(--text-dim); line-height:1.6;">&Eacute; um modelo de verdade (n&atilde;o compara odds), n&atilde;o tem look-ahead bias, foi o mais consistente entre os limiares testados (+0,7% a +0,8% ROI com amostra grande) e tem explica&ccedil;&atilde;o causal: times que marcam/sofrem mais gols tendem a repetir o padr&atilde;o.</div>
+      </div>
+    </div>
+    <div class="panel-desc" style="margin-bottom:0">
+      Resumindo: o Poisson &eacute; o modelo em que confiar&iacute;amos mais para continuar apostando daqui pra frente, porque seu resultado positivo tem uma causa mais plaus&iacute;vel &mdash; enquanto o resultado do Favorito &eacute; bom demais pra ser levado a s&eacute;rio sem desconfian&ccedil;a, e os dois Value Bets sofrem de amostra pequena e alta vari&acirc;ncia.
+    </div>
+  </div>
+
   <div class="panel">
     <div class="panel-title">Log de apostas</div>
     <div class="slider-row" style="margin-bottom:10px">

@@ -458,6 +458,7 @@
     <button class="bh-tab" data-tab="calendar">Calendario</button>
     <button class="bh-tab" data-tab="cartola">Cartola FC</button>
     <button class="bh-tab" data-tab="valuebet">Value Betting</button>
+    <button class="bh-tab" data-tab="docs">Documentacao</button>
   </div>
 
   <!-- ===== TAB 1: PREDICTOR ===== -->
@@ -998,6 +999,164 @@
 </script>
 
   </div>
+
+  <!-- ===== TAB: DOCUMENTACAO / METODOLOGIA ===== -->
+  <div class="bh-panel" id="panel-docs">
+  <style>
+    #panel-docs .doc-wrap { max-width: 900px; }
+    #panel-docs h2 { font-family: var(--font-display); letter-spacing: 0.04em; font-size: 26px; color: var(--gold); margin: 0 0 4px; }
+    #panel-docs .doc-sub { color: var(--cream-dim); font-size: 12.5px; font-family: var(--font-mono); margin-bottom: 22px; }
+    #panel-docs h3 { font-family: var(--font-display); letter-spacing: 0.03em; font-size: 19px; color: var(--cream); margin: 30px 0 4px; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+    #panel-docs h4 { font-size: 14.5px; color: var(--gold); margin: 18px 0 6px; }
+    #panel-docs p { font-size: 13.5px; line-height: 1.65; color: var(--cream); margin: 8px 0; }
+    #panel-docs .doc-example { background: var(--pitch-1); border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 16px; margin: 10px 0; font-size: 13px; line-height: 1.6; }
+    #panel-docs .doc-example b.tag { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gold); display: block; margin-bottom: 4px; }
+    #panel-docs table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 10px 0 16px; }
+    #panel-docs th { text-align: left; font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cream-dim); border-bottom: 1px solid var(--line); padding: 6px 10px; }
+    #panel-docs td { padding: 6px 10px; border-bottom: 1px solid rgba(51,69,47,0.5); font-family: var(--font-mono); color: var(--cream); }
+    #panel-docs tr.highlight td { color: var(--gold); font-weight: 600; }
+    #panel-docs .doc-pos { color: var(--good); }
+    #panel-docs .doc-neg { color: var(--bad); }
+    #panel-docs .doc-toc { background: var(--pitch-1); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin-bottom: 24px; }
+    #panel-docs .doc-toc a { color: var(--cream); text-decoration: none; font-family: var(--font-mono); font-size: 12.5px; display: block; padding: 3px 0; }
+    #panel-docs .doc-toc a:hover { color: var(--gold); }
+    #panel-docs .doc-callout { background: rgba(203,161,53,0.08); border: 1px solid var(--gold-dim); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+  </style>
+  <div class="doc-wrap">
+    <h2>Documentação &amp; Metodologia</h2>
+    <div class="doc-sub">Como os dois modelos deste site foram construídos, testados e recalibrados — com exemplos práticos e os números reais de cada validação.</div>
+
+    <div class="doc-toc">
+      <a href="#doc-valuebet">1. Modelo de Value Betting (Brasileirão)</a>
+      <a href="#doc-cartola">2. Sistema de escalação (Cartola FC)</a>
+      <a href="#doc-licoes">3. Lições de metodologia</a>
+    </div>
+
+    <h3 id="doc-valuebet">1. Modelo de Value Betting</h3>
+
+    <h4>1.1 — Poisson com ataque e defesa (o baseline)</h4>
+    <p>Cada time tem uma força de ataque e uma força de defesa, estimadas a partir de gols marcados/sofridos. A expectativa de gols de um jogo é o produto entre o ataque de um time, a defesa do outro, e a média geral da liga.</p>
+    <div class="doc-example">
+      <b class="tag">Exemplo prático</b>
+      Palmeiras marca em média 1,8 gols/jogo em casa (ataque forte). O adversário sofre em média 1,4 gols fora (defesa fraca). O modelo projeta gols esperados do Palmeiras acima da média da liga (~1,3).
+    </div>
+
+    <h4>1.2 — Correção de Dixon-Coles</h4>
+    <p>Poisson simples erra sistematicamente em placares baixos (superestima 0-0, subestima 1-0/0-1). Corrigimos com um parâmetro &rho; = -0,110, estimado por máxima verossimilhança contra o histórico 2012-2026.</p>
+
+    <h4>1.3 — Decaimento temporal: quanto vale um jogo antigo?</h4>
+    <p>Testamos meias-vidas de decaimento entre 180 dias e "sem decaimento nenhum", medindo log-loss (erro de calibração, menor é melhor):</p>
+    <table>
+      <tr><th>Meia-vida</th><th>Log-loss</th></tr>
+      <tr><td>180 dias</td><td>1,041</td></tr>
+      <tr><td>365 dias</td><td>1,031</td></tr>
+      <tr class="highlight"><td>730 dias (2 anos)</td><td>1,029 — melhor</td></tr>
+      <tr><td>1460 dias</td><td>1,031</td></tr>
+      <tr><td>Sem decaimento</td><td>1,036</td></tr>
+    </table>
+
+    <h4>1.4 — Combinando Poisson com Elo</h4>
+    <p>A literatura acadêmica (revisamos ~37 trabalhos) recomenda somar um rating específico de futebol ao baseline de gols, não substituí-lo. Construímos um Elo sequencial (sem look-ahead, K=15) e testamos o blend:</p>
+    <table>
+      <tr><th>Peso Poisson</th><th>Log-loss</th></tr>
+      <tr><td>0% (só Elo)</td><td>1,020</td></tr>
+      <tr class="highlight"><td>25% — melhor</td><td>1,018</td></tr>
+      <tr><td>50%</td><td>1,020</td></tr>
+      <tr><td>100% (só Poisson)</td><td>1,028</td></tr>
+    </table>
+    <p>O blend final (25% Poisson-DC + 75% Elo) fica em log-loss 1,018 — o mercado de apostas (Pinnacle/média) fica em 1,000. A distância que sobra provavelmente é informação real que o mercado tem e o modelo não (lesões, escalação).</p>
+
+    <div class="doc-callout">
+      <b>Achado central:</b> a cada melhoria de calibração, o ROI do backtest de apostas <i>piorou</i>. Um modelo mal calibrado "acha valor" com frequência — mas esse valor costuma ser o próprio erro do modelo, não uma ineficiência real do mercado. Modelo melhor concorda mais com um mercado eficiente, não menos.
+    </div>
+
+    <h4>1.5 — Quanto edge dá pra provar com os dados que temos?</h4>
+    <p>Com ~5.500 jogos históricos: desvio-padrão de ~1,63 unidades por aposta. Menor edge detectável com confiança razoável (80% de poder estatístico): <b>~6,2%</b>. Pra detectar um edge mais realista de 2%, seriam necessárias <b>~52.000 apostas</b> — dez vezes mais dados do que existem.</p>
+
+    <h4>1.6 — Por que o empate quase nunca é "favorito"</h4>
+    <p>Em 5.496 jogos, o empate teve a menor cota em só 6 casos (0,1%). A probabilidade de empate fica numa faixa estreita (8,7%-37,4%, desvio-padrão 3,5 pontos); vitória casa/fora oscila muito mais (3,5%-88%, desvio 10-13 pontos). Pra empate virar favorito, precisaria superar as outras duas ao mesmo tempo — raro, porque a vantagem de mando geralmente desequilibra.</p>
+
+    <h4>1.7 — Garimpo de dados: uma armadilha real</h4>
+    <p>Testamos "apostar no empate quando os times são parecidos" em 8 limiares diferentes. Os dois mais apertados deram resultado positivo (+7,27% e +0,59%) — mas nenhum passou de t-stat 1,35 (a barra de confiança convencional é ~2). Testar várias hipóteses até uma "funcionar" infla artificialmente a chance de achar algo positivo por puro acaso.</p>
+
+    <h3 id="doc-cartola">2. Sistema de escalação (Cartola FC)</h3>
+
+    <h4>2.1 — Expandindo cobertura com dados do FBRef</h4>
+    <p>O critério original de "ameaça de gol" só cobria ~25 jogadores (os que tinham xG individual medido). Buscamos gols e assistências no FBRef pra estender a cobertura — o que exigiu resolver, em sequência: bloqueio de bot (precisou de navegador headless de verdade), a temporada 2026 não estar numa lista fixa da biblioteca, um bug de extração em tabelas com cabeçalho de dois níveis, e uma explosão de linhas num merge com dados duplicados. No fim, 475 dos 569 jogadores (83%) ficaram com dado real de gols/assistências.</p>
+
+    <h4>2.2 — A primeira validação (e o viés escondido)</h4>
+    <p>Correlacionamos os novos sinais contra a <b>média da temporada inteira</b> de cada jogador:</p>
+    <table>
+      <tr><th>Sinal</th><th>Correlação (1ª versão)</th></tr>
+      <tr><td>goalShare (concentração de gols)</td><td class="doc-pos">r = 0,686</td></tr>
+      <tr><td>assistShare (concentração de assist.)</td><td class="doc-pos">r = 0,441</td></tr>
+      <tr><td>cruzamentos/90 (laterais)</td><td class="doc-neg">r = -0,035 — removido</td></tr>
+      <tr><td>ações defensivas/90 (zagueiros)</td><td class="doc-neg">r = 0,176 — removido</td></tr>
+    </table>
+    <p>Os dois primeiros pareciam ótimos. Mas comparar o total da temporada contra a própria média da temporada é parcialmente circular: um jogador bom o ano inteiro tem os dois números altos quase por construção, sem isso provar poder preditivo real "pra frente".</p>
+
+    <h4>2.3 — Backtest de verdade, primeira rodada</h4>
+    <p>A API oficial do Cartola tem pontuação rodada a rodada. Reconstruímos "a média até a rodada N" usando só rodadas anteriores, prevendo a rodada seguinte — sem look-ahead:</p>
+    <table>
+      <tr><th>Critério</th><th>Correlação real</th><th>Pontos médios (top-15)</th></tr>
+      <tr class="highlight"><td>média da temporada</td><td>+0,231</td><td>5,56</td></tr>
+      <tr><td>consistência</td><td>+0,215</td><td>5,51</td></tr>
+      <tr><td>forma recente (últimas 5)</td><td>+0,190</td><td>5,18</td></tr>
+      <tr><td>aleatório (referência)</td><td>—</td><td>3,24</td></tr>
+    </table>
+    <p>Achado contraintuitivo: <b>a média da temporada prediz melhor que a forma recente</b> — o oposto de "seguir quem está quente". Uma média de 18 rodadas tem bem menos ruído que uma de 5.</p>
+
+    <h4>2.4 — Backtest de verdade, segunda rodada: a grande correção</h4>
+    <p>Um repositório público (caRtola, Henrique Gomide) tem o scout detalhado rodada a rodada desde 2014. Isso permitiu testar os sinais do FBRef com o mesmo rigor da média/forma. A primeira tentativa ainda misturava jogadores que nem entraram em campo (viés); a versão filtrada corretamente deu:</p>
+    <table>
+      <tr><th>Sinal</th><th>Correlação "inflada"</th><th>Correlação real (filtrada)</th></tr>
+      <tr class="highlight"><td>finalizações no alvo/90</td><td>0,498</td><td>0,227 — melhor sobrevivente</td></tr>
+      <tr><td>goalShare</td><td>0,686</td><td>0,155</td></tr>
+      <tr><td>falta sofrida/90</td><td>0,327</td><td>0,205</td></tr>
+      <tr><td>assistShare</td><td>0,441</td><td class="doc-neg">0,096 — ruído, removido</td></tr>
+      <tr><td>desarmes/90</td><td>0,176</td><td class="doc-neg">0,067 — ruído</td></tr>
+      <tr><td>gols sofridos c/ jogador em campo</td><td>-0,483</td><td class="doc-neg">+0,039 — sinal invertido, removido</td></tr>
+    </table>
+    <div class="doc-callout">
+      <b>O caso mais dramático:</b> "gols sofridos com o jogador em campo" parecia o achado mais forte do projeto (r = -0,483, direção correta). Com o rigor adequado, murchou pra praticamente ruído — e com o sinal <i>trocado</i>.
+    </div>
+
+    <h4>2.5 — Recalibração final</h4>
+    <p>Reduzimos os pesos proporcionalmente à queda real de correlação, em vez de descartar tudo:</p>
+    <table>
+      <tr><th>Sinal</th><th>Peso antes</th><th>Peso depois</th></tr>
+      <tr><td>goalShare</td><td>6</td><td>1,5</td></tr>
+      <tr><td>finalizações no alvo/90</td><td>1,2</td><td>0,6</td></tr>
+      <tr><td>assistShare</td><td>6</td><td class="doc-neg">removido</td></tr>
+      <tr><td>gols sofridos c/ jogador em campo</td><td>1,0</td><td class="doc-neg">removido</td></tr>
+    </table>
+
+    <h4>2.6 — O Critério Mestre</h4>
+    <p>Combina tudo com pesos calibrados por evidência:</p>
+    <div class="doc-example">
+      <b class="tag">Fórmula</b>
+      45% previsão do próximo jogo (matchup) + 15% estatísticas reais por posição (gol/assistência/finalização) + 40% dividido entre média (40%), forma recente (20%) e consistência (40%).
+    </div>
+
+    <h3 id="doc-licoes">3. Lições de metodologia</h3>
+
+    <h4>3.1 — Circularidade é fácil de não perceber</h4>
+    <p>Comparar "o total da temporada" contra "a média da própria temporada" parece razoável, mas é parcialmente uma tautologia. A validação de verdade precisa isolar o que era conhecido <i>antes</i> do momento sendo previsto.</p>
+
+    <h4>3.2 — Filtrar errado infla tudo</h4>
+    <p>Incluir candidatos que não deveriam estar na comparação (times pausados, jogadores que não jogaram) cria clusters de "tudo baixo prevendo tudo baixo" que parecem sinal, mas não são.</p>
+
+    <h4>3.3 — Tamanho de amostra é o limite real</h4>
+    <p>Um modelo genuinamente bom pode ser estatisticamente indistinguível de ruído numa amostra pequena. Fazer a conta de poder estatístico antes de confiar num resultado evita ilusões.</p>
+
+    <h4>3.4 — Resultado bom demais é motivo de desconfiança</h4>
+    <p>Tanto o critério "Favorito" batendo modelos sofisticados quanto o `onGA_p90` parecendo o melhor sinal do Cartola foram, nos dois casos, os resultados que não sobreviveram a mais escrutínio.</p>
+
+    <h4>3.5 — Validar não é opcional, é o produto</h4>
+    <p>O valor deste projeto não está em nenhum coeficiente específico — está no processo de testar, achar furo, corrigir, testar de novo. Publicar um modelo sem esse processo é publicar um número que parece bom só porque nunca foi comparado contra um baseline simples.</p>
+  </div>
+  </div>
+
 </div>
 
 

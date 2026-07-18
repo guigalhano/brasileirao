@@ -566,8 +566,8 @@
         <option value="consistencia">Consistencia (media alta, menor variacao)</option>
         <option value="combinado">Combinado (65% previsao do modelo + 35% media dos outros 3 criterios)</option>
         <option value="ameaca_gol">Ameaca real de gol e assist. (xG/playmaking quando disponivel; senao, concentracao de gols/assist. do time)</option>
-        <option value="estatisticas_posicao">Estatisticas reais por posicao (gol/assist/SoT ATA-MEI; SG via onGA para ZAG/LAT/GOL)</option>
-        <option value="combinado_completo">Criterio mestre (previsao do proximo jogo + estatisticas reais + media/forma/consistencia)</option>
+        <option value="estatisticas_posicao">Estatisticas reais por posicao (gol/assist/SoT ATA-MEI, pesos recalibrados por backtest; sem sinal validado p/ defesa ainda)</option>
+        <option value="combinado_completo">Criterio mestre (previsao do proximo jogo + estatisticas reais + media/forma/consistencia, pesos recalibrados por backtest)</option>
       </select>
 
       <button class="bp-swap" id="ct-build-btn" style="width:100%;margin-top:10px;padding:9px;text-align:center;">MONTAR TIME</button>
@@ -606,7 +606,8 @@
       <b>Concentracao de gols e assistencias:</b> no criterio "Ameaca real de gol e assist.", 475 dos 569 jogadores do elenco (antes eram so 46, e so pra gols) agora recebem um ajuste baseado na fatia dos gols/assistencias do proprio TIME que eles concentraram na temporada -- dados reais do FBRef (via LanusStats), casados por nome+time. Cobre ATA, MEI e LAT pra assistencias (antes so MEI, e so quando havia dado de playmaking). Ambos os pesos (6x) sao heuristica, nao coeficiente calibrado por regressao como o do xG/playmaking -- mas o baseline (0.10 pra ambos) agora vem da media real observada nos dados, nao de um chute.<br><br>
       <b>Estatisticas por posicao (atualizado 18/07):</b> testamos cada sinal contra a media real de pontos de cada jogador (correlacao de Pearson) antes de deixar no ar. Validaram bem e estao ativos: goalShare (ATA/MEI, r=0.686), assistShare (ATA/MEI/LAT, r=0.441), playmaking (MEI, r=0.380), SoT/90 -- finalizacoes no alvo (ATA/MEI, r=0.498), e onGA/90 -- gols sofridos com o jogador em campo, proxy do scout SG (ZAG/LAT/GOL, r=-0.483). Testamos e REMOVEMOS por nao terem sinal real: cruzamentos/90 pra LAT (r=-0.035), desarmes+intercep/90 pra ZAG (r=0.176), faltas cometidas (r=-0.030), cartao amarelo (r=-0.093) e impedimento (r=0.087) -- nenhum desses passou no teste, mesmo alguns sendo scouts oficiais do Cartola (cartao e falta cometida sao negativos na pontuacao oficial, mas nao correlacionaram aqui, provavelmente porque titulares regulares cometem mais faltas so por jogarem mais minutos, cancelando o efeito).
       <br><br><b>Criterio mestre (novo):</b> "Criterio mestre" combina previsao do proximo jogo (45%), estatisticas reais por posicao (25%) e a media dos outros tres criterios -- media da temporada, forma recente e consistencia (30%, ver pesos abaixo). E uma extensao do "Combinado" original (que so tinha 65% previsao + 35% resto), agora tambem incorporando os sinais validados acima.
-      <br><br><b>Backtest real rodada a rodada (18/07):</b> testamos "media", "ult5" (forma recente) e "consistencia" com um backtest de verdade -- usando so dado disponivel ATE a rodada anterior pra prever a rodada seguinte (via API oficial do Cartola, historico das 18 rodadas jogadas), evitando o look-ahead que a correlacao contra a media da temporada inteira nao evitava. Resultado: media_ate_N-1 previu a rodada seguinte com r=0.231, consistencia com r=0.215, ult5 com r=0.190 -- todos batem escolha aleatoria com folga (5.5 pontos/rodada em media pra top-15 por media, contra 3.24 aleatorio), mas media prediz melhor que forma recente, ao contrario da intuicao comum de "seguir quem esta quente". Por isso os criterios "Combinado" e "Criterio mestre" agora dao peso 40% pra media e consistencia e so 20% pra forma recente dentro do bloco dos "outros 3" (antes era 33% cada). Os demais criterios (estatisticas_posicao, previsao do proximo jogo) nao deram pra backtestar assim -- dependem de fotos atuais dos dados (FBRef, Elo) sem historico rodada a rodada disponivel.
+      <br><br><b>Backtest real rodada a rodada (18/07):</b> testamos "media", "ult5" (forma recente) e "consistencia" com um backtest de verdade -- usando so dado disponivel ATE a rodada anterior pra prever a rodada seguinte (via API oficial do Cartola, historico das 18 rodadas jogadas), evitando o look-ahead que a correlacao contra a media da temporada inteira nao evitava. Resultado: media_ate_N-1 previu a rodada seguinte com r=0.231, consistencia com r=0.215, ult5 com r=0.190 -- todos batem escolha aleatoria com folga (5.5 pontos/rodada em media pra top-15 por media, contra 3.24 aleatorio), mas media prediz melhor que forma recente, ao contrario da intuicao comum de "seguir quem esta quente". Por isso os criterios "Combinado" e "Criterio mestre" agora dao peso 40% pra media e consistencia e so 20% pra forma recente dentro do bloco dos "outros 3" (antes era 33% cada).
+      <br><br><b>Segunda rodada de backtest (18/07, mais tarde no mesmo dia):</b> descobrimos o reposit&oacute;rio p&uacute;blico caRtola (henriquepgomide), que tem o scout REAL rodada a rodada desde 2014 -- isso resolveu a lacuna que t&iacute;nhamos apontado (n&atilde;o dava pra backtestar os sinais do FBRef porque s&oacute; t&iacute;nhamos a foto atual da temporada). Refizemos goalShare/assistShare/sot_p90/onGA_p90/desarme_p90 com esse hist&oacute;rico real, sem look-ahead, filtrando s&oacute; jogadores que efetivamente entraram em campo (uma primeira vers&atilde;o sem esse filtro inflava os n&uacute;meros). Resultado, bem mais modesto que a correla&ccedil;&atilde;o contra a m&eacute;dia da temporada inteira sugeria: <b>sot_p90 r=0.227</b> (o melhor, perto de "consist&ecirc;ncia"), <b>goalShare r=0.155</b>, assistShare r=0.096 (abaixo do nosso pr&oacute;prio limiar de ru&iacute;do, removido), onGA_p90 r=0.039 <i>com sinal trocado</i> (era pra ser negativo, deu positivo -- removido), desarme_p90 r=0.067 (ru&iacute;do, n&atilde;o voltou). Os pesos de goalShare (6&rarr;1.5) e sot_p90 (1.2&rarr;0.6) foram reduzidos na mesma propor&ccedil;&atilde;o da queda de correla&ccedil;&atilde;o, e o peso de "estatisticas_posicao" dentro do Crit&eacute;rio Mestre caiu de 25% pra 15%. Conclus&atilde;o: ainda n&atilde;o temos nenhum sinal de defesa (ZAG/LAT/GOL) que sobreviva a um backtest honesto -- essas posi&ccedil;&otilde;es usam s&oacute; media/forma/consist&ecirc;ncia/matchup por enquanto.
     </div>
   </div>
 
@@ -1944,50 +1945,53 @@
         base += bonus;
       } else if((p.pos === 'ATA' || p.pos === 'MEI') && typeof p.goalShare === 'number'){
         // Fallback quando nao ha xG individual: fatia dos gols do TIME que
-        // esse jogador concentrou na temporada, agora vinda do FBRef (via
-        // LanusStats -- Gls por jogador / Gls do time), cobrindo 475 dos
-        // 569 jogadores do elenco (antes eram so 46, com a artilharia
-        // parcial da API dadosfutebol). E um proxy mais grosseiro que xG
-        // (nao diferencia finalizacao de oportunismo, e e uma foto da
-        // temporada inteira, nao forma recente) -- por isso o peso abaixo
-        // continua conservador e NAO foi calibrado por regressao contra o
-        // scout G real (diferente do 1.1 do xG90, que veio de regressao).
-        // Trate como heuristica, nao como coeficiente validado. Baseline
-        // 0.10 = concentracao media real entre jogadores com pelo menos 1
-        // gol na base do FBRef (n=176) -- antes era um chute (0.15), agora
-        // e um numero medido nos proprios dados.
-        var goalBonus = (p.goalShare - 0.10) * 6;
+        // esse jogador concentrou na temporada (FBRef via LanusStats),
+        // cobrindo 475 dos 569 jogadores.
+        //
+        // PESO RECALIBRADO em 18/07 apos backtest real rodada a rodada
+        // (repositorio caRtola/henriquepgomide, 18 rodadas de 2026, scout
+        // G real por rodada, sem look-ahead, filtrando so jogadores que
+        // efetivamente entraram em campo). O r=0.686 usado pra calibrar
+        // essa bonus originalmente vinha de comparar total-da-temporada
+        // contra media-da-temporada-inteira, que e parcialmente circular
+        // (jogador bom o ano todo tem os dois altos quase por construcao).
+        // O r real, decision-relevante (so dado ate a rodada anterior
+        // prevendo a rodada seguinte, so entre quem realmente jogou), caiu
+        // pra r=0.155 -- ainda real, mas bem mais fraco. Peso caiu de 6
+        // pra 1.5 na mesma proporcao. Baseline atualizado pra 0.073 (media
+        // real observada no backtest, n=2278).
+        var goalBonus = (p.goalShare - 0.073) * 1.5;
         base += goalBonus;
       }
-      // Criacao de chance: so tinhamos finalizacao (xG); assistencias reais
-      // por jogo (scout A) sao o sinal mais direto de criacao que temos pra
-      // MEI. Peso 0.37 = coeficiente empirico do scout A pra MEI (mesma
-      // regressao acima). Baseline 0.30 = media real de assistencias/jogo
-      // entre os MEI com dado suficiente (n=200).
+      // Criacao de chance: assistencias reais por jogo (scout A) sao o
+      // sinal mais direto de criacao que temos pra MEI. Peso 0.37 =
+      // coeficiente empirico do scout A pra MEI (regressao contra
+      // cartola_historico_2026_completo.csv). Baseline 0.30 = media real
+      // de assistencias/jogo entre os MEI com dado suficiente (n=200).
       if(p.pos === 'MEI' && typeof p.playmaking === 'number'){
         base += (p.playmaking - 0.30) * 0.37;
-      } else if((p.pos === 'ATA' || p.pos === 'MEI' || p.pos === 'LAT') && typeof p.assistShare === 'number'){
-        // Fallback quando nao ha playmaking medido (so ~200 MEI tinham):
-        // fatia das assistencias do TIME que esse jogador concentrou na
-        // temporada (FBRef via LanusStats, Ast por jogador / Ast do time).
-        // Cobre 475 dos 569 jogadores, incluindo ATA e LAT -- que o
-        // playmaking (so MEI) nunca cobriu. Mesma logica/cautela do
-        // goalBonus acima: heuristica nao validada por regressao contra o
-        // scout A real, peso conservador. Baseline 0.10 = concentracao
-        // media real entre jogadores com pelo menos 1 assistencia (n=162).
-        var assistBonus = (p.assistShare - 0.10) * 6;
-        base += assistBonus;
       }
+      // assistShare (fallback baseado em FBRef, ATA/MEI/LAT) REMOVIDO em
+      // 18/07: o mesmo backtest real mostrou r=0.096, abaixo do nosso
+      // proprio limiar de "trata como ruido" (~0.10, mesmo padrao usado
+      // pra descartar cartao amarelo r=-0.093, impedimento r=0.087, etc
+      // mais cedo no projeto). Nao fazia sentido manter um bonus pra esse
+      // sinal especifico enquanto descartavamos outros igualmente fracos.
+      //
       // Finalizacoes no alvo por 90min (sot_p90): sinal ofensivo
-      // independente do gol realizado -- mede ameaca criada de fato, nao
-      // so o que virou gol (jogador pode finalizar bem e ter azar/goleiro
-      // adversario bem). Adicionado em 18/07 depois de validar contra a
-      // media real de pontos: r=0.498 (n=197), um dos sinais mais fortes
-      // que testamos, quase no nivel do goalShare (r=0.686). Baseline
-      // 0.63 = media real de SoT/90 entre ATA/MEI com dado. Peso 1.2,
-      // heuristica (nao regressao).
+      // independente do gol realizado. PESO RECALIBRADO em 18/07: o
+      // r=0.498 original (season-total vs media-da-temporada) tambem
+      // sofria do mesmo problema de circularidade acima. Com backtest real
+      // (usando um proxy de "finalizacao perigosa" -- gol + defendida +
+      // na trave -- calculado rodada a rodada a partir do proprio scout do
+      // Cartola, nao do FBRef), o r ficou em 0.227 -- ainda o sinal mais
+      // forte entre os testados, mas menos da metade do que se pensava.
+      // Peso caiu de 1.2 pra 0.6 na mesma proporcao (baseline mantido em
+      // 0.63, que e a media real da metrica original do FBRef -- o proxy
+      // usado no backtest mede algo parecido mas nao identico, entao so a
+      // magnitude do peso foi recalibrada, nao o baseline).
       if((p.pos === 'ATA' || p.pos === 'MEI') && typeof p.sot_p90 === 'number'){
-        base += (p.sot_p90 - 0.63) * 1.2;
+        base += (p.sot_p90 - 0.63) * 0.6;
       }
       return base;
     }
@@ -1998,46 +2002,56 @@
       // pra todo mundo.
       //
       // ATA/MEI: identico ao "ameaca_gol" (gol via xG ou goalShare,
-      // assistencia via playmaking ou assistShare, finalizacao no alvo
-      // via sot_p90).
+      // assistencia via playmaking, finalizacao no alvo via sot_p90 --
+      // todos com pesos recalibrados em 18/07, ver comentarios no
+      // "ameaca_gol" acima).
       //
-      // LAT/ZAG (primeira tentativa, removida em 18/07): cruzamentos/90 e
-      // desarmes+intercep/90 nao correlacionaram com a media real de
-      // pontos (r=-0.035 e r=0.176) -- removidos.
+      // LAT/ZAG, tentativa 1 (removida 18/07): cruzamentos/90 e
+      // desarmes+intercep/90, testados contra a media da temporada
+      // inteira -- r=-0.035 e r=0.176. Removidos.
       //
-      // ZAG/LAT/GOL (18/07, sinal novo): gols sofridos com o jogador em
-      // campo por 90min (onGA_p90, de playingtime/FBRef) e um proxy
-      // direto do scout SG (jogo sem sofrer gol), um dos mais importantes
-      // pra essas posicoes no Cartola. Validado: r=-0.483 (n=150) contra
-      // a media real -- o sinal mais forte que achamos pra defesa, bem
-      // melhor que os anteriores. Baseline 1.34 = media real de
-      // onGA_p90 entre ZAG/LAT/GOL com dado. Peso 1.0, heuristica (nao
-      // regressao) -- sinal negativo: quanto MENOS gol sofrido em campo,
-      // maior o bonus.
+      // ZAG/LAT/GOL, tentativa 2 (removida 18/07, mesmo dia): onGA_p90
+      // (gols sofridos com o jogador em campo). Testado inicialmente
+      // contra a media da temporada inteira deu r=-0.483, parecia o
+      // melhor sinal do projeto. Mas ao rodar um backtest de verdade
+      // (repositorio caRtola/henriquepgomide, scout real rodada a rodada,
+      // sem look-ahead, so jogadores que efetivamente jogaram) o sinal
+      // colapsou pra r=+0.039 -- praticamente ruido, e ainda com o sinal
+      // TROCADO (positivo em vez de negativo). Isso significa que o
+      // r=-0.483 original quase certamente era inflado pela mesma
+      // circularidade que afetou goalShare/assistShare (comparar total-
+      // da-temporada contra media-da-temporada-inteira). Removido.
       //
-      // GOL/TEC sem xG/goalShare/playmaking obviamente (nao se aplicam),
-      // mas GOL agora entra no bonus de onGA_p90 acima.
+      // Conclusao pratica: ainda NAO temos um sinal de defesa (ZAG/LAT/
+      // GOL) que sobreviva a um backtest honesto. Essas posicoes caem no
+      // "combinado" (media/forma/consistencia + previsao de matchup) sem
+      // nenhum bonus extra por enquanto -- e melhor nao ter sinal do que
+      // ter um sinal que parece bom so por causa de vies de validacao.
       var base2 = criteriaScoreBase(p, 'ameaca_gol');
-      if((p.pos === 'ZAG' || p.pos === 'LAT' || p.pos === 'GOL') && typeof p.onGA_p90 === 'number'){
-        base2 += (1.34 - p.onGA_p90) * 1.0;
-      }
       return base2;
     }
     if(criteria === 'combinado_completo'){
-      // Criterio mestre: junta TODOS os criterios existentes num so, com
-      // peso maior pra previsao do proximo jogo (matchup), do mesmo jeito
-      // que o "combinado" original ja fazia (65% previsao + 35% resto),
-      // mas agora tambem incorpora o "estatisticas_posicao" -- que ja
-      // embute gol/assist/SoT (ATA/MEI) e onGA (ZAG/LAT/GOL), todos
-      // validados por correlacao real contra a media de pontos (ver
-      // comentarios acima, r entre 0.38 e 0.69 pros que ficaram).
+      // Criterio mestre: junta os criterios existentes, com peso maior
+      // pra previsao do proximo jogo (matchup), do mesmo jeito que o
+      // "combinado" original ja fazia (65% previsao + 35% resto).
+      //
+      // Pesos ATUALIZADOS em 18/07 apos o backtest real (ver comentarios
+      // acima): o peso de "estatisticas_posicao" caiu de 25% pra 15%,
+      // porque essa validacao honesta mostrou que os sinais de posicao
+      // sao mais fracos do que a correlacao inflada sugeria (o melhor
+      // deles, sot_p90, tem r=0.227 real -- parecido com "consistencia"
+      // r=0.215, nao um sinal muito mais forte que os criterios originais
+      // como a calibracao antiga supunha). Os 10 pontos percentuais que
+      // saíram foram pra "outros 3" (media/forma/consistencia), que se
+      // provaram mais confiaveis no mesmo backtest.
       //
       // Pesos (heuristica, nao regressao -- mesma ressalva de sempre):
       //   45% previsao do proximo jogo (matchup contra o adversario)
-      //   25% estatisticas reais por posicao (gol/assist/SoT/onGA)
-      //   30% dividido entre media da temporada, forma recente (ult5,
+      //   15% estatisticas reais por posicao (gol/assist/SoT p/ ATA-MEI;
+      //       ZAG/LAT/GOL sem bonus extra, ver nota do onGA_p90 acima)
+      //   40% dividido entre media da temporada, forma recente (ult5,
       //       ajustado por forca do adversario quando disponivel) e
-      //       consistencia (media menos metade do desvio) -- NAO mais em
+      //       consistencia (media menos metade do desvio) -- NAO em
       //       partes iguais, ver nota do backtest abaixo.
       // O peso da previsao caiu de 65% (no "combinado") pra 45% aqui
       // porque parte do que a previsao de matchup capturava (contexto do
@@ -2057,7 +2071,7 @@
       var formaRecente = (typeof p.ult5Sos === 'number') ? p.ult5Sos : p.ult5;
       var consistencia = p.media - (p.desvio || 0) * 0.5;
       var outrosTres = 0.40*media + 0.20*formaRecente + 0.40*consistencia;
-      return 0.45 * previsaoModelo + 0.25 * estatPos + 0.30 * outrosTres;
+      return 0.45 * previsaoModelo + 0.15 * estatPos + 0.40 * outrosTres;
     }
     return p.media;
   }

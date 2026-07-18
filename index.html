@@ -684,6 +684,16 @@
   .table-scroll::-webkit-scrollbar-thumb { background:var(--line); border-radius:6px; }
 
   .footnote { color:var(--text-dim); font-size:11px; margin-top:4px; line-height:1.6; }
+  .nm-card { background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:10px; }
+  .nm-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; flex-wrap:wrap; gap:6px; }
+  .nm-teams { font-size:14px; font-weight:600; color:var(--text); }
+  .nm-when { font-family:ui-monospace,Consolas,monospace; font-size:10.5px; color:var(--text-dim); }
+  .nm-row { display:grid; grid-template-columns:34px 1fr 44px; gap:8px; align-items:center; margin-bottom:5px; }
+  .nm-rowlabel { font-family:ui-monospace,Consolas,monospace; font-size:10.5px; color:var(--text-dim); }
+  .nm-track { position:relative; height:15px; background:var(--bg); border-radius:4px; overflow:hidden; }
+  .nm-fill { position:absolute; top:0; left:0; height:100%; border-radius:4px; }
+  .nm-val { font-family:ui-monospace,Consolas,monospace; font-size:11px; text-align:right; color:var(--text); }
+  .nm-elo { font-family:ui-monospace,Consolas,monospace; font-size:10px; color:var(--text-dim); margin-top:8px; padding-top:6px; border-top:1px solid var(--line); }
   .badge-noev { color:var(--text-dim); font-size:10.5px; }
 </style>
 
@@ -747,6 +757,12 @@
     <div class="panel-desc" style="margin-bottom:0">
       O lado inc&ocirc;modo da hist&oacute;ria, de novo: melhorar a calibra&ccedil;&atilde;o (agora combinando Poisson com Elo) <b>n&atilde;o</b> aumentou o ROI aparente do backtest de apostas &mdash; ficou levemente negativo na maior parte dos limiares de EV testados. Isso &eacute; esperado, e refor&ccedil;a a confian&ccedil;a no modelo: se cada melhora de calibra&ccedil;&atilde;o reduz o "edge" aparente, é sinal de que esse edge nunca foi real &mdash; era erro do modelo, n&atilde;o ineficiência do mercado. Um modelo mais fiel &agrave; realidade tende a concordar mais com um mercado eficiente, n&atilde;o menos &mdash; e o Poisson + Elo continua sendo o &uacute;nico dos quatro com essa valida&ccedil;&atilde;o independente por tr&aacute;s.
     </div>
+  </div>
+
+  <div class="panel" id="nextMatchesPanel">
+    <div class="panel-title">Pr&oacute;ximos jogos &middot; Rodada 19</div>
+    <div class="panel-desc">Previs&otilde;es do nosso modelo (Poisson + Elo, sem odds) pros jogos restantes da rodada, atualizado com os 2 resultados mais recentes (Botafogo 2-1 Santos e Vit&oacute;ria 1-0 Vasco, 16/07). Sem odds de mercado dispon&iacute;veis pra esses jogos ainda &mdash; s&atilde;o previs&otilde;es puras do modelo, n&atilde;o compara&ccedil;&atilde;o de valor.</div>
+    <div id="nextMatchesCards"></div>
   </div>
 
   <div class="panel">
@@ -934,6 +950,23 @@
   seasonSel.addEventListener('change', compute);
   logSel.addEventListener('change', compute);
   compute();
+
+  // ---- Próximos jogos (Poisson + Elo), rodada 19 ----
+  var NEXT_MATCHES = [{"data":"23/07/2026","home":"Corinthians","away":"Remo","eloHome":1562.3,"eloAway":1490.7,"pH":0.5731,"pD":0.2491,"pA":0.1778,"poiUsed":true},{"data":"21/07/2026","home":"Atlético Mineiro","away":"Bahia","eloHome":1549.0,"eloAway":1567.0,"pH":0.4829,"pD":0.2734,"pA":0.2437,"poiUsed":true},{"data":"22/07/2026","home":"Chapecoense","away":"Flamengo","eloHome":1343.6,"eloAway":1725.5,"pH":0.1156,"pD":0.2292,"pA":0.6552,"poiUsed":true},{"data":"22/07/2026","home":"Coritiba","away":"Palmeiras","eloHome":1471.9,"eloAway":1743.9,"pH":0.193,"pD":0.2824,"pA":0.5246,"poiUsed":true},{"data":"22/07/2026","home":"Internacional","away":"Cruzeiro","eloHome":1540.9,"eloAway":1599.0,"pH":0.426,"pD":0.2956,"pA":0.2784,"poiUsed":true},{"data":"22/07/2026","home":"São Paulo","away":"Athletico Paranaense","eloHome":1558.3,"eloAway":1556.6,"pH":0.4969,"pD":0.2812,"pA":0.2219,"poiUsed":true},{"data":"17/07/2026","home":"Fluminense","away":"Red Bull Bragantino","eloHome":1619.3,"eloAway":1558.0,"pH":0.5544,"pD":0.2618,"pA":0.1838,"poiUsed":true},{"data":"17/07/2026","home":"Mirassol","away":"Grêmio","eloHome":1558.7,"eloAway":1537.1,"pH":0.5254,"pD":0.2635,"pA":0.2111,"poiUsed":true}]
+;
+  function fmtPct1(x){ return (x*100).toFixed(1) + '%'; }
+  var nmContainer = root.querySelector('#nextMatchesCards');
+  if (nmContainer) {
+    nmContainer.innerHTML = NEXT_MATCHES.map(function(m){
+      return '<div class="nm-card">' +
+        '<div class="nm-head"><span class="nm-teams">' + m.home + ' vs ' + m.away + '</span><span class="nm-when">' + m.data + '</span></div>' +
+        '<div class="nm-row"><span class="nm-rowlabel">Casa</span><div class="nm-track"><div class="nm-fill" style="width:' + (m.pH*100) + '%;background:var(--win);"></div></div><span class="nm-val">' + fmtPct1(m.pH) + '</span></div>' +
+        '<div class="nm-row"><span class="nm-rowlabel">Empate</span><div class="nm-track"><div class="nm-fill" style="width:' + (m.pD*100) + '%;background:var(--text-dim);"></div></div><span class="nm-val">' + fmtPct1(m.pD) + '</span></div>' +
+        '<div class="nm-row"><span class="nm-rowlabel">Fora</span><div class="nm-track"><div class="nm-fill" style="width:' + (m.pA*100) + '%;background:var(--loss);"></div></div><span class="nm-val">' + fmtPct1(m.pA) + '</span></div>' +
+        '<div class="nm-elo">Elo: ' + m.home + ' ' + Math.round(m.eloHome) + ' &middot; ' + m.away + ' ' + Math.round(m.eloAway) + (m.poiUsed ? ' &middot; Poisson ativo' : ' &middot; s\u00f3 Elo (hist\u00f3rico insuficiente p/ Poisson)') + '</div>' +
+        '</div>';
+    }).join('');
+  }
 })();
 </script>
 

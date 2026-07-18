@@ -566,7 +566,7 @@
         <option value="consistencia">Consistencia (media alta, menor variacao)</option>
         <option value="combinado">Combinado (65% previsao do modelo + 35% media dos outros 3 criterios)</option>
         <option value="ameaca_gol">Ameaca real de gol e assist. (xG/playmaking quando disponivel; senao, concentracao de gols/assist. do time)</option>
-        <option value="estatisticas_posicao">Estatisticas reais por posicao (gol/assist ATA-MEI, cruzamento LAT, desarme+intercep ZAG)</option>
+        <option value="estatisticas_posicao">Estatisticas reais por posicao (gol/assist ATA-MEI; LAT/ZAG testados e sem sinal valido ainda)</option>
       </select>
 
       <button class="bp-swap" id="ct-build-btn" style="width:100%;margin-top:10px;padding:9px;text-align:center;">MONTAR TIME</button>
@@ -603,7 +603,7 @@
       Base: dados oficiais da API do Cartola FC (mercado.json, rodada 19, 2026), enriquecida com o historico completo das 18 rodadas ja jogadas (repositorio henriquepgomide/caRtola no GitHub) — 569 jogadores com pelo menos 1 jogo, cobrindo os 20 times. "ult5" = media das ultimas 5 rodadas de cada jogador; consistencia penaliza jogadores com pontuacao muito variavel. Jogadores em duvida/suspenso/contundido ficam de fora por padrao (ative o filtro acima pra incluir mesmo assim; eles aparecem marcados em vermelho).<br>
       Montagem por algoritmo guloso (maior media por posicao dentro do orcamento) &mdash; nao e um otimizador exato, e uma aproximacao rapida.<br>
       <b>Concentracao de gols e assistencias:</b> no criterio "Ameaca real de gol e assist.", 475 dos 569 jogadores do elenco (antes eram so 46, e so pra gols) agora recebem um ajuste baseado na fatia dos gols/assistencias do proprio TIME que eles concentraram na temporada -- dados reais do FBRef (via LanusStats), casados por nome+time. Cobre ATA, MEI e LAT pra assistencias (antes so MEI, e so quando havia dado de playmaking). Ambos os pesos (6x) sao heuristica, nao coeficiente calibrado por regressao como o do xG/playmaking -- mas o baseline (0.10 pra ambos) agora vem da media real observada nos dados, nao de um chute.<br><br>
-      <b>Estatisticas por posicao (novo):</b> criterio "Estatisticas reais por posicao" estende a mesma logica pra LAT (cruzamentos/90, 67 jogadores com dado) e ZAG (desarmes+intercep/90, 59 jogadores com dado), tambem via FBRef. Algumas colunas mais especificas do FBRef (cruzamentos na area, passes na area, gca/90) nao vieram preenchidas na extracao -- provavelmente sao calculadas por JavaScript no carregamento da pagina e nao ficaram no HTML capturado pelo navegador headless -- entao usamos as metricas mais simples que vieram 100% completas (cruzamentos totais, desarmes vencidos + interceptacoes) em vez delas. GOL e TEC ainda nao tem estatistica especifica (a extracao nao cobriu as categorias de goleiro) e caem na media combinada.
+      <b>Estatisticas por posicao (atualizado 18/07):</b> testamos o criterio "Estatisticas reais por posicao" contra a media real de pontos de cada jogador (correlacao de Pearson) antes de deixar no ar. Gols/assistencias concentrados (ATA/MEI/LAT) validaram bem: goalShare r=0.686, assistShare r=0.441, playmaking r=0.380. Mas os bonus que tinhamos pra LAT (cruzamentos/90) e ZAG (desarmes+intercep/90) NAO validaram -- r=-0.035 e r=0.176 respectivamente, ambos sem poder preditivo real -- e foram removidos da pontuacao. Faz sentido: lateral e zagueiro pontuam no Cartola sobretudo por SG (jogo sem sofrer gol) e participacao direta em gol/assistencia, nao pelo volume bruto de cruzamentos ou desarmes. Os dados continuam salvos no elenco caso surja um jeito melhor de usa-los, mas por enquanto essas duas posicoes usam so a media combinada nesse criterio.
     </div>
   </div>
 
@@ -1978,33 +1978,33 @@
       // ATA/MEI: identico ao "ameaca_gol" (gol via xG ou goalShare,
       // assistencia via playmaking ou assistShare).
       //
-      // LAT: parte do mesmo calculo de ameaca_gol (que ja inclui o
-      // assistBonus pra LAT) e soma um bonus de cruzamentos/90min --
-      // sinal direto de participacao ofensiva que nao depende de o
-      // cruzamento ter virado gol ou assistencia. Dado: coluna "crosses"
-      // (misc, FBRef), 100% populada pros 623 jogadores da liga --
-      // diferente de "cruzamentos na area" (crosses_into_penalty_area),
-      // que a extracao nao conseguiu preencher (provavelmente calculada
-      // via JS no carregamento da pagina, nao veio no HTML capturado).
-      // Baseline 3,48 e peso 0,4 = media real de cruzamentos/90 entre os
-      // 67 laterais com dado (nao e coeficiente de regressao, e
-      // heuristica -- mesma ressalva do goalBonus/assistBonus acima).
-      //
-      // ZAG: acoes defensivas/90 (desarmes vencidos + interceptacoes,
-      // colunas "tackles_won" + "interceptions" do FBRef, tambem 100%
-      // populadas). Baseline 1,97 e peso 1,0 = media real entre os 59
-      // zagueiros com dado. Mesma ressalva de heuristica nao calibrada.
+      // LAT/ZAG: TESTADO E REMOVIDO em 18/07. A versao original desse
+      // criterio tinha um bonus de cruzamentos/90 pra LAT e de
+      // desarmes+intercep/90 pra ZAG. Antes de deixar isso no ar,
+      // rodamos a correlacao de Pearson entre cada sinal e a "media"
+      // real de pontos do jogador na temporada (18 rodadas) -- o mesmo
+      // tipo de checagem que jogos historicos com odds:
+      //   - goalShare (ATA/MEI) vs media: r=0.686 (n=279) -- forte, ok
+      //   - assistShare (ATA/MEI/LAT) vs media: r=0.441 (n=368) -- ok
+      //   - playmaking (MEI) vs media: r=0.380 (n=184) -- ok
+      //   - crossesP90 (LAT) vs media: r=-0.035 (n=67) -- RUIDO, sem
+      //     poder preditivo real. Removido.
+      //   - defActionsP90 (ZAG) vs media: r=0.176 (n=59) -- fraco, quase
+      //     certamente nao significativo nesse tamanho de amostra
+      //     (t~1.35, p~0.18). Removido tambem, por seguranca.
+      // Conclusao: cruzar muito ou desarmar muito nao necessariamente
+      // vira pontuacao real no Cartola pra essas posicoes -- faz sentido
+      // em retrospecto, porque LAT/ZAG pontuam sobretudo via SG (jogo
+      // sem sofrer gol) e participacao direta em gol/assistencia, nao
+      // via volume bruto dessas acoes. Os dados (crossesP90,
+      // defActionsP90) continuam no elenco pra uso futuro se surgir um
+      // jeito melhor de usa-los, mas nao entram na pontuacao por
+      // enquanto -- ate termos um sinal que realmente valide.
       //
       // GOL/TEC: sem dado do FBRef pra essas funcoes nesta extracao --
       // cai no "combinado" mesmo (via ameaca_gol, que ja faz esse
       // fallback quando nenhum bonus se aplica).
       var base2 = criteriaScoreBase(p, 'ameaca_gol');
-      if(p.pos === 'LAT' && typeof p.crossesP90 === 'number'){
-        base2 += (p.crossesP90 - 3.48) * 0.4;
-      }
-      if(p.pos === 'ZAG' && typeof p.defActionsP90 === 'number'){
-        base2 += (p.defActionsP90 - 1.97) * 1.0;
-      }
       return base2;
     }
     return p.media;

@@ -1139,6 +1139,20 @@
       45% previsão do próximo jogo (matchup) + 15% estatísticas reais por posição (gol/assistência/finalização) + 40% dividido entre média (40%), forma recente (20%) e consistência (40%).
     </div>
 
+    <h4>2.7 — A média da temporada anterior ajuda no início de uma temporada nova</h4>
+    <p>Testamos se a média de 2025 de um jogador prediz o começo de 2026 — mas dessa vez validando em <strong>6 transições de temporada independentes</strong> (2018→19 até 2025→26), não só uma amostra. Resultado: r=0,223 na rodada 3 e r=0,222 na rodada 6 (t-stat ~6 em ambos — um dos achados mais sólidos do projeto).</p>
+    <table>
+      <tr><th>Rodada da temporada nova</th><th>Correlação média (6 transições)</th><th>t-stat</th></tr>
+      <tr class="highlight"><td>Rodada 3</td><td>r = 0,223</td><td>5,95</td></tr>
+      <tr class="highlight"><td>Rodada 6</td><td>r = 0,222</td><td>6,41</td></tr>
+    </table>
+    <p>O efeito enfraquece conforme a temporada atual acumula rodadas — por volta da rodada 10, a média corrente já supera a do ano anterior sozinha. Um blend fixo 50/50 testado ficou <em>pior</em> que usar só a média anterior nas primeiras rodadas — o jeito certo é um peso decrescente:</p>
+    <div class="doc-example">
+      <b class="tag">Fórmula de encolhimento (shrinkage)</b>
+      peso_temporada_anterior = K / (K + jogos_da_temporada_atual), com K=10 — calibrado pelo ponto onde as duas fontes empatam em poder preditivo (por volta da rodada 10).
+    </div>
+    <p>Implementado como <code>mediaAjustada()</code>, ativo nos critérios "Combinado" e "Critério mestre" para 421 dos 569 jogadores (os que têm histórico de 2025 casado por nome). Na rodada 19 atual, o peso já caiu pra ~36% — o maior benefício desse sinal vai aparecer no início da temporada 2027.</p>
+
     <h3 id="doc-licoes">3. Lições de metodologia</h3>
 
     <h4>3.1 — Circularidade é fácil de não perceber</h4>

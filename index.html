@@ -457,6 +457,7 @@
     <button class="bh-tab" data-tab="nextmatches">Proximos Jogos</button>
     <button class="bh-tab" data-tab="calendar">Calendario</button>
     <button class="bh-tab" data-tab="cartola">Cartola FC</button>
+    <button class="bh-tab" data-tab="meutime">Meu Time</button>
     <button class="bh-tab" data-tab="valuebet">Value Betting</button>
     <button class="bh-tab" data-tab="docs">Documentacao</button>
   </div>
@@ -610,6 +611,40 @@
       <br><br><b>Backtest real rodada a rodada (18/07):</b> testamos "media", "ult5" (forma recente) e "consistencia" com um backtest de verdade -- usando so dado disponivel ATE a rodada anterior pra prever a rodada seguinte (via API oficial do Cartola, historico das 18 rodadas jogadas), evitando o look-ahead que a correlacao contra a media da temporada inteira nao evitava. Resultado: media_ate_N-1 previu a rodada seguinte com r=0.231, consistencia com r=0.215, ult5 com r=0.190 -- todos batem escolha aleatoria com folga (5.5 pontos/rodada em media pra top-15 por media, contra 3.24 aleatorio), mas media prediz melhor que forma recente, ao contrario da intuicao comum de "seguir quem esta quente". Por isso os criterios "Combinado" e "Criterio mestre" agora dao peso 40% pra media e consistencia e so 20% pra forma recente dentro do bloco dos "outros 3" (antes era 33% cada).
       <br><br><b>Segunda rodada de backtest (18/07, mais tarde no mesmo dia):</b> descobrimos o reposit&oacute;rio p&uacute;blico caRtola (henriquepgomide), que tem o scout REAL rodada a rodada desde 2014 -- isso resolveu a lacuna que t&iacute;nhamos apontado (n&atilde;o dava pra backtestar os sinais do FBRef porque s&oacute; t&iacute;nhamos a foto atual da temporada). Refizemos goalShare/assistShare/sot_p90/onGA_p90/desarme_p90 com esse hist&oacute;rico real, sem look-ahead, filtrando s&oacute; jogadores que efetivamente entraram em campo (uma primeira vers&atilde;o sem esse filtro inflava os n&uacute;meros). Resultado, bem mais modesto que a correla&ccedil;&atilde;o contra a m&eacute;dia da temporada inteira sugeria: <b>sot_p90 r=0.227</b> (o melhor, perto de "consist&ecirc;ncia"), <b>goalShare r=0.155</b>, assistShare r=0.096 (abaixo do nosso pr&oacute;prio limiar de ru&iacute;do, removido), onGA_p90 r=0.039 <i>com sinal trocado</i> (era pra ser negativo, deu positivo -- removido), desarme_p90 r=0.067 (ru&iacute;do, n&atilde;o voltou). Os pesos de goalShare (6&rarr;1.5) e sot_p90 (1.2&rarr;0.6) foram reduzidos na mesma propor&ccedil;&atilde;o da queda de correla&ccedil;&atilde;o, e o peso de "estatisticas_posicao" dentro do Crit&eacute;rio Mestre caiu de 25% pra 15%. Conclus&atilde;o: ainda n&atilde;o temos nenhum sinal de defesa (ZAG/LAT/GOL) que sobreviva a um backtest honesto -- essas posi&ccedil;&otilde;es usam s&oacute; media/forma/consist&ecirc;ncia/matchup por enquanto.
       <br><br><b>Terceira rodada de backtest (18/07, ainda no mesmo dia): m&eacute;dia da temporada anterior.</b> Testamos se a m&eacute;dia de 2025 de um jogador ajuda a prever o in&iacute;cio de 2026 -- e, diferente das vezes anteriores, validamos em <b>6 transi&ccedil;&otilde;es de temporada independentes</b> (2018&rarr;19, 2019&rarr;20, 2022&rarr;23, 2023&rarr;24, 2024&rarr;25, 2025&rarr;26), n&atilde;o s&oacute; uma. Resultado: media_temporada_anterior prediz a rodada 3 da temporada seguinte com <b>r=0,223</b> (m&eacute;dia entre as 6 transi&ccedil;&otilde;es, t-stat=5,95) e a rodada 6 com <b>r=0,222</b> (t-stat=6,41) -- um dos achados mais robustos do projeto, porque n&atilde;o depende de uma &uacute;nica amostra ter dado sorte. O efeito enfraquece conforme a temporada atual acumula rodadas (por volta da rodada 10 a m&eacute;dia corrente j&aacute; supera a do ano anterior sozinha) e um blend fixo 50/50 testado ficou <i>pior</i> que usar s&oacute; a m&eacute;dia anterior nas primeiras rodadas -- o jeito certo &eacute; um peso decrescente (f&oacute;rmula de encolhimento/shrinkage: peso = K/(K+jogos), K=10). Implementado nos crit&eacute;rios "Combinado" e "Crit&eacute;rio mestre" como <code>mediaAjustada()</code> -- ativo pra 421 dos 569 jogadores (os que t&ecirc;m hist&oacute;rico de 2025 casado por nome). Como j&aacute; estamos na rodada 19 de 2026, o efeito pr&aacute;tico agora &eacute; moderado (peso ~36% pra 2025, ~64% pra 2026); o maior benef&iacute;cio vai aparecer no in&iacute;cio da temporada 2027, quando o peso do histórico começa perto de 100% e cai gradualmente.
+    </div>
+  </div>
+
+  <!-- ===== TAB: MEU TIME (historico vs time medio da rodada) ===== -->
+  <div class="bh-panel" id="panel-meutime">
+    <style>
+      #panel-meutime .mt-cards { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:20px; }
+      #panel-meutime .mt-card { flex:1; min-width:160px; background:var(--pitch-1); border:1px solid var(--line); border-radius:8px; padding:14px 16px; }
+      #panel-meutime .mt-card-label { font-family:ui-monospace,Consolas,monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--cream-dim); margin-bottom:6px; }
+      #panel-meutime .mt-card-val { font-family:ui-monospace,Consolas,monospace; font-size:22px; color:var(--gold); }
+      #panel-meutime .mt-card-val.good { color:var(--good); }
+      #panel-meutime .mt-card-val.bad { color:var(--bad); }
+      #panel-meutime canvas#mtChart { width:100% !important; height:260px !important; margin-bottom:20px; }
+      #panel-meutime table { width:100%; border-collapse:collapse; font-size:12.5px; }
+      #panel-meutime th { text-align:left; font-family:ui-monospace,Consolas,monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--cream-dim); border-bottom:1px solid var(--line); padding:6px 10px; }
+      #panel-meutime td { padding:6px 10px; border-bottom:1px solid rgba(51,69,47,0.5); font-family:ui-monospace,Consolas,monospace; color:var(--cream); }
+      #panel-meutime tr.mt-win td.mt-diff { color:var(--good); }
+      #panel-meutime tr.mt-loss td.mt-diff { color:var(--bad); }
+    </style>
+
+    <div class="mt-cards" id="mt-cards"></div>
+
+    <canvas id="mtChart"></canvas>
+
+    <div class="table-scroll">
+      <table id="mt-table">
+        <thead><tr><th>Rodada</th><th>Seus pontos</th><th>Time medio</th><th>Diferenca</th><th>Resultado</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="bh-note">
+      <b>O que e "time medio":</b> a API publica do Cartola FC nao expoe um dado confiavel de "time mais escalado" (dominio bloqueado no ambiente do Claude, e sem endpoint oficial documentado para isso). Como referencia mais solida, "time medio" aqui e a media de pontos dos jogadores que <b>entraram em campo</b> naquela rodada (filtra reservas que nem jogaram, que dominam a base e derrubam a media pra quase zero) multiplicada por 12 (11 titulares + 1 capitao, que pontua em dobro).<br><br>
+      Dados do time (id 199236) coletados com <code>scripts/comparar_historico_time.py</code> (roda local, ja que a API do Cartola esta bloqueada no ambiente do Claude) e embutidos aqui com <code>scripts/build_meu_time_tab.py</code>. Pra atualizar com rodadas novas, rode os dois scripts de novo.
     </div>
   </div>
 
@@ -1193,8 +1228,66 @@
       panels.forEach(function(p){ p.classList.remove('active'); });
       tab.classList.add('active');
       document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      if (tab.dataset.tab === 'meutime') { initMeuTime(); }
     });
   });
+
+  // ---- Meu Time (historico vs time medio da rodada) ----
+  var mtInitialized = false;
+  function initMeuTime(){
+    if (mtInitialized) return;
+    mtInitialized = true;
+
+    if (!MEU_TIME_HIST.length) {
+      document.getElementById('mt-cards').innerHTML =
+        '<div class="mt-card"><div class="mt-card-label">Sem dados</div><div class="mt-card-val" style="font-size:13px;">' +
+        'Rode scripts/comparar_historico_time.py e scripts/build_meu_time_tab.py pra popular essa aba.</div></div>';
+      return;
+    }
+
+    var n = MEU_TIME_HIST.length;
+    var vitorias = MEU_TIME_HIST.filter(function(r){ return r.bateu; }).length;
+    var saldo = MEU_TIME_HIST.reduce(function(s, r){ return s + r.diff; }, 0);
+    var mediaDiff = saldo / n;
+
+    var cardsHtml =
+      '<div class="mt-card"><div class="mt-card-label">Rodadas vs time medio</div><div class="mt-card-val ' + (vitorias >= n/2 ? 'good' : 'bad') + '">' + vitorias + '/' + n + ' (' + Math.round(100*vitorias/n) + '%)</div></div>' +
+      '<div class="mt-card"><div class="mt-card-label">Saldo total na temporada</div><div class="mt-card-val ' + (saldo >= 0 ? 'good' : 'bad') + '">' + (saldo >= 0 ? '+' : '') + saldo.toFixed(1) + ' pts</div></div>' +
+      '<div class="mt-card"><div class="mt-card-label">Diferenca media / rodada</div><div class="mt-card-val ' + (mediaDiff >= 0 ? 'good' : 'bad') + '">' + (mediaDiff >= 0 ? '+' : '') + mediaDiff.toFixed(1) + ' pts</div></div>';
+    document.getElementById('mt-cards').innerHTML = cardsHtml;
+
+    var tbody = document.querySelector('#mt-table tbody');
+    tbody.innerHTML = MEU_TIME_HIST.map(function(r){
+      return '<tr class="' + (r.bateu ? 'mt-win' : 'mt-loss') + '">' +
+        '<td>' + r.rodada + '</td>' +
+        '<td>' + r.meus.toFixed(1) + '</td>' +
+        '<td>' + r.medio.toFixed(1) + '</td>' +
+        '<td class="mt-diff">' + (r.diff >= 0 ? '+' : '') + r.diff.toFixed(1) + '</td>' +
+        '<td>' + (r.bateu ? 'Bateu' : 'Ficou abaixo') + '</td>' +
+        '</tr>';
+    }).join('');
+
+    var ctx = document.getElementById('mtChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: MEU_TIME_HIST.map(function(r){ return 'R' + r.rodada; }),
+        datasets: [
+          { label: 'Seu time', data: MEU_TIME_HIST.map(function(r){ return r.meus; }), backgroundColor: '#CBA135' },
+          { label: 'Time medio', data: MEU_TIME_HIST.map(function(r){ return r.medio; }), backgroundColor: '#5FA772' }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { ticks: { color: '#A7AB9C' }, grid: { color: '#33452F' } },
+          y: { ticks: { color: '#A7AB9C' }, grid: { color: '#33452F' } }
+        },
+        plugins: { legend: { labels: { color: '#EFEAD9' } } }
+      }
+    });
+  }
 
   // ---- Current season snapshot (top 3, as of 2026-07-14) ----
   var SNAPSHOT = [
@@ -1992,6 +2085,28 @@
     {name:"Preciado", pos:"LAT", team:"CAM", price:7.2, media:4.0, status:"Nulo", ult5:5.22, desvio:3.88, ult5Sos:5.879, riscoRotacao:1.0}
   ];
   PLAYERS.forEach(function(p, i){ p.id = i; });
+
+  // ================= MEU TIME: HISTORICO VS TIME MEDIO =================
+  var MEU_TIME_HIST = [
+    {rodada:1, meus:63.66, medio:43.41, diff:20.25, bateu:true},
+    {rodada:2, meus:39.8, medio:41.59, diff:-1.79, bateu:false},
+    {rodada:3, meus:71.46, medio:46.55, diff:24.91, bateu:true},
+    {rodada:4, meus:55.58, medio:37.09, diff:18.49, bateu:true},
+    {rodada:5, meus:64.64, medio:43.47, diff:21.17, bateu:true},
+    {rodada:6, meus:74.41, medio:38.97, diff:35.44, bateu:true},
+    {rodada:7, meus:51.55, medio:40.33, diff:11.22, bateu:true},
+    {rodada:8, meus:77.02, medio:40.97, diff:36.05, bateu:true},
+    {rodada:9, meus:87.74, medio:44.13, diff:43.61, bateu:true},
+    {rodada:10, meus:69.89, medio:40.26, diff:29.63, bateu:true},
+    {rodada:11, meus:80.96, medio:41.04, diff:39.92, bateu:true},
+    {rodada:12, meus:89.5, medio:42.57, diff:46.93, bateu:true},
+    {rodada:13, meus:109.49, medio:43.67, diff:65.82, bateu:true},
+    {rodada:14, meus:57.38, medio:39.81, diff:17.57, bateu:true},
+    {rodada:15, meus:63.54, medio:40.21, diff:23.33, bateu:true},
+    {rodada:16, meus:73.59, medio:40.19, diff:33.4, bateu:true},
+    {rodada:17, meus:78.62, medio:43.51, diff:35.11, bateu:true},
+    {rodada:18, meus:101.3, medio:44.98, diff:56.32, bateu:true}
+  ];
 
   var ALL_TEAMS = ["Atletico-PR","Atletico-MG","Bahia","Botafogo","Bragantino","Chapecoense","Corinthians","Coritiba","Cruzeiro","Flamengo","Fluminense","Gremio","Internacional","Mirassol","Palmeiras","Remo","Santos","Sao Paulo","Vasco","Vitoria"];
   var TEAMS_WITH_DATA = {};

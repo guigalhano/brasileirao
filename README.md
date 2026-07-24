@@ -15,7 +15,7 @@ no repositório e como cada peça se encaixa.
 ├── data/                   # dados processados, prontos pra uso (CSV/JSON)
 ├── scripts/                # scripts Python/bat que geram os dados em data/
 ├── docs/                   # versões standalone de widgets específicos (predictor sozinho, etc.)
-└── .github/workflows/      # automação do GitHub Actions (atualização a cada 3 dias)
+└── .github/workflows/      # automação do GitHub Actions (atualização diária)
 ```
 
 ## O modelo, em resumo
@@ -79,9 +79,9 @@ No Windows, `scripts/coletar_tudo.bat` roda o pipeline completo do Transfermarkt
 3. Salve. Em alguns minutos a ferramenta fica disponível em
    `https://SEU-USUARIO.github.io/NOME-DO-REPO/`.
 
-## Automação (atualização a cada 3 dias)
+## Automação (atualização diária)
 
-O arquivo `.github/workflows/atualizar_dados.yml` roda automaticamente a cada 3 dias (e também
+O arquivo `.github/workflows/atualizar_dados.yml` roda automaticamente todo dia (e também
 pode ser disparado manualmente na aba Actions do GitHub). Ele:
 1. Baixa o snapshot mais recente do mercado do Cartola FC (preço, média, status de cada jogador).
 2. Reprocessa a base enriquecida (histórico + forma recente + consistência).

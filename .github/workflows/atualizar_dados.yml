@@ -1,10 +1,10 @@
 name: Atualizar dados do Cartola FC
 
-# Roda automaticamente a cada 3 dias, e tambem pode ser disparado manualmente
+# Roda automaticamente todo dia, e tambem pode ser disparado manualmente
 # na aba "Actions" do GitHub (botao "Run workflow").
 on:
   schedule:
-    - cron: "0 6 */3 * *"   # 06:00 UTC, a cada 3 dias
+    - cron: "0 6 * * *"   # 06:00 UTC, todo dia
   workflow_dispatch: {}
 
 permissions:

@@ -2084,7 +2084,13 @@
     {name:"Luis Eduardo", pos:"ZAG", team:"GRE", price:1.45, media:-0.3, status:"Nulo", ult5:-0.3, desvio:0.0, ult5Sos:-0.286, riscoRotacao:0.6},
     {name:"Preciado", pos:"LAT", team:"CAM", price:7.2, media:4.0, status:"Nulo", ult5:5.22, desvio:3.88, ult5Sos:5.879, riscoRotacao:1.0}
   ];
-  PLAYERS.forEach(function(p, i){ p.id = i; });
+  var TEAM_CODE_TO_NAME = {
+    CAM:"Atletico-MG", CAP:"Atletico-PR", BAH:"Bahia", BOT:"Botafogo", RBB:"Bragantino",
+    CHA:"Chapecoense", COR:"Corinthians", CFC:"Coritiba", CRU:"Cruzeiro", FLA:"Flamengo",
+    FLU:"Fluminense", GRE:"Gremio", INT:"Internacional", MIR:"Mirassol", PAL:"Palmeiras",
+    REM:"Remo", SAN:"Santos", SAO:"Sao Paulo", VAS:"Vasco", VIT:"Vitoria"
+  };
+  PLAYERS.forEach(function(p, i){ p.id = i; p.team = TEAM_CODE_TO_NAME[p.team] || p.team; });
 
   // ================= MEU TIME: HISTORICO VS TIME MEDIO =================
   var MEU_TIME_HIST = [

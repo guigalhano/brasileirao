@@ -292,20 +292,6 @@
   }
   .rj-noodds{font-family:var(--font-mono);font-size:10.5px;color:var(--gold-dim);text-align:center;padding:6px 0 2px;}
 
-  /* ---- Calendar tab ---- */
-  .rj-runin-row{
-    display:grid;
-    grid-template-columns:22px 108px 1fr 40px;
-    align-items:center;
-    gap:8px;
-    padding:7px 0;
-    border-bottom:1px solid var(--line);
-  }
-  .rj-runin-rank{font-family:var(--font-mono);font-size:10px;color:var(--cream-dim);}
-  .rj-runin-team{font-size:12.5px;font-weight:600;}
-  .rj-runin-opps{font-family:var(--font-mono);font-size:9.5px;color:var(--cream-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .rj-runin-val{font-family:var(--font-mono);font-size:11px;text-align:right;}
-
   .bh-note{
     font-family:var(--font-mono);
     font-size:10px;
@@ -455,7 +441,6 @@
   <div class="bh-tabs">
     <button class="bh-tab active" data-tab="predictor">Preditor</button>
     <button class="bh-tab" data-tab="nextmatches">Proximos Jogos</button>
-    <button class="bh-tab" data-tab="calendar">Calendario</button>
     <button class="bh-tab" data-tab="cartola">Cartola FC</button>
     <button class="bh-tab" data-tab="meutime">Meu Time</button>
     <button class="bh-tab" data-tab="valuebet">Value Betting</button>
@@ -522,15 +507,6 @@
     <div id="rj-cards"></div>
     <div class="bh-note">
       Odds medias 1X2 coletadas em 14-15/07, normalizadas para remover a margem da casa. Edge = modelo menos mercado; nao e recomendacao de aposta, so mostra onde o modelo diverge do mercado (que ja incorpora lesoes/escalacao). 3 jogos sem odds fechadas no momento da consulta.
-    </div>
-  </div>
-
-  <!-- ===== TAB 3: CALENDAR DIFFICULTY ===== -->
-  <div class="bh-panel" id="panel-calendar">
-    <div class="bp-section-title" style="margin-top:0;">Media do rating Elo-Odds dos proximos 5 adversarios (rodadas 19-23)</div>
-    <div id="rj-runin"></div>
-    <div class="bh-note">
-      Verde = calendario mais facil (adversarios mais fracos pela frente), vermelho = mais dificil. Baseado na tabela oficial da CBF; pode haver pequenos ajustes de data/mando em rodadas futuras.
     </div>
   </div>
 
@@ -1478,45 +1454,6 @@
     card.appendChild(foot);
 
     matchContainer.appendChild(card);
-  });
-
-  // ================= CALENDAR DIFFICULTY =================
-  var RUNIN = [
-    {team:"Vasco", avg:1012, opps:["Vitoria","Mirassol","Chapecoense","Bahia","Santos"]},
-    {team:"Flamengo", avg:1017, opps:["Chapecoense","Sao Paulo","Internacional","Vitoria","Mirassol"]},
-    {team:"Santos", avg:1033, opps:["Botafogo","Chapecoense","Sao Paulo","Atletico-PR","Vasco"]},
-    {team:"Palmeiras", avg:1038, opps:["Coritiba","Atletico-MG","Vitoria","Internacional","Fluminense"]},
-    {team:"Bahia", avg:1045, opps:["Atletico-MG","Corinthians","Fluminense","Vasco","Chapecoense"]},
-    {team:"Remo", avg:1046, opps:["Corinthians","Vitoria","Mirassol","Atletico-MG","Internacional"]},
-    {team:"Cruzeiro", avg:1050, opps:["Internacional","Botafogo","Coritiba","Mirassol","Corinthians"]},
-    {team:"Botafogo", avg:1053, opps:["Santos","Cruzeiro","Gremio","Fluminense","Vitoria"]},
-    {team:"Atletico-MG", avg:1054, opps:["Bahia","Palmeiras","Bragantino","Remo","Gremio"]},
-    {team:"Gremio", avg:1055, opps:["Mirassol","Fluminense","Botafogo","Sao Paulo","Atletico-MG"]},
-    {team:"Corinthians", avg:1058, opps:["Remo","Bahia","Atletico-PR","Bragantino","Cruzeiro"]},
-    {team:"Bragantino", avg:1058, opps:["Fluminense","Coritiba","Atletico-MG","Corinthians","Atletico-PR"]},
-    {team:"Coritiba", avg:1059, opps:["Palmeiras","Bragantino","Cruzeiro","Chapecoense","Sao Paulo"]},
-    {team:"Fluminense", avg:1063, opps:["Bragantino","Gremio","Bahia","Botafogo","Palmeiras"]},
-    {team:"Sao Paulo", avg:1066, opps:["Atletico-PR","Flamengo","Santos","Gremio","Coritiba"]},
-    {team:"Mirassol", avg:1077, opps:["Gremio","Vasco","Remo","Cruzeiro","Flamengo"]},
-    {team:"Chapecoense", avg:1078, opps:["Flamengo","Santos","Vasco","Coritiba","Bahia"]},
-    {team:"Atletico-PR", avg:1078, opps:["Sao Paulo","Internacional","Corinthians","Santos","Bragantino"]},
-    {team:"Vitoria", avg:1081, opps:["Vasco","Remo","Palmeiras","Flamengo","Botafogo"]},
-    {team:"Internacional", avg:1089, opps:["Cruzeiro","Atletico-PR","Flamengo","Palmeiras","Remo"]}
-  ];
-  var minAvg = Math.min.apply(null, RUNIN.map(function(r){return r.avg;}));
-  var maxAvg = Math.max.apply(null, RUNIN.map(function(r){return r.avg;}));
-  var runinContainer = document.getElementById('rj-runin');
-  RUNIN.forEach(function(r, idx){
-    var t = (r.avg - minAvg) / (maxAvg - minAvg);
-    var color = t < 0.5 ? 'var(--edge-pos)' : (t < 0.75 ? 'var(--gold)' : 'var(--edge-neg)');
-    var row = document.createElement('div');
-    row.className = 'rj-runin-row';
-    row.innerHTML =
-      '<div class="rj-runin-rank">' + (idx+1) + '</div>' +
-      '<div class="rj-runin-team">' + label(r.team) + '</div>' +
-      '<div class="rj-runin-opps">' + r.opps.map(label).join(' &middot; ') + '</div>' +
-      '<div class="rj-runin-val" style="color:' + color + ';">' + r.avg + '</div>';
-    runinContainer.appendChild(row);
   });
 
   // ================= CARTOLA FC INTERACTIVE TEAM BUILDER =================

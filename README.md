@@ -11,7 +11,7 @@ no repositório e como cada peça se encaixa.
 
 ```
 .
-├── index.html              # a ferramenta principal (abas: Preditor, Próximos Jogos, Calendário, Cartola FC)
+├── index.html              # a ferramenta principal (abas: Preditor, Próximos Jogos, Cartola FC, Meu Time)
 ├── data/                   # dados processados, prontos pra uso (CSV/JSON)
 ├── scripts/                # scripts Python/bat que geram os dados em data/
 ├── docs/                   # versões standalone de widgets específicos (predictor sozinho, etc.)

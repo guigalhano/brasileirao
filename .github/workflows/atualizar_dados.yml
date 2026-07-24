@@ -25,6 +25,10 @@ jobs:
       - name: Instalar dependencias
         run: pip install requests pandas
 
+      - name: Coletar rodadas novas do historico de scouts (se houver)
+        run: python scripts/atualizar_historico_cartola.py
+        continue-on-error: true  # nao bloqueia a atualizacao do mercado se o formato da API mudar
+
       - name: Buscar mercado atual do Cartola FC e enriquecer com o historico
         run: python scripts/atualizar_mercado_cartola.py
 

@@ -284,6 +284,10 @@ def main():
     def to_js(v):
         if v is None:
             return "null"
+        # coerce numpy escalares (np.float64/np.int64) para tipos Python nativos,
+        # senao repr() escreve "np.float64(0.463)" no array e quebra o JSON/JS
+        if hasattr(v, "item") and not isinstance(v, (str, bool)):
+            v = v.item()
         if isinstance(v, bool):
             return "true" if v else "false"
         if isinstance(v, str):

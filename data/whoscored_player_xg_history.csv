@@ -1,0 +1,339 @@
+rodada,name,team,apps,mins,xG,xg90,goal,shots
+20,Ademir,Bahia,20,782,1.673,0.1925,1,22.0
+20,Adson,Vasco da Gama,10,531,0.638,0.1082,0,17.0
+20,Agustín Canobbio,Fluminense,13,988,3.167,0.2885,4,21.0
+20,Agustín Giay,Palmeiras,16,1066,0.234,0.0198,0,5.0
+20,Alan Franco,Sao Paulo,13,1077,0.502,0.0419,0,4.0
+20,Alan Franco,Atletico MG,15,1306,0.87,0.0599,0,5.0
+20,Alan Minda,Atletico MG,10,370,1.873,0.4555,2,11.0
+20,Alan Patrick,Internacional,15,988,2.354,0.2144,3,20.0
+20,Alan Saldivia,Vasco da Gama,10,900,0.782,0.0782,0,9.0
+20,Alef Manga,Remo,20,1498,4.822,0.2897,5,37.0
+20,Alerrandro,Internacional,19,913,6.88,0.6782,3,28.0
+20,Alesson,Mirassol,18,1226,2.703,0.1984,0,29.0
+20,Alex Sandro,Flamengo,15,1181,0.073,0.0056,0,2.0
+20,Alex Telles,Botafogo RJ,18,1428,1.833,0.1155,2,9.0
+20,Alexander Barboza,Botafogo RJ,12,1044,0.756,0.0651,1,12.0
+20,Alexandro Bernabéi,Internacional,17,1466,2.506,0.1538,4,40.0
+20,Alix,Red Bull Bragantino,17,1337,0.356,0.0239,0,8.0
+20,Allan,Palmeiras,17,1225,2.356,0.1731,4,27.0
+20,Allan,Botafogo RJ,10,465,0.104,0.0202,0,2.0
+20,Allan,Corinthians,15,647,0.562,0.0782,0,6.0
+20,Andreas Pereira,Palmeiras,19,1512,1.548,0.0922,1,21.0
+20,André,Corinthians,16,992,0.944,0.0857,3,15.0
+20,André Carrillo,Corinthians,16,719,0.145,0.0182,0,4.0
+20,André Luís,Mirassol,12,465,1.709,0.3308,1,5.0
+20,André Silva,Sao Paulo,13,339,0.411,0.109,0,5.0
+20,Andrés Gómez,Vasco da Gama,18,1444,3.667,0.2286,4,66.0
+20,Antonio Galeano,Mirassol,11,283,0.684,0.2174,0,8.0
+20,Arthur,Palmeiras,14,814,0.283,0.0313,0,8.0
+20,Arthur,Gremio,10,810,0.091,0.0101,0,3.0
+20,Arthur Cabral,Botafogo RJ,17,1380,4.356,0.2841,7,36.0
+20,Arthur Dias,Athletico Paranaense,18,1540,0.193,0.0113,0,5.0
+20,Artur,Sao Paulo,12,1038,2.095,0.1817,2,24.0
+20,Ayrton Lucas,Flamengo,10,491,0.339,0.0622,0,6.0
+20,Benjamín Rollheiser,Santos FC,16,575,2.575,0.4031,3,16.0
+20,Bernard,Atletico MG,17,900,1.468,0.1468,1,9.0
+20,Braian Aguirre,Internacional,13,482,0.815,0.1522,1,12.0
+20,Brenner,Vasco da Gama,14,584,3.674,0.5662,1,17.0
+20,Breno Bidon,Corinthians,18,1298,1.538,0.1067,2,14.0
+20,Breno Lopes,Coritiba,17,1142,5.1,0.4019,8,18.0
+20,Bruninho,Athletico Paranaense,9,310,0.634,0.184,0,9.0
+20,Bruno Gomes,Internacional,20,1617,0.597,0.0332,0,15.0
+20,Bruno Henrique,Flamengo,14,495,1.175,0.2136,0,12.0
+20,Bruno Henrique,Internacional,17,959,1.279,0.1201,0,17.0
+20,Bruno Leonardo,Chapecoense AF,15,1311,0.132,0.0091,0,2.0
+20,Bruno Melo,Coritiba,18,1436,0.585,0.0367,1,6.0
+20,Bruno Pacheco,Chapecoense AF,12,911,0.097,0.0096,0,3.0
+20,Bruno Rodrigues,Cruzeiro,11,334,0.363,0.0977,0,5.0
+20,Bruno Zapelli,Athletico Paranaense,15,687,0.624,0.0818,0,10.0
+20,Cacá,Vitoria,15,1306,0.792,0.0546,1,6.0
+20,Caio Alexandre,Bahia,11,506,0.221,0.0393,0,3.0
+20,Camilo,Chapecoense AF,17,1427,0.34,0.0214,0,14.0
+20,Carlos Cuesta,Vasco da Gama,10,900,0.322,0.0322,0,4.0
+20,Carlos Eduardo,Mirassol,12,573,1.613,0.2533,1,12.0
+20,Carlos Terán,Athletico Paranaense,14,900,0.747,0.0747,0,7.0
+20,Carlos Vinícius,Gremio,19,1569,6.943,0.3982,10,39.0
+20,Cauan Barros,Vasco da Gama,17,1289,1.849,0.1291,3,18.0
+20,Cauly,Sao Paulo,12,567,1.197,0.19,1,7.0
+20,Caíque Gonçalves,Vitoria,17,1280,0.024,0.0017,0,2.0
+20,Christian,Cruzeiro,17,1258,2.271,0.1625,5,21.0
+20,Christian Oliva,Santos FC,14,856,0.252,0.0265,0,7.0
+20,Claudio Spinelli,Vasco da Gama,14,637,5.76,0.8138,1,33.0
+20,Cristian Medina,Botafogo RJ,14,1129,2.601,0.2073,1,18.0
+20,Cristian Olivera,Bahia,16,961,2.054,0.1924,1,22.0
+20,Cristian Pavón,Gremio,18,1403,0.399,0.0256,0,10.0
+20,Cuiabano,Vasco da Gama,13,932,1.783,0.1722,1,21.0
+20,Damián Bobadilla,Sao Paulo,15,1141,0.822,0.0649,0,14.0
+20,Danielzinho,Sao Paulo,18,1365,0.955,0.063,1,9.0
+20,Danilo Santos,Botafogo RJ,14,1164,2.284,0.1766,7,28.0
+20,David,Vasco da Gama,17,808,2.353,0.262,2,15.0
+20,David Duarte,Bahia,14,1257,1.435,0.1028,3,14.0
+20,Denilson,Mirassol,12,660,0.238,0.0325,1,5.0
+20,Diego Hernández,Remo,9,157,0.437,0.2506,0,6.0
+20,Diego Tarzia,Vitoria,15,470,1.674,0.3206,2,18.0
+20,Dieguinho,Corinthians,9,133,0.13,0.0881,1,4.0
+20,Doma,Chapecoense AF,18,1554,0.918,0.0532,1,12.0
+20,Dudu,Atletico MG,13,330,1.649,0.4498,2,13.0
+20,Dudu Kogitzki,Athletico Paranaense,13,632,1.022,0.1455,1,5.0
+20,Duplexe Tchamba,Remo,14,1256,0.216,0.0154,0,4.0
+20,Edenílson,Botafogo RJ,13,582,1.884,0.2914,3,11.0
+20,Edson Carioca,Mirassol,13,616,1.455,0.2126,2,13.0
+20,Eduardo,Mirassol,12,575,1.412,0.221,2,10.0
+20,Eduardo Sasha,Red Bull Bragantino,15,881,4.139,0.4228,1,21.0
+20,Emerson Royal,Flamengo,10,675,0.337,0.0449,0,3.0
+20,Emmanuel Martínez,Vitoria,16,1244,0.932,0.0674,0,6.0
+20,Enzo Díaz,Sao Paulo,13,929,0.217,0.0211,0,11.0
+20,Eric Ramires,Red Bull Bragantino,13,488,0.713,0.1316,0,2.0
+20,Erick,Vitoria,19,1396,1.707,0.11,2,23.0
+20,Erick,Bahia,16,1022,2.374,0.2091,2,14.0
+20,Erick Noriega,Gremio,14,1019,0.784,0.0692,1,7.0
+20,Erick Pulga,Bahia,20,1430,1.426,0.0898,0,22.0
+20,Erick Pulgar,Flamengo,10,823,0.294,0.0321,1,7.0
+20,Everaldo,Bahia,15,633,2.541,0.3614,4,19.0
+20,Everton,Flamengo,10,377,0.789,0.1883,1,12.0
+20,Everton,Chapecoense AF,16,1076,0.677,0.0566,0,10.0
+20,Evertton Araújo,Flamengo,15,874,0.767,0.079,0,16.0
+20,Fabrício,Vitoria,9,196,0.814,0.374,0,6.0
+20,Fabrício Bruno,Cruzeiro,19,1673,0.537,0.0289,0,13.0
+20,Facundo Bernal,Fluminense,10,552,0.309,0.0503,0,9.0
+20,Felipe Anderson,Palmeiras,14,398,0.356,0.0806,2,11.0
+20,Felipe Jonatan,Coritiba,13,573,0.242,0.038,0,7.0
+20,Fernando,Red Bull Bragantino,10,350,1.926,0.4953,2,13.0
+20,Ferreira,Sao Paulo,15,565,1.705,0.2716,4,20.0
+20,Francis Amuzu,Gremio,18,1172,1.505,0.1156,1,30.0
+20,Félix Torres,Internacional,14,1101,2.524,0.2063,1,11.0
+20,Gabriel,Red Bull Bragantino,16,1198,0.512,0.0385,2,18.0
+20,Gabriel Baralhas,Vitoria,17,1463,1.519,0.0934,2,21.0
+20,Gabriel Barbosa,Santos FC,13,897,4.917,0.4933,7,30.0
+20,Gabriel Bontempo,Santos FC,18,1177,1.548,0.1184,0,12.0
+20,Gabriel Brazão,Santos FC,18,1620,0.04,0.0022,0,1.0
+20,Gabriel Justino,Botafogo RJ,10,587,0.202,0.031,1,3.0
+20,Gabriel Mec,Gremio,15,689,1.914,0.2501,2,12.0
+20,Gabriel Menino,Santos FC,10,473,0.466,0.0887,1,13.0
+20,Gabriel Mercado,Internacional,12,1027,0.79,0.0692,1,6.0
+20,Gabriel Paulista,Corinthians,16,1440,0.495,0.0309,1,15.0
+20,Gabriel Poveda,Remo,10,145,0.141,0.0873,0,2.0
+20,Ganso,Fluminense,12,331,0.562,0.1529,0,5.0
+20,Gastón Benavídez,Athletico Paranaense,16,1359,0.762,0.0505,0,7.0
+20,Gerson,Cruzeiro,18,1443,0.931,0.058,0,16.0
+20,Giorgian de Arrascaeta,Flamengo,12,800,5.086,0.5722,3,28.0
+20,Giovanni Augusto,Chapecoense AF,13,611,0.222,0.0327,0,5.0
+20,Gonzalo Escobar,Santos FC,14,1228,0.494,0.0362,0,9.0
+20,Gonzalo Plata,Flamengo,11,594,2.78,0.4212,2,22.0
+20,Gonzalo Tapia,Sao Paulo,11,275,2.092,0.6846,0,8.0
+20,Guga,Fluminense,13,847,0.063,0.0067,0,3.0
+20,Guilherme Arana,Fluminense,14,822,0.918,0.1005,1,14.0
+20,Guillermo Varela,Flamengo,14,1069,0.398,0.0335,0,4.0
+20,Gustavinho,Red Bull Bragantino,13,612,0.84,0.1236,1,9.0
+20,Gustavo Gómez,Palmeiras,18,1610,2.307,0.129,3,15.0
+20,Gustavo Henrique,Corinthians,17,1530,1.1,0.0647,0,14.0
+20,Gustavo Henrique,Santos FC,9,645,0.096,0.0135,0,2.0
+20,Gustavo Marques,Red Bull Bragantino,18,1473,1.8,0.11,0,12.0
+20,Gustavo Martins,Gremio,13,1073,1.481,0.1242,0,9.0
+20,Gustavo Scarpa,Atletico MG,10,319,0.614,0.1731,1,14.0
+20,Henry Mosquera,Red Bull Bragantino,16,1119,2.48,0.1995,0,34.0
+20,Higor Meritão,Chapecoense AF,11,618,1.885,0.2744,1,11.0
+20,Hugo Moura,Vasco da Gama,11,583,0.412,0.0635,1,3.0
+20,Hulk,Atletico MG,12,912,2.343,0.2312,1,25.0
+20,Hércules,Fluminense,18,1105,1.811,0.1475,3,26.0
+20,Ignacio Sosa,Red Bull Bragantino,14,406,0.287,0.0635,0,5.0
+20,Ignácio,Fluminense,9,590,0.538,0.0821,1,8.0
+20,Igor Formiga,Mirassol,16,1292,2.344,0.1633,4,18.0
+20,Igor Vinícius,Santos FC,15,1304,0.145,0.01,0,4.0
+20,Isidro Pitta,Red Bull Bragantino,18,1169,6.438,0.4956,5,38.0
+20,Italo,Chapecoense AF,15,718,1.265,0.1585,0,16.0
+20,Jacy,Coritiba,17,1284,0.339,0.0238,1,10.0
+20,Jamerson,Vitoria,9,541,0.152,0.0253,0,4.0
+20,Jean Carlos,Chapecoense AF,17,652,1.483,0.2047,2,18.0
+20,Jean Lucas,Bahia,17,1288,1.381,0.0965,2,19.0
+20,Jefferson Savarino,Fluminense,16,1084,3.407,0.2828,3,38.0
+20,Jemmes,Fluminense,15,1173,0.183,0.014,0,3.0
+20,Jesse Lingard,Corinthians,10,426,0.448,0.0947,0,6.0
+20,Jhon Arias,Palmeiras,15,1186,2.421,0.1837,3,31.0
+20,Joaquín Lavega,Coritiba,19,915,2.403,0.2364,5,15.0
+20,Johan Carbonero,Internacional,19,1313,4.462,0.3058,5,42.0
+20,Johan Rojas,Vasco da Gama,18,846,2.143,0.228,0,34.0
+20,John Kennedy,Fluminense,18,1129,6.997,0.5578,9,38.0
+20,Jonathan Calleri,Sao Paulo,18,1506,8.576,0.5125,7,41.0
+20,Jonathan Jesus,Cruzeiro,12,979,0.561,0.0516,0,8.0
+20,Jordan Barrera,Botafogo RJ,11,370,1.315,0.32,1,11.0
+20,Jorge Carrascal,Flamengo,13,617,2.415,0.3522,2,19.0
+20,Jorginho,Flamengo,13,1048,1.713,0.1471,2,6.0
+20,Josué,Coritiba,19,1454,1.388,0.0859,1,16.0
+20,José Aldo,Mirassol,17,1208,0.493,0.0368,0,14.0
+20,José Enamorado,Gremio,18,867,1.101,0.1143,0,13.0
+20,José Herrera,Red Bull Bragantino,16,863,0.921,0.0961,1,22.0
+20,José Hurtado,Red Bull Bragantino,14,1041,0.655,0.0566,1,15.0
+20,José Manuel López,Palmeiras,17,1313,3.65,0.2502,6,35.0
+20,José Rodríguez,Vasco da Gama,14,1040,2.555,0.2211,2,27.0
+20,João Cruz,Athletico Paranaense,14,470,0.818,0.1567,0,14.0
+20,João Pedro Chermont,Coritiba,12,683,0.203,0.0267,0,5.0
+20,João Schmidt,Santos FC,10,622,0.423,0.0613,0,6.0
+20,João Victor,Mirassol,19,1710,1.182,0.0622,0,8.0
+20,João Vitor,Chapecoense AF,11,598,0.812,0.1222,0,19.0
+20,Juan Aguirre,Athletico Paranaense,16,1335,0.797,0.0538,1,9.0
+20,Juan Nardoni,Gremio,13,908,1.784,0.1768,1,11.0
+20,Juan Pablo Freytes,Fluminense,17,1497,0.804,0.0483,0,14.0
+20,Juan Portilla,Athletico Paranaense,16,811,0.241,0.0268,0,6.0
+20,Julimar,Athletico Paranaense,13,730,2.412,0.2973,3,15.0
+20,Juninho Capixaba,Red Bull Bragantino,17,1519,1.047,0.062,3,23.0
+20,Jáderson,Remo,10,203,0.133,0.059,0,3.0
+20,Jádson,Athletico Paranaense,14,885,0.059,0.006,0,2.0
+20,Jája Silva,Remo,16,1059,3.484,0.2961,5,28.0
+20,Júnior Alonso,Atletico MG,10,900,0.214,0.0214,0,5.0
+20,Júnior Santos,Botafogo RJ,9,411,1.361,0.2981,1,8.0
+20,Kadir Barría,Botafogo RJ,11,286,1.879,0.5913,1,13.0
+20,Kaiki,Cruzeiro,16,1418,1.035,0.0657,0,18.0
+20,Kaio Jorge,Cruzeiro,14,1093,6.084,0.501,5,33.0
+20,Kauã Moraes,Cruzeiro,10,456,1.084,0.214,2,5.0
+20,Keny Arroyo,Cruzeiro,16,916,1.288,0.1266,2,28.0
+20,Kevin Serna,Fluminense,20,1134,2.792,0.2216,1,23.0
+20,Kevin Viveros,Athletico Paranaense,19,1701,13.86,0.7333,12,54.0
+20,Khellven,Palmeiras,14,757,0.106,0.0126,0,4.0
+20,Leonel Picco,Remo,17,773,1.123,0.1308,1,9.0
+20,Leonel Pérez,Gremio,11,716,0.392,0.0493,0,7.0
+20,Luan Cândido,Vitoria,13,1045,1.067,0.0919,0,9.0
+20,Luan Peres,Santos FC,16,1223,0.151,0.0111,0,3.0
+20,Lucas Barbosa,Red Bull Bragantino,18,1591,4.922,0.2785,4,48.0
+20,Lucas Esquivel,Athletico Paranaense,16,1301,0.397,0.0274,1,13.0
+20,Lucas Evangelista,Palmeiras,18,400,0.638,0.1436,0,7.0
+20,Lucas Paquetá,Flamengo,12,820,2.134,0.2343,3,26.0
+20,Lucas Piton,Vasco da Gama,14,840,0.728,0.078,0,6.0
+20,Lucas Ramon,Sao Paulo,14,1150,0.252,0.0197,0,7.0
+20,Lucas Romero,Cruzeiro,13,920,0.439,0.0429,1,9.0
+20,Lucas Ronier,Coritiba,17,1322,1.994,0.1358,1,33.0
+20,Lucas Silva,Cruzeiro,14,585,0.137,0.0211,0,4.0
+20,Lucas Veríssimo,Santos FC,13,1170,1.677,0.129,0,8.0
+20,Lucas Villalba,Botafogo RJ,12,519,0.427,0.0741,1,5.0
+20,Lucas Villalba,Cruzeiro,10,653,0.074,0.0102,0,3.0
+20,Lucho Acosta,Fluminense,16,1076,2.717,0.2273,3,24.0
+20,Luciano,Sao Paulo,16,1162,5.178,0.401,6,31.0
+20,Luciano Juba,Bahia,17,1342,3.234,0.2169,7,21.0
+20,Luiz Araújo,Flamengo,11,360,1.116,0.2791,1,9.0
+20,Luiz Gustavo,Athletico Paranaense,15,1180,2.903,0.2214,2,19.0
+20,Lyanco,Atletico MG,9,633,0.203,0.0288,0,5.0
+20,Léo Derik,Athletico Paranaense,10,505,0.05,0.0089,0,3.0
+20,Léo Ortiz,Flamengo,17,1353,0.179,0.0119,1,4.0
+20,Léo Pereira,Flamengo,16,1401,1.562,0.1003,2,17.0
+20,Maicon,Coritiba,13,1022,0.104,0.0091,0,1.0
+20,Mamady Cissé,Atletico MG,10,236,0.643,0.2452,1,7.0
+20,Marcelinho,Remo,17,1386,1.244,0.0808,2,18.0
+20,Marcinho,Chapecoense AF,19,1001,1.321,0.1188,2,21.0
+20,Marcos Antônio,Sao Paulo,14,1068,1.27,0.107,0,13.0
+20,Marcos Vinícius,Chapecoense AF,10,580,0.958,0.1487,0,3.0
+20,Marino Hinestroza,Vasco da Gama,9,238,0.135,0.0511,0,5.0
+20,Marllon,Remo,19,1710,0.534,0.0281,1,5.0
+20,Marlon Freitas,Palmeiras,19,1667,0.61,0.0329,2,12.0
+20,Martin Braithwaite,Gremio,13,402,0.286,0.064,0,4.0
+20,Martinelli,Fluminense,14,1129,0.386,0.0308,0,11.0
+20,Mateo Cassierra,Atletico MG,16,851,4.506,0.4766,2,23.0
+20,Mateo Ponte,Botafogo RJ,10,595,0.516,0.0781,0,2.0
+20,Mateo Sanabria,Bahia,12,300,1.449,0.4346,2,13.0
+20,Matheus Alexandre,Remo,9,180,0.038,0.0189,0,1.0
+20,Matheus Bahia,Internacional,12,798,0.314,0.0354,0,6.0
+20,Matheus Bidu,Corinthians,16,1374,0.573,0.0375,2,14.0
+20,Matheus Fernandes,Red Bull Bragantino,12,668,0.34,0.0458,0,12.0
+20,Matheus Henrique,Cruzeiro,19,944,0.438,0.0418,0,9.0
+20,Matheus Martins,Botafogo RJ,18,1042,3.355,0.2898,4,33.0
+20,Matheus Pereira,Cruzeiro,17,1495,3.732,0.2247,4,43.0
+20,Matheus Pereira,Corinthians,13,476,0.192,0.0363,0,8.0
+20,Matheuzinho,Corinthians,16,1342,0.324,0.0217,1,10.0
+20,Matheuzinho,Vitoria,18,1128,2.565,0.2047,2,24.0
+20,Mauricio,Palmeiras,17,1101,3.5,0.2861,3,28.0
+20,Maycon,Atletico MG,12,970,1.867,0.1732,2,9.0
+20,Mayk,Remo,12,1069,0.047,0.0039,0,3.0
+20,Michel Araújo,Bahia,12,234,0.079,0.0302,0,4.0
+20,Miguel Terceros,Santos FC,9,467,1.125,0.2167,1,11.0
+20,Moisés,Santos FC,13,372,1.781,0.4308,2,9.0
+20,Murilo,Palmeiras,17,1487,1.939,0.1173,1,11.0
+20,Nahuel Ferraresi,Botafogo RJ,14,1099,0.729,0.0597,1,4.0
+20,Natanael,Atletico MG,13,1054,0.316,0.027,0,8.0
+20,Nathan Fogaça,Mirassol,11,350,3.839,0.9872,2,17.0
+20,Nathan Mendes,Vitoria,13,1064,0.141,0.0119,0,2.0
+20,Negueba,Mirassol,9,782,0.936,0.1077,2,19.0
+20,Neto Moura,Mirassol,12,726,0.446,0.0552,0,11.0
+20,Neto Pessoa,Chapecoense AF,10,269,2.003,0.6701,2,14.0
+20,Neymar,Santos FC,9,776,4.309,0.4998,6,30.0
+20,Nicolás Acevedo,Bahia,18,1572,1.642,0.094,0,23.0
+20,Nicolás de la Cruz,Flamengo,10,224,0.275,0.1105,0,4.0
+20,Nuno Moreira,Vasco da Gama,17,900,1.57,0.157,1,20.0
+20,Néiser Villarreal,Cruzeiro,12,546,5.007,0.8253,3,20.0
+20,Pablo Maia,Sao Paulo,12,667,0.192,0.0259,0,8.0
+20,Patrick,Remo,17,1129,1.084,0.0864,0,13.0
+20,Paulinho Paula,Internacional,13,697,0.397,0.0512,0,9.0
+20,Paulo Henrique,Vasco da Gama,12,780,0.181,0.0209,0,4.0
+20,Pedro,Flamengo,19,1527,9.52,0.5611,12,40.0
+20,Pedro Gabriel,Gremio,11,762,0.123,0.0145,0,5.0
+20,Pedro Henrique,Red Bull Bragantino,13,869,0.863,0.0893,0,3.0
+20,Pedro Rocha,Coritiba,19,1509,5.377,0.3207,4,37.0
+20,Rafael Borré,Internacional,17,1038,5.738,0.4975,2,28.0
+20,Rafael Carvalheira,Chapecoense AF,14,897,0.77,0.0773,2,14.0
+20,Ramon,Vitoria,17,1469,0.571,0.035,2,9.0
+20,Ramón Sosa,Palmeiras,16,778,0.731,0.0846,3,16.0
+20,Raniele,Corinthians,17,1308,1.602,0.1102,1,15.0
+20,Reinaldo,Mirassol,16,1331,0.622,0.042,0,20.0
+20,Reinier,Atletico MG,15,626,2.844,0.4089,1,17.0
+20,Renan Lodi,Atletico MG,19,1696,1.216,0.0645,0,29.0
+20,Renato Kayzer,Vitoria,15,749,3.191,0.3834,4,17.0
+20,Renê,Fluminense,13,998,0.545,0.0491,0,8.0
+20,Renê,Vitoria,13,883,4.075,0.4153,5,31.0
+20,Robert Renan,Vasco da Gama,20,1800,0.727,0.0363,1,6.0
+20,Rodrigo Castillo,Fluminense,12,503,2.309,0.4131,3,16.0
+20,Rodrigo Garro,Corinthians,19,1321,1.731,0.1179,2,30.0
+20,Rodrigo Nestor,Bahia,13,632,1.605,0.2285,1,23.0
+20,Rodrigo Villagra,Internacional,15,1224,0.223,0.0164,0,9.0
+20,Rodriguinho,Red Bull Bragantino,11,495,1.122,0.204,2,12.0
+20,Rony,Santos FC,16,917,1.004,0.0985,0,17.0
+20,Ruan Tressoldi,Atletico MG,17,1511,1.405,0.0837,2,8.0
+20,Rubens,Chapecoense AF,9,187,0.122,0.059,1,4.0
+20,Sabino,Sao Paulo,16,1261,0.348,0.0249,1,7.0
+20,Samuel Lino,Flamengo,19,1192,2.313,0.1747,4,31.0
+20,Samuel Xavier,Fluminense,12,969,0.202,0.0188,0,5.0
+20,Santiago Ramos Mingo,Bahia,18,1576,0.393,0.0224,0,8.0
+20,Santiago Rodríguez,Botafogo RJ,13,539,0.044,0.0073,0,1.0
+20,Sebastián Gómez,Coritiba,16,1248,0.486,0.0351,0,13.0
+20,Shaylon,Mirassol,15,858,0.443,0.0465,1,11.0
+20,Steven Mendoza,Athletico Paranaense,20,1625,1.997,0.1106,5,27.0
+20,Tchê Tchê,Vasco da Gama,14,856,1.238,0.1302,1,10.0
+20,Tetê,Gremio,16,797,2.048,0.2312,2,26.0
+20,Thaciano,Santos FC,13,610,2.096,0.3092,2,15.0
+20,Thiago Maia,Internacional,10,137,0.03,0.0196,0,1.0
+20,Thiago Mendes,Vasco da Gama,17,1423,1.808,0.1143,4,14.0
+20,Thiago Santos,Coritiba,13,612,0.214,0.0314,0,3.0
+20,Tiago Cóser,Coritiba,17,1090,0.586,0.0484,1,4.0
+20,Tiago Volpi,Red Bull Bragantino,13,1170,1.546,0.1189,2,2.0
+20,Tinga,Coritiba,13,1030,0.139,0.0121,0,5.0
+20,Tomás Cuello,Atletico MG,18,1302,4.158,0.2874,2,40.0
+20,Tomás Pérez,Atletico MG,12,790,0.356,0.0405,0,4.0
+20,Victor Gabriel,Internacional,16,1189,0.264,0.02,0,5.0
+20,Victor Hugo,Atletico MG,17,1351,2.407,0.1603,4,20.0
+20,Viery,Gremio,13,1169,0.497,0.0382,1,6.0
+20,Vini Paulista,Coritiba,20,812,0.658,0.0729,0,9.0
+20,Vinicinho,Red Bull Bragantino,9,292,0.075,0.0232,0,2.0
+20,Vitinho,Botafogo RJ,18,1415,0.234,0.0149,0,5.0
+20,Vitinho,Internacional,19,1371,2.216,0.1454,0,31.0
+20,Vitor Bueno,Remo,13,812,1.928,0.2137,2,14.0
+20,Wagner Leonardo,Gremio,9,684,0.411,0.054,0,2.0
+20,Wallisson,Coritiba,12,432,0.105,0.0218,0,3.0
+20,Walter Clar,Chapecoense AF,10,767,2.534,0.2973,3,10.0
+20,Wanderson,Cruzeiro,16,426,1.028,0.2172,1,13.0
+20,Wendell,Sao Paulo,14,948,0.192,0.0182,0,6.0
+20,William,Cruzeiro,10,556,0.083,0.0135,0,4.0
+20,Willian,Gremio,9,371,0.843,0.2045,0,7.0
+20,Willian Arão,Santos FC,15,857,0.074,0.0078,0,1.0
+20,Willian José,Bahia,19,1066,5.954,0.5027,3,21.0
+20,Willian Machado,Mirassol,15,1350,0.654,0.0436,1,9.0
+20,Willian Oliveira,Coritiba,10,475,0.294,0.0556,0,5.0
+20,Yago Pikachu,Remo,19,1077,1.369,0.1144,2,20.0
+20,Yannick Bolasie,Chapecoense AF,17,1182,4.305,0.3278,1,30.0
+20,Yeferson Soteldo,Fluminense,13,522,0.659,0.1136,0,7.0
+20,Yuri Alberto,Corinthians,16,1391,4.375,0.283,3,34.0
+20,Zakaria Labyad,Corinthians,10,179,0.301,0.1515,1,5.0
+20,Zé Ricardo,Remo,18,1031,0.348,0.0304,0,10.0
+20,Zé Vitor,Vitoria,12,777,0.403,0.0467,1,12.0
+20,Zé Welison,Remo,17,1050,0.26,0.0223,0,11.0
+20,Álvaro Barreal,Santos FC,17,1112,2.095,0.1696,4,30.0
+20,Álvaro Montoro,Botafogo RJ,17,1097,1.131,0.0928,0,16.0
+20,Éverton Ribeiro,Bahia,16,1009,1.656,0.1477,0,16.0
+20,Ênio,Chapecoense AF,12,762,0.632,0.0747,1,16.0

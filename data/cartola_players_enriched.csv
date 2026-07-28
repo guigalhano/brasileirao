@@ -24,6 +24,7 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 145660,Luiz Felipe,LAT,INT,1.65,1.45,Nulo,2.05,1.45
 150959,Davizinho,LAT,SAN,0.81,0.0,Nulo,0.0,0.0
 130279,Lukas Zuccarello,MEI,VAS,2.32,1.3,Nulo,0.0,1.3
+97101,Gabriel Rojas,LAT,CRU,7.15,4.4,Provável,0.0,4.4
 147544,Gabriel Menegon,GOL,GRE,1.81,0.0,Nulo,0.0,0.0
 107203,Max,MEI,CHA,4.9,3.2,Nulo,0.0,3.2
 97101,Gabriel Rojas,LAT,CRU,6.94,3.3,Provável,1.56,3.3000000000000003
@@ -354,6 +355,10 @@ atleta_id,name,pos,team,price,media,status,desvio,ult5
 93716,Paulo Henrique,LAT,VAS,7.25,2.94,Nulo,3.3,1.78
 72391,Fernando Diniz,TEC,COR,8.99,5.62,Provável,2.36,6.537999999999999
 108588,Tapia,ATA,SAO,4.06,1.46,Nulo,1.49,0.34
+113359,Pablo Maia,MEI,SAO,4.4,1.4,Provável,2.0,1.6200000000000003
+77656,Cédric Soares,LAT,SAO,3.73,0.94,Nulo,0.83,0.74
+131617,André Silva,ATA,SAO,3.62,0.38,Nulo,1.05,0.9200000000000002
+72391,Fernando Diniz,TEC,COR,9.89,5.81,Provável,2.35,7.422
 141611,Maik,LAT,SAO,5.52,3.48,Nulo,2.52,3.4799999999999995
 131617,André Silva,ATA,SAO,3.48,0.32,Nulo,1.02,0.5000000000000001
 86410,Victor Luis,LAT,MIR,3.65,1.2,Nulo,2.56,1.3800000000000001

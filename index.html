@@ -1148,7 +1148,7 @@
     <p>Combina tudo com pesos calibrados por evidência:</p>
     <div class="doc-example">
       <b class="tag">Fórmula</b>
-      45% previsão do próximo jogo (matchup) + 15% estatísticas reais por posição (gol/assistência/finalização) + 40% dividido entre média (40%), forma recente (20%) e consistência (40%).
+      Peso do matchup depende da posição (ajustado em 28/07): <b>goleiro e técnico 65% matchup + 35% média/forma/consistência</b> (os pontos deles são quase inteiramente decididos pelo jogo — SG e vitória); <b>zagueiro/lateral 55% matchup</b> + 10% estatísticas + 35% resto; <b>atacante/meia 45% matchup</b> + 15% estatísticas reais por posição + 40% resto (pesos validados por backtest — pra atacante, qualidade individual pesa mais em relação ao jogo). O bloco "resto" é dividido em média (40%), forma recente (20%) e consistência (40%).
     </div>
 
     <h4>2.7 — A média da temporada anterior ajuda no início de uma temporada nova</h4>
@@ -2375,6 +2375,21 @@
       var formaRecente = (typeof p.ult5Sos === 'number') ? p.ult5Sos : p.ult5;
       var consistencia = p.media - (p.desvio || 0) * 0.5;
       var outrosTres = 0.40*media + 0.20*formaRecente + 0.40*consistencia;
+      // PESO DO MATCHUP DEPENDENTE DA POSICAO (ajustado em 28/07):
+      // os pontos de GOLEIRO e TECNICO sao quase inteiramente decididos pelo
+      // JOGO especifico (SG/vitoria), nao pela forma individual -- um goleiro
+      // contra ataque fraco vale muito mais naquela rodada independente da
+      // media da temporada. Entao o confronto pesa mais pra eles. ZAG/LAT ficam
+      // no meio (SG importa, mas tem scout proprio mais estavel). ATA/MEI mantem
+      // os 45/15/40 validados por backtest -- pra atacante, qualidade individual
+      // pesa mais em relacao ao jogo (bom atacante marca contra qualquer um).
+      // (Antes: 45% pra todos, o que fazia tecnico/goleiro de jogo ruim mas
+      // media alta -- ex: Abel fora -- passar na frente de um confronto melhor.)
+      if(p.pos === 'GOL' || p.pos === 'TEC'){
+        return 0.65 * previsaoModelo + 0.35 * outrosTres;
+      } else if(p.pos === 'ZAG' || p.pos === 'LAT'){
+        return 0.55 * previsaoModelo + 0.10 * estatPos + 0.35 * outrosTres;
+      }
       return 0.45 * previsaoModelo + 0.15 * estatPos + 0.40 * outrosTres;
     }
     return p.media;

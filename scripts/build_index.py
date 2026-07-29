@@ -65,6 +65,8 @@ def main():
                 extra_fields += ", playmaking:%s" % adv["playmaking"]
             if pd.notna(adv.get("risco_rotacao")):
                 extra_fields += ", riscoRotacao:%s" % adv["risco_rotacao"]
+            if pd.notna(adv.get("goalShare")):
+                extra_fields += ", goalShare:%s" % adv["goalShare"]
         lines.append(
             '    {name:"%s", pos:"%s", team:"%s", price:%s, media:%s, status:"%s", ult5:%s, desvio:%s%s}'
             % (name, p["pos"], p["team"], p["price"], p["media"], p["status"], p["ult5"], p["desvio"], extra_fields)

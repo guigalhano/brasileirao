@@ -48,6 +48,41 @@ def poisson_pmf(k, lam):
     return math.exp(-lam) * lam ** k / math.factorial(k)
 
 
+def scout_val(row, col):
+    v = row.get(col)
+    if v in (None, ""):
+        return 0.0
+    try:
+        return float(v)
+    except ValueError:
+        return 0.0
+
+
+def per_round_scout(games, col):
+    """Converte o scout `col` (ex: 'G', 'A') pra valor POR RODADA.
+
+    IMPORTANTE: nas rodadas <=18 (dataset caRtola) o scout e' CUMULATIVO
+    (acumulado da temporada ate aquela rodada); nas rodadas >=19 (coletado do
+    endpoint /atletas/pontuados) ja e' POR RODADA. Somar direto o cumulativo
+    infla tudo (foi o bug que corrompia o playmaking). Aqui: no bloco <=18
+    tiramos a diferenca entre rodadas consecutivas; de 19 em diante usamos o
+    valor como esta. Retorna dict {rodada_id: valor_por_rodada}.
+    """
+    games = sorted(games, key=lambda g: int(g["atletas.rodada_id"]))
+    out = {}
+    prev_cum = 0.0
+    for g in games:
+        rod = int(g["atletas.rodada_id"])
+        v = scout_val(g, col)
+        if rod <= 18:
+            pr = v - prev_cum
+            prev_cum = v
+        else:
+            pr = v  # ja e' por-rodada
+        out[rod] = max(pr, 0.0)  # clip: diffs negativos (correcao de scout) viram 0
+    return out
+
+
 def build_team_fixtures_by_round(matches_path):
     rows = list(csv.DictReader(open(matches_path, encoding="utf-8")))
     s2026 = [r for r in rows if r["season"] == "2026"]
@@ -126,6 +161,16 @@ def main():
     for pid in by_player:
         by_player[pid].sort(key=lambda r: int(r["atletas.rodada_id"]))
 
+    # Gols POR RODADA de cada jogador (normalizados) e total por time -- pro goalShare.
+    player_goals_pr = {}   # pid -> total de gols por-rodada na temporada
+    team_goals_total = defaultdict(float)
+    for pid, games in by_player.items():
+        g_pr = per_round_scout(games, "G")
+        total_g = sum(g_pr.values())
+        player_goals_pr[pid] = total_g
+        team_abbrev = games[0]["atletas.clube.id.full.name"]
+        team_goals_total[team_abbrev] += total_g
+
     output_rows = []
     for pid, games in by_player.items():
         team_abbrev = games[0]["atletas.clube.id.full.name"]
@@ -150,11 +195,24 @@ def main():
             adj_scores.append(pontos / dificuldade if dificuldade > 0 else pontos)
         ult5_sos = round(sum(adj_scores) / len(adj_scores), 3) if adj_scores else None
 
-        # 2) playmaking real (assistencias por jogo), so relevante pra MEI
+        # 2) playmaking real (assistencias POR RODADA por jogo), so relevante pra MEI.
+        # CONSERTADO: usa o scout A normalizado pra por-rodada (antes somava o
+        # cumulativo, inflando ~5x). So conta os jogos em que entrou em campo.
         playmaking = None
         if pos == "MEI" and played:
-            total_a = sum(float(g["A"]) if g["A"] not in ("", None) else 0.0 for g in played)
+            a_pr = per_round_scout(games, "A")
+            rounds_played = {int(g["atletas.rodada_id"]) for g in played}
+            total_a = sum(v for rod, v in a_pr.items() if rod in rounds_played)
             playmaking = round(total_a / len(played), 3)
+
+        # 4) goalShare: fatia dos gols do TIME que esse jogador concentrou na
+        # temporada (gols por-rodada normalizados). So pra ATA/MEI -- validado
+        # em backtest walk-forward (r=0.162, acima do limiar de ruido ~0.10).
+        goal_share = None
+        if pos in ("ATA", "MEI"):
+            tg = team_goals_total.get(team_abbrev, 0.0)
+            if tg > 0:
+                goal_share = round(player_goals_pr.get(pid, 0.0) / tg, 4)
 
         # 3) risco de rotacao: fracao das ultimas 5 rodadas (jogadas ou nao)
         # em que o jogador de fato entrou em campo
@@ -170,11 +228,12 @@ def main():
             "ult5_sos": ult5_sos if ult5_sos is not None else "",
             "playmaking": playmaking if playmaking is not None else "",
             "risco_rotacao": risco_rotacao if risco_rotacao is not None else "",
+            "goalShare": goal_share if goal_share is not None else "",
         })
 
     out_path = repo / "data" / "advanced_signals.csv"
     with open(out_path, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["atleta_id", "ult5_sos", "playmaking", "risco_rotacao"])
+        w = csv.DictWriter(f, fieldnames=["atleta_id", "ult5_sos", "playmaking", "risco_rotacao", "goalShare"])
         w.writeheader()
         w.writerows(output_rows)
     print(f"OK: {len(output_rows)} jogadores salvos em {out_path}")

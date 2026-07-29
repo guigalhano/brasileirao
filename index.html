@@ -548,6 +548,17 @@
         <option value="combinado_completo">Criterio mestre (previsao do proximo jogo + estatisticas reais + media/forma/consistencia, pesos recalibrados por backtest)</option>
       </select>
 
+      <div id="ct-matchup-row" style="margin-top:12px;">
+        <label class="bp-picklabel" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>Peso do confronto <span style="color:var(--cream-dim);font-weight:400;">(só no Critério mestre)</span></span>
+          <span id="ct-matchup-val" style="font-family:var(--font-mono);color:var(--gold);">45%</span>
+        </label>
+        <input type="range" id="ct-matchup-slider" min="25" max="75" step="5" value="45" style="width:100%;margin-top:4px;">
+        <div style="font-family:var(--font-mono);font-size:9.5px;color:var(--cream-dim);margin-top:3px;line-height:1.4;">
+          Quanto o jogo da rodada pesa vs média/forma. Goleiro e técnico ganham +20pp sobre esse valor; zagueiro/lateral +10pp (o jogo decide mais os pontos deles). Atacante/meia usam o valor cheio.
+        </div>
+      </div>
+
       <button class="bp-swap" id="ct-build-btn" style="width:100%;margin-top:10px;padding:9px;text-align:center;">MONTAR TIME</button>
     </div>
 
@@ -1458,6 +1469,9 @@
   });
 
   // ================= CARTOLA FC INTERACTIVE TEAM BUILDER =================
+  // Peso do confronto (matchup) no Criterio mestre -- controlado pelo slider
+  // "Peso do confronto". Padrao 0.45 = valor validado por backtest pra ATA/MEI.
+  var MATCHUP_W = 0.45;
   var PLAYERS = [
     {name:"Picco", pos:"MEI", team:"REM", price:6.28, media:3.06, status:"Provável", ult5:1.64, desvio:3.37, ult5Sos:1.699, playmaking:0.0, riscoRotacao:0.0, goalShare:0.0455},
     {name:"Cufré", pos:"LAT", team:"REM", price:3.45, media:-0.3, status:"Nulo", ult5:-0.3, desvio:0.0, ult5Sos:-0.341, riscoRotacao:1.0},
@@ -2385,12 +2399,18 @@
       // pesa mais em relacao ao jogo (bom atacante marca contra qualquer um).
       // (Antes: 45% pra todos, o que fazia tecnico/goleiro de jogo ruim mas
       // media alta -- ex: Abel fora -- passar na frente de um confronto melhor.)
-      if(p.pos === 'GOL' || p.pos === 'TEC'){
-        return 0.65 * previsaoModelo + 0.35 * outrosTres;
-      } else if(p.pos === 'ZAG' || p.pos === 'LAT'){
-        return 0.55 * previsaoModelo + 0.10 * estatPos + 0.35 * outrosTres;
-      }
-      return 0.45 * previsaoModelo + 0.15 * estatPos + 0.40 * outrosTres;
+      // Peso do matchup controlado pelo slider "Peso do confronto" (MATCHUP_W,
+      // padrao 0.45 = valor validado por backtest pra ATA/MEI). GOL/TEC ganham
+      // +0.20 e ZAG/LAT +0.10 sobre esse valor, porque o jogo decide mais os
+      // pontos deles (SG/vitoria). O peso de estatisticas_posicao fica fixo
+      // (0 pra GOL/TEC, que nao tem sinal validado; 0.10 ZAG/LAT; 0.15 ATA/MEI)
+      // e o "resto" (media/forma/consistencia) absorve o complemento.
+      var wMatch, wEstat;
+      if(p.pos === 'GOL' || p.pos === 'TEC'){ wMatch = Math.min(0.90, MATCHUP_W + 0.20); wEstat = 0; }
+      else if(p.pos === 'ZAG' || p.pos === 'LAT'){ wMatch = Math.min(0.85, MATCHUP_W + 0.10); wEstat = 0.10; }
+      else { wMatch = MATCHUP_W; wEstat = 0.15; }
+      var wOutros = Math.max(0, 1 - wMatch - wEstat);
+      return wMatch * previsaoModelo + wEstat * estatPos + wOutros * outrosTres;
     }
     return p.media;
   }
@@ -2540,6 +2560,23 @@
     var built = buildCartolaTeam(budget, formationKey, allowedTeams, includeRisky, criteria);
     renderCartolaResult(built, criteria);
   });
+
+  // Slider "Peso do confronto": atualiza MATCHUP_W e remonta ao vivo. So faz
+  // diferenca no Criterio mestre (os outros criterios nao usam MATCHUP_W).
+  (function(){
+    var slider = document.getElementById('ct-matchup-slider');
+    var valEl = document.getElementById('ct-matchup-val');
+    var rowEl = document.getElementById('ct-matchup-row');
+    var critEl = document.getElementById('ct-criteria-input');
+    function syncVisibility(){ rowEl.style.opacity = (critEl.value === 'combinado_completo') ? '1' : '0.45'; }
+    slider.addEventListener('input', function(){
+      MATCHUP_W = parseInt(slider.value, 10) / 100;
+      valEl.textContent = slider.value + '%';
+      document.getElementById('ct-build-btn').click();
+    });
+    critEl.addEventListener('change', syncVisibility);
+    syncVisibility();
+  })();
 
   // initial build on load
   document.getElementById('ct-build-btn').click();

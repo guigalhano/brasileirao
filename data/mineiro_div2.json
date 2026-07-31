@@ -1,0 +1,31 @@
+{
+  "competicao": "Campeonato Mineiro - Segunda Divisão 2026",
+  "times": {
+    "ARAXÁ ESPORTE CLUBE SAF": "Araxá",
+    "ASSOCIAÇÃO ESPORTIVA PARACATU": "Paracatu",
+    "BETIM FUTEBOL (\"B\")": "Betim",
+    "ESPORTE CLUBE NOVA LAVRAS": "Lavras",
+    "ESPORTE CLUBE SIDERÚRGICA": "Sabará",
+    "FUNORTE ESPORTE CLUBE": "Montes Claros",
+    "NACIONAL ATLÉTICO CLUBE - MURIAÉ": "Muriaé",
+    "NOVO ESPORTE CLUBE ITABIRINHA": "Itabirinha",
+    "SANTARRITENSE FUTEBOL CLUBE": "Santa Rita do Sapucaí",
+    "SÃO JOÃO DEL REI ESPORTE CLUBE": "São João Del-rei",
+    "VENDA NOVA FUTEBOL CLUBE SAF": "Belo Horizonte",
+    "ASSOCIAÇÃO DESPORTIVA INTERNACIONAL": "Itaúna"
+  },
+  "cidades": {
+    "Araxá": {"lat": -19.5908, "lng": -46.9445},
+    "Belo Horizonte": {"lat": -19.9191, "lng": -43.9386},
+    "Betim": {"lat": -19.9686, "lng": -44.1975},
+    "Itabirinha": {"lat": -19.1708, "lng": -42.1847},
+    "Itaúna": {"lat": -19.9944, "lng": -44.5725},
+    "Lavras": {"lat": -21.2455, "lng": -44.9968},
+    "Montes Claros": {"lat": -16.7317, "lng": -43.8532},
+    "Muriaé": {"lat": -21.1014, "lng": -42.3671},
+    "Paracatu": {"lat": -18.8945, "lng": -46.8699},
+    "Sabará": {"lat": -20.0218, "lng": -43.8106},
+    "Santa Rita do Sapucaí": {"lat": -21.9464, "lng": -45.1906},
+    "São João Del-rei": {"lat": -20.8871, "lng": -43.7519}
+  }
+}

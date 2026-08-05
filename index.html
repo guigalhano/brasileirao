@@ -300,6 +300,41 @@
     font-size:0.85em;
     line-height:1.5;
   }
+  .rj-analysis-toggle{
+    text-align:center;
+    padding:6px;
+    margin-top:8px;
+    cursor:pointer;
+    color:var(--model-c);
+    font-size:0.75em;
+    font-weight:bold;
+  }
+  .rj-analysis-grid{
+    display:none;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:8px;
+  }
+  .rj-analysis-grid.open{display:grid;}
+  .rj-ana{
+    background:rgba(102,126,234,0.1);
+    border-left:2px solid var(--model-c);
+    padding:6px 8px;
+    border-radius:3px;
+    font-size:0.75em;
+    line-height:1.4;
+    color:var(--cream-dim);
+  }
+  .rj-ana strong{color:var(--cream);font-size:0.8em;}
+  .rj-insight{
+    background:rgba(249,158,11,0.1);
+    border-left:2px solid var(--gold);
+    padding:6px 8px;
+    margin-top:6px;
+    border-radius:3px;
+    font-size:0.8em;
+    color:var(--gold);
+  }
 
   .bh-note{
     font-family:var(--font-mono);
@@ -1416,7 +1451,7 @@
   renderPredictor();
 
   // ================= NEXT MATCHES VS MARKET =================
-  var DATA = [{"home": "Flamengo", "away": "Chapecoense", "day": "Dom 11/08", "time": "18:30", "model": [0.8121, 0.1188, 0.0691], "xg": [2.99, 0.8], "analysis": "Forte favorito. Flamengo com 81.2% de chance de vitória. xG significativamente superior (2.99 vs 0.80). Aposta mais segura da rodada."}, {"home": "Palmeiras", "away": "Corinthians", "day": "Dom 11/08", "time": "18:30", "model": [0.5072, 0.3069, 0.1858], "xg": [1.2, 0.6], "analysis": "Confronto clássico. Palmeiras tem leve favoritismo (50.7%). Empate com 30.7% de chance. Jogo equilibrado no geral."}, {"home": "Bahia", "away": "Fluminense", "day": "Dom 11/08", "time": "18:30", "model": [0.4528, 0.2302, 0.317], "xg": [1.77, 1.45], "analysis": "Duelo equilibrado (45.3% Bahia). Fluminense com 31.7% de chance de surpreender. xG similar (1.77 vs 1.45). Incerteza moderada."}, {"home": "Gremio", "away": "Coritiba", "day": "Dom 11/08", "time": "20:30", "model": [0.4885, 0.2497, 0.2618], "xg": [1.59, 1.1], "analysis": "Casa com 48.9% de vantagem. Equilíbrio relativo, com 25% de chance de empate. Visitante tem 26.2% de chance."}, {"home": "Atletico-PR", "away": "Botafogo", "day": "Dom 11/08", "time": "20:30", "model": [0.6867, 0.1766, 0.1368], "xg": [2.38, 0.97], "analysis": "Segundo jogo mais previsível (68.7% Atlético-PR). xG favorável para o mandante (2.38 vs 0.97). Visitante enfrenta dificuldade."}, {"home": "Santos", "away": "Vitoria", "day": "Dom 11/08", "time": "20:30", "model": [0.528, 0.2347, 0.2373], "xg": [1.76, 1.1], "analysis": "Levemente favorável ao Santos (52.8%). Vitória com 23.7% de chance. Jogo com incerteza moderada-alta."}, {"home": "Vasco", "away": "Atletico-MG", "day": "Seg 12/08", "time": "20:30", "model": [0.5798, 0.2056, 0.2146], "xg": [2.13, 1.23], "analysis": "Vasco tem 58% de chance em casa. Jogo bem definido mas com margem de erro. xG: 2.13 vs 1.23."}, {"home": "Cruzeiro", "away": "Mirassol", "day": "Seg 12/08", "time": "20:30", "model": [0.567, 0.2319, 0.2011], "xg": [1.78, 0.96], "analysis": "Cruzeiro favorito com 56.7%. Mirassol com 20.1% de derrota esperada. Confronto moderadamente vantajoso para casa."}, {"home": "Bragantino", "away": "Internacional", "day": "Ter 13/08", "time": "19:30", "model": [0.5408, 0.2185, 0.2407], "xg": [1.97, 1.25], "analysis": "Equilíbrio relativo (54.1% Bragantino). Internacional com 24.1% de chance. Jogo com bom potencial para apostas."}, {"home": "Remo", "away": "Sao Paulo", "day": "Ter 13/08", "time": "21:30", "model": [0.3802, 0.2513, 0.3686], "xg": [1.43, 1.4], "analysis": "JOGO MAIS EQUILIBRADO da rodada (38% vs 36.9% vs 25%). Praticamente uma moeda ao ar. Alto grau de incerteza."}];
+  var DATA = [{"home": "Flamengo", "away": "Chapecoense", "day": "Dom 11/08", "time": "18:30", "model": [0.8121, 0.1188, 0.0691], "xg": [2.99, 0.8], "analysis": "Flamengo favorito em casa (56%). Chapecoense oferece resistencia (0%). Visitante favorito no H2H.", "analysis_grid": {"h2h": "Flamengo 0-1 (historicamente: Visitante favorito)", "form": "Flamengo 1.89 gols/jogo vs Chapecoense 0.95 gols/jogo", "home_away": "Casa: 56% W vs Fora: 0% W", "defense": "Flamengo -/0.89 gols vs Chapecoense -/2.05 gols", "clean_sheets": "Flamengo 42% CS vs Chapecoense 5% CS", "forecast": "2-0 (10%) | 3-0 (10%) | 2-1 (8%)"}}, {"home": "Palmeiras", "away": "Corinthians", "day": "Dom 11/08", "time": "18:30", "model": [0.5072, 0.3069, 0.1858], "xg": [1.2, 0.6], "analysis": "Palmeiras favorito em casa (70%). Corinthians oferece resistencia (20%). Equilibrio no H2H.", "analysis_grid": {"h2h": "Palmeiras 0-0 (historicamente: Equilibrio)", "form": "Palmeiras 1.70 gols/jogo vs Corinthians 1.10 gols/jogo", "home_away": "Casa: 70% W vs Fora: 20% W", "defense": "Palmeiras -/0.80 gols vs Corinthians -/1.00 gols", "clean_sheets": "Palmeiras 35% CS vs Corinthians 40% CS", "forecast": "1-0 (20%) | 0-0 (16%) | 1-1 (12%)"}}, {"home": "Bahia", "away": "Fluminense", "day": "Dom 11/08", "time": "18:30", "model": [0.4528, 0.2302, 0.317], "xg": [1.77, 1.45], "analysis": "Bahia favorito em casa (36%). Fluminense oferece resistencia (20%). Equilibrio no H2H.", "analysis_grid": {"h2h": "Bahia 0-0 (historicamente: Equilibrio)", "form": "Bahia 1.45 gols/jogo vs Fluminense 1.50 gols/jogo", "home_away": "Casa: 36% W vs Fora: 20% W", "defense": "Bahia -/1.25 gols vs Fluminense -/1.25 gols", "clean_sheets": "Bahia 25% CS vs Fluminense 15% CS", "forecast": "1-1 (10%) | 2-1 (9%) | 1-2 (7%)"}}, {"home": "Gremio", "away": "Coritiba", "day": "Dom 11/08", "time": "20:30", "model": [0.4885, 0.2497, 0.2618], "xg": [1.59, 1.1], "analysis": "Gremio favorito em casa (50%). Coritiba oferece resistencia (36%). Casa favorita no H2H.", "analysis_grid": {"h2h": "Gremio 1-0 (historicamente: Casa favorita)", "form": "Gremio 1.10 gols/jogo vs Coritiba 1.25 gols/jogo", "home_away": "Casa: 50% W vs Fora: 36% W", "defense": "Gremio -/1.30 gols vs Coritiba -/1.35 gols", "clean_sheets": "Gremio 25% CS vs Coritiba 30% CS", "forecast": "1-1 (12%) | 1-0 (11%) | 2-1 (9%)"}}, {"home": "Atletico-PR", "away": "Botafogo", "day": "Dom 11/08", "time": "20:30", "model": [0.6867, 0.1766, 0.1368], "xg": [2.38, 0.97], "analysis": "Atletico-PR favorito em casa (73%). Botafogo oferece resistencia (36%). Casa favorita no H2H.", "analysis_grid": {"h2h": "Atletico-PR 1-0 (historicamente: Casa favorita)", "form": "Atletico-PR 1.40 gols/jogo vs Botafogo 1.70 gols/jogo", "home_away": "Casa: 73% W vs Fora: 36% W", "defense": "Atletico-PR -/0.95 gols vs Botafogo -/1.60 gols", "clean_sheets": "Atletico-PR 30% CS vs Botafogo 15% CS", "forecast": "2-0 (10%) | 2-1 (10%) | 1-0 (8%)"}}, {"home": "Santos", "away": "Vitoria", "day": "Dom 11/08", "time": "20:30", "model": [0.528, 0.2347, 0.2373], "xg": [1.76, 1.1], "analysis": "Santos favorito em casa (45%). Vitoria oferece resistencia (0%). Casa favorita no H2H.", "analysis_grid": {"h2h": "Santos 1-0 (historicamente: Casa favorita)", "form": "Santos 1.45 gols/jogo vs Vitoria 1.10 gols/jogo", "home_away": "Casa: 45% W vs Fora: 0% W", "defense": "Santos -/1.65 gols vs Vitoria -/1.35 gols", "clean_sheets": "Santos 20% CS vs Vitoria 40% CS", "forecast": "1-1 (11%) | 1-0 (10%) | 2-1 (10%)"}}, {"home": "Vasco", "away": "Atletico-MG", "day": "Seg 12/08", "time": "20:30", "model": [0.5798, 0.2056, 0.2146], "xg": [2.13, 1.23], "analysis": "Vasco favorito em casa (45%). Atletico-MG oferece resistencia (36%). Equilibrio no H2H.", "analysis_grid": {"h2h": "Vasco 0-0 (historicamente: Equilibrio)", "form": "Vasco 1.15 gols/jogo vs Atletico-MG 1.25 gols/jogo", "home_away": "Casa: 45% W vs Fora: 36% W", "defense": "Vasco -/1.55 gols vs Atletico-MG -/1.25 gols", "clean_sheets": "Vasco 5% CS vs Atletico-MG 20% CS", "forecast": "2-1 (10%) | 1-1 (9%) | 2-0 (8%)"}}, {"home": "Cruzeiro", "away": "Mirassol", "day": "Seg 12/08", "time": "20:30", "model": [0.567, 0.2319, 0.2011], "xg": [1.78, 0.96], "analysis": "Cruzeiro favorito em casa (36%). Mirassol oferece resistencia (11%). Equilibrio no H2H.", "analysis_grid": {"h2h": "Cruzeiro 0-0 (historicamente: Equilibrio)", "form": "Cruzeiro 1.30 gols/jogo vs Mirassol 1.11 gols/jogo", "home_away": "Casa: 36% W vs Fora: 11% W", "defense": "Cruzeiro -/1.50 gols vs Mirassol -/1.37 gols", "clean_sheets": "Cruzeiro 20% CS vs Mirassol 5% CS", "forecast": "1-0 (12%) | 1-1 (11%) | 2-0 (10%)"}}, {"home": "Bragantino", "away": "Internacional", "day": "Ter 13/08", "time": "19:30", "model": [0.5408, 0.2185, 0.2407], "xg": [1.97, 1.25], "analysis": "Bragantino favorito em casa (50%). Internacional oferece resistencia (20%). Casa favorita no H2H.", "analysis_grid": {"h2h": "Bragantino 1-0 (historicamente: Casa favorita)", "form": "Bragantino 1.30 gols/jogo vs Internacional 1.10 gols/jogo", "home_away": "Casa: 50% W vs Fora: 20% W", "defense": "Bragantino -/1.00 gols vs Internacional -/1.30 gols", "clean_sheets": "Bragantino 35% CS vs Internacional 20% CS", "forecast": "1-1 (10%) | 2-1 (10%) | 1-0 (8%)"}}, {"home": "Remo", "away": "Sao Paulo", "day": "Ter 13/08", "time": "21:30", "model": [0.3802, 0.2513, 0.3686], "xg": [1.43, 1.4], "analysis": "Remo favorito em casa (30%). Sao Paulo oferece resistencia (18%). Casa favorita no H2H.", "analysis_grid": {"h2h": "Remo 1-0 (historicamente: Casa favorita)", "form": "Remo 1.15 gols/jogo vs Sao Paulo 1.25 gols/jogo", "home_away": "Casa: 30% W vs Fora: 18% W", "defense": "Remo -/1.60 gols vs Sao Paulo -/1.15 gols", "clean_sheets": "Remo 15% CS vs Sao Paulo 20% CS", "forecast": "1-1 (12%) | 1-0 (8%) | 2-1 (8%)"}}];
 
   function buildBar(modelVal, marketVal){
     var m = (modelVal*100).toFixed(0);
@@ -1477,8 +1512,37 @@
     if(f.analysis){
       var analysis = document.createElement('div');
       analysis.className = 'rj-analysis';
-      analysis.innerHTML = '<strong style="color:var(--cream);font-size:0.9em;">Análise:</strong> <span style="color:var(--cream-dim);font-size:0.85em;">'+f.analysis+'</span>';
+      analysis.innerHTML = '<strong style="color:var(--cream);font-size:0.9em;">Análise Resumida:</strong> <span style="color:var(--cream-dim);font-size:0.85em;">'+f.analysis+'</span>';
       card.appendChild(analysis);
+    }
+
+    if(f.analysis_grid){
+      var gridContainer = document.createElement('div');
+      gridContainer.className = 'rj-analysis-grid';
+      var ag = f.analysis_grid;
+
+      var grids = [
+        '<div class="rj-ana"><strong>H2H:</strong> '+ag.h2h+'</div>',
+        '<div class="rj-ana"><strong>Ataque:</strong> '+ag.form+'</div>',
+        '<div class="rj-ana"><strong>Casa/Fora:</strong> '+ag.home_away+'</div>',
+        '<div class="rj-ana"><strong>Defesa:</strong> '+ag.defense+'</div>',
+        '<div class="rj-ana"><strong>Clean Sheets:</strong> '+ag.clean_sheets+'</div>',
+        '<div class="rj-ana"><strong>Forecast:</strong> '+ag.forecast+'</div>'
+      ];
+
+      gridContainer.innerHTML = grids.join('');
+      card.appendChild(gridContainer);
+
+      var toggle = document.createElement('div');
+      toggle.className = 'rj-analysis-toggle';
+      toggle.textContent = '+ VER 7 ANALISES COMPLETAS';
+      toggle.style.cursor = 'pointer';
+      toggle.onclick = function(e){
+        e.stopPropagation();
+        gridContainer.classList.toggle('open');
+        toggle.textContent = gridContainer.classList.contains('open') ? '- OCULTAR ANALISES' : '+ VER 7 ANALISES COMPLETAS';
+      };
+      card.appendChild(toggle);
     }
 
     matchContainer.appendChild(card);

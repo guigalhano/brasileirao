@@ -61,15 +61,49 @@ def build_analyses(repo_path):
     for match in matches_r22:
         home, away = match['home'], match['away']
 
-        # H2H Analysis
-        h2h_matches = [m for m in matches_2026 if
-                      (m['home_team'] == home and m['away_team'] == away) or
-                      (m['home_team'] == away and m['away_team'] == home)]
-        h2h_matches = sorted(h2h_matches, key=lambda x: x['date'])[-5:]
+        # H2H Analysis - Últimos 5 anos
+        h2h_all = [m for m in matches if
+                  (m['home_team'] == home and m['away_team'] == away) or
+                  (m['home_team'] == away and m['away_team'] == home)]
 
-        home_wins = sum(1 for m in h2h_matches if m['home_team'] == home and m['home_goals'] > m['away_goals'])
-        away_wins = sum(1 for m in h2h_matches if m['away_team'] == home and m['away_goals'] > m['home_goals'])
-        dominance = "Casa favorita" if home_wins > away_wins else ("Visitante favorito" if away_wins > home_wins else "Equilibrio")
+        # Últimos 5 anos (desde 2021)
+        h2h_5y = [m for m in h2h_all if int(m['season']) >= 2021]
+        h2h_recent = sorted(h2h_5y, key=lambda x: x['date'])[-5:] if h2h_5y else []
+
+        # Calcular stats do mandante nos últimos 5 anos
+        home_wins_5y = sum(1 for m in h2h_5y if m['home_team'] == home and m['home_goals'] > m['away_goals'])
+        away_wins_5y = sum(1 for m in h2h_5y if m['away_team'] == home and m['away_goals'] > m['home_goals'])
+        draws_5y = len(h2h_5y) - home_wins_5y - away_wins_5y
+
+        # Tendência recente (últimos 5 jogos)
+        home_wins_recent = sum(1 for m in h2h_recent if m['home_team'] == home and m['home_goals'] > m['away_goals'])
+        away_wins_recent = sum(1 for m in h2h_recent if m['away_team'] == home and m['away_goals'] > m['home_goals'])
+        draws_recent = len(h2h_recent) - home_wins_recent - away_wins_recent
+
+        # Dominância
+        if home_wins_5y > away_wins_5y:
+            dominance = "Casa historicamente favorita"
+        elif away_wins_5y > home_wins_5y:
+            dominance = "Visitante historicamente favorito"
+        else:
+            dominance = "Equilibrio historico"
+
+        # Tendência
+        if len(h2h_recent) > 0:
+            if home_wins_recent > away_wins_recent:
+                trend = " | Casa em alta"
+            elif away_wins_recent > home_wins_recent:
+                trend = " | Visitante em alta"
+            else:
+                trend = " | Padrão misto"
+        else:
+            trend = ""
+
+        # Formato: "Casa 10-5-3 (5 anos) | Recente: 2-1-2 | Casa histórica"
+        h2h_text = f"{home} {home_wins_5y}-{draws_5y}-{away_wins_5y} ({len(h2h_5y)} jogos/5 anos)"
+        if h2h_recent:
+            h2h_text += f" | Recente: {home_wins_recent}W-{draws_recent}D-{away_wins_recent}L"
+        h2h_text += f" | {dominance}{trend}"
 
         # Casa vs Fora Analysis
         home_games = [m for m in matches_2026 if m['home_team'] == home]
@@ -136,7 +170,7 @@ def build_analyses(repo_path):
 
         # Consolidate all analyses
         analysis = {
-            'h2h': f"{home} {home_wins}-{away_wins} (historicamente: {dominance})",
+            'h2h': h2h_text,
             'form': f"{home} {home_stats['gf']:.2f} gols/jogo vs {away} {away_stats['gf']:.2f} gols/jogo",
             'home_away': f"Casa: {home_win:.0f}% W vs Fora: {away_win:.0f}% W",
             'defense': f"{home} -/{home_stats['ga']:.2f} gols vs {away} -/{away_stats['ga']:.2f} gols",

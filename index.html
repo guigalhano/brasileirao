@@ -291,6 +291,15 @@
     border-top:1px solid var(--line);font-family:var(--font-mono);font-size:10px;color:var(--cream-dim);
   }
   .rj-noodds{font-family:var(--font-mono);font-size:10.5px;color:var(--gold-dim);text-align:center;padding:6px 0 2px;}
+  .rj-analysis{
+    background:rgba(102,126,234,0.08);
+    border-left:3px solid var(--model-c);
+    padding:8px 10px;
+    margin-top:8px;
+    border-radius:4px;
+    font-size:0.85em;
+    line-height:1.5;
+  }
 
   .bh-note{
     font-family:var(--font-mono);
@@ -1407,7 +1416,7 @@
   renderPredictor();
 
   // ================= NEXT MATCHES VS MARKET =================
-  var DATA = [{"home": "Flamengo", "away": "Chapecoense", "day": "Dom 11/08", "time": "18:30", "model": [0.8121, 0.1188, 0.0691], "xg": [2.99, 0.8]}, {"home": "Palmeiras", "away": "Corinthians", "day": "Dom 11/08", "time": "18:30", "model": [0.5072, 0.3069, 0.1858], "xg": [1.2, 0.6]}, {"home": "Bahia", "away": "Fluminense", "day": "Dom 11/08", "time": "18:30", "model": [0.4528, 0.2302, 0.317], "xg": [1.77, 1.45]}, {"home": "Gremio", "away": "Coritiba", "day": "Dom 11/08", "time": "20:30", "model": [0.4885, 0.2497, 0.2618], "xg": [1.59, 1.1]}, {"home": "Atletico-PR", "away": "Botafogo", "day": "Dom 11/08", "time": "20:30", "model": [0.6867, 0.1766, 0.1368], "xg": [2.38, 0.97]}, {"home": "Santos", "away": "Vitoria", "day": "Dom 11/08", "time": "20:30", "model": [0.528, 0.2347, 0.2373], "xg": [1.76, 1.1]}, {"home": "Vasco", "away": "Atletico-MG", "day": "Seg 12/08", "time": "20:30", "model": [0.5798, 0.2056, 0.2146], "xg": [2.13, 1.23]}, {"home": "Cruzeiro", "away": "Mirassol", "day": "Seg 12/08", "time": "20:30", "model": [0.567, 0.2319, 0.2011], "xg": [1.78, 0.96]}, {"home": "Bragantino", "away": "Internacional", "day": "Ter 13/08", "time": "19:30", "model": [0.5408, 0.2185, 0.2407], "xg": [1.97, 1.25]}, {"home": "Remo", "away": "Sao Paulo", "day": "Ter 13/08", "time": "21:30", "model": [0.3802, 0.2513, 0.3686], "xg": [1.43, 1.4]}];
+  var DATA = [{"home": "Flamengo", "away": "Chapecoense", "day": "Dom 11/08", "time": "18:30", "model": [0.8121, 0.1188, 0.0691], "xg": [2.99, 0.8], "analysis": "Forte favorito. Flamengo com 81.2% de chance de vitória. xG significativamente superior (2.99 vs 0.80). Aposta mais segura da rodada."}, {"home": "Palmeiras", "away": "Corinthians", "day": "Dom 11/08", "time": "18:30", "model": [0.5072, 0.3069, 0.1858], "xg": [1.2, 0.6], "analysis": "Confronto clássico. Palmeiras tem leve favoritismo (50.7%). Empate com 30.7% de chance. Jogo equilibrado no geral."}, {"home": "Bahia", "away": "Fluminense", "day": "Dom 11/08", "time": "18:30", "model": [0.4528, 0.2302, 0.317], "xg": [1.77, 1.45], "analysis": "Duelo equilibrado (45.3% Bahia). Fluminense com 31.7% de chance de surpreender. xG similar (1.77 vs 1.45). Incerteza moderada."}, {"home": "Gremio", "away": "Coritiba", "day": "Dom 11/08", "time": "20:30", "model": [0.4885, 0.2497, 0.2618], "xg": [1.59, 1.1], "analysis": "Casa com 48.9% de vantagem. Equilíbrio relativo, com 25% de chance de empate. Visitante tem 26.2% de chance."}, {"home": "Atletico-PR", "away": "Botafogo", "day": "Dom 11/08", "time": "20:30", "model": [0.6867, 0.1766, 0.1368], "xg": [2.38, 0.97], "analysis": "Segundo jogo mais previsível (68.7% Atlético-PR). xG favorável para o mandante (2.38 vs 0.97). Visitante enfrenta dificuldade."}, {"home": "Santos", "away": "Vitoria", "day": "Dom 11/08", "time": "20:30", "model": [0.528, 0.2347, 0.2373], "xg": [1.76, 1.1], "analysis": "Levemente favorável ao Santos (52.8%). Vitória com 23.7% de chance. Jogo com incerteza moderada-alta."}, {"home": "Vasco", "away": "Atletico-MG", "day": "Seg 12/08", "time": "20:30", "model": [0.5798, 0.2056, 0.2146], "xg": [2.13, 1.23], "analysis": "Vasco tem 58% de chance em casa. Jogo bem definido mas com margem de erro. xG: 2.13 vs 1.23."}, {"home": "Cruzeiro", "away": "Mirassol", "day": "Seg 12/08", "time": "20:30", "model": [0.567, 0.2319, 0.2011], "xg": [1.78, 0.96], "analysis": "Cruzeiro favorito com 56.7%. Mirassol com 20.1% de derrota esperada. Confronto moderadamente vantajoso para casa."}, {"home": "Bragantino", "away": "Internacional", "day": "Ter 13/08", "time": "19:30", "model": [0.5408, 0.2185, 0.2407], "xg": [1.97, 1.25], "analysis": "Equilíbrio relativo (54.1% Bragantino). Internacional com 24.1% de chance. Jogo com bom potencial para apostas."}, {"home": "Remo", "away": "Sao Paulo", "day": "Ter 13/08", "time": "21:30", "model": [0.3802, 0.2513, 0.3686], "xg": [1.43, 1.4], "analysis": "JOGO MAIS EQUILIBRADO da rodada (38% vs 36.9% vs 25%). Praticamente uma moeda ao ar. Alto grau de incerteza."}];
 
   function buildBar(modelVal, marketVal){
     var m = (modelVal*100).toFixed(0);
@@ -1464,6 +1473,13 @@
     var oddsText = f.odds ? ('Odds: ' + f.odds[0] + ' / ' + f.odds[1] + ' / ' + f.odds[2]) : '';
     foot.innerHTML = '<span>'+xgText+'</span><span>'+oddsText+'</span>';
     card.appendChild(foot);
+
+    if(f.analysis){
+      var analysis = document.createElement('div');
+      analysis.className = 'rj-analysis';
+      analysis.innerHTML = '<strong style="color:var(--cream);font-size:0.9em;">Análise:</strong> <span style="color:var(--cream-dim);font-size:0.85em;">'+f.analysis+'</span>';
+      card.appendChild(analysis);
+    }
 
     matchContainer.appendChild(card);
   });

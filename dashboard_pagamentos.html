@@ -15,7 +15,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
 
         .container {
@@ -25,9 +25,9 @@
 
         .header {
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
@@ -35,18 +35,134 @@
         .header h1 {
             color: #333;
             margin-bottom: 5px;
-            font-size: 28px;
+            font-size: 24px;
         }
 
         .header p {
             color: #666;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        /* CARD TOTAL - NO TOPO */
+        .total-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            order: -1;
+        }
+
+        .total-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+
+        .total-section {
+            text-align: left;
+        }
+
+        .falta-section {
+            text-align: right;
+            padding-top: 5px;
+        }
+
+        .total-card h2 {
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .falta-label {
+            color: #ff6b6b;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .total-value {
+            font-size: 42px;
+            font-weight: 700;
+            color: #667eea;
+            line-height: 1;
+            margin-bottom: 0;
+        }
+
+        .falta-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ff6b6b;
+            line-height: 1;
+        }
+
+        .meta-info {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+            padding: 8px;
+            background: #f8f9ff;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .meta-info strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #999;
+            text-transform: uppercase;
+            margin-top: 3px;
         }
 
         .table-section {
@@ -68,19 +184,21 @@
         thead {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            position: sticky;
+            top: 0;
         }
 
         th {
-            padding: 15px;
+            padding: 12px 8px;
             text-align: left;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         td {
-            padding: 12px 15px;
+            padding: 10px 8px;
             border-bottom: 1px solid #eee;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         tbody tr:hover {
@@ -94,15 +212,15 @@
         .pessoa {
             font-weight: 500;
             color: #333;
-            min-width: 150px;
+            min-width: 120px;
         }
 
         input[type="number"] {
             width: 100%;
-            padding: 8px;
+            padding: 8px 6px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 12px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -118,100 +236,21 @@
             color: #aaa;
         }
 
-        .valor-input {
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .card h2 {
-            color: #333;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            color: #666;
-        }
-
-        .total-value {
-            font-size: 36px;
-            font-weight: 700;
-            color: #667eea;
-            line-height: 1;
-            margin-bottom: 5px;
-        }
-
-        .total-label {
-            font-size: 12px;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s ease;
-        }
-
-        .stats {
+        .botoes {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: #999;
-            text-transform: uppercase;
-            margin-top: 3px;
-        }
-
-        .botoes {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         button {
-            padding: 10px;
+            padding: 12px;
             border: none;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -244,29 +283,282 @@
             padding: 10px;
             border-left: 3px solid #667eea;
             border-radius: 3px;
-            font-size: 12px;
+            font-size: 11px;
             color: #666;
             margin-top: 10px;
+            text-align: center;
         }
 
+        .btn-home {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #f0f0f0;
+            color: #666;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-home:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .pix-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+        }
+
+        .pix-info {
+            text-align: center;
+        }
+
+        .pix-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pix-key {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            padding: 12px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+        }
+
+        .costs-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+        }
+
+        .cost-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .cost-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .btn-copy {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-copy:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-copy:active {
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVO PARA CELULAR */
         @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
+            body {
+                padding: 8px;
             }
 
-            .sidebar {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+            .header {
+                padding: 15px;
+                margin-bottom: 12px;
             }
 
-            th, td {
-                padding: 10px 8px;
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .header p {
                 font-size: 12px;
             }
 
+            .total-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .total-header {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .falta-section {
+                text-align: left;
+                padding-top: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+
             .total-value {
+                font-size: 32px;
+            }
+
+            .falta-value {
                 font-size: 28px;
+            }
+
+            .meta-info {
+                font-size: 11px;
+                margin-top: 8px;
+                padding: 6px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .stat-value {
+                font-size: 16px;
+            }
+
+            .stat-label {
+                font-size: 9px;
+            }
+
+            th {
+                padding: 10px 6px;
+                font-size: 11px;
+            }
+
+            td {
+                padding: 8px 6px;
+                font-size: 11px;
+            }
+
+            .pessoa {
+                min-width: 100px;
+                font-size: 12px;
+            }
+
+            input[type="number"] {
+                padding: 6px 4px;
+                font-size: 11px;
+            }
+
+            .botoes {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                padding: 12px;
+                margin-top: 12px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 11px;
+            }
+
+            .info-mes {
+                padding: 8px;
+                font-size: 10px;
+                margin-top: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .header p {
+                font-size: 11px;
+            }
+
+            .total-value {
+                font-size: 32px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+
+            .stat-value {
+                font-size: 14px;
+            }
+
+            .stat-label {
+                font-size: 8px;
+            }
+
+            th {
+                padding: 8px 4px;
+                font-size: 10px;
+            }
+
+            td {
+                padding: 6px 4px;
+                font-size: 10px;
+            }
+
+            .pessoa {
+                min-width: 90px;
+                font-size: 11px;
+            }
+
+            input[type="number"] {
+                padding: 5px 3px;
+                font-size: 10px;
+            }
+
+            .botoes {
+                grid-template-columns: 1fr;
+                gap: 6px;
+                padding: 10px;
+                margin-top: 10px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 10px;
             }
         }
     </style>
@@ -275,20 +567,75 @@
     <div class="container">
         <div class="header">
             <h1>💰 Pagamentos - Pintura São Lourenço</h1>
-            <p>Controle de arrecadação de valores</p>
+            <p>Controle de arrecadação</p>
         </div>
 
         <div class="main-content">
+            <!-- TOTAL NO TOPO -->
+            <div class="total-card">
+                <div class="total-header">
+                    <div class="total-section">
+                        <h2>Total Arrecadado</h2>
+                        <div class="total-value" id="totalGeral">R$ 0,00</div>
+                    </div>
+                    <div class="falta-section">
+                        <div class="falta-label">Falta Arrecadar</div>
+                        <div class="falta-value" id="faltaArrecadar">R$ 12.000,00</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="meta-info">
+                    <span>Valor necessário: <strong>R$ 12.000,00</strong></span>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="totalAgosto">R$ 0</div>
+                        <div class="stat-label">Agosto</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="totalSetembro">R$ 0</div>
+                        <div class="stat-label">Setembro</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="totalPessoas">0</div>
+                        <div class="stat-label">Pessoas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAVE PIX -->
+            <div class="pix-card">
+                <div class="pix-info">
+                    <div class="pix-label">📲 CHAVE PIX PARA PAGAMENTO</div>
+                    <div class="pix-key">31988324044</div>
+                    <button class="btn-copy" onclick="copiarPix()">Copiar</button>
+                </div>
+            </div>
+
+            <!-- CUSTOS -->
+            <div class="costs-card">
+                <div class="cost-item">
+                    <span class="cost-label">Valor para filh@s:</span>
+                    <span class="cost-value">R$ 1.000</span>
+                </div>
+                <div class="cost-item">
+                    <span class="cost-label">Valor para net@s:</span>
+                    <span class="cost-value">R$ 400</span>
+                </div>
+            </div>
+
+            <!-- TABELA -->
             <div class="table-section">
                 <div class="table-wrapper">
                     <table id="tabelaPagamentos">
                         <thead>
                             <tr>
-                                <th>Filhos/Netos</th>
-                                <th>Agosto</th>
-                                <th>Setembro</th>
-                                <th>Outubro</th>
-                                <th>Subtotal</th>
+                                <th>Pessoa</th>
+                                <th>Ago</th>
+                                <th>Set</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -296,195 +643,145 @@
                                 <td class="pessoa">TASSINHO</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">RAPHAEL</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">ALEXANDRE</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">MARIALICE</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">VAGNER</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">DANIEL</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">TIAGO</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">TARCÍSIO</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">TARCISINHO</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">ANDRÉ</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" value="400" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">RENATA</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">MARIÂNGELA</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" value="1000" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">GUILHERME</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">HENRIQUE</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">TULIO</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">TASSO</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">SOFIA</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">BRUNO</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">TELMO</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">POLLYANNA</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                             <tr>
                                 <td class="pessoa">PATRICIA</td>
                                 <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
                                 <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
-                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
-                                <td class="subtotal">R$ 0,00</td>
+                                <td class="subtotal">R$ 0</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div class="sidebar">
-                <div class="card">
-                    <h2>Total Arrecadado</h2>
-                    <div class="total-value" id="totalGeral">R$ 0,00</div>
-                    <div class="total-label">Valor total</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-                    </div>
-                </div>
+            <!-- BOTÕES -->
+            <div class="botoes">
+                <button class="btn-export" onclick="exportarCSV()">📊 Exportar</button>
+                <button class="btn-reset" onclick="limparDados()">🔄 Limpar</button>
+            </div>
 
-                <div class="card">
-                    <h2>Por Mês</h2>
-                    <div class="stats">
-                        <div class="stat">
-                            <div class="stat-value" id="totalAgosto">R$ 0</div>
-                            <div class="stat-label">Agosto</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value" id="totalSetembro">R$ 0</div>
-                            <div class="stat-label">Setembro</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value" id="totalOutubro">R$ 0</div>
-                            <div class="stat-label">Outubro</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value" id="totalPessoas">0</div>
-                            <div class="stat-label">Contribuintes</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="info-mes">
+                ℹ️ Os valores são atualizados automaticamente conforme você digita.
+            </div>
 
-                <div class="card">
-                    <div class="botoes">
-                        <button class="btn-export" onclick="exportarCSV()">📊 Exportar CSV</button>
-                        <button class="btn-reset" onclick="limparDados()">🔄 Limpar</button>
-                    </div>
-                    <div class="info-mes">
-                        ℹ️ Os valores são atualizados automaticamente conforme você digita.
-                    </div>
-                </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="index.html" class="btn-home">← Voltar para o Menu</a>
             </div>
         </div>
     </div>
@@ -497,32 +794,30 @@
         const totalOutubroEl = document.getElementById('totalOutubro');
         const totalPessoasEl = document.getElementById('totalPessoas');
         const progressFill = document.getElementById('progressFill');
+        const faltaArrecadarEl = document.getElementById('faltaArrecadar');
+        const META = 12000;
 
         function atualizarTotais() {
             let totalGeral = 0;
             let totalAgosto = 0;
             let totalSetembro = 0;
-            let totalOutubro = 0;
             let pessoasComPagamento = 0;
 
             document.querySelectorAll('#tabelaPagamentos tbody tr').forEach(row => {
                 const inputAgosto = row.querySelector('.mes-agosto');
                 const inputSetembro = row.querySelector('.mes-setembro');
-                const inputOutubro = row.querySelector('.mes-outubro');
                 const subtotalCell = row.querySelector('.subtotal');
 
                 const valorAgosto = parseFloat(inputAgosto.value) || 0;
                 const valorSetembro = parseFloat(inputSetembro.value) || 0;
-                const valorOutubro = parseFloat(inputOutubro.value) || 0;
 
-                const subtotal = valorAgosto + valorSetembro + valorOutubro;
+                const subtotal = valorAgosto + valorSetembro;
 
                 subtotalCell.textContent = formatarMoeda(subtotal);
 
                 totalGeral += subtotal;
                 totalAgosto += valorAgosto;
                 totalSetembro += valorSetembro;
-                totalOutubro += valorOutubro;
 
                 if (subtotal > 0) {
                     pessoasComPagamento++;
@@ -532,11 +827,12 @@
             totalGeralEl.textContent = formatarMoeda(totalGeral);
             totalAgostoEl.textContent = formatarMoeda(totalAgosto);
             totalSetembroEl.textContent = formatarMoeda(totalSetembro);
-            totalOutubroEl.textContent = formatarMoeda(totalOutubro);
             totalPessoasEl.textContent = pessoasComPagamento;
 
-            const meta = 10000;
-            const percentual = Math.min((totalGeral / meta) * 100, 100);
+            const falta = Math.max(META - totalGeral, 0);
+            faltaArrecadarEl.textContent = formatarMoeda(falta);
+
+            const percentual = Math.min((totalGeral / META) * 100, 100);
             progressFill.style.width = percentual + '%';
 
             salvarDados();
@@ -552,19 +848,18 @@
         }
 
         function exportarCSV() {
-            let csv = 'Filhos/Netos,Agosto,Setembro,Outubro,Subtotal\n';
+            let csv = 'Filhos/Netos,Agosto,Setembro,Subtotal\n';
 
             document.querySelectorAll('#tabelaPagamentos tbody tr').forEach(row => {
                 const pessoa = row.querySelector('.pessoa').textContent;
                 const agosto = row.querySelector('.mes-agosto').value || '0';
                 const setembro = row.querySelector('.mes-setembro').value || '0';
-                const outubro = row.querySelector('.mes-outubro').value || '0';
                 const subtotal = row.querySelector('.subtotal').textContent.replace('R$ ', '').replace('.', '').replace(',', '.');
 
-                csv += `${pessoa},${agosto},${setembro},${outubro},${subtotal}\n`;
+                csv += `${pessoa},${agosto},${setembro},${subtotal}\n`;
             });
 
-            csv += `\nTOTAL,${totalAgostoEl.textContent},${totalSetembroEl.textContent},${totalOutubroEl.textContent},${totalGeralEl.textContent}`;
+            csv += `\nTOTAL,${totalAgostoEl.textContent},${totalSetembroEl.textContent},${totalGeralEl.textContent}`;
 
             const element = document.createElement('a');
             element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
@@ -584,13 +879,26 @@
             }
         }
 
+        function copiarPix() {
+            const pixKey = '31988324044';
+            navigator.clipboard.writeText(pixKey).then(() => {
+                const btn = event.target;
+                const textoOriginal = btn.textContent;
+                btn.textContent = '✅ Copiado!';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    btn.textContent = textoOriginal;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+
         function salvarDados() {
             const dados = {};
             document.querySelectorAll('#tabelaPagamentos tbody tr').forEach((row, index) => {
                 dados[index] = {
                     agosto: row.querySelector('.mes-agosto').value,
-                    setembro: row.querySelector('.mes-setembro').value,
-                    outubro: row.querySelector('.mes-outubro').value
+                    setembro: row.querySelector('.mes-setembro').value
                 };
             });
             localStorage.setItem('pagamentosSaoLourenco', JSON.stringify(dados));
@@ -604,7 +912,6 @@
                     if (parsed[index]) {
                         row.querySelector('.mes-agosto').value = parsed[index].agosto;
                         row.querySelector('.mes-setembro').value = parsed[index].setembro;
-                        row.querySelector('.mes-outubro').value = parsed[index].outubro;
                     }
                 });
             }

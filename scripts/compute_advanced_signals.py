@@ -68,11 +68,11 @@ def per_round_scout(games, col):
     tiramos a diferenca entre rodadas consecutivas; de 19 em diante usamos o
     valor como esta. Retorna dict {rodada_id: valor_por_rodada}.
     """
-    games = sorted(games, key=lambda g: int(g["atletas.rodada_id"]))
+    games = sorted(games, key=lambda g: int(g["rodada"]))
     out = {}
     prev_cum = 0.0
     for g in games:
-        rod = int(g["atletas.rodada_id"])
+        rod = int(g["rodada"])
         v = scout_val(g, col)
         if rod <= 18:
             pr = v - prev_cum
@@ -157,9 +157,9 @@ def main():
     hist_rows = list(csv.DictReader(open(repo / "data" / "cartola_historico_2026_completo.csv", encoding="utf-8")))
     by_player = defaultdict(list)
     for r in hist_rows:
-        by_player[r["atletas.atleta_id"]].append(r)
+        by_player[r["atleta_id"]].append(r)
     for pid in by_player:
-        by_player[pid].sort(key=lambda r: int(r["atletas.rodada_id"]))
+        by_player[pid].sort(key=lambda r: int(r["rodada"]))
 
     # Gols POR RODADA de cada jogador (normalizados) e total por time -- pro goalShare.
     player_goals_pr = {}   # pid -> total de gols por-rodada na temporada
@@ -168,30 +168,30 @@ def main():
         g_pr = per_round_scout(games, "G")
         total_g = sum(g_pr.values())
         player_goals_pr[pid] = total_g
-        team_abbrev = games[0]["atletas.clube.id.full.name"]
+        team_abbrev = games[0]["clube"]
         team_goals_total[team_abbrev] += total_g
 
     output_rows = []
     for pid, games in by_player.items():
-        team_abbrev = games[0]["atletas.clube.id.full.name"]
+        team_abbrev = games[0]["clube"]
         team = CLUB_ABBREV_TO_NAME.get(team_abbrev)
-        pos = POSICAO_ID_TO_POS.get(games[0]["atletas.posicao_id"])
+        pos = games[0]["posicao"]
         if team is None or pos is None:
             continue
 
-        played = [g for g in games if g["atletas.entrou_em_campo"] == "True"]
+        played = [g for g in games if g["entrou_em_campo"] == "True"]
 
         # 1) ult5 ajustado por forca do adversario (ultimas 5 rodadas jogadas)
         last5 = played[-5:]
         adj_scores = []
         for g in last5:
-            rodada = int(g["atletas.rodada_id"])
+            rodada = int(g["rodada"])
             fx = fixture_by_team_round.get((team, rodada))
             dificuldade = 1.0
             if fx:
                 dificuldade = matchup_difficulty(pos, ratings, home_adv, avg_lam,
                                                   team, fx["opponent"], fx["is_home"])
-            pontos = float(g["atletas.pontos_num"])
+            pontos = float(g["pontos"])
             adj_scores.append(pontos / dificuldade if dificuldade > 0 else pontos)
         ult5_sos = round(sum(adj_scores) / len(adj_scores), 3) if adj_scores else None
 
@@ -201,7 +201,7 @@ def main():
         playmaking = None
         if pos == "MEI" and played:
             a_pr = per_round_scout(games, "A")
-            rounds_played = {int(g["atletas.rodada_id"]) for g in played}
+            rounds_played = {int(g["rodada"]) for g in played}
             total_a = sum(v for rod, v in a_pr.items() if rod in rounds_played)
             playmaking = round(total_a / len(played), 3)
 
@@ -218,7 +218,7 @@ def main():
         # em que o jogador de fato entrou em campo
         last5_all = games[-5:]
         if last5_all:
-            participou = sum(1 for g in last5_all if g["atletas.entrou_em_campo"] == "True")
+            participou = sum(1 for g in last5_all if g["entrou_em_campo"] == "True")
             risco_rotacao = round(1 - participou / len(last5_all), 3)
         else:
             risco_rotacao = None

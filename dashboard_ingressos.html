@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Ingressos - São Lourenço</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .total-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .total-card h2 {
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .total-value {
+            font-size: 42px;
+            font-weight: 700;
+            color: #10b981;
+            line-height: 1;
+            margin-bottom: 15px;
+        }
+
+        .meta-info {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            padding: 8px;
+            background: #f0fdf4;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .meta-info strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .table-section {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        th {
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        th:first-child {
+            text-align: left;
+            border-right: 2px solid white;
+        }
+
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #333;
+            min-width: 120px;
+            border-right: 2px solid #f0fdf4;
+        }
+
+        td:nth-child(2) {
+            background: #f9fafb;
+            border-right: 1px solid #eee;
+            font-weight: 600;
+        }
+
+        tbody tr:hover {
+            background-color: #f0fdf4;
+        }
+
+        tbody tr:last-child {
+            border-top: 3px solid #10b981;
+            font-weight: 700;
+            background: #f0fdf4;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+            padding: 12px 8px;
+        }
+
+        tbody tr:last-child td:first-child {
+            background: #e0fbe8;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        input[type="text"][readonly] {
+            background: #f5f5f5;
+            color: #666;
+            cursor: default;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #10b981;
+            background-color: #f0fdf4;
+            box-shadow: 0 0 5px rgba(16, 185, 129, 0.1);
+        }
+
+        input[type="number"]::placeholder {
+            color: #aaa;
+        }
+
+        .botoes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-export {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-export:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-reset {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-reset:hover {
+            background: #e0e0e0;
+        }
+
+        .info-mes {
+            background: #f0fdf4;
+            padding: 10px;
+            border-left: 3px solid #10b981;
+            border-radius: 3px;
+            font-size: 11px;
+            color: #666;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .btn-home {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #f0f0f0;
+            color: #666;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-home:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1024px) {
+            th, td {
+                padding: 8px 4px;
+                font-size: 11px;
+            }
+
+            input[type="number"],
+            input[type="text"] {
+                padding: 6px 3px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            th, td {
+                padding: 6px 3px;
+                font-size: 10px;
+            }
+
+            input[type="number"],
+            input[type="text"] {
+                padding: 5px 2px;
+                font-size: 9px;
+            }
+
+            .botoes {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Ingressos - São Lourenço</h1>
+            <p>Controle de receitas - Julho a Dezembro 2026</p>
+        </div>
+
+        <div class="main-content">
+            <div class="total-card">
+                <h2>Total de Ingressos</h2>
+                <div class="total-value" id="totalGeral">R$ 0,00</div>
+                <div class="meta-info">
+                    Período: <strong>Julho a Dezembro 2026</strong>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <div class="table-wrapper">
+                    <table id="tabelaIngressos">
+                        <thead>
+                            <tr>
+                                <th>Irmão</th>
+                                <th>Valor</th>
+                                <th>Jul</th>
+                                <th>Ago</th>
+                                <th>Set</th>
+                                <th>Out</th>
+                                <th>Nov</th>
+                                <th>Dez</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>TASSINHO</td>
+                                <td>110</td>
+                                <td><input type="number" class="mes-julho" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-novembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-dezembro" placeholder="0" min="0" step="0.01"></td>
+                                <td class="subtotal-linha">R$ 0</td>
+                            </tr>
+                            <tr>
+                                <td>MARIALICE</td>
+                                <td>135</td>
+                                <td><input type="number" class="mes-julho" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-novembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-dezembro" placeholder="0" min="0" step="0.01"></td>
+                                <td class="subtotal-linha">R$ 0</td>
+                            </tr>
+                            <tr>
+                                <td>TARCÍSIO</td>
+                                <td>135</td>
+                                <td><input type="number" class="mes-julho" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-novembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-dezembro" placeholder="0" min="0" step="0.01"></td>
+                                <td class="subtotal-linha">R$ 0</td>
+                            </tr>
+                            <tr>
+                                <td>MARIÂNGELA</td>
+                                <td>110</td>
+                                <td><input type="number" class="mes-julho" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-novembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-dezembro" placeholder="0" min="0" step="0.01"></td>
+                                <td class="subtotal-linha">R$ 0</td>
+                            </tr>
+                            <tr>
+                                <td>TULIO</td>
+                                <td>135</td>
+                                <td><input type="number" class="mes-julho" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-novembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-dezembro" placeholder="0" min="0" step="0.01"></td>
+                                <td class="subtotal-linha">R$ 0</td>
+                            </tr>
+                            <tr>
+                                <td>TELMO</td>
+                                <td>110</td>
+                                <td><input type="number" class="mes-julho" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-agosto" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-setembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-outubro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-novembro" placeholder="0" min="0" step="0.01"></td>
+                                <td><input type="number" class="mes-dezembro" placeholder="0" min="0" step="0.01"></td>
+                                <td class="subtotal-linha">R$ 0</td>
+                            </tr>
+                            <tr>
+                                <td>TOTAL MÊS</td>
+                                <td>-</td>
+                                <td id="total-julho">R$ 0</td>
+                                <td id="total-agosto">R$ 0</td>
+                                <td id="total-setembro">R$ 0</td>
+                                <td id="total-outubro">R$ 0</td>
+                                <td id="total-novembro">R$ 0</td>
+                                <td id="total-dezembro">R$ 0</td>
+                                <td id="total-geral-tabela">R$ 0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="botoes">
+                <button class="btn-export" onclick="exportarCSV()">📊 Exportar</button>
+                <button class="btn-reset" onclick="limparDados()">🔄 Limpar</button>
+            </div>
+
+            <div class="info-mes">
+                ℹ️ Os valores são atualizados automaticamente. A última linha mostra o total por mês.
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="index.html" class="btn-home">← Voltar para o Menu</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const totalGeralEl = document.getElementById('totalGeral');
+        const META = 50000;
+
+        function atualizarTotais() {
+            const meses = ['julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+            const totaisMes = {};
+            let totalGeral = 0;
+
+            meses.forEach(mes => totaisMes[mes] = 0);
+
+            const rows = document.querySelectorAll('#tabelaIngressos tbody tr');
+
+            rows.forEach((row, index) => {
+                if (index === rows.length - 1) return;
+
+                let subtotalLinha = 0;
+
+                meses.forEach(mes => {
+                    const input = row.querySelector(`.mes-${mes}`);
+                    if (input && !input.readOnly) {
+                        const valor = parseFloat(input.value) || 0;
+                        subtotalLinha += valor;
+                        totaisMes[mes] += valor;
+                    }
+                });
+
+                const subtotalCell = row.querySelector('.subtotal-linha');
+                if (subtotalCell) {
+                    subtotalCell.textContent = formatarMoeda(subtotalLinha);
+                }
+
+                totalGeral += subtotalLinha;
+            });
+
+            totalGeralEl.textContent = formatarMoeda(totalGeral);
+
+            meses.forEach(mes => {
+                const totalMesEl = document.getElementById(`total-${mes}`);
+                if (totalMesEl) {
+                    totalMesEl.textContent = formatarMoeda(totaisMes[mes]);
+                }
+            });
+
+            const totalGeralTabelaEl = document.getElementById('total-geral-tabela');
+            if (totalGeralTabelaEl) {
+                totalGeralTabelaEl.textContent = formatarMoeda(totalGeral);
+            }
+
+            salvarDados();
+        }
+
+        function formatarMoeda(valor) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(valor);
+        }
+
+        function exportarCSV() {
+            let csv = 'Irmão,Valor,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro,Total\n';
+
+            const rows = document.querySelectorAll('#tabelaIngressos tbody tr');
+            rows.forEach((row, index) => {
+                if (index === rows.length - 1) return;
+
+                const irmao = row.cells[0].textContent;
+                const valor = row.cells[1].textContent;
+                const julho = row.querySelector('.mes-julho')?.value || '';
+                const agosto = row.querySelector('.mes-agosto')?.value || '';
+                const setembro = row.querySelector('.mes-setembro')?.value || '';
+                const outubro = row.querySelector('.mes-outubro')?.value || '';
+                const novembro = row.querySelector('.mes-novembro')?.value || '';
+                const dezembro = row.querySelector('.mes-dezembro')?.value || '';
+                const total = row.querySelector('.subtotal-linha').textContent;
+
+                csv += `${irmao},${valor},${julho},${agosto},${setembro},${outubro},${novembro},${dezembro},${total}\n`;
+            });
+
+            const totalJulho = document.getElementById('total-julho').textContent;
+            const totalAgosto = document.getElementById('total-agosto').textContent;
+            const totalSetembro = document.getElementById('total-setembro').textContent;
+            const totalOutubro = document.getElementById('total-outubro').textContent;
+            const totalNovembro = document.getElementById('total-novembro').textContent;
+            const totalDezembro = document.getElementById('total-dezembro').textContent;
+            const totalGeralTabela = document.getElementById('total-geral-tabela').textContent;
+
+            csv += `TOTAL MÊS,-,${totalJulho},${totalAgosto},${totalSetembro},${totalOutubro},${totalNovembro},${totalDezembro},${totalGeralTabela}`;
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+            element.setAttribute('download', `ingressos_sao_lourenco_${new Date().toISOString().split('T')[0]}.csv`);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function limparDados() {
+            if (confirm('Deseja realmente limpar todos os dados?')) {
+                document.querySelectorAll('input[type="number"]').forEach(input => {
+                    input.value = '';
+                });
+                atualizarTotais();
+            }
+        }
+
+        function salvarDados() {
+            const dados = {};
+            const rows = document.querySelectorAll('#tabelaIngressos tbody tr');
+            rows.forEach((row, index) => {
+                if (index === rows.length - 1) return;
+                dados[index] = {
+                    julho: row.querySelector('.mes-julho')?.value || '',
+                    agosto: row.querySelector('.mes-agosto')?.value || '',
+                    setembro: row.querySelector('.mes-setembro')?.value || '',
+                    outubro: row.querySelector('.mes-outubro')?.value || '',
+                    novembro: row.querySelector('.mes-novembro')?.value || '',
+                    dezembro: row.querySelector('.mes-dezembro')?.value || ''
+                };
+            });
+            localStorage.setItem('ingressosSaoLourenco', JSON.stringify(dados));
+        }
+
+        function carregarDados() {
+            const dados = localStorage.getItem('ingressosSaoLourenco');
+            if (dados) {
+                const parsed = JSON.parse(dados);
+                const rows = document.querySelectorAll('#tabelaIngressos tbody tr');
+                rows.forEach((row, index) => {
+                    if (index === rows.length - 1) return;
+                    if (parsed[index]) {
+                        const julho = row.querySelector('.mes-julho');
+                        const agosto = row.querySelector('.mes-agosto');
+                        const setembro = row.querySelector('.mes-setembro');
+                        const outubro = row.querySelector('.mes-outubro');
+                        const novembro = row.querySelector('.mes-novembro');
+                        const dezembro = row.querySelector('.mes-dezembro');
+
+                        if (julho) julho.value = parsed[index].julho;
+                        if (agosto) agosto.value = parsed[index].agosto;
+                        if (setembro) setembro.value = parsed[index].setembro;
+                        if (outubro) outubro.value = parsed[index].outubro;
+                        if (novembro) novembro.value = parsed[index].novembro;
+                        if (dezembro) dezembro.value = parsed[index].dezembro;
+                    }
+                });
+            }
+        }
+
+        window.addEventListener('load', () => {
+            carregarDados();
+            document.querySelectorAll('input[type="number"]').forEach(input => {
+                input.addEventListener('input', atualizarTotais);
+            });
+            atualizarTotais();
+        });
+    </script>
+</body>
+</html>

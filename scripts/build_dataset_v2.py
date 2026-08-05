@@ -54,7 +54,13 @@ def canon_team(name):
     return CANON.get(key, str(name).strip())
 
 
-df = pd.read_csv("/mnt/project/BRA.csv")
+import os
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(script_dir)
+input_file = os.path.join(project_root, "data", "matches_2012_2026.csv")
+output_file = os.path.join(project_root, "data", "matches_2012_2026.csv")
+
+df = pd.read_csv(input_file)
 
 df["date"] = pd.to_datetime(df["Date"], format="%d/%m/%Y")
 df = df.dropna(subset=["HG", "AG"]).copy()
@@ -75,7 +81,7 @@ out = df[[
     "avg_odds_home", "avg_odds_draw", "avg_odds_away",
 ]].sort_values("date").reset_index(drop=True)
 
-out.to_csv("/home/claude/brasileirao/matches_2012_2026.csv", index=False)
+out.to_csv(output_file, index=False)
 
 print("Total matches:", len(out))
 print("Seasons:", out["season"].min(), "-", out["season"].max())

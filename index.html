@@ -335,6 +335,57 @@
     font-size:0.8em;
     color:var(--gold);
   }
+  /* Advanced Features CSS */
+  .rj-advanced-features{
+    margin-top:12px;
+    border-top:1px solid var(--line);
+    padding-top:10px;
+  }
+  .rj-feature-section{
+    margin-bottom:10px;
+    background:rgba(102,126,234,0.05);
+    border-left:3px solid var(--model-c);
+    padding:8px;
+    border-radius:3px;
+  }
+  .rj-feature-title{
+    font-size:0.75em;
+    font-weight:bold;
+    color:var(--model-c);
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .rj-feature-content{
+    font-size:0.8em;
+    color:var(--cream-dim);
+    line-height:1.4;
+  }
+  .rj-forecast-item{
+    padding:3px 0;
+    display:inline-block;
+    margin-right:8px;
+    font-size:0.75em;
+  }
+  .rj-matchup-badge{
+    display:inline-block;
+    padding:2px 6px;
+    border-radius:3px;
+    font-size:0.7em;
+    font-weight:bold;
+    margin-top:3px;
+  }
+  .rj-matchup-alta{background:rgba(16,185,129,0.3);color:#10b981;}
+  .rj-matchup-media{background:rgba(249,158,11,0.3);color:#f59e0b;}
+  .rj-matchup-baixa{background:rgba(239,68,68,0.3);color:#ef4444;}
+  .rj-stats-row{
+    display:flex;
+    justify-content:space-between;
+    padding:2px 0;
+    font-size:0.75em;
+    border-bottom:1px solid rgba(102,126,234,0.1);
+  }
+  .rj-stats-label{color:#999;}
+  .rj-stats-value{color:var(--model-c);font-weight:bold;}
 
   .bh-note{
     font-family:var(--font-mono);
@@ -1543,6 +1594,45 @@
         toggle.textContent = gridContainer.classList.contains('open') ? '- OCULTAR ANALISES' : '+ VER 7 ANALISES COMPLETAS';
       };
       card.appendChild(toggle);
+    }
+
+    // [FEATURE #6 + #8 + #11 + #12] ADVANCED FEATURES
+    if(f.forecast || f.matchup){
+      var advContainer = document.createElement('div');
+      advContainer.className = 'rj-advanced-features';
+
+      // [#6] Forecast Expandido
+      if(f.forecast){
+        var forecastDiv = document.createElement('div');
+        forecastDiv.className = 'rj-feature-section';
+        var fcst = f.forecast;
+        var forecastHTML = '<div class="rj-feature-title">Forecast Top 10</div>';
+        forecastHTML += '<div class="rj-feature-content">';
+        for(var i=0;i<fcst.top_10.length;i++){
+          forecastHTML += '<div class="rj-forecast-item">'+fcst.top_10[i]+'</div>';
+        }
+        forecastHTML += '</div>';
+        forecastHTML += '<div class="rj-stats-row" style="margin-top:4px;"><span class="rj-stats-label">Over 2.5:</span><span class="rj-stats-value">'+fcst.over_2_5+'%</span></div>';
+        forecastHTML += '<div class="rj-stats-row"><span class="rj-stats-label">BTTS:</span><span class="rj-stats-value">'+fcst.btts+'%</span></div>';
+        forecastDiv.innerHTML = forecastHTML;
+        advContainer.appendChild(forecastDiv);
+      }
+
+      // [#12] Matchup Analysis
+      if(f.matchup){
+        var matchupDiv = document.createElement('div');
+        matchupDiv.className = 'rj-feature-section';
+        var mu = f.matchup;
+        var badgeClass = 'rj-matchup-'+mu.home_advantage.toLowerCase();
+        var matchupHTML = '<div class="rj-feature-title">Matchup Especifico</div>';
+        matchupHTML += '<div class="rj-feature-content">'+mu.home_matchup;
+        matchupHTML += '<div class="rj-matchup-badge '+badgeClass+'">Vantagem: '+mu.home_advantage+'</div>';
+        matchupHTML += '</div>';
+        matchupDiv.innerHTML = matchupHTML;
+        advContainer.appendChild(matchupDiv);
+      }
+
+      card.appendChild(advContainer);
     }
 
     matchContainer.appendChild(card);

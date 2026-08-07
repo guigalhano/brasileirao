@@ -35,6 +35,12 @@ jobs:
       - name: Regenerar index.html com os dados atualizados
         run: python scripts/build_index.py
 
+      - name: Atualizar próximos confrontos e análises
+        run: |
+          python scripts/update_next_matches.py --repo-dir .
+          python scripts/build_match_analysis_data.py . > data/matches_data_with_analysis.json
+        continue-on-error: true  # nao bloqueia se os dados dos proximos jogos nao existirem
+
       - name: Commit e push se algo mudou
         run: |
           git config user.name "github-actions[bot]"

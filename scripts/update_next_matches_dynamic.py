@@ -95,23 +95,23 @@ def main():
     # Atualizar o arquivo HTML
     html_text = index_path.read_text(encoding="utf-8")
     json_str = json.dumps(data)
-    new_html = re.sub(
-        r"var DATA = \[.*?\];",
-        f"var DATA = {json_str};",
-        html_text,
-        flags=re.DOTALL
-    )
 
-    index_path.write_text(new_html, encoding="utf-8")
+    # Substituir DATA array de forma segura
+    start_idx = html_text.find("var DATA = [")
+    end_idx = html_text.find("];", start_idx) + 2
+    if start_idx != -1 and end_idx > start_idx:
+        new_html = html_text[:start_idx] + f"var DATA = {json_str};" + html_text[end_idx:]
 
-    # Atualizar o título da rodada
-    new_html = re.sub(
-        r"Próximos jogos.*?Rodada \d+",
-        f"Próximos jogos · Rodada {rodada}",
-        new_html
-    )
+        # Atualizar o título da rodada
+        new_html = re.sub(
+            r"Próximos jogos.*?Rodada \d+",
+            f"Próximos jogos · Rodada {rodada}",
+            new_html
+        )
 
-    index_path.write_text(new_html, encoding="utf-8")
+        index_path.write_text(new_html, encoding="utf-8")
+    else:
+        print("[ERRO] Nao conseguiu encontrar var DATA no HTML")
 
     print(f"\n[OK] {len(data)} jogos atualizados para Rodada {rodada}")
     print(f"[DATAS] {proximos_doc['data_inicio']} a {proximos_doc['data_fim']}")

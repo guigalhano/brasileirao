@@ -83,13 +83,8 @@ def enrich_with_history(current_df):
         return current_df
 
     hist = pd.read_csv(hist_path)
-    hist = hist.rename(columns={
-        "atletas.atleta_id": "atleta_id",
-        "atletas.pontos_num": "pontos",
-        "atletas.rodada_id": "rodada",
-        "atletas.entrou_em_campo": "jogou",
-    })
-    played = hist[hist["jogou"] == True].copy()
+    # Filtrar apenas jogadores que atuaram (pontos > 0)
+    played = hist[hist["pontos"] > 0].copy()
 
     summary = played.groupby("atleta_id").agg(
         media_geral=("pontos", "mean"),

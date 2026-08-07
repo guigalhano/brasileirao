@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Próximos Jogos - Menu de Países</title>
+<style>
+  :root {
+    --pitch-0: #0E1912;
+    --pitch-1: #152417;
+    --pitch-2: #1D301F;
+    --line: #33452F;
+    --gold: #CBA135;
+    --gold-dim: #8A7024;
+    --cream: #EFEAD9;
+    --cream-dim: #A7AB9C;
+    --good: #5FA772;
+    --bad: #C15A3E;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-body: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--pitch-0);
+    color: var(--cream);
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: var(--gold);
+    margin: 0 0 8px;
+    letter-spacing: 0.06em;
+  }
+  .header p {
+    color: var(--cream-dim);
+    margin: 0;
+    font-size: 14px;
+    font-family: var(--font-mono);
+  }
+  .countries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .country-card {
+    background: var(--pitch-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .country-card:hover {
+    background: var(--pitch-2);
+    border-color: var(--gold);
+    transform: translateY(-4px);
+  }
+  .country-flag {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+  .country-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .game-count {
+    font-size: 12px;
+    color: var(--cream-dim);
+    font-family: var(--font-mono);
+  }
+  .games-section {
+    margin-top: 20px;
+  }
+  .games-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-family: var(--font-display);
+    color: var(--gold);
+  }
+  .back-btn {
+    background: var(--pitch-1);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    background: var(--pitch-2);
+    border-color: var(--gold);
+  }
+  .game-card {
+    background: var(--pitch-1);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 1fr 120px 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+  .game-team {
+    text-align: right;
+  }
+  .game-team.away {
+    text-align: left;
+  }
+  .game-team-name {
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .game-info {
+    text-align: center;
+  }
+  .game-time {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .game-competition {
+    font-size: 11px;
+    color: var(--cream-dim);
+    font-family: var(--font-mono);
+  }
+  .game-city {
+    font-size: 11px;
+    color: var(--cream-dim);
+  }
+  .no-games {
+    text-align: center;
+    color: var(--cream-dim);
+    padding: 40px 20px;
+    font-style: italic;
+  }
+  .loading {
+    text-align: center;
+    color: var(--cream-dim);
+    padding: 40px;
+  }
+  .error {
+    background: var(--bad);
+    color: var(--cream);
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  #countries, #games { display: none; }
+  #countries.active, #games.active { display: block; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚽ PRÓXIMOS JOGOS</h1>
+    <p>Seleções de futebol - América do Sul</p>
+  </div>
+
+  <div id="countries" class="active">
+    <div class="countries-grid" id="countriesGrid"></div>
+  </div>
+
+  <div id="games">
+    <button class="back-btn" onclick="showCountries()">← Voltar</button>
+    <div class="games-section">
+      <div class="games-title" id="gamesTitle"></div>
+      <div id="gamesList"></div>
+    </div>
+  </div>
+
+  <div id="error" style="display:none;"></div>
+  <div id="loading" class="loading">Carregando dados...</div>
+</div>
+
+<script>
+const countryFlags = {
+  'Brasil': '🇧🇷',
+  'Paraguai': '🇵🇾',
+  'Chile': '🇨🇱',
+  'Argentina': '🇦🇷',
+  'Uruguai': '🇺🇾',
+  'Peru': '🇵🇪',
+  'Colombia': '🇨🇴',
+  'Bolivia': '🇧🇴',
+  'Venezuela': '🇻🇪',
+  'Ecuador': '🇪🇨',
+  'Paraguai - Tercera División': '🇵🇾'
+};
+
+let allGames = [];
+let currentCountry = null;
+
+async function loadGames() {
+  try {
+    // Tenta carregar do jogos-chile-scraper (repositório remoto)
+    const response = await fetch('https://raw.githubusercontent.com/guigalhano/jogos-chile-scraper/main/data/jogos_programados.json');
+    if (!response.ok) {
+      throw new Error('Não conseguiu carregar os dados');
+    }
+    allGames = await response.json();
+    document.getElementById('loading').style.display = 'none';
+    renderCountries();
+  } catch (error) {
+    console.error('Erro ao carregar dados:', error);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('error').className = 'error';
+    document.getElementById('error').innerHTML = `
+      <strong>Erro ao carregar dados:</strong> ${error.message}<br>
+      Verifique se o repositório está acessível.
+    `;
+  }
+}
+
+function getCountries() {
+  const countries = new Set();
+  allGames.forEach(game => {
+    if (game.pais) {
+      countries.add(game.pais);
+    }
+  });
+  return Array.from(countries).sort();
+}
+
+function getGamesByCountry(country) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return allGames.filter(game => {
+    if (game.pais !== country) return false;
+    const gameDate = new Date(game.data);
+    return gameDate >= today;
+  }).sort((a, b) => {
+    const dateA = new Date(a.data + 'T' + (a.hora || '00:00'));
+    const dateB = new Date(b.data + 'T' + (b.hora || '00:00'));
+    return dateA - dateB;
+  }).slice(0, 50); // Limita a 50 próximos jogos
+}
+
+function renderCountries() {
+  const countries = getCountries();
+  const grid = document.getElementById('countriesGrid');
+  grid.innerHTML = '';
+
+  countries.forEach(country => {
+    const games = getGamesByCountry(country);
+    const flag = countryFlags[country] || '🏳️';
+    const card = document.createElement('div');
+    card.className = 'country-card';
+    card.innerHTML = `
+      <div class="country-flag">${flag}</div>
+      <div class="country-name">${country}</div>
+      <div class="game-count">${games.length} jogo(s) programado(s)</div>
+    `;
+    card.onclick = () => showCountry(country);
+    grid.appendChild(card);
+  });
+}
+
+function showCountry(country) {
+  currentCountry = country;
+  const games = getGamesByCountry(country);
+
+  document.getElementById('countries').classList.remove('active');
+  document.getElementById('games').classList.add('active');
+
+  const flag = countryFlags[country] || '🏳️';
+  document.getElementById('gamesTitle').textContent = `${flag} ${country}`;
+
+  const gamesList = document.getElementById('gamesList');
+  gamesList.innerHTML = '';
+
+  if (games.length === 0) {
+    gamesList.innerHTML = '<div class="no-games">Nenhum jogo programado no momento</div>';
+    return;
+  }
+
+  games.forEach(game => {
+    const date = new Date(game.data);
+    const formattedDate = new Intl.DateTimeFormat('pt-BR', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short'
+    }).format(date);
+
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    card.innerHTML = `
+      <div class="game-team">
+        <div class="game-team-name">${game.mandante}</div>
+        <div class="game-city">${game.cidade || ''}</div>
+      </div>
+      <div class="game-info">
+        <div class="game-time">${game.hora || '--:--'}</div>
+        <div class="game-competition">${game.competicao || ''}</div>
+        <div class="game-competition">${formattedDate}</div>
+      </div>
+      <div class="game-team away">
+        <div class="game-team-name">${game.visitante}</div>
+        <div class="game-city">${game.estadio || ''}</div>
+      </div>
+    `;
+    gamesList.appendChild(card);
+  });
+}
+
+function showCountries() {
+  document.getElementById('games').classList.remove('active');
+  document.getElementById('countries').classList.add('active');
+  currentCountry = null;
+}
+
+// Inicializa
+loadGames();
+</script>
+</body>
+</html>

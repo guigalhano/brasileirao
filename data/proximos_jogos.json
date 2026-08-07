@@ -1,0 +1,17 @@
+{
+  "rodada": 23,
+  "data_inicio": "18/08/2026",
+  "data_fim": "20/08/2026",
+  "jogos": [
+    {"home": "Flamengo", "away": "Chapecoense", "day": "Dom 18/08", "time": "18:30"},
+    {"home": "Palmeiras", "away": "Corinthians", "day": "Dom 18/08", "time": "18:30"},
+    {"home": "Bahia", "away": "Fluminense", "day": "Dom 18/08", "time": "18:30"},
+    {"home": "Gremio", "away": "Coritiba", "day": "Dom 18/08", "time": "20:30"},
+    {"home": "Atletico-PR", "away": "Botafogo", "day": "Dom 18/08", "time": "20:30"},
+    {"home": "Santos", "away": "Vitoria", "day": "Dom 18/08", "time": "20:30"},
+    {"home": "Vasco", "away": "Atletico-MG", "day": "Seg 19/08", "time": "20:30"},
+    {"home": "Cruzeiro", "away": "Mirassol", "day": "Seg 19/08", "time": "20:30"},
+    {"home": "Bragantino", "away": "Internacional", "day": "Ter 20/08", "time": "19:30"},
+    {"home": "Remo", "away": "Sao Paulo", "day": "Ter 20/08", "time": "21:30"}
+  ]
+}

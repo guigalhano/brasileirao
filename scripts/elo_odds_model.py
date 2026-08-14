@@ -3,10 +3,18 @@ ELO-Result, ELO-Goals, ELO-Odds for the Brasileirao, following Wunderlich &
 Memmert (2018, PLOS ONE). Sequential Elo updates mean every prediction only
 uses information strictly prior to that match -- no look-ahead by construction.
 """
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv("/home/claude/brasileirao/matches_2012_2026.csv", parse_dates=["date"]).sort_values("date").reset_index(drop=True)
+# Caminho relativo ao repo. Antes era "/home/claude/brasileirao/..." -- um path
+# de sandbox que so existia na maquina onde o script foi escrito, o que deixou
+# este modelo impossivel de rodar aqui apesar de o README o anunciar como o
+# resultado principal do projeto.
+DATA = Path(__file__).resolve().parent.parent / "data"
+
+df = pd.read_csv(DATA / "matches_2012_2026.csv", parse_dates=["date"]).sort_values("date").reset_index(drop=True)
 df = df.dropna(subset=["avg_odds_home", "avg_odds_draw", "avg_odds_away"]).reset_index(drop=True)
 
 inv_h = 1 / df.avg_odds_home

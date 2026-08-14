@@ -15,7 +15,11 @@ import pandas as pd
 from scipy.optimize import minimize
 from scipy.stats import poisson
 
-df = pd.read_csv("/home/claude/brasileirao/matches_2012_2026.csv", parse_dates=["date"])
+from pathlib import Path
+
+DATA = Path(__file__).resolve().parent.parent / "data"
+
+df = pd.read_csv(DATA / "matches_2012_2026.csv", parse_dates=["date"])
 
 teams = sorted(set(df.home_team) | set(df.away_team))
 team_idx = {t: i for i, t in enumerate(teams)}
@@ -107,6 +111,6 @@ export = {
     "note": "Dixon-Coles com peso extra (2.5x) para jogos sob tecnico confirmado como novo (data oficial via Transfermarkt), aplicado so aos times com troca confirmada.",
     "teams": {t: {"attack": round(float(ratings[t]["attack"]), 4), "defense": round(float(ratings[t]["defense"]), 4)} for t in export_teams}
 }
-with open("/home/claude/brasileirao/team_ratings_coach_adjusted.json", "w", encoding="utf-8") as f:
+with open(DATA / "team_ratings_coach_adjusted.json", "w", encoding="utf-8") as f:
     json.dump(export, f, indent=2, ensure_ascii=False)
 print("\nSalvo team_ratings_coach_adjusted.json")

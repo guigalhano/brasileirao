@@ -1,26 +1,27 @@
 {
+  "rodada": 23,
   "rankings": {
     "attack": {
       "top5": [
         [
           "Flamengo",
-          1.89
-        ],
-        [
-          "Botafogo",
-          1.7
+          1.86
         ],
         [
           "Palmeiras",
-          1.7
+          1.73
+        ],
+        [
+          "Botafogo",
+          1.67
         ],
         [
           "Fluminense",
-          1.5
+          1.41
         ],
         [
           "Santos",
-          1.45
+          1.38
         ]
       ],
       "bottom5": [
@@ -30,19 +31,19 @@
         ],
         [
           "Vitoria",
-          1.1
-        ],
-        [
-          "Gremio",
-          1.1
-        ],
-        [
-          "Corinthians",
-          1.1
+          1.0
         ],
         [
           "Internacional",
-          1.1
+          1.05
+        ],
+        [
+          "Vasco",
+          1.09
+        ],
+        [
+          "Corinthians",
+          1.09
         ]
       ]
     },
@@ -50,23 +51,23 @@
       "top5": [
         [
           "Palmeiras",
-          0.8
-        ],
-        [
-          "Flamengo",
-          0.89
+          0.73
         ],
         [
           "Atletico-PR",
-          0.95
+          0.86
         ],
         [
-          "Bragantino",
-          1.0
+          "Flamengo",
+          0.86
         ],
         [
           "Corinthians",
-          1.0
+          0.91
+        ],
+        [
+          "Bragantino",
+          1.05
         ]
       ],
       "bottom5": [
@@ -76,43 +77,43 @@
         ],
         [
           "Santos",
-          1.65
+          1.67
         ],
         [
           "Remo",
-          1.6
+          1.64
         ],
         [
           "Botafogo",
-          1.6
+          1.57
         ],
         [
-          "Vasco",
-          1.55
+          "Vitoria",
+          1.5
         ]
       ]
     },
     "clean_sheets": {
       "top5": [
         [
-          "Flamengo",
-          42.0
-        ],
-        [
-          "Vitoria",
-          40.0
-        ],
-        [
           "Corinthians",
-          40.0
+          45.0
+        ],
+        [
+          "Flamengo",
+          43.0
         ],
         [
           "Palmeiras",
-          35.0
+          41.0
         ],
         [
-          "Bragantino",
-          35.0
+          "Vitoria",
+          36.0
+        ],
+        [
+          "Atletico-PR",
+          36.0
         ]
       ],
       "bottom5": [
@@ -126,324 +127,44 @@
         ],
         [
           "Vasco",
-          5.0
-        ],
-        [
-          "Remo",
-          15.0
+          9.0
         ],
         [
           "Botafogo",
-          15.0
+          14.0
+        ],
+        [
+          "Remo",
+          14.0
         ]
       ]
     }
   },
   "matches": [
     {
-      "home": "Flamengo",
-      "away": "Chapecoense",
+      "home": "Atletico-MG",
+      "away": "Gremio",
       "forecast": {
         "top_10": [
-          "2-0 (10.1%)",
-          "3-0 (10.1%)",
-          "2-1 (8.1%)",
-          "3-1 (8.0%)",
-          "4-0 (7.5%)",
-          "1-0 (6.8%)",
-          "4-1 (6.0%)",
-          "1-1 (5.4%)",
-          "5-0 (4.5%)",
-          "5-1 (3.6%)"
-        ],
-        "combined_top10": 70.1,
-        "over_2_5": 71.6,
-        "under_2_5": 28.4,
-        "over_1_5": 87.8,
-        "btts": 51.5,
-        "xg": [
-          2.99,
-          0.8
-        ]
-      },
-      "matchup": {
-        "home_matchup": "Ataque forte vs Defesa fraca",
-        "away_matchup": "Visitante: Desfavoravel",
-        "home_advantage": "ALTA",
-        "home_multiplier": 0.4,
-        "away_multiplier": 0.45
-      },
-      "value_betting": null
-    },
-    {
-      "home": "Palmeiras",
-      "away": "Corinthians",
-      "forecast": {
-        "top_10": [
-          "1-0 (19.8%)",
-          "0-0 (16.4%)",
-          "1-1 (11.9%)",
-          "2-0 (11.9%)",
-          "0-1 (9.9%)",
-          "2-1 (7.2%)",
-          "3-0 (4.8%)",
-          "1-2 (3.6%)",
-          "0-2 (3.0%)",
-          "3-1 (2.9%)"
-        ],
-        "combined_top10": 91.4,
-        "over_2_5": 27.2,
-        "under_2_5": 72.8,
-        "over_1_5": 54.0,
-        "btts": 31.8,
-        "xg": [
-          1.2,
-          0.6
-        ]
-      },
-      "matchup": {
-        "home_matchup": "Matchup equilibrado",
-        "away_matchup": "Visitante: Equilibrado",
-        "home_advantage": "MEDIA",
-        "home_multiplier": 0.76,
-        "away_multiplier": 0.54
-      },
-      "value_betting": null
-    },
-    {
-      "home": "Bahia",
-      "away": "Fluminense",
-      "forecast": {
-        "top_10": [
-          "1-1 (10.2%)",
-          "2-1 (9.1%)",
-          "1-2 (7.4%)",
-          "1-0 (7.0%)",
-          "2-2 (6.6%)",
-          "2-0 (6.2%)",
-          "0-1 (5.8%)",
-          "3-1 (5.4%)",
-          "0-2 (4.2%)",
-          "0-0 (4.0%)"
-        ],
-        "combined_top10": 65.9,
-        "over_2_5": 62.2,
-        "under_2_5": 37.8,
-        "over_1_5": 82.8,
-        "btts": 63.3,
-        "xg": [
-          1.77,
-          1.45
-        ]
-      },
-      "matchup": {
-        "home_matchup": "Ataque fraco vs Defesa forte",
-        "away_matchup": "Visitante: Favoravel",
-        "home_advantage": "BAIXA",
-        "home_multiplier": 0.56,
-        "away_multiplier": 0.58
-      },
-      "value_betting": null
-    },
-    {
-      "home": "Gremio",
-      "away": "Coritiba",
-      "forecast": {
-        "top_10": [
-          "1-1 (11.9%)",
-          "1-0 (10.8%)",
-          "2-1 (9.4%)",
-          "2-0 (8.6%)",
-          "0-1 (7.5%)",
-          "0-0 (6.8%)",
-          "1-2 (6.5%)",
-          "2-2 (5.2%)",
-          "3-1 (5.0%)",
-          "3-0 (4.6%)"
-        ],
-        "combined_top10": 76.3,
-        "over_2_5": 50.0,
-        "under_2_5": 50.0,
-        "over_1_5": 74.6,
-        "btts": 52.7,
-        "xg": [
-          1.59,
-          1.1
-        ]
-      },
-      "matchup": {
-        "home_matchup": "Ataque fraco vs Defesa forte",
-        "away_matchup": "Visitante: Favoravel",
-        "home_advantage": "BAIXA",
-        "home_multiplier": 0.4,
-        "away_multiplier": 0.47
-      },
-      "value_betting": null
-    },
-    {
-      "home": "Atletico-PR",
-      "away": "Botafogo",
-      "forecast": {
-        "top_10": [
-          "2-0 (9.9%)",
-          "2-1 (9.6%)",
+          "2-1 (9.8%)",
+          "2-0 (9.3%)",
+          "1-1 (8.7%)",
           "1-0 (8.3%)",
-          "1-1 (8.1%)",
-          "3-0 (7.9%)",
-          "3-1 (7.7%)",
-          "2-2 (4.7%)",
-          "4-0 (4.7%)",
-          "4-1 (4.6%)",
-          "1-2 (3.9%)"
+          "3-1 (7.4%)",
+          "3-0 (7.0%)",
+          "2-2 (5.2%)",
+          "1-2 (4.6%)",
+          "4-1 (4.1%)",
+          "0-1 (3.9%)"
         ],
-        "combined_top10": 69.4,
-        "over_2_5": 64.7,
-        "under_2_5": 35.3,
-        "over_1_5": 84.3,
-        "btts": 56.2,
+        "combined_top10": 68.3,
+        "over_2_5": 63.9,
+        "under_2_5": 36.1,
+        "over_1_5": 83.9,
+        "btts": 58.1,
         "xg": [
-          2.38,
-          0.97
-        ]
-      },
-      "matchup": {
-        "home_matchup": "Matchup equilibrado",
-        "away_matchup": "Visitante: Equilibrado",
-        "home_advantage": "MEDIA",
-        "home_multiplier": 0.44,
-        "away_multiplier": 0.77
-      },
-      "value_betting": null
-    },
-    {
-      "home": "Santos",
-      "away": "Vitoria",
-      "forecast": {
-        "top_10": [
-          "1-1 (11.1%)",
-          "1-0 (10.0%)",
-          "2-1 (9.8%)",
-          "2-0 (8.8%)",
-          "0-1 (6.3%)",
-          "1-2 (6.1%)",
-          "0-0 (5.7%)",
-          "3-1 (5.7%)",
-          "2-2 (5.4%)",
-          "3-0 (5.2%)"
-        ],
-        "combined_top10": 74.1,
-        "over_2_5": 54.4,
-        "under_2_5": 45.6,
-        "over_1_5": 77.8,
-        "btts": 55.1,
-        "xg": [
-          1.76,
-          1.1
-        ]
-      },
-      "matchup": {
-        "home_matchup": "Ataque fraco vs Defesa forte",
-        "away_matchup": "Visitante: Favoravel",
-        "home_advantage": "BAIXA",
-        "home_multiplier": 0.53,
-        "away_multiplier": 0.33
-      },
-      "value_betting": null
-    },
-    {
-      "home": "Vasco",
-      "away": "Atletico-MG",
-      "forecast": {
-        "top_10": [
-          "2-1 (9.7%)",
-          "1-1 (9.1%)",
-          "2-0 (7.9%)",
-          "1-0 (7.4%)",
-          "3-1 (6.9%)",
-          "2-2 (6.0%)",
-          "1-2 (5.6%)",
-          "3-0 (5.6%)",
-          "0-1 (4.3%)",
-          "3-2 (4.2%)"
-        ],
-        "combined_top10": 66.7,
-        "over_2_5": 65.1,
-        "under_2_5": 34.9,
-        "over_1_5": 84.7,
-        "btts": 62.2,
-        "xg": [
-          2.13,
-          1.23
-        ]
-      },
-      "matchup": {
-        "home_matchup": "Ataque fraco vs Defesa forte",
-        "away_matchup": "Visitante: Favoravel",
-        "home_advantage": "BAIXA",
-        "home_multiplier": 0.45,
-        "away_multiplier": 0.4
-      },
-      "value_betting": null
-    },
-    {
-      "home": "Cruzeiro",
-      "away": "Mirassol",
-      "forecast": {
-        "top_10": [
-          "1-0 (11.5%)",
-          "1-1 (11.0%)",
-          "2-0 (10.2%)",
-          "2-1 (9.8%)",
-          "0-0 (6.5%)",
-          "0-1 (6.2%)",
-          "3-0 (6.1%)",
-          "3-1 (5.8%)",
-          "1-2 (5.3%)",
-          "2-2 (4.7%)"
-        ],
-        "combined_top10": 77.1,
-        "over_2_5": 51.3,
-        "under_2_5": 48.7,
-        "over_1_5": 75.5,
-        "btts": 50.9,
-        "xg": [
-          1.78,
-          0.96
-        ]
-      },
-      "matchup": {
-        "home_matchup": "Ataque fraco vs Defesa forte",
-        "away_matchup": "Visitante: Favoravel",
-        "home_advantage": "BAIXA",
-        "home_multiplier": 0.47,
-        "away_multiplier": 0.37
-      },
-      "value_betting": null
-    },
-    {
-      "home": "Bragantino",
-      "away": "Internacional",
-      "forecast": {
-        "top_10": [
-          "1-1 (9.9%)",
-          "2-1 (9.7%)",
-          "1-0 (7.9%)",
-          "2-0 (7.8%)",
-          "3-1 (6.4%)",
-          "1-2 (6.2%)",
-          "2-2 (6.1%)",
-          "3-0 (5.1%)",
-          "0-1 (5.0%)",
-          "0-0 (4.0%)"
-        ],
-        "combined_top10": 68.1,
-        "over_2_5": 62.3,
-        "under_2_5": 37.7,
-        "over_1_5": 83.1,
-        "btts": 61.4,
-        "xg": [
-          1.97,
-          1.25
+          2.25,
+          1.05
         ]
       },
       "matchup": {
@@ -451,42 +172,322 @@
         "away_matchup": "Visitante: Favoravel",
         "home_advantage": "BAIXA",
         "home_multiplier": 0.49,
-        "away_multiplier": 0.49
+        "away_multiplier": 0.43
       },
       "value_betting": null
     },
     {
-      "home": "Remo",
-      "away": "Sao Paulo",
+      "home": "Fluminense",
+      "away": "Palmeiras",
       "forecast": {
         "top_10": [
-          "1-1 (11.8%)",
-          "1-0 (8.4%)",
-          "2-1 (8.4%)",
+          "1-1 (12.3%)",
+          "1-0 (12.1%)",
+          "2-1 (9.2%)",
+          "2-0 (9.0%)",
           "0-1 (8.3%)",
-          "1-2 (8.3%)",
-          "2-0 (6.0%)",
-          "0-0 (5.9%)",
-          "2-2 (5.9%)",
-          "0-2 (5.8%)",
-          "3-1 (4.0%)"
+          "0-0 (8.1%)",
+          "1-2 (6.3%)",
+          "2-2 (4.7%)",
+          "3-1 (4.6%)",
+          "3-0 (4.5%)"
         ],
-        "combined_top10": 72.8,
-        "over_2_5": 53.7,
-        "under_2_5": 46.3,
-        "over_1_5": 77.3,
-        "btts": 57.2,
+        "combined_top10": 79.1,
+        "over_2_5": 45.7,
+        "under_2_5": 54.3,
+        "over_1_5": 71.2,
+        "btts": 49.3,
         "xg": [
-          1.43,
-          1.4
+          1.49,
+          1.02
         ]
       },
       "matchup": {
         "home_matchup": "Ataque fraco vs Defesa forte",
         "away_matchup": "Visitante: Favoravel",
         "home_advantage": "BAIXA",
-        "home_multiplier": 0.47,
-        "away_multiplier": 0.39
+        "home_multiplier": 0.71,
+        "away_multiplier": 0.7
+      },
+      "value_betting": null
+    },
+    {
+      "home": "Atletico-PR",
+      "away": "Bragantino",
+      "forecast": {
+        "top_10": [
+          "1-1 (11.5%)",
+          "1-0 (10.5%)",
+          "2-1 (9.6%)",
+          "2-0 (8.8%)",
+          "0-1 (6.9%)",
+          "0-0 (6.3%)",
+          "1-2 (6.3%)",
+          "3-1 (5.4%)",
+          "2-2 (5.3%)",
+          "3-0 (4.9%)"
+        ],
+        "combined_top10": 75.5,
+        "over_2_5": 51.8,
+        "under_2_5": 48.2,
+        "over_1_5": 75.9,
+        "btts": 53.6,
+        "xg": [
+          1.67,
+          1.1
+        ]
+      },
+      "matchup": {
+        "home_matchup": "Ataque fraco vs Defesa forte",
+        "away_matchup": "Visitante: Favoravel",
+        "home_advantage": "BAIXA",
+        "home_multiplier": 0.59,
+        "away_multiplier": 0.59
+      },
+      "value_betting": null
+    },
+    {
+      "home": "Sao Paulo",
+      "away": "Coritiba",
+      "forecast": {
+        "top_10": [
+          "1-0 (11.4%)",
+          "2-0 (11.2%)",
+          "1-1 (10.1%)",
+          "2-1 (9.9%)",
+          "3-0 (7.3%)",
+          "3-1 (6.4%)",
+          "0-0 (5.8%)",
+          "0-1 (5.2%)",
+          "1-2 (4.4%)",
+          "2-2 (4.4%)"
+        ],
+        "combined_top10": 76.1,
+        "over_2_5": 53.7,
+        "under_2_5": 46.3,
+        "over_1_5": 77.3,
+        "btts": 50.1,
+        "xg": [
+          1.96,
+          0.88
+        ]
+      },
+      "matchup": {
+        "home_matchup": "Ataque fraco vs Defesa forte",
+        "away_matchup": "Visitante: Favoravel",
+        "home_advantage": "BAIXA",
+        "home_multiplier": 0.46,
+        "away_multiplier": 0.49
+      },
+      "value_betting": null
+    },
+    {
+      "home": "Chapecoense",
+      "away": "Bahia",
+      "forecast": {
+        "top_10": [
+          "1-1 (9.9%)",
+          "1-2 (8.8%)",
+          "2-1 (7.7%)",
+          "2-2 (6.8%)",
+          "0-1 (6.4%)",
+          "0-2 (5.6%)",
+          "1-0 (5.6%)",
+          "1-3 (5.2%)",
+          "2-0 (4.3%)",
+          "2-3 (4.0%)"
+        ],
+        "combined_top10": 64.3,
+        "over_2_5": 64.4,
+        "under_2_5": 35.6,
+        "over_1_5": 84.2,
+        "btts": 65.2,
+        "xg": [
+          1.56,
+          1.77
+        ]
+      },
+      "matchup": {
+        "home_matchup": "Ataque fraco vs Defesa forte",
+        "away_matchup": "Visitante: Favoravel",
+        "home_advantage": "BAIXA",
+        "home_multiplier": 0.39,
+        "away_multiplier": 0.28
+      },
+      "value_betting": null
+    },
+    {
+      "home": "Vasco",
+      "away": "Santos",
+      "forecast": {
+        "top_10": [
+          "2-1 (9.7%)",
+          "2-0 (9.5%)",
+          "1-1 (8.2%)",
+          "1-0 (8.0%)",
+          "3-1 (7.6%)",
+          "3-0 (7.5%)",
+          "2-2 (4.9%)",
+          "4-1 (4.5%)",
+          "4-0 (4.4%)",
+          "1-2 (4.2%)"
+        ],
+        "combined_top10": 68.5,
+        "over_2_5": 65.2,
+        "under_2_5": 34.8,
+        "over_1_5": 84.7,
+        "btts": 57.5,
+        "xg": [
+          2.36,
+          1.02
+        ]
+      },
+      "matchup": {
+        "home_matchup": "Matchup equilibrado",
+        "away_matchup": "Visitante: Equilibrado",
+        "home_advantage": "MEDIA",
+        "home_multiplier": 0.32,
+        "away_multiplier": 0.48
+      },
+      "value_betting": null
+    },
+    {
+      "home": "Mirassol",
+      "away": "Flamengo",
+      "forecast": {
+        "top_10": [
+          "1-1 (11.1%)",
+          "1-2 (9.2%)",
+          "0-1 (8.3%)",
+          "2-1 (7.3%)",
+          "0-2 (6.9%)",
+          "1-0 (6.6%)",
+          "2-2 (6.1%)",
+          "1-3 (5.1%)",
+          "0-0 (5.0%)",
+          "2-0 (4.4%)"
+        ],
+        "combined_top10": 70.0,
+        "over_2_5": 57.1,
+        "under_2_5": 42.9,
+        "over_1_5": 79.5,
+        "btts": 59.3,
+        "xg": [
+          1.33,
+          1.67
+        ]
+      },
+      "matchup": {
+        "home_matchup": "Ataque fraco vs Defesa forte",
+        "away_matchup": "Visitante: Favoravel",
+        "home_advantage": "BAIXA",
+        "home_multiplier": 0.54,
+        "away_multiplier": 0.66
+      },
+      "value_betting": null
+    },
+    {
+      "home": "Vitoria",
+      "away": "Botafogo",
+      "forecast": {
+        "top_10": [
+          "1-1 (10.4%)",
+          "2-1 (9.4%)",
+          "1-0 (7.9%)",
+          "2-0 (7.1%)",
+          "1-2 (7.0%)",
+          "2-2 (6.3%)",
+          "0-1 (5.8%)",
+          "3-1 (5.7%)",
+          "0-0 (4.4%)",
+          "3-0 (4.3%)"
+        ],
+        "combined_top10": 68.3,
+        "over_2_5": 60.9,
+        "under_2_5": 39.1,
+        "over_1_5": 82.3,
+        "btts": 61.6,
+        "xg": [
+          1.8,
+          1.33
+        ]
+      },
+      "matchup": {
+        "home_matchup": "Matchup equilibrado",
+        "away_matchup": "Visitante: Equilibrado",
+        "home_advantage": "MEDIA",
+        "home_multiplier": 0.32,
+        "away_multiplier": 0.56
+      },
+      "value_betting": null
+    },
+    {
+      "home": "Corinthians",
+      "away": "Cruzeiro",
+      "forecast": {
+        "top_10": [
+          "0-0 (15.1%)",
+          "0-1 (14.5%)",
+          "1-0 (14.1%)",
+          "1-1 (13.5%)",
+          "0-2 (6.9%)",
+          "2-0 (6.6%)",
+          "1-2 (6.5%)",
+          "2-1 (6.3%)",
+          "2-2 (3.0%)",
+          "0-3 (2.2%)"
+        ],
+        "combined_top10": 88.7,
+        "over_2_5": 29.3,
+        "under_2_5": 70.7,
+        "over_1_5": 56.3,
+        "btts": 37.4,
+        "xg": [
+          0.93,
+          0.96
+        ]
+      },
+      "matchup": {
+        "home_matchup": "Ataque fraco vs Defesa forte",
+        "away_matchup": "Visitante: Favoravel",
+        "home_advantage": "BAIXA",
+        "home_multiplier": 0.39,
+        "away_multiplier": 0.63
+      },
+      "value_betting": null
+    },
+    {
+      "home": "Internacional",
+      "away": "Remo",
+      "forecast": {
+        "top_10": [
+          "2-1 (9.4%)",
+          "2-0 (8.9%)",
+          "3-1 (7.9%)",
+          "3-0 (7.5%)",
+          "1-1 (7.4%)",
+          "1-0 (7.0%)",
+          "2-2 (5.0%)",
+          "4-1 (5.0%)",
+          "4-0 (4.7%)",
+          "3-2 (4.2%)"
+        ],
+        "combined_top10": 67.0,
+        "over_2_5": 69.1,
+        "under_2_5": 30.9,
+        "over_1_5": 87.0,
+        "btts": 59.9,
+        "xg": [
+          2.52,
+          1.06
+        ]
+      },
+      "matchup": {
+        "home_matchup": "Matchup equilibrado",
+        "away_matchup": "Visitante: Equilibrado",
+        "home_advantage": "MEDIA",
+        "home_multiplier": 0.32,
+        "away_multiplier": 0.46
       },
       "value_betting": null
     }

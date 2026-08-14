@@ -11,7 +11,11 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
 
-df_all = pd.read_csv("/home/claude/brasileirao/matches_2012_2026.csv", parse_dates=["date"])
+from pathlib import Path
+
+DATA = Path(__file__).resolve().parent.parent / "data"
+
+df_all = pd.read_csv(DATA / "matches_2012_2026.csv", parse_dates=["date"])
 df_all = df_all.dropna(subset=["avg_odds_home", "avg_odds_draw", "avg_odds_away"]).reset_index(drop=True)
 
 

@@ -13,7 +13,11 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
-df = pd.read_csv("/home/claude/brasileirao/matches_2012_2026.csv", parse_dates=["date"]).sort_values("date").reset_index(drop=True)
+from pathlib import Path
+
+DATA = Path(__file__).resolve().parent.parent / "data"
+
+df = pd.read_csv(DATA / "matches_2012_2026.csv", parse_dates=["date"]).sort_values("date").reset_index(drop=True)
 df = df.dropna(subset=["avg_odds_home", "avg_odds_draw", "avg_odds_away"]).reset_index(drop=True)
 df["result"] = np.where(df.home_goals > df.away_goals, "H", np.where(df.home_goals == df.away_goals, "D", "A"))
 

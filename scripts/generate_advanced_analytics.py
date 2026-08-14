@@ -9,11 +9,18 @@ Implementa:
   [12] Matchup específico (força vs fraqueza)
 """
 
+import argparse
 import json
 import csv
 import math
+import sys
 from collections import defaultdict
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.fixtures import load_fixtures
+from lib.index_data import read_data, write_data
+from lib.teams import check_ratings_cover_canonical
 
 def poisson_pmf(k, lam):
     return math.exp(-lam) * lam ** k / math.factorial(k)
@@ -160,7 +167,11 @@ def generate_value_betting(model_probs, market_data=None):
     return edges if edges else None
 
 def main():
-    repo = Path("D:/brasileirao")
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--repo-dir", default=str(Path(__file__).resolve().parent.parent),
+                    help="raiz do repo (padrao: deduzida deste arquivo)")
+    args = ap.parse_args()
+    repo = Path(args.repo_dir).resolve()
 
     # Carregar dados
     matches = list(csv.DictReader(open(repo / "data" / "matches_2012_2026.csv", encoding="utf-8")))
@@ -177,31 +188,28 @@ def main():
     ratings = ratings_doc["teams"]
     home_adv = ratings_doc["home_advantage_log"]
 
+    check_ratings_cover_canonical(ratings)
+
     # Gerar rankings (usado por todos)
     print("Gerando rankings...")
     rankings, team_stats = generate_rankings(matches_2026, ratings)
 
-    # Próximos jogos
-    matches_r22 = [
-        {"home": "Flamengo", "away": "Chapecoense"},
-        {"home": "Palmeiras", "away": "Corinthians"},
-        {"home": "Bahia", "away": "Fluminense"},
-        {"home": "Gremio", "away": "Coritiba"},
-        {"home": "Atletico-PR", "away": "Botafogo"},
-        {"home": "Santos", "away": "Vitoria"},
-        {"home": "Vasco", "away": "Atletico-MG"},
-        {"home": "Cruzeiro", "away": "Mirassol"},
-        {"home": "Bragantino", "away": "Internacional"},
-        {"home": "Remo", "away": "Sao Paulo"},
-    ]
+    # Confrontos: fonte unica em data/proximos_jogos.json.
+    # Antes esta lista era hardcoded aqui e ficou congelada numa rodada antiga,
+    # entao a aba de analises do site descrevia jogos que nao aconteceriam --
+    # e como o arquivo era regravado, o timestamp parecia sempre atual.
+    rodada, fixtures, meta = load_fixtures(repo / "data" / "proximos_jogos.json")
+    print(f"Rodada {rodada} ({meta['data_inicio']} - {meta['data_fim']}), "
+          f"{len(fixtures)} jogos")
 
     analytics = {
+        'rodada': rodada,
         'rankings': rankings,
         'matches': []
     }
 
     print("Gerando analytics para cada jogo...")
-    for match in matches_r22:
+    for match in fixtures:
         home, away = match['home'], match['away']
 
         # #6 - Forecast expandido
@@ -231,11 +239,47 @@ def main():
             'value_betting': value_betting
         })
 
-    # Salvar
+    # Salvar o JSON de analytics
     with open(repo / "data" / "analytics_advanced.json", "w", encoding="utf-8") as f:
         json.dump(analytics, f, ensure_ascii=False, indent=2)
+    print(f"\n[OK] analytics_advanced.json: {len(analytics['matches'])} jogos "
+          f"da rodada {rodada}")
 
-    print(f"\n✓ Gerado: analytics_advanced.json com 4 features para 10 jogos")
+    # Injetar no DATA do index.html -- e o que faz a aba de analises aparecer.
+    # O front so cria o botao "+ VER ANALISES COMPLETAS" quando f.analysis_grid
+    # existe; sem esta etapa o JSON acima fica orfao e a aba nao renderiza.
+    index_path = repo / "index.html"
+    por_confronto = {f"{m['home']}|{m['away']}": m for m in analytics['matches']}
+    atualizados = []
+    for jogo in read_data(index_path):
+        a = por_confronto.get(f"{jogo['home']}|{jogo['away']}")
+        if not a:
+            atualizados.append(jogo)
+            continue
+        mt, fc = a['matchup'], a['forecast']
+        jogo['analysis_grid'] = {
+            'h2h': f"{a['home']} x {a['away']} - rodada {rodada}",
+            'form': f"Ataque casa: {mt['home_multiplier']}x | visitante: {mt['away_multiplier']}x",
+            'home_away': f"Mando de campo: {mt['home_advantage']}",
+            'defense': mt['home_matchup'],
+            'clean_sheets': f"Ambos marcam: {fc['btts']}%" if fc else "-",
+            'forecast': " | ".join(fc['top_10'][:3]) if fc else "-",
+        }
+        if fc:
+            jogo['analysis'] = (
+                f"Placar mais provavel {fc['top_10'][0]}. "
+                f"xG {fc['xg'][0]:.2f}-{fc['xg'][1]:.2f}. "
+                f"Over 2.5: {fc['over_2_5']}% | Ambos marcam: {fc['btts']}%. "
+                f"{mt['home_matchup']} ({mt['home_advantage']})."
+            )
+        jogo['forecast'] = fc
+        jogo['matchup'] = mt
+        jogo['value_betting'] = a['value_betting']
+        atualizados.append(jogo)
+
+    write_data(index_path, atualizados, merge=True)
+    com_analise = sum(1 for j in atualizados if j.get('analysis_grid'))
+    print(f"[OK] index.html: {com_analise}/{len(atualizados)} jogos com analise")
 
 if __name__ == "__main__":
     main()

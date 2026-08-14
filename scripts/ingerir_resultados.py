@@ -135,8 +135,13 @@ def main():
         print("\n[DRY-RUN] Nada gravado.")
         return 0
 
+    # Ordena SO por data, e o sort do Python e estavel: as linhas que ja
+    # estavam no arquivo mantem a ordem relativa original e as novas caem no
+    # fim do seu dia. Ordenar tambem por home_team reembaralharia as 5.5k
+    # linhas historicas e produziria um diff de ~2000 linhas para 17 jogos
+    # novos -- ruido que torna a revisao impossivel.
     combinado = existentes + novos
-    combinado.sort(key=lambda r: (r["date"], r["home_team"]))
+    combinado.sort(key=lambda r: r["date"])
     with DESTINO.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=COLUNAS)
         w.writeheader()

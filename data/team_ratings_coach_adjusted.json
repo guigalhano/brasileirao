@@ -1,5 +1,5 @@
 {
-  "home_advantage_log": 0.17209879199747888,
+  "home_advantage_log": 0.17209889344751797,
   "note": "Dixon-Coles com peso extra (2.5x) para jogos sob tecnico confirmado como novo (data oficial via Transfermarkt), aplicado so aos times com troca confirmada.",
   "teams": {
     "Palmeiras": {
@@ -19,7 +19,7 @@
       "defense": 0.39
     },
     "Bragantino": {
-      "attack": 0.1468,
+      "attack": 0.1467,
       "defense": 0.0154
     },
     "Bahia": {
@@ -68,7 +68,7 @@
     },
     "Vasco": {
       "attack": 0.0795,
-      "defense": -0.0111
+      "defense": -0.0112
     },
     "Remo": {
       "attack": -0.0339,

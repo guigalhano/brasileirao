@@ -1,17 +1,67 @@
 {
-  "rodada": 22,
-  "data_inicio": "08/08/2026",
-  "data_fim": "09/08/2026",
+  "rodada": 23,
+  "data_inicio": "15/08/2026",
+  "data_fim": "17/08/2026",
   "jogos": [
-    {"home": "Gremio", "away": "Sao Paulo", "day": "Amanhã", "time": "15:00"},
-    {"home": "Remo", "away": "Atletico-MG", "day": "Amanhã", "time": "17:30"},
-    {"home": "Coritiba", "away": "Chapecoense", "day": "Amanhã", "time": "19:30"},
-    {"home": "Botafogo", "away": "Fluminense", "day": "Amanhã", "time": "20:00"},
-    {"home": "Cruzeiro", "away": "Mirassol", "day": "Dom 09/08", "time": "10:00"},
-    {"home": "Bahia", "away": "Vasco", "day": "Dom 09/08", "time": "15:00"},
-    {"home": "Palmeiras", "away": "Internacional", "day": "Dom 09/08", "time": "15:00"},
-    {"home": "Santos", "away": "Atletico-PR", "day": "Dom 09/08", "time": "17:30"},
-    {"home": "Bragantino", "away": "Corinthians", "day": "Dom 09/08", "time": "17:30"},
-    {"home": "Flamengo", "away": "Vitoria", "day": "Dom 09/08", "time": "18:30"}
+    {
+      "home": "Atlético",
+      "away": "Grêmio",
+      "day": "Sábado",
+      "time": "16:30"
+    },
+    {
+      "home": "Fluminense",
+      "away": "Palmeiras",
+      "day": "Sábado",
+      "time": "16:30"
+    },
+    {
+      "home": "Athletico",
+      "away": "Red Bull Bragantino",
+      "day": "Sábado",
+      "time": "18:30"
+    },
+    {
+      "home": "São Paulo",
+      "away": "Coritiba",
+      "day": "Sábado",
+      "time": "21:00"
+    },
+    {
+      "home": "Chapecoense",
+      "away": "Bahia",
+      "day": "Domingo",
+      "time": "11:00"
+    },
+    {
+      "home": "Vasco da Gama",
+      "away": "Santos",
+      "day": "Domingo",
+      "time": "16:00"
+    },
+    {
+      "home": "Mirassol",
+      "away": "Flamengo",
+      "day": "Domingo",
+      "time": "18:30"
+    },
+    {
+      "home": "Vitória",
+      "away": "Botafogo",
+      "day": "Domingo",
+      "time": "18:30"
+    },
+    {
+      "home": "Corinthians",
+      "away": "Cruzeiro",
+      "day": "Domingo",
+      "time": "19:30"
+    },
+    {
+      "home": "Internacional",
+      "away": "Remo",
+      "day": "Segunda",
+      "time": "20:00"
+    }
   ]
 }

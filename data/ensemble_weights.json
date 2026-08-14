@@ -1,0 +1,15 @@
+{
+  "w_elo": 0.9,
+  "w_dixon_coles": 0.1,
+  "half_life": 450.0,
+  "k_elo": 250.0,
+  "validacao": "2017-2021",
+  "teste": "2022-2026",
+  "log_loss_teste": {
+    "ensemble": 1.0189,
+    "elo_odds": 1.0238,
+    "dixon_coles": 1.2897,
+    "mercado": 1.0015
+  },
+  "n_jogos_teste": 1736
+}

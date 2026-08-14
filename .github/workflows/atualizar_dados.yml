@@ -35,9 +35,18 @@ jobs:
       - name: Regenerar index.html com os dados atualizados
         run: python scripts/build_index.py
 
-      - name: Atualizar próximos confrontos (dinamico)
+      # As duas etapas abaixo sao um par e precisam rodar NA ORDEM.
+      # A primeira grava model/xg; a segunda repoe analysis/analysis_grid.
+      # Rodar so a primeira foi o que deixou a aba de analises fora do ar
+      # entre as rodadas 21 e 23 (ver scripts/lib/index_data.py).
+      - name: Atualizar próximos confrontos (modelo)
         run: python scripts/update_next_matches_dynamic.py --repo-dir .
-        continue-on-error: true  # nao bloqueia se os dados dos proximos jogos nao existirem
+
+      - name: Repor as analises dos confrontos
+        run: python scripts/generate_advanced_analytics.py --repo-dir .
+
+      - name: Conferir integridade antes de publicar
+        run: python scripts/verificar_integridade.py --repo-dir .
 
       - name: Commit e push se algo mudou
         run: |

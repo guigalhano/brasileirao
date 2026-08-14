@@ -186,7 +186,7 @@ def build_analyses(repo_path):
     return result
 
 if __name__ == "__main__":
-    repo = Path("D:/brasileirao")
+    repo = Path(__file__).resolve().parent.parent
     analyses = build_analyses(repo)
 
     # Salvar JSON

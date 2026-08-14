@@ -7,11 +7,11 @@
           1.89
         ],
         [
-          "Palmeiras",
+          "Botafogo",
           1.7
         ],
         [
-          "Botafogo",
+          "Palmeiras",
           1.7
         ],
         [
@@ -29,7 +29,11 @@
           0.95
         ],
         [
-          "Internacional",
+          "Vitoria",
+          1.1
+        ],
+        [
+          "Gremio",
           1.1
         ],
         [
@@ -37,11 +41,7 @@
           1.1
         ],
         [
-          "Vitoria",
-          1.1
-        ],
-        [
-          "Gremio",
+          "Internacional",
           1.1
         ]
       ]
@@ -61,11 +61,11 @@
           0.95
         ],
         [
-          "Corinthians",
+          "Bragantino",
           1.0
         ],
         [
-          "Bragantino",
+          "Corinthians",
           1.0
         ]
       ],
@@ -99,11 +99,11 @@
           42.0
         ],
         [
-          "Corinthians",
+          "Vitoria",
           40.0
         ],
         [
-          "Vitoria",
+          "Corinthians",
           40.0
         ],
         [
@@ -117,7 +117,7 @@
       ],
       "bottom5": [
         [
-          "Vasco",
+          "Mirassol",
           5.0
         ],
         [
@@ -125,15 +125,15 @@
           5.0
         ],
         [
-          "Mirassol",
+          "Vasco",
           5.0
         ],
         [
-          "Fluminense",
+          "Remo",
           15.0
         ],
         [
-          "Remo",
+          "Botafogo",
           15.0
         ]
       ]

@@ -2611,6 +2611,25 @@
       var formaRecente = (typeof p.ult5Sos === 'number') ? p.ult5Sos : p.ult5;
       var consistencia = p.media - (p.desvio || 0) * 0.5;
       var outrosTres = 0.40*media + 0.20*formaRecente + 0.40*consistencia;
+      // ZAG/LAT: metade do bloco media/forma/consistencia cede lugar ao
+      // eptsScouts (pontuacao esperada montada scout a scout, onde o desarme
+      // e o que sobra decidindo -- ver compute_advanced_signals.py).
+      //
+      // POR QUE AQUI, e nao mais peso em estatisticas_posicao: o backtest
+      // comparou eptsScouts contra a MEDIA (0,167 contra 0,112 pra ZAG/LAT),
+      // ou seja, ele estima melhor a MESMA coisa que media/consistencia
+      // estimam. Entao ele desloca esse bloco, em vez de virar um quinto
+      // ingrediente pendurado ao lado do termo de confronto.
+      //
+      // Antes desta mudanca o desarme so entrava via estatisticas_posicao,
+      // que carrega wEstat=0,10 aqui dentro -- peso efetivo de 5%, e a
+      // medicao mostrou que a 5% ele nao mudava nada (top 11 identico, maior
+      // movimento no ranking inteiro: 3 posicoes). Agora fica em ~27%.
+      // Ganho medido, walk-forward rodadas 8-21, pareado por rodada:
+      // +0,0065 de correlacao (t=+4,53) contra nao ter desarme nenhum.
+      if((p.pos === 'ZAG' || p.pos === 'LAT') && typeof p.eptsScouts === 'number'){
+        outrosTres = 0.5*p.eptsScouts + 0.5*outrosTres;
+      }
       // PESO DO MATCHUP DEPENDENTE DA POSICAO (ajustado em 28/07):
       // os pontos de GOLEIRO e TECNICO sao quase inteiramente decididos pelo
       // JOGO especifico (SG/vitoria), nao pela forma individual -- um goleiro

@@ -44,8 +44,9 @@ def main():
             # colunas), entao um atleta_id 63007 vira "63007.0" e nunca bate
             # com o int64 vindo de cartola_players_enriched.csv.
             adv_by_id[str(int(r["atleta_id"]))] = r
-        print(f"Usando sinais avancados (ult5_sos/playmaking/risco_rotacao) para {len(adv_by_id)} "
-              f"jogadores (rode scripts/compute_advanced_signals.py para atualizar).")
+        print(f"Usando sinais avancados (ult5_sos/playmaking/risco_rotacao/ds_jogo/"
+              f"epts_scouts) para {len(adv_by_id)} jogadores "
+              f"(rode scripts/compute_advanced_signals.py para atualizar).")
     else:
         print("AVISO: data/advanced_signals.csv nao encontrado -- PLAYERS vai sem esses sinais "
               "(rode scripts/compute_advanced_signals.py primeiro).")
@@ -67,6 +68,13 @@ def main():
                 extra_fields += ", riscoRotacao:%s" % adv["risco_rotacao"]
             if pd.notna(adv.get("goalShare")):
                 extra_fields += ", goalShare:%s" % adv["goalShare"]
+            # Desarme: dsJogo e a taxa observada (vai pra tela); eptsScouts e a
+            # pontuacao esperada montada scout a scout, que e o sinal defensivo
+            # validado -- ver compute_advanced_signals.py.
+            if pd.notna(adv.get("ds_jogo")):
+                extra_fields += ", dsJogo:%s" % adv["ds_jogo"]
+            if pd.notna(adv.get("epts_scouts")):
+                extra_fields += ", eptsScouts:%s" % adv["epts_scouts"]
         lines.append(
             '    {name:"%s", pos:"%s", team:"%s", price:%s, media:%s, status:"%s", ult5:%s, desvio:%s%s}'
             % (name, p["pos"], p["team"], p["price"], p["media"], p["status"], p["ult5"], p["desvio"], extra_fields)

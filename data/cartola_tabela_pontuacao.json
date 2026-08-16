@@ -1,0 +1,39 @@
+{
+  "_fonte": "https://cartola.globo.com/#!/entenda-mais (Cartola FC -- Entenda Mais)",
+  "_temporada": 2026,
+  "_conferido_em": "2026-08-16",
+  "_nota": "Tabela OFICIAL. Serve de referencia para conferir a tabela que scripts/lib/pontuacao.py recupera por regressao dos dados reais (data/cartola_historico_2026_completo.csv). Se as duas divergirem, o Cartola mudou a pontuacao e este arquivo precisa ser atualizado -- o pipeline avisa sozinho.",
+  "scouts": {
+    "G":  {"nome": "Gol",                  "pontos": 8.0},
+    "A":  {"nome": "Assistencia",          "pontos": 5.0},
+    "SG": {"nome": "Jogo sem sofrer gol",  "pontos": 5.0},
+    "FT": {"nome": "Finalizacao na trave", "pontos": 3.0},
+    "FD": {"nome": "Finalizacao defendida","pontos": 1.2},
+    "FF": {"nome": "Finalizacao para fora","pontos": 0.8},
+    "FS": {"nome": "Falta sofrida",        "pontos": 0.5},
+    "PS": {"nome": "Penalti sofrido",      "pontos": 1.0},
+    "DS": {"nome": "Desarme",              "pontos": 1.5},
+    "DE": {"nome": "Defesa",               "pontos": 1.3},
+    "DP": {"nome": "Defesa de penalti",    "pontos": 7.0},
+    "GC": {"nome": "Gol contra",           "pontos": -3.0},
+    "CV": {"nome": "Cartao vermelho",      "pontos": -3.0},
+    "CA": {"nome": "Cartao amarelo",       "pontos": -1.0},
+    "GS": {"nome": "Gol sofrido",          "pontos": -1.0},
+    "PP": {"nome": "Penalti perdido",      "pontos": -4.0},
+    "PC": {"nome": "Penalti cometido",     "pontos": -1.0},
+    "FC": {"nome": "Falta cometida",       "pontos": -0.3},
+    "I":  {"nome": "Impedimento",          "pontos": -0.1}
+  },
+  "restricoes_por_posicao": {
+    "_nota": "Scouts que so pontuam para certas posicoes. O resto vale para todo jogador de linha.",
+    "SG": ["GOL", "ZAG", "LAT"],
+    "DE": ["GOL"],
+    "DP": ["GOL"],
+    "GS": ["GOL"]
+  },
+  "tecnico": {
+    "_nota": "O tecnico nao pontua por scout. Medido em 341 observacoes de 2026 (data/cartola_historico_2026_completo.csv): a unica variavel que move a pontuacao e a vitoria.",
+    "media_com_vitoria": 7.76,
+    "media_sem_vitoria": 3.42
+  }
+}

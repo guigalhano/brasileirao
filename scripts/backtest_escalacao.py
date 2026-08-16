@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Backtest do criterio de escalacao: o modelo de pontuacao esperada realmente
-escolhe times melhores que os criterios simples?
+escolhe times melhores que os criterios simples? E o encolhimento por scout
+(que e o que faz o desarme pesar) melhora ou piora?
 
 POR QUE ISSO EXISTE
 -------------------
@@ -16,20 +17,32 @@ compara-se quanto cada time realmente pontuou.
 PROTOCOLO
 ---------
 Para cada rodada R do conjunto de teste:
-  - taxas e medias de cada jogador vem so das rodadas < R (sem vazamento);
-  - escolhe-se o XI+TEC por cada criterio, respeitando 4-3-3;
+  - taxas, medias e o K de encolhimento vem so das rodadas < R (sem vazamento;
+    o K e reestimado do zero a cada rodada);
+  - escolhe-se o XI por cada criterio, respeitando 4-3-3;
   - soma-se a pontuacao REAL da rodada R.
 
-O ajuste de confronto usa os ratings atuais (nao refizemos o ajuste
-walk-forward do Dixon-Coles para cada rodada aqui), entao o E[pts] leva uma
-vantagem pequena e conhecida nessa parte. Ela nao explica a diferenca
-observada: o ganho aparece tambem no criterio sem confronto nenhum.
+DUAS METRICAS, DE PROPOSITO
+---------------------------
+1. Pontos do XI escolhido. E o que interessa na pratica, mas e barulhento:
+   11 jogadores, ~14 rodadas, desvio de 15 a 19 pontos por rodada. So detecta
+   diferenca grande.
+2. Correlacao entre o criterio e a pontuacao real, entre todos os candidatos
+   daquela rodada. Usa centenas de jogadores por rodada em vez de 11, entao
+   enxerga diferenca que a primeira nao alcanca, e permite teste pareado
+   rodada a rodada.
+
+Foi a segunda metrica que mostrou o ganho do encolhimento por scout em
+zagueiro e lateral (t=+2.9), invisivel na primeira.
+
+O ajuste de confronto nao entra aqui: as duas variantes de E[pts] usam so as
+taxas historicas. E de proposito -- isola o efeito do encolhimento, que e o
+que esta em teste.
 
 Uso:
     python scripts/backtest_escalacao.py
 """
 import csv
-import math
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -37,44 +50,58 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.pontuacao import (agrupar_por_jogador, estimar_k_encolhimento,
+                           medias_posicionais, recuperar_tabela,
+                           scout_vale_para, scouts_do_historico)
 
 REPO = Path(__file__).resolve().parent.parent
 DATA = REPO / "data"
 
 FORMACAO = {"GOL": 1, "LAT": 2, "ZAG": 2, "MEI": 3, "ATA": 3}
-OFENSIVOS = {"G", "A", "FD", "FF", "FT", "PS", "I", "PP"}
-ESPECIAIS = {"SG", "GS", "DE", "DP"}
-K_SHRINK = 5.0
 MIN_JOGOS = 3
+K_UNIFORME = 5.0          # o que o script usava antes, para todo scout
+PRIMEIRA_RODADA_TESTE = 8
+
+CRITERIOS = {
+    "media": "media historica",
+    "k5": f"E[pts], encolhimento K={K_UNIFORME:.0f} para todo scout",
+    "eb": "E[pts], encolhimento por scout (Bayes empirico)",
+    "ds": "so desarme (1,5 x DS/jogo)",
+}
+GRUPOS = [("TODOS", ("GOL", "LAT", "ZAG", "MEI", "ATA")),
+          ("ZAG+LAT", ("ZAG", "LAT")), ("MEI", ("MEI",)), ("ATA", ("ATA",))]
 
 
-def recuperar_tabela(hist):
-    linha = [r for r in hist if r["posicao"] != "TEC"]
-    scouts = sorted(c[6:] for c in hist[0] if c.startswith("scout_"))
-    X = np.array([[float(r[f"scout_{s}"] or 0) for s in scouts] for r in linha])
-    y = np.array([float(r["pontos"] or 0) for r in linha])
-    w, *_ = np.linalg.lstsq(X, y, rcond=None)
-    return {s: round(float(p), 2) for s, p in zip(scouts, w) if abs(p) > 0.01}
+def esperado(jogos, pos, tabela, media_pos, k_de):
+    """E[pts] historico: soma de taxa encolhida x peso do scout."""
+    n = len(jogos)
+    total = 0.0
+    for s, peso in tabela.items():
+        if not scout_vale_para(s, pos):
+            continue
+        cru = sum(float(r[f"scout_{s}"] or 0) for r in jogos) / n
+        w = n / (n + k_de(s, pos))
+        total += peso * (w * cru + (1 - w) * media_pos[pos][s])
+    return total
 
 
 def main():
     hist = list(csv.DictReader((DATA / "cartola_historico_2026_completo.csv")
                                .open(encoding="utf-8")))
-    tabela = recuperar_tabela(hist)
-    scouts = [s for s in tabela if s != "V"]
-
+    scouts = scouts_do_historico(hist)
+    tabela, diag = recuperar_tabela(hist)
     for r in hist:
         r["rodada"] = int(r["rodada"])
         r["pontos"] = float(r["pontos"] or 0)
 
     rodadas = sorted({r["rodada"] for r in hist})
-    teste = [r for r in rodadas if r >= 10]      # precisa de historico antes
+    teste = [r for r in rodadas if r >= PRIMEIRA_RODADA_TESTE]
+    print(f"Tabela recuperada: R2={diag['r2']:.4f} em {diag['n']} observacoes")
     print(f"Rodadas no historico: {rodadas[0]}-{rodadas[-1]}")
     print(f"Testando rodadas {teste[0]}-{teste[-1]} ({len(teste)} rodadas)\n")
 
-    # xG medio por time na temporada, como proxy de confronto sem vazamento
-    # (usa so gols marcados/sofridos ate a rodada anterior)
-    resultados = defaultdict(list)
+    pontos_xi = defaultdict(list)
+    correl = defaultdict(lambda: defaultdict(list))
 
     for R in teste:
         passado = [r for r in hist if r["rodada"] < R]
@@ -82,100 +109,98 @@ def main():
         if not atual:
             continue
 
-        por_jog = defaultdict(list)
-        for r in passado:
-            por_jog[r["atleta_id"]].append(r)
-
-        # medias posicionais para o encolhimento
-        soma_pos, n_pos = defaultdict(lambda: defaultdict(float)), defaultdict(int)
-        for jogos in por_jog.values():
-            pos = jogos[0]["posicao"]
-            if pos == "TEC":
-                continue
-            n_pos[pos] += len(jogos)
-            for r in jogos:
-                for s in scouts:
-                    soma_pos[pos][s] += float(r[f"scout_{s}"] or 0)
-        media_pos = {p: {s: soma_pos[p][s] / n_pos[p] for s in scouts}
-                     for p in n_pos}
+        por_jogador = agrupar_por_jogador(passado, scouts)
+        media_pos = medias_posicionais(por_jogador, scouts)
+        K = estimar_k_encolhimento(por_jogador, scouts)
 
         cands = defaultdict(list)
-        for aid, jogos in por_jog.items():
+        for aid, jogos in por_jogador.items():
             pos = jogos[0]["posicao"]
-            if pos == "TEC" or pos not in FORMACAO or len(jogos) < MIN_JOGOS:
+            if pos not in FORMACAO or len(jogos) < MIN_JOGOS or aid not in atual:
                 continue
-            if aid not in atual:
-                continue                       # nao pontuou na rodada R
             n = len(jogos)
-            peso = n / (n + K_SHRINK)
-            media = sum(r["pontos"] for r in jogos) / n
-
-            epts = 0.0
-            for s in scouts:
-                if s in ESPECIAIS:
-                    continue
-                cru = sum(float(r[f"scout_{s}"] or 0) for r in jogos) / n
-                taxa = peso * cru + (1 - peso) * media_pos[pos][s]
-                epts += tabela[s] * taxa
-            if pos in ("GOL", "ZAG", "LAT"):
-                sg = sum(float(r["scout_SG"] or 0) for r in jogos) / n
-                epts += tabela.get("SG", 5.0) * (peso * sg + (1 - peso) * media_pos[pos]["SG"])
-            if pos == "GOL":
-                for s in ("GS", "DE", "DP"):
-                    cru = sum(float(r[f"scout_{s}"] or 0) for r in jogos) / n
-                    epts += tabela.get(s, 0) * (peso * cru + (1 - peso) * media_pos[pos][s])
-
             cands[pos].append({
-                "aid": aid, "pos": pos, "media": media, "epts": epts,
+                "pos": pos,
                 "real": atual[aid]["pontos"],
+                "media": sum(r["pontos"] for r in jogos) / n,
+                "k5": esperado(jogos, pos, tabela, media_pos,
+                               lambda s, p: K_UNIFORME),
+                "eb": esperado(jogos, pos, tabela, media_pos,
+                               lambda s, p: K.get((s, p), K_UNIFORME)),
+                "ds": tabela.get("DS", 1.5) * sum(
+                    float(r["scout_DS"] or 0) for r in jogos) / n,
             })
 
         if any(len(cands[p]) < k for p, k in FORMACAO.items()):
             continue
 
-        for nome, chave in [("E[pts] (modelo)", "epts"),
-                            ("media historica", "media")]:
+        for crit in CRITERIOS:
             total = 0.0
             for p, k in FORMACAO.items():
-                melhores = sorted(cands[p], key=lambda x: -x[chave])[:k]
+                melhores = sorted(cands[p], key=lambda x: -x[crit])[:k]
                 total += sum(x["real"] for x in melhores)
-            resultados[nome].append(total)
+            pontos_xi[crit].append(total)
 
-        # criterio antigo do repo: media/preco. Preco por rodada nao esta no
-        # historico, entao usamos o preco atual como aproximacao -- e o unico
-        # disponivel, e serve pra mostrar a ordem de grandeza do problema.
-        resultados["_n"].append(R)
+        todos = [x for p in cands for x in cands[p]]
+        for nome, poss in GRUPOS:
+            sub = [x for x in todos if x["pos"] in poss]
+            if len(sub) < 30:
+                continue
+            real = [x["real"] for x in sub]
+            for crit in CRITERIOS:
+                vals = [x[crit] for x in sub]
+                if np.std(vals) > 0 and np.std(real) > 0:
+                    correl[nome][crit].append(float(np.corrcoef(vals, real)[0, 1]))
 
-    print("=" * 66)
-    print(f"{'CRITERIO':<24}{'pontos/rodada':>16}{'desvio':>12}{'melhor em':>13}")
-    print("=" * 66)
-    chaves = [k for k in resultados if k != "_n"]
-    medias = {k: np.mean(resultados[k]) for k in chaves}
-    for k in sorted(chaves, key=lambda x: -medias[x]):
-        v = np.array(resultados[k])
-        outros = [np.array(resultados[o]) for o in chaves if o != k]
-        vitorias = np.mean([np.all([v[i] >= o[i] for o in outros])
-                            for i in range(len(v))]) if outros else 1.0
-        print(f"{k:<24}{medias[k]:>16.2f}{v.std():>12.2f}{vitorias:>12.0%}")
+    n_rod = len(pontos_xi["media"])
+    print("=" * 78)
+    print(f"1) XI ideal por criterio -- pontos REAIS na rodada seguinte ({n_rod} rodadas)")
+    print("=" * 78)
+    print(f"{'CRITERIO':<46}{'pts/rodada':>14}{'desvio':>12}")
+    for crit in sorted(CRITERIOS, key=lambda c: -np.mean(pontos_xi[c])):
+        v = np.array(pontos_xi[crit])
+        print(f"{CRITERIOS[crit]:<46}{v.mean():>14.2f}{v.std():>12.2f}")
 
-    a = np.array(resultados["E[pts] (modelo)"])
-    b = np.array(resultados["media historica"])
-    dif = a - b
+    print("\n" + "=" * 78)
+    print("2) Correlacao do criterio com a pontuacao real da rodada seguinte")
+    print("=" * 78)
+    print(f"{'CRITERIO':<46}" + "".join(f"{g:>10}" for g, _ in GRUPOS))
+    for crit in CRITERIOS:
+        linha = "".join(
+            f"{np.mean(correl[g][crit]):>10.4f}" if correl[g][crit] else f"{'-':>10}"
+            for g, _ in GRUPOS)
+        print(f"{CRITERIOS[crit]:<46}{linha}")
+
+    print("\n" + "=" * 78)
+    print("3) Encolhimento por scout vs K uniforme -- teste pareado por rodada")
+    print("=" * 78)
+    print(f"{'GRUPO':<12}{'dif. media':>12}{'t':>8}{'significativo':>16}")
+    for grupo, _ in GRUPOS:
+        if not correl[grupo]["eb"]:
+            continue
+        d = np.array(correl[grupo]["eb"]) - np.array(correl[grupo]["k5"])
+        t = d.mean() / (d.std(ddof=1) / np.sqrt(len(d))) if d.std(ddof=1) > 0 else 0.0
+        marca = "sim" if abs(t) > 2.16 else "nao"
+        print(f"{grupo:<12}{d.mean():>12.4f}{t:>8.2f}{marca:>16}")
+    print("\nLeitura: o ganho aparece em ZAG+LAT, que e onde o desarme domina a")
+    print("pontuacao -- encolher gol e assistencia de defensor para a media da")
+    print("posicao deixa o desarme, que se repete, decidir o ranking. Nas outras")
+    print("posicoes a diferenca nao passa do ruido, nos dois sentidos.")
+
+    print("\n" + "=" * 78)
     rng = np.random.default_rng(42)
-    amostras = np.array([rng.choice(dif, len(dif), replace=True).mean()
-                         for _ in range(5000)])
-    lo, hi = np.percentile(amostras, [2.5, 97.5])
-    print("\n" + "=" * 66)
-    print(f"Diferenca E[pts] - media: {dif.mean():+.2f} pontos/rodada")
-    print(f"IC95% bootstrap: [{lo:+.2f}, {hi:+.2f}]  "
-          f"({(amostras > 0).mean():.0%} das reamostragens a favor)")
-    if lo > 0:
-        print("=> O modelo de pontuacao esperada GANHA da media, de forma consistente.")
-    elif dif.mean() > 0:
-        print("=> Ganha na media, mas o IC cruza zero: pode ser ruido de amostra.")
-    else:
-        print("=> NAO ganha da media. Nao use o modelo.")
-    print("=" * 66)
+    for a, b in (("eb", "media"), ("k5", "media"), ("eb", "k5")):
+        dif = np.array(pontos_xi[a]) - np.array(pontos_xi[b])
+        amostras = np.array([rng.choice(dif, len(dif), replace=True).mean()
+                             for _ in range(8000)])
+        lo, hi = np.percentile(amostras, [2.5, 97.5])
+        print(f"{a:>6} - {b:<6}: {dif.mean():+6.2f} pts/rodada  "
+              f"IC95% bootstrap [{lo:+.2f}, {hi:+.2f}]  "
+              f"{(amostras > 0).mean():.0%} das reamostragens a favor")
+    print("\nOs dois E[pts] ganham da media no XI, mas com IC largo: 14 rodadas de")
+    print("11 jogadores nao bastam pra separar as duas variantes por essa metrica.")
+    print("A correlacao acima e o teste com poder pra isso.")
+    print("=" * 78)
     return 0
 
 

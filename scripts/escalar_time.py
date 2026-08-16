@@ -13,21 +13,29 @@ isso -- razao media/preco nao mede pontuacao, mede barateza.
 O que este script faz:
 
   1. RECUPERA a tabela de pontuacao do Cartola dos proprios dados, em vez de
-     chutar. Regressao de `pontos` contra os 20 scouts em 6.2k observacoes
-     de jogadores de linha: R2 = 0.990, erro medio 0.04 ponto, e todos os
-     pesos saem redondos (G=8, A=5, SG=5, DP=7, DS=1.5, ...). Se o Cartola
-     mudar a tabela, isto acompanha sozinho.
+     chutar, e CONFERE contra a tabela oficial transcrita de
+     cartola.globo.com/#!/entenda-mais em data/cartola_tabela_pontuacao.json.
+     Filtrando so as cinco posicoes de linha, a regressao de `pontos` contra
+     os scouts e exata: R2 = 1.0000, erro 0.0000, os 19 scouts batendo na
+     casa decimal com a tabela oficial (G=8, A=5, SG=5, DP=7, DS=1.5, ...).
+     Se o Cartola mexer na pontuacao, os dados divergem do arquivo e o script
+     avisa em vez de seguir escalando com peso velho.
 
-  2. Estima a TAXA DE CADA SCOUT por jogador com encolhimento empirico de
-     Bayes na media da posicao. A mediana e de 10 jogos por jogador --
-     amostra curta demais pra confiar na media crua de quem jogou 2 partidas.
+  2. Estima a TAXA DE CADA SCOUT por jogador com encolhimento de Bayes
+     empirico na media da posicao, com forca de encolhimento MEDIDA POR
+     SCOUT. Antes era K=5 para todos, como se gol e desarme fossem
+     igualmente previsiveis; a autocorrelacao de rodada para rodada diz o
+     contrario (DS 0.231, FS 0.292 contra G 0.090, A 0.055). Desarme e
+     habito, gol e evento -- ver scripts/lib/pontuacao.py.
 
   3. AJUSTA PELO CONFRONTO, que e o ponto que a media sozinha ignora:
      - scouts ofensivos escalam pelo xG esperado do time NAQUELE jogo;
      - SG (+5, o maior premio de defensor e goleiro) vira a probabilidade
        de nao sofrer gol, P(Poisson(xG_adversario) = 0);
      - GS (-1 por gol sofrido, goleiro) vira o xG esperado do adversario;
-     - defesas do goleiro escalam com a pressao ofensiva do adversario.
+     - defesas do goleiro escalam com a pressao ofensiva do adversario;
+     - DESARME de zagueiro e lateral sobe contra ataque forte, com o
+       coeficiente medido nos dados (ver medir_resposta_desarme).
      Um zagueiro do Flamengo contra o Mirassol e um zagueiro do Mirassol
      contra o Flamengo nao valem a mesma coisa, e a media nao sabe disso.
 
@@ -51,8 +59,13 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from lib.fixtures import load_fixtures
+from lib.fixtures import historico_por_time_rodada, load_fixtures
 from lib.index_data import read_data
+from lib.pontuacao import (agrupar_por_jogador, carregar_tabela_oficial,
+                           conferir_tabela, estimar_k_encolhimento, jogou,
+                           medias_posicionais, recuperar_tabela,
+                           scout_vale_para, scouts_do_historico,
+                           taxas_encolhidas)
 from lib.teams import canonical, canonical_or_none
 
 REPO = Path(__file__).resolve().parent.parent
@@ -71,22 +84,10 @@ POSICOES = ("GOL", "LAT", "ZAG", "MEI", "ATA")
 OFENSIVOS = {"G", "A", "FD", "FF", "FT", "PS", "I", "PP"}
 # Scouts tratados a parte porque dependem do adversario, nao do jogador
 ESPECIAIS = {"SG", "GS", "DE", "DP"}
+# Posicoes cujo desarme responde ao confronto (ver medir_resposta_desarme)
+POSICOES_DESARME = ("ZAG", "LAT")
 
-K_SHRINK = 5.0    # jogos "virtuais" da media posicional no encolhimento
 GRAO = 0.1        # granularidade do orcamento na DP, em cartoletas
-
-
-def recuperar_tabela(hist):
-    """Descobre quanto vale cada scout, regredindo pontos contra os scouts."""
-    linha = [r for r in hist if r["posicao"] != "TEC"]
-    scouts = sorted(c[6:] for c in hist[0] if c.startswith("scout_"))
-    X = np.array([[float(r[f"scout_{s}"] or 0) for s in scouts] for r in linha])
-    y = np.array([float(r["pontos"] or 0) for r in linha])
-    w, *_ = np.linalg.lstsq(X, y, rcond=None)
-    pred = X @ w
-    r2 = 1 - ((y - pred) ** 2).sum() / ((y - y.mean()) ** 2).sum()
-    tabela = {s: round(float(p), 2) for s, p in zip(scouts, w) if abs(p) > 0.01}
-    return tabela, r2, float(np.abs(y - pred).mean()), len(linha)
 
 
 def medir_elasticidades(hist):
@@ -138,35 +139,77 @@ def medir_elasticidades(hist):
             "defesas": e_de, "r2_defesas": r_de}
 
 
-def taxas_por_jogador(hist, tabela):
-    """Taxa media de cada scout por jogo, encolhida na media da posicao."""
-    por_jogador = defaultdict(list)
+def medir_resposta_desarme(hist, scouts):
+    """Quanto o DESARME de zagueiro e lateral responde a forca do ataque adversario.
+
+    O desarme e o scout que mais pesa na pontuacao de defensor (1,5 ponto cada,
+    1,31 por jogo de lateral e 1,04 de zagueiro -- mais do que o SG rende na
+    media), e ate agora entrava aqui como taxa fixa, alheia ao confronto.
+
+    A leitura ingenua desses dados engana, e vale registrar porque: a correlacao
+    CRUA entre desarmes do time por jogo e gols sofridos por jogo e NEGATIVA
+    (-0.37 entre os 20 times). Quem sofre mais gol desarma menos. Isso nao e o
+    efeito do confronto, e confusao com a qualidade do time: time bom desarma
+    mais E sofre menos (corr(DS, gols marcados) = +0.39). Quem e atropelado nao
+    desarma, corre atras.
+
+    Com efeito fixo de jogador -- comparando o MESMO jogador contra adversarios
+    diferentes, que e a pergunta certa -- o sinal inverte e fica positivo:
+
+        ZAG+LAT  +0.311 desarme por gol/jogo de ataque adversario  (t=+2.39)
+        MEI      +0.149                                            (t=+1.16)
+        ATA      -0.005                                            (t=-0.05)
+
+    So ZAG/LAT tem efeito significativo, e so eles recebem o ajuste. E um efeito
+    modesto e proposital: entre o ataque mais fraco e o mais forte da liga da
+    cerca de 0,3 desarme, uns 0,4 ponto. Ajuste ADITIVO, na escala em que foi
+    medido -- multiplicativo estouraria com pouco dado, que foi o defeito que
+    medir_elasticidades ja teve que corrigir com o goleiro do Remo.
+
+    Devolve (coeficiente, t, n). Coeficiente 0.0 quando nao da pra medir.
+    """
+    mapa = historico_por_time_rodada()
+    ataque_medio = defaultdict(list)
+    for (time, _), j in mapa.items():
+        ataque_medio[time].append(j["gols_pro"])
+    forca_ataque = {t: float(np.mean(v)) for t, v in ataque_medio.items()}
+
+    jogadores, linhas = {}, []
     for r in hist:
-        if r["posicao"] == "TEC":
+        if r["posicao"] not in POSICOES_DESARME or not jogou(r, scouts):
             continue
-        por_jogador[r["atleta_id"]].append(r)
-
-    soma_pos, n_pos = defaultdict(lambda: defaultdict(float)), defaultdict(int)
-    for jogos in por_jogador.values():
-        pos = jogos[0]["posicao"]
-        n_pos[pos] += len(jogos)
-        for r in jogos:
-            for s in tabela:
-                soma_pos[pos][s] += float(r[f"scout_{s}"] or 0)
-    media_pos = {p: {s: soma_pos[p][s] / n_pos[p] for s in tabela} for p in n_pos}
-
-    taxas = {}
-    for aid, jogos in por_jogador.items():
-        pos, n = jogos[0]["posicao"], len(jogos)
-        if pos not in media_pos:
+        time = canonical_or_none(r["clube"])
+        j = mapa.get((time, int(r["rodada"]))) if time else None
+        if not j or j["adv"] not in forca_ataque:
             continue
-        peso = n / (n + K_SHRINK)
-        t = {}
-        for s in tabela:
-            cru = sum(float(r[f"scout_{s}"] or 0) for r in jogos) / n
-            t[s] = peso * cru + (1 - peso) * media_pos[pos][s]
-        taxas[aid] = {"pos": pos, "n": n, "taxas": t}
-    return taxas, media_pos
+        aid = r["atleta_id"]
+        jogadores.setdefault(aid, len(jogadores))
+        linhas.append((jogadores[aid], forca_ataque[j["adv"]],
+                       float(r["scout_DS"] or 0)))
+
+    # Regressao com uma dummy por jogador: o coeficiente do ataque adversario
+    # sai limpo da diferenca entre jogos do mesmo jogador, sem carregar o
+    # quanto cada um desarma em geral.
+    if len(linhas) < 200 or len(jogadores) < 20:
+        return 0.0, 0.0, len(linhas)
+    X = np.zeros((len(linhas), len(jogadores) + 1))
+    y = np.empty(len(linhas))
+    for i, (idx, ataque, ds) in enumerate(linhas):
+        X[i, idx] = 1.0
+        X[i, -1] = ataque
+        y[i] = ds
+    beta, *_ = np.linalg.lstsq(X, y, rcond=None)
+    residuo = y - X @ beta
+    graus = len(linhas) - np.linalg.matrix_rank(X)
+    if graus <= 0:
+        return 0.0, 0.0, len(linhas)
+    var = (residuo ** 2).sum() / graus * np.linalg.pinv(X.T @ X)
+    erro = float(np.sqrt(np.diag(var))[-1])
+    coef = float(beta[-1])
+    t = coef / erro if erro > 0 else 0.0
+    # Coeficiente sem significancia entra como zero: melhor nao ajustar do que
+    # ajustar por ruido -- mesmo criterio que ja tirou outros sinais do projeto.
+    return (coef if abs(t) > 2 else 0.0), t, len(linhas)
 
 
 def contexto_da_rodada():
@@ -185,7 +228,11 @@ def contexto_da_rodada():
 
 
 def pontos_esperados(taxa, pos, ctx, xg_medio):
-    """Pontuacao esperada do jogador neste confronto especifico."""
+    """Pontuacao esperada do jogador neste confronto especifico.
+
+    Devolve (total, parcelas) -- parcelas separa quanto vem de desarme, de SG e
+    do resto, pra tela poder mostrar de onde sai a nota em vez de so um numero.
+    """
     xg_pro, xg_contra = ctx["xg_pro"], ctx["xg_contra"]
     # Expoentes medidos nos dados (ver medir_elasticidades), nao 1.0: a resposta
     # dos scouts ao confronto e bem mais achatada do que proporcional.
@@ -193,22 +240,33 @@ def pontos_esperados(taxa, pos, ctx, xg_medio):
     mult_defensivo = (xg_contra / xg_medio) ** ELAST["defesas"]
     p_sg = math.exp(-xg_contra)          # P(adversario nao marca)
 
-    total = 0.0
-    for s, peso in TABELA.items():
-        if s == "V":
-            continue                      # so tecnico pontua por vitoria
-        if s in ESPECIAIS:
-            continue
-        r = taxa[s]
-        total += peso * (r * mult_ofensivo if s in OFENSIVOS else r)
+    # Desarme responde ao confronto so em ZAG/LAT, e de forma aditiva na escala
+    # em que foi medido (ver medir_resposta_desarme). xg_contra e o gol esperado
+    # do adversario neste jogo; a medicao usou gols/jogo do adversario na
+    # temporada -- mesma escala, entao o coeficiente transfere.
+    taxa_ds = taxa.get("DS", 0.0)
+    if pos in POSICOES_DESARME and DS_COEF:
+        taxa_ds = max(0.0, taxa_ds + DS_COEF * (xg_contra - xg_medio))
 
-    if pos in ("GOL", "ZAG", "LAT"):
-        total += TABELA.get("SG", 5.0) * p_sg
+    total, pts_ds = 0.0, 0.0
+    for s, peso in TABELA.items():
+        if s in ESPECIAIS or not scout_vale_para(s, pos):
+            continue
+        if s == "DS":
+            pts_ds = peso * taxa_ds
+            total += pts_ds
+            continue
+        total += peso * (taxa[s] * mult_ofensivo if s in OFENSIVOS else taxa[s])
+
+    pts_sg = 0.0
+    if scout_vale_para("SG", pos):
+        pts_sg = TABELA.get("SG", 5.0) * p_sg
+        total += pts_sg
     if pos == "GOL":
         total += TABELA.get("GS", -1.0) * xg_contra
         total += TABELA.get("DE", 1.3) * taxa.get("DE", 0.0) * mult_defensivo
         total += TABELA.get("DP", 7.0) * taxa.get("DP", 0.0)
-    return total
+    return total, {"DS": pts_ds, "SG": pts_sg, "taxa_ds": taxa_ds}
 
 
 def melhor_por_posicao(cands, k, orcamento):
@@ -222,7 +280,8 @@ def melhor_por_posicao(cands, k, orcamento):
     dp[0, 0] = 0.0
     escolha = [[None] * C for _ in range(k + 1)]
 
-    for j, (aid, nome, time, preco, pts) in enumerate(cands):
+    for j, cand in enumerate(cands):
+        preco, pts = cand[3], cand[4]
         custo = int(round(preco / GRAO))
         if custo > C - 1:
             continue
@@ -251,7 +310,7 @@ def reconstruir(escolha, k, custo, cands):
 
 
 def main():
-    global TABELA, ELAST
+    global TABELA, ELAST, DS_COEF
     ap = argparse.ArgumentParser()
     ap.add_argument("--orcamento", type=float, default=120.0,
                     help="cartoletas disponiveis (padrao 120)")
@@ -265,16 +324,52 @@ def main():
 
     hist = list(csv.DictReader((DATA / "cartola_historico_2026_completo.csv")
                                .open(encoding="utf-8")))
-    TABELA, r2, err, n = recuperar_tabela(hist)
-    print(f"Tabela de pontuacao recuperada de {n} observacoes: "
-          f"R2={r2:.4f}, erro medio {err:.3f} ponto")
+    scouts = scouts_do_historico(hist)
+
+    TABELA, diag = recuperar_tabela(hist)
+    print(f"Tabela de pontuacao recuperada de {diag['n']} observacoes: "
+          f"R2={diag['r2']:.4f}, erro medio {diag['erro_medio']:.4f} ponto")
+
+    # Confere contra a tabela oficial do cartola.globo.com/#!/entenda-mais.
+    # Divergencia aqui significa que o Cartola mexeu na pontuacao -- o script
+    # segue (os dados mandam), mas nao deixa isso passar em silencio.
+    oficial, doc_oficial = carregar_tabela_oficial()
+    problemas = conferir_tabela(TABELA, oficial)
+    if problemas:
+        print("\n[ATENCAO] a pontuacao nos dados nao bate com "
+              f"data/cartola_tabela_pontuacao.json (conferida em "
+              f"{doc_oficial['_conferido_em']}):")
+        for p in problemas:
+            print(f"    - {p}")
+        print("    Confira " + doc_oficial["_fonte"] + " e atualize o arquivo.\n")
+    else:
+        print(f"Confere com a tabela oficial de {doc_oficial['_conferido_em']} "
+              f"({len(oficial)} scouts): DS={TABELA.get('DS')}, "
+              f"DE={TABELA.get('DE')}, G={TABELA.get('G')}, SG={TABELA.get('SG')}")
 
     ELAST = medir_elasticidades(hist)
     print(f"Elasticidades medidas: ofensiva {ELAST['ofensiva']:.2f} "
           f"(R2={ELAST['r2_ofensiva']:.2f}), defesas do goleiro "
           f"{ELAST['defesas']:.2f} (R2={ELAST['r2_defesas']:.2f})")
 
-    taxas, _ = taxas_por_jogador(hist, TABELA)
+    DS_COEF, ds_t, ds_n = medir_resposta_desarme(hist, scouts)
+    if DS_COEF:
+        print(f"Desarme de ZAG/LAT responde ao confronto: {DS_COEF:+.3f} desarme "
+              f"por gol/jogo do ataque adversario (t={ds_t:+.2f}, n={ds_n})")
+    else:
+        print(f"Desarme sem resposta significativa ao confronto (t={ds_t:+.2f}, "
+              f"n={ds_n}) -- entra como taxa fixa")
+
+    # Encolhimento por scout: gol de zagueiro nao se repete, desarme sim.
+    por_jogador = agrupar_por_jogador(hist, scouts)
+    media_pos = medias_posicionais(por_jogador, scouts)
+    K = estimar_k_encolhimento(por_jogador, scouts)
+    taxas = taxas_encolhidas(por_jogador, scouts, K, media_pos)
+    amostra_k = ", ".join(
+        f"{s} {K[(s, 'ZAG')]:.0f}" for s in ("DS", "FS", "SG", "G", "A")
+        if (s, "ZAG") in K)
+    print(f"Encolhimento por scout (Bayes empirico, K de zagueiro): {amostra_k}")
+
     rodada, meta, ctx_time = contexto_da_rodada()
     xg_medio = float(np.mean([c["xg_pro"] for c in ctx_time.values()]))
     print(f"Rodada {rodada} ({meta['data_inicio']} - {meta['data_fim']}), "
@@ -308,8 +403,10 @@ def main():
         if info is None or info["n"] < args.min_jogos:
             fora[f"menos de {args.min_jogos} jogos"] += 1
             continue
-        pts = pontos_esperados(info["taxas"], r["pos"], ctx, xg_medio)
-        cands[r["pos"]].append((r["atleta_id"], r["name"], time, preco, pts))
+        pts, parcelas = pontos_esperados(info["taxas"], r["pos"], ctx, xg_medio)
+        parcelas["ds_observado"] = info["cru"].get("DS", 0.0)
+        cands[r["pos"]].append((r["atleta_id"], r["name"], time, preco, pts,
+                                parcelas))
 
     print("Elegiveis: " + ", ".join(f"{p}={len(cands[p])}" for p in POSICOES)
           + f", TEC={len(tecnicos)}")
@@ -382,23 +479,31 @@ def main():
         return 1
 
     pontos, formacao, tec, escalacao, custo = melhor_geral
-    print("=" * 74)
+    largura = 92
+    print("=" * largura)
     print(f"TIME IDEAL DA RODADA {rodada}  |  formacao {formacao}")
-    print("=" * 74)
-    print(f"{'POS':<5}{'JOGADOR':<24}{'TIME':<14}{'PRECO':>7}{'E[pts]':>9}")
-    print("-" * 74)
+    print("=" * largura)
+    print(f"{'POS':<5}{'JOGADOR':<24}{'TIME':<14}{'PRECO':>7}{'E[pts]':>9}"
+          f"{'DS/jogo':>9}{'pts DS':>8}  CONFRONTO")
+    print("-" * largura)
+    total_ds = 0.0
     for p in POSICOES:
-        for aid, nome, time, preco, pts in escalacao.get(p, []):
+        for aid, nome, time, preco, pts, parc in escalacao.get(p, []):
             adv = ctx_time[time]["adv"]
             casa = "x" if ctx_time[time]["casa"] else "@"
+            total_ds += parc["DS"]
             print(f"{p:<5}{nome[:23]:<24}{time[:13]:<14}{preco:>7.2f}{pts:>9.2f}"
-                  f"   {casa} {adv}")
+                  f"{parc['ds_observado']:>9.2f}{parc['DS']:>8.2f}  {casa} {adv}")
     print(f"{'TEC':<5}{tec[1][:23]:<24}{tec[2][:13]:<14}{tec[3]:>7.2f}{tec[4]:>9.2f}")
-    print("-" * 74)
-    print(f"{'':<43}{custo:>7.2f}{pontos:>9.2f}")
+    print("-" * largura)
+    print(f"{'':<43}{custo:>7.2f}{pontos:>9.2f}{'':>9}{total_ds:>8.2f}")
     print(f"\nOrcamento {args.orcamento:.2f} | gasto {custo:.2f} | "
           f"sobra {args.orcamento - custo:.2f}")
-    print(f"Pontuacao esperada: {pontos:.2f}")
+    print(f"Pontuacao esperada: {pontos:.2f} "
+          f"({total_ds:.2f} vem de desarme, {100 * total_ds / pontos:.0f}%)")
+    print("DS/jogo = desarmes por jogo observados na temporada (sem encolher); "
+          "pts DS = quanto\ndisso entra na pontuacao esperada, ja encolhido e "
+          "ajustado ao confronto.")
     return 0
 
 

@@ -2,7 +2,7 @@
 """
 compute_advanced_signals.py
 
-Calcula 3 sinais avancados por jogador a partir do historico rodada-a-rodada
+Calcula os sinais avancados por jogador a partir do historico rodada-a-rodada
 (data/cartola_historico_2026_completo.csv) e grava em
 data/advanced_signals.csv, para o build_index.py incluir no array PLAYERS.
 
@@ -18,9 +18,39 @@ data/advanced_signals.csv, para o build_index.py incluir no array PLAYERS.
    existe (so tinhamos finalizacao/xG, nada de criacao).
 
 3) risco_rotacao: fracao das ultimas 5 rodadas em que o jogador REALMENTE
-   entrou em campo (entrou_em_campo=True), independente do status "Provavel"
-   atual. Jogador "Provavel" que so jogou 1 dos ultimos 5 jogos e sinal de
-   risco de rotacao que o status sozinho nao capta.
+   entrou em campo, independente do status "Provavel" atual. Jogador
+   "Provavel" que so jogou 1 dos ultimos 5 jogos e sinal de risco de
+   rotacao que o status sozinho nao capta.
+
+4) ds_jogo: desarmes por jogo. E o scout que mais decide a pontuacao de
+   defensor -- 1,5 ponto cada, 1,31 por jogo de lateral, 1,04 de zagueiro --
+   e o unico sinal desses que se repete de rodada pra rodada de verdade
+   (autocorrelacao 0,231 contra 0,090 do gol). Numero observado, sem
+   encolher: serve pra mostrar na tela.
+
+5) epts_scouts: pontuacao esperada montada scout a scout, com encolhimento
+   de Bayes empirico por scout (lib/pontuacao.py). E o sinal defensivo que
+   faltava: em backtest walk-forward nas rodadas 8-21, para ZAG/LAT a
+   correlacao com a pontuacao da rodada seguinte foi 0,177 contra 0,120 da
+   media -- e a diferenca contra o encolhimento uniforme e significativa
+   (t=+2,5). Neutro quanto a confronto de proposito: o ajuste de adversario
+   ja e aplicado no index.html, aplicar aqui tambem contaria duas vezes.
+
+DUAS CORRECOES FEITAS AQUI (agosto/2026)
+----------------------------------------
+a) O script estava QUEBRADO: lia g["entrou_em_campo"], coluna que nao existe
+   mais no CSV do historico, e morria com KeyError. Ninguem percebeu porque
+   o build_index.py so le o advanced_signals.csv que ja estava no disco --
+   entao o site vinha servindo sinais congelados em 29/07 com cara de atual.
+   Agora "jogou" e deduzido do proprio scout (lib.pontuacao.jogou).
+
+b) O per_round_scout() diferenciava os scouts das rodadas <=18 achando que
+   vinham cumulativos da temporada. Nao vem: em 24% dos pares de rodadas
+   consecutivas o scout DIMINUI, o que e impossivel num acumulado, e a
+   regressao de pontos (que sao por rodada) contra os scouts crus da
+   R2=1,0000 com erro zero -- so fecha se scout e pontos estiverem na mesma
+   base. A diferenciacao estava subtraindo valor legitimo e zerando o
+   restante, corrompendo goalShare e playmaking. Removida.
 
 Uso:
     python3 compute_advanced_signals.py --repo-dir /caminho/para/repo
@@ -30,8 +60,15 @@ import argparse
 import csv
 import json
 import math
+import sys
 from collections import defaultdict
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.pontuacao import (agrupar_por_jogador, estimar_k_encolhimento, jogou,
+                           medias_posicionais, recuperar_tabela,
+                           scout_vale_para, scouts_do_historico,
+                           taxas_encolhidas)
 
 CLUB_ABBREV_TO_NAME = {
     "BAH": "Bahia", "BOT": "Botafogo", "CAM": "Atletico-MG", "CAP": "Atletico-PR",
@@ -48,8 +85,25 @@ def poisson_pmf(k, lam):
     return math.exp(-lam) * lam ** k / math.factorial(k)
 
 
-def scout_val(row, col):
-    v = row.get(col)
+def scout_val(row, scout):
+    """Valor do scout (ex: 'G', 'DS') naquela rodada.
+
+    TERCEIRA falha silenciosa deste arquivo (agosto/2026): a versao anterior
+    recebia o nome da coluna e fazia row.get(col) com col="G". A coluna do CSV
+    chama scout_G, nao G, entao o get devolvia None, o codigo convertia em 0.0
+    e seguia. Todo goalShare e todo playmaking do site foram zero desde sempre
+    por causa disso -- sem erro, sem aviso, so um numero errado.
+
+    Agora recebe a SIGLA do scout, monta o nome da coluna e levanta erro se
+    ela nao existir. Coluna faltando e problema de coleta e tem que aparecer.
+    """
+    col = f"scout_{scout}"
+    if col not in row:
+        raise KeyError(
+            f"Coluna {col!r} nao existe no historico do Cartola. "
+            f"Colunas de scout disponiveis: "
+            f"{sorted(c for c in row if c.startswith('scout_'))}")
+    v = row[col]
     if v in (None, ""):
         return 0.0
     try:
@@ -59,28 +113,13 @@ def scout_val(row, col):
 
 
 def per_round_scout(games, col):
-    """Converte o scout `col` (ex: 'G', 'A') pra valor POR RODADA.
+    """Scout `col` (ex: 'G', 'A') por rodada: {rodada_id: valor}.
 
-    IMPORTANTE: nas rodadas <=18 (dataset caRtola) o scout e' CUMULATIVO
-    (acumulado da temporada ate aquela rodada); nas rodadas >=19 (coletado do
-    endpoint /atletas/pontuados) ja e' POR RODADA. Somar direto o cumulativo
-    infla tudo (foi o bug que corrompia o playmaking). Aqui: no bloco <=18
-    tiramos a diferenca entre rodadas consecutivas; de 19 em diante usamos o
-    valor como esta. Retorna dict {rodada_id: valor_por_rodada}.
+    O scout ja vem por rodada no CSV, em toda a temporada -- ver a correcao
+    (b) no cabecalho deste arquivo. Esta funcao so indexa por rodada.
     """
-    games = sorted(games, key=lambda g: int(g["rodada"]))
-    out = {}
-    prev_cum = 0.0
-    for g in games:
-        rod = int(g["rodada"])
-        v = scout_val(g, col)
-        if rod <= 18:
-            pr = v - prev_cum
-            prev_cum = v
-        else:
-            pr = v  # ja e' por-rodada
-        out[rod] = max(pr, 0.0)  # clip: diffs negativos (correcao de scout) viram 0
-    return out
+    return {int(g["rodada"]): scout_val(g, col)
+            for g in sorted(games, key=lambda g: int(g["rodada"]))}
 
 
 def build_team_fixtures_by_round(matches_path):
@@ -155,11 +194,27 @@ def main():
     fixture_by_team_round = build_team_fixtures_by_round(repo / "data" / "matches_2012_2026.csv")
 
     hist_rows = list(csv.DictReader(open(repo / "data" / "cartola_historico_2026_completo.csv", encoding="utf-8")))
+    scouts = scouts_do_historico(hist_rows)
     by_player = defaultdict(list)
     for r in hist_rows:
         by_player[r["atleta_id"]].append(r)
     for pid in by_player:
         by_player[pid].sort(key=lambda r: int(r["rodada"]))
+
+    # Pontuacao esperada por scout, com encolhimento medido por scout/posicao.
+    # Sem ajuste de confronto: o index.html aplica o dele por cima.
+    tabela, diag = recuperar_tabela(hist_rows)
+    print(f"Tabela de pontuacao recuperada: R2={diag['r2']:.4f} "
+          f"({diag['n']} observacoes)")
+    por_jogador = agrupar_por_jogador(hist_rows, scouts)
+    media_pos = medias_posicionais(por_jogador, scouts)
+    K = estimar_k_encolhimento(por_jogador, scouts)
+    taxas = taxas_encolhidas(por_jogador, scouts, K, media_pos)
+    epts_por_jogador = {}
+    for pid, info in taxas.items():
+        epts_por_jogador[pid] = round(sum(
+            peso * info["taxas"][s] for s, peso in tabela.items()
+            if scout_vale_para(s, info["pos"])), 3)
 
     # Gols POR RODADA de cada jogador (normalizados) e total por time -- pro goalShare.
     player_goals_pr = {}   # pid -> total de gols por-rodada na temporada
@@ -179,7 +234,9 @@ def main():
         if team is None or pos is None:
             continue
 
-        played = [g for g in games if g["entrou_em_campo"] == "True"]
+        # "Entrou em campo" deduzido do proprio scout: a coluna entrou_em_campo
+        # nao existe mais no CSV, e era ela que derrubava este script.
+        played = [g for g in games if jogou(g, scouts)]
 
         # 1) ult5 ajustado por forca do adversario (ultimas 5 rodadas jogadas)
         last5 = played[-5:]
@@ -218,10 +275,15 @@ def main():
         # em que o jogador de fato entrou em campo
         last5_all = games[-5:]
         if last5_all:
-            participou = sum(1 for g in last5_all if g["entrou_em_campo"] == "True")
+            participou = sum(1 for g in last5_all if jogou(g, scouts))
             risco_rotacao = round(1 - participou / len(last5_all), 3)
         else:
             risco_rotacao = None
+
+        # 5) desarme: taxa observada (pra mostrar) e quanto ela vale em ponto.
+        ds_jogo = round(sum(scout_val(g, "DS") for g in played) / len(played), 3) \
+            if played else None
+        epts_scouts = epts_por_jogador.get(pid)
 
         output_rows.append({
             "atleta_id": pid,
@@ -229,14 +291,20 @@ def main():
             "playmaking": playmaking if playmaking is not None else "",
             "risco_rotacao": risco_rotacao if risco_rotacao is not None else "",
             "goalShare": goal_share if goal_share is not None else "",
+            "ds_jogo": ds_jogo if ds_jogo is not None else "",
+            "epts_scouts": epts_scouts if epts_scouts is not None else "",
         })
 
     out_path = repo / "data" / "advanced_signals.csv"
+    campos = ["atleta_id", "ult5_sos", "playmaking", "risco_rotacao",
+              "goalShare", "ds_jogo", "epts_scouts"]
     with open(out_path, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["atleta_id", "ult5_sos", "playmaking", "risco_rotacao", "goalShare"])
+        w = csv.DictWriter(f, fieldnames=campos)
         w.writeheader()
         w.writerows(output_rows)
-    print(f"OK: {len(output_rows)} jogadores salvos em {out_path}")
+    com_ds = sum(1 for r in output_rows if r["ds_jogo"] != "")
+    print(f"OK: {len(output_rows)} jogadores salvos em {out_path} "
+          f"({com_ds} com desarme por jogo)")
 
 
 if __name__ == "__main__":

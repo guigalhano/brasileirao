@@ -33,11 +33,56 @@ Duas partes que se complementam:
    trocaram de comando em 2026 (Atlético-MG, Vasco, São Paulo, Flamengo, Cruzeiro, Santos,
    Botafogo, Corinthians, Chapecoense).
 
+## Pontuação do Cartola e o desarme
+
+A tabela oficial (cartola.globo.com → "Entenda Mais") está transcrita em
+`data/cartola_tabela_pontuacao.json`. Ela não é usada direto: `scripts/lib/pontuacao.py`
+**recupera** a tabela regredindo a pontuação real contra os scouts e cruza o resultado com
+o arquivo. Restrita às cinco posições de linha, a recuperação é exata — R²=1,0000, erro
+0,0000, os 19 scouts batendo na casa decimal. Se o Cartola reajustar algum scout (já
+aconteceu com desarme e defesa), os dados divergem do arquivo e `verificar_integridade.py`
+barra a publicação em vez de deixar o site somar peso velho.
+
+O **desarme** é o scout que mais decide a pontuação de defensor: 1,5 ponto, 1,31 por jogo
+de lateral e 1,04 de zagueiro — rende mais que o SG na média. E é o mais repetível de
+todos (autocorrelação de rodada para rodada 0,231, contra 0,090 do gol e 0,055 da
+assistência). Desarme é hábito, gol é evento.
+
+Mas ele **não entra como bônus somado** — isso foi testado e não passa (t=0,07 contra a
+média, para ZAG/LAT), e um XI montado só por desarme faz 48,4 pontos por rodada contra
+57,4 da média simples. O que funciona é usá-lo por dentro de uma pontuação esperada
+montada scout a scout, com encolhimento de Bayes empírico **medido por scout**: o ganho
+vem de encolher o resto. Gol de zagueiro não tem variância entre jogadores que sobreviva
+à estimativa, então vai todo para a média da posição, e o desarme decide o ranking.
+Backtest walk-forward (rodadas 8-21, encolhimento reestimado a cada rodada só com o
+passado, `scripts/backtest_escalacao.py` reproduz):
+
+| ZAG+LAT, correlação com a rodada seguinte | |
+|---|---|
+| média histórica | 0,120 |
+| E[pts], encolhimento uniforme K=5 | 0,151 |
+| E[pts], encolhimento por scout | **0,177** (t=+2,51 vs uniforme) |
+
+Em MEI e ATA a diferença fica em \|t\|<0,4 — ruído nos dois sentidos. Por isso o sinal
+entra só em ZAG/LAT no site, que é onde foi validado.
+
+Sobre confronto: a correlação crua entre desarmes do time e gols sofridos é **negativa**
+(-0,37), mas isso é confusão com qualidade do time — time bom desarma mais e sofre menos.
+Comparando o mesmo jogador contra adversários diferentes, o sinal inverte: +0,31 desarme
+por gol/jogo de ataque adversário (t=+2,39) em ZAG/LAT, contra t=-0,05 em ATA.
+
 Achados relevantes ao longo do processo (todos com validação estatística, não só opinião):
 - Nenhuma estratégia de aposta simples nem o modelo batem o mercado de forma consistente
   (o mercado brasileiro é bem calibrado).
 - Encurtar a meia-vida do Dixon-Coles piora a calibração geral, mesmo resolvendo casos
   pontuais (ex: Chapecoense) — por isso o ajuste de técnico é seletivo, não global.
+- Três falhas silenciosas encontradas em agosto/2026 no `compute_advanced_signals.py`, todas
+  corrigidas: (a) o script vinha morrendo com `KeyError` desde 29/07 e o site servia um arquivo
+  congelado com cara de atual; (b) a leitura de scout procurava a coluna `G` quando o CSV tem
+  `scout_G`, devolvia vazio e convertia em 0,0 — `goalShare` e `playmaking` estavam zerados no
+  site desde sempre; (c) o código diferenciava scouts consecutivos achando que vinham
+  cumulativos, o que é falso (em 24% dos pares o scout diminui, e a regressão dá R²=1,0 exato
+  com os valores crus) — a "correção" é que corrompia o dado.
 - Valor de mercado (Transfermarkt) não melhora a previsão de partidas nesse ponto da temporada
   (18 rodadas de dados reais já dominam qualquer prior financeiro), e tem uma relação estatisticamente
   significativa mas **negativa** com a pontuação no Cartola (controlando pelo preço) — reflete
@@ -81,21 +126,36 @@ No Windows, `scripts/coletar_tudo.bat` roda o pipeline completo do Transfermarkt
 
 ## Automação (atualização diária)
 
-O arquivo `.github/workflows/atualizar_dados.yml` roda automaticamente todo dia (e também
-pode ser disparado manualmente na aba Actions do GitHub). Ele:
-1. Baixa o snapshot mais recente do mercado do Cartola FC (preço, média, status de cada jogador).
-2. Reprocessa a base enriquecida (histórico + forma recente + consistência).
-3. Faz commit automático dos arquivos atualizados em `data/`.
+O arquivo `.github/workflows/atualizar_dados.yml` roda sozinho **3x por dia** (06h, 12h e 18h
+BRT) e também pode ser disparado na aba Actions. O ciclo é fechado — nada precisa ser rodado
+localmente para o site continuar em dia:
 
-Isso funciona porque o GitHub Actions roda numa máquina com acesso normal à internet — diferente
-do ambiente do Claude, que tem alguns domínios bloqueados por política de rede.
+1. **Coleta**: resultados novos (football-data.co.uk), confrontos da rodada atual (API do
+   Cartola), rodadas novas do histórico de scouts, e o mercado (preço/média/status).
+2. **Modelo**: reajusta o Dixon-Coles e recalibra ataque/defesa — **só se entrou resultado
+   novo** (o otimizador não é determinístico no 4º decimal, então refitar à toa geraria um diff
+   de 140 linhas a cada execução).
+3. **Sinais por jogador**: desarme, pontuação esperada por scout, forma ajustada.
+4. **Montagem**: regenera o `index.html` (jogadores, probabilidades, análises).
+5. **Portão**: `verificar_integridade.py` — se sair != 0, **não publica**.
+6. Commit + push, e o GitHub Pages publica sozinho.
 
-**Ressalva importante**: o workflow atualiza os dados do Cartola FC (que mudam de verdade a cada
-poucos dias, dentro da mesma temporada). Já a raspagem completa do Transfermarkt (valor de mercado
-por jogador) é mais pesada (~1000+ requisições) e não está automatizada por padrão, pra não gerar
-carga desnecessária num site de terceiros a cada 3 dias sem necessidade real — esses dados mudam
-bem mais devagar (semanas/meses). Rode `scripts/coletar_valores_jogadores.py` manualmente quando
-quiser atualizar essa parte.
+A ordem importa em dois pontos: `compute_advanced_signals.py` **antes** do `build_index.py`
+(senão o site publica os sinais da execução anterior), e `update_next_matches_dynamic.py`
+**antes** do `generate_advanced_analytics.py` (senão a aba de análises some).
+
+**Nenhuma etapa de coleta usa `continue-on-error`** — e isso é deliberado. Era exatamente o que
+mantinha o workflow verde enquanto o `atualizar_historico_cartola.py` quebrava todo dia com
+`KeyError` e o histórico de scouts congelava na rodada 21. Falha de coleta agora derruba o job;
+o site fica com o dado de ontem, que é o comportamento certo.
+
+### O que ainda não é automático
+
+| Fonte | Por quê | Se envelhecer |
+|---|---|---|
+| xG do WhoScored (`data/whoscored_xg_2026.csv`) | o site bloqueia scraping automatizado | a âncora de xG perde atualidade aos poucos; o pipeline **não** quebra — o `recalibrar_com_whoscored.py` normaliza por jogo justamente pra tolerar isso |
+| Valor de mercado (Transfermarkt) | ~1000+ requisições, e o dado muda em escala de meses | nada quebra; rode `scripts/coletar_valores_jogadores.py` quando quiser |
+| Odds de fechamento | vêm junto com os resultados; jogos futuros não têm | só a coluna de edge fica vazia (já é um aviso, não erro) |
 
 ## Histórico do projeto
 

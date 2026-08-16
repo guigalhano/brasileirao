@@ -19,17 +19,57 @@ que passa despercebido justamente por parecer atualizado.
 Regra: qualquer script que precise saber "quais sao os jogos" chama
 load_fixtures(). Nenhuma lista de confronto hardcoded em script nenhum.
 """
+import csv
 import json
+from collections import defaultdict
 from pathlib import Path
 
-from .teams import canonical
+from .teams import canonical, canonical_or_none
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 FIXTURES_PATH = REPO_ROOT / "data" / "proximos_jogos.json"
+MATCHES_PATH = REPO_ROOT / "data" / "matches_2012_2026.csv"
 
 
 class FixturesError(RuntimeError):
     pass
+
+
+def historico_por_time_rodada(path=None, season="2026"):
+    """{(time_canonico, rodada): {adv, casa, gols_pro, gols_contra}} da temporada.
+
+    RESSALVA HONESTA: matches_2012_2026.csv nao tem coluna de rodada, so data.
+    A rodada aqui e o n-esimo jogo daquele time em ordem de data -- o mesmo
+    metodo que compute_advanced_signals.py ja usa. Com jogo adiado o n-esimo
+    jogo do time deixa de ser a n-esima rodada.
+
+    Conferido contra os proprios scouts do Cartola (gols sofridos pelo goleiro
+    na rodada X versus placar do mapa): 295 de 359 batem, 82%. Serve para
+    medir tendencia agregada -- e o uso que se faz disso em escalar_time.py,
+    onde entra so um coeficiente de resposta media do desarme ao confronto.
+    NAO serve para afirmar coisa nenhuma sobre um jogo especifico.
+    """
+    path = Path(path) if path else MATCHES_PATH
+    if not path.exists():
+        raise FixturesError(f"Arquivo de resultados nao encontrado: {path}")
+
+    por_time = defaultdict(list)
+    with path.open(encoding="utf-8") as f:
+        for m in csv.DictReader(f):
+            if m["season"] != season or not m["home_goals"]:
+                continue
+            casa, fora = canonical_or_none(m["home_team"]), canonical_or_none(m["away_team"])
+            if casa is None or fora is None:
+                continue
+            por_time[casa].append((m["date"], fora, True, m["home_goals"], m["away_goals"]))
+            por_time[fora].append((m["date"], casa, False, m["away_goals"], m["home_goals"]))
+
+    mapa = {}
+    for time, jogos in por_time.items():
+        for rodada, (_, adv, em_casa, pro, contra) in enumerate(sorted(jogos), 1):
+            mapa[(time, rodada)] = {"adv": adv, "casa": em_casa,
+                                    "gols_pro": int(pro), "gols_contra": int(contra)}
+    return mapa
 
 
 def load_fixtures(path=None):

@@ -29,6 +29,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lib.fixtures import load_fixtures
 from lib.index_data import read_data
+from lib.pontuacao import (carregar_tabela_oficial, conferir_tabela,
+                           recuperar_tabela)
 from lib.teams import CANONICAL, check_ratings_cover_canonical
 
 # Quantas rodadas de atraso nos resultados ainda sao toleraveis antes de
@@ -123,6 +125,37 @@ def checar_frescor(repo, rodada, rel):
                   f"({atraso} de atraso, ultimo jogo {ultima})")
 
 
+def checar_pontuacao_cartola(repo, rel):
+    """A tabela que os dados mostram ainda e a tabela oficial do Cartola?
+
+    O Cartola ja reajustou scout no meio do caminho (desarme e defesa
+    subiram em temporadas passadas). Se isso acontecer de novo, tudo que
+    depende de pontuacao esperada passa a somar peso velho sem reclamar --
+    a escalacao continua saindo, so que errada. Aqui isso vira aviso
+    explicito com o scout e os dois valores lado a lado.
+    """
+    caminho = repo / "data" / "cartola_historico_2026_completo.csv"
+    if not caminho.exists():
+        rel.aviso(f"{caminho.name} nao existe -- pontuacao do Cartola nao conferida")
+        return
+
+    hist = list(csv.DictReader(caminho.open(encoding="utf-8")))
+    recuperada, diag = recuperar_tabela(hist)
+    oficial, doc = carregar_tabela_oficial()
+
+    # Com o filtro de posicao certo a recuperacao e exata. R2 caindo aqui
+    # significa scout novo na tabela ou coleta corrompida -- nao passa batido.
+    if diag["r2"] < 0.999:
+        rel.erro(f"A pontuacao nao se explica pelos scouts (R2={diag['r2']:.4f}, "
+                 f"erro medio {diag['erro_medio']:.3f}) -- scout novo na tabela "
+                 f"ou historico corrompido")
+
+    for problema in conferir_tabela(recuperada, oficial):
+        rel.erro(f"Pontuacao do Cartola mudou: {problema}. Confira "
+                 f"{doc['_fonte']} e atualize data/cartola_tabela_pontuacao.json "
+                 f"(ultima conferencia: {doc['_conferido_em']})")
+
+
 def checar_ratings(repo, rel):
     caminho = repo / "data" / "team_ratings_calibrado.json"
     if not caminho.exists():
@@ -142,6 +175,7 @@ def main():
     rel = Relatorio()
     try:
         checar_ratings(repo, rel)
+        checar_pontuacao_cartola(repo, rel)
         rodada = checar_confrontos(repo, rel)
         checar_analytics(repo, rodada, rel)
         checar_frescor(repo, rodada, rel)

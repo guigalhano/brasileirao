@@ -1,14 +1,23 @@
 name: Atualizar dados do Cartola FC
 
-# Roda automaticamente todo dia, e tambem pode ser disparado manualmente
-# na aba "Actions" do GitHub (botao "Run workflow").
+# Tres vezes por dia. O mercado do Cartola muda preco/status ao longo do dia
+# e fecha pouco antes da rodada; uma passada diaria as 06:00 UTC pegava o
+# estado da madrugada e servia isso por 24h.
 on:
   schedule:
-    - cron: "0 6 * * *"   # 06:00 UTC, todo dia
+    - cron: "0 9 * * *"    # 06:00 BRT -- resultados da noite anterior
+    - cron: "0 15 * * *"   # 12:00 BRT -- escalacoes e status do dia
+    - cron: "0 21 * * *"   # 18:00 BRT -- ultima foto antes dos jogos da noite
   workflow_dispatch: {}
 
 permissions:
   contents: write
+
+# Duas execucoes ao mesmo tempo dariam push concorrente no main. A segunda
+# espera; nao cancela, porque uma coleta pela metade e pior que uma fila.
+concurrency:
+  group: atualizar-dados
+  cancel-in-progress: false
 
 jobs:
   atualizar:
@@ -23,28 +32,88 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependencias
-        run: pip install requests pandas
+        run: pip install requests pandas numpy scipy
 
-      - name: Coletar rodadas novas do historico de scouts (se houver)
+      # ---------- 1. COLETA (tudo que vem de fora) ----------
+      # NENHUMA etapa de coleta usa continue-on-error. Era o que mantinha o
+      # workflow verde enquanto o historico de scouts congelava na rodada 21:
+      # o atualizar_historico_cartola.py quebrava todo dia com KeyError e o
+      # resultado do job continuava "success". Falha de coleta agora derruba
+      # o job -- o site fica com o dado de ontem, que e o certo a fazer.
+
+      - name: Resultados novos das partidas (football-data.co.uk)
+        run: python scripts/ingerir_resultados.py
+
+      # O reajuste do modelo so faz sentido se entrou resultado novo. O
+      # otimizador do Dixon-Coles nao e deterministico ao nivel do 4o decimal:
+      # refitar com os MESMOS jogos mexe o ataque de cada time em ~0.0008 e
+      # gera um diff de 140 linhas do nada. Rodando 3x por dia isso seria
+      # ~1000 commits de ruido por ano e anularia a guarda de "nada mudou".
+      - name: O CSV de resultados mudou?
+        id: resultados
+        run: |
+          if git diff --quiet -- data/matches_2012_2026.csv; then
+            echo "mudou=false" >> "$GITHUB_OUTPUT"
+            echo "Nenhum resultado novo -- modelo mantido como esta."
+          else
+            echo "mudou=true" >> "$GITHUB_OUTPUT"
+            echo "Resultados novos ingeridos -- o modelo sera reajustado."
+          fi
+
+      - name: Confrontos da rodada atual (API do Cartola)
+        run: python scripts/atualizar_confrontos_cartola.py
+
+      - name: Rodadas novas do historico de scouts (API do Cartola)
         run: python scripts/atualizar_historico_cartola.py
-        continue-on-error: true  # nao bloqueia a atualizacao do mercado se o formato da API mudar
 
-      - name: Buscar mercado atual do Cartola FC e enriquecer com o historico
+      - name: Mercado atual do Cartola (preco, media, status)
         run: python scripts/atualizar_mercado_cartola.py
 
-      - name: Regenerar index.html com os dados atualizados
+      # ---------- 2. MODELO (reajusta com os resultados novos) ----------
+      # Sem estas duas etapas a ingestao de resultados nao servia pra nada:
+      # os ratings continuavam os de semanas atras. A ordem importa --
+      # fit_model_v2 produz team_ratings_final_v2.json, e recalibrar produz o
+      # team_ratings_calibrado.json, que e o arquivo que o resto do pipeline
+      # prefere quando existe.
+      - name: Reajustar o Dixon-Coles com os resultados atualizados
+        if: steps.resultados.outputs.mudou == 'true'
+        run: python scripts/fit_model_v2.py --repo-dir .
+
+      # O xG do WhoScored (data/whoscored_xg_2026.csv) continua sendo coleta
+      # manual -- o site bloqueia scraping automatizado. Nao trava o ciclo: o
+      # recalibrar_com_whoscored.py normaliza por JOGO justamente para tolerar
+      # que o xG cubra menos partidas que o CSV de resultados (ver o cabecalho
+      # dele). O efeito de deixar esse arquivo envelhecer e a ancora de xG
+      # perder atualidade aos poucos, nao o pipeline quebrar.
+      - name: Recalibrar ataque/defesa com o xG do WhoScored
+        if: steps.resultados.outputs.mudou == 'true'
+        run: python scripts/recalibrar_com_whoscored.py --repo-dir .
+
+      # ---------- 3. SINAIS POR JOGADOR ----------
+      # PRECISA vir antes do build_index.py: e este script que grava o
+      # advanced_signals.csv (desarme, pontuacao esperada por scout, forma
+      # ajustada) que o build_index le pra montar o array PLAYERS. Rodando na
+      # ordem errada, o site publica os sinais da execucao ANTERIOR.
+      - name: Recalcular sinais por jogador (desarme, E[pts] por scout, forma)
+        run: python scripts/compute_advanced_signals.py --repo-dir .
+
+      # ---------- 4. MONTAGEM DO SITE ----------
+      - name: Regenerar o array de jogadores no index.html
         run: python scripts/build_index.py
 
       # As duas etapas abaixo sao um par e precisam rodar NA ORDEM.
       # A primeira grava model/xg; a segunda repoe analysis/analysis_grid.
       # Rodar so a primeira foi o que deixou a aba de analises fora do ar
       # entre as rodadas 21 e 23 (ver scripts/lib/index_data.py).
-      - name: Atualizar próximos confrontos (modelo)
+      - name: Atualizar proximos confrontos (modelo)
         run: python scripts/update_next_matches_dynamic.py --repo-dir .
 
       - name: Repor as analises dos confrontos
         run: python scripts/generate_advanced_analytics.py --repo-dir .
 
+      # ---------- 5. PORTAO ----------
+      # Confere confrontos, analises, frescor dos resultados e a tabela de
+      # pontuacao do Cartola contra a oficial. Sai != 0 => nao publica.
       - name: Conferir integridade antes de publicar
         run: python scripts/verificar_integridade.py --repo-dir .
 
@@ -56,6 +125,8 @@ jobs:
           if git diff --cached --quiet; then
             echo "Nada mudou desde a ultima atualizacao, nao commitando."
           else
-            git commit -m "Atualizacao automatica dos dados do Cartola FC ($(date -u +%Y-%m-%d))"
+            git commit -m "Atualizacao automatica dos dados do Cartola FC ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            # Outra execucao pode ter empurrado enquanto esta rodava.
+            git pull --rebase --autostash origin main
             git push
           fi

@@ -4,23 +4,33 @@ encerradas, incrementalmente (nao refaz o arquivo inteiro do zero).
 
 Criado para rodar no GitHub Actions (tem internet irrestrita) OU localmente.
 NAO funciona dentro do sandbox do Claude -- o dominio api.cartolafc.globo.com
-esta bloqueado la por politica de rede do proprio ambiente.
+esta bloqueado la por politica de rede do proprio ambiente. Confirmado que
+funciona no Actions: o /atletas/mercado responde normal de la.
 
-COMO FUNCIONA
--------------
-1. Le o CSV existente e acha a maior rodada ja presente (coluna
-   "atletas.rodada_id").
-2. Tenta buscar GET /atletas/pontuados/{rodada} para as proximas rodadas
-   (max+1, max+2, ...), parando assim que uma rodada falhar ou vier vazia
-   (sinal de que ainda nao foi encerrada -- as rodadas sao sequenciais, entao
-   nao faz sentido tentar pular uma que falhou e testar a seguinte).
-3. Faz append das linhas novas no MESMO formato de coluna do arquivo (o
-   schema "atletas.X" + colunas de scout por letra vem do dataset publico
-   henriquepgomide/caRtola, que e a fonte original deste CSV).
+O SCHEMA MUDOU E ESTE SCRIPT NAO TINHA ACOMPANHADO (agosto/2026)
+----------------------------------------------------------------
+O CSV nasceu do dataset publico henriquepgomide/caRtola, com colunas
+"atletas.apelido", "atletas.rodada_id", scouts em letra solta ("A", "DS").
+Em algum ponto ele foi reescrito para um schema limpo -- atleta_id, nome,
+clube, posicao, rodada, pontos, scout_A, scout_DS ... -- e este script
+continuou lendo e escrevendo o schema velho.
+
+Resultado: ele quebrava na PRIMEIRA linha util, com
+KeyError: 'atletas.rodada_id', antes mesmo de tocar a rede. E como o
+workflow diario o chamava com continue-on-error, o GitHub Actions ficava
+VERDE todo dia enquanto o historico de scouts congelava na rodada 21.
+Tudo que depende de scout -- desarme, media por jogador, pontuacao esperada,
+os sinais de defesa -- parou junto, sem nenhum sinal de que tinha parado.
+
+Agora o script le e escreve o schema real do arquivo, e confere isso na
+entrada: se as colunas nao forem as esperadas, ele para com erro em vez de
+adivinhar.
 
 Uso:
     python scripts/atualizar_historico_cartola.py
+    python scripts/atualizar_historico_cartola.py --dry-run
 """
+import argparse
 import csv
 import sys
 import time
@@ -46,9 +56,12 @@ CLUBE_ID_TO_ABBR = {
     283: "CRU", 284: "GRE", 285: "INT", 287: "VIT", 293: "CAP", 294: "CFC",
     315: "CHA", 364: "REM",
 }
+POSICAO_ID_TO_POS = {1: "GOL", 2: "LAT", 3: "ZAG", 4: "MEI", 5: "ATA", 6: "TEC"}
 
-SCOUT_COLS = ["A", "CA", "CV", "DE", "DS", "FC", "FD", "FF", "FS", "FT",
-              "G", "GC", "GS", "I", "PC", "PS", "SG", "V", "DP", "PP"]
+SCOUTS = ["A", "CA", "CV", "DE", "DP", "DS", "FC", "FD", "FF", "FS", "FT",
+          "G", "GC", "GS", "I", "PC", "PP", "PS", "SG", "V"]
+COLUNAS = ["atleta_id", "nome", "clube", "posicao", "rodada", "pontos"] + \
+          [f"scout_{s}" for s in SCOUTS]
 
 
 def fetch_json(url):
@@ -62,72 +75,98 @@ def fetch_json(url):
 
 
 def linha_do_atleta(atleta_id, info, rodada):
-    row = {
-        "atletas.apelido": info.get("apelido", ""),
-        "atletas.apelido_abreviado": info.get("apelido_abreviado", info.get("apelido", "")),
-        "atletas.atleta_id": atleta_id,
-        "atletas.clube.id.full.name": CLUBE_ID_TO_ABBR.get(info.get("clube_id"), ""),
-        "atletas.clube_id": info.get("clube_id", ""),
-        "atletas.entrou_em_campo": info.get("entrou_em_campo", ""),
-        "atletas.foto": info.get("foto", ""),
-        "atletas.jogos_num": info.get("jogos_num", ""),
-        "atletas.media_num": info.get("media_num", ""),
-        "atletas.nome": info.get("nome", info.get("apelido", "")),
-        "atletas.pontos_num": info.get("pontuacao", info.get("pontos_num", "")),
-        "atletas.posicao_id": info.get("posicao_id", ""),
-        "atletas.preco_num": info.get("preco_num", ""),
-        "atletas.rodada_id": rodada,
-        "atletas.slug": info.get("slug", ""),
-        "atletas.status_id": info.get("status_id", ""),
-        "atletas.variacao_num": info.get("variacao_num", ""),
-        "atletas.craque": info.get("craque", ""),
-    }
+    """Converte um atleta do /atletas/pontuados/{rodada} para o schema local."""
     scout = info.get("scout") or {}
-    for col in SCOUT_COLS:
-        row[col] = scout.get(col, "")
-    return row
+    linha = {
+        "atleta_id": atleta_id,
+        "nome": info.get("apelido", ""),
+        "clube": CLUBE_ID_TO_ABBR.get(info.get("clube_id"), "?"),
+        "posicao": POSICAO_ID_TO_POS.get(info.get("posicao_id"), "?"),
+        "rodada": rodada,
+        # A API chama de "pontuacao" aqui e de "pontos_num" no /mercado.
+        "pontos": info.get("pontuacao", info.get("pontos_num", 0)),
+    }
+    for s in SCOUTS:
+        # Scout ausente = nao aconteceu. O CSV guarda vazio, nao zero, pro
+        # arquivo nao triplicar de tamanho -- todo leitor ja trata "" como 0.
+        v = scout.get(s)
+        linha[f"scout_{s}"] = "" if v in (None, 0) else v
+    return linha
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dry-run", action="store_true",
+                    help="busca e mostra, sem gravar")
+    args = ap.parse_args()
+
     if not HISTORICO_CSV.exists():
         print(f"ERRO: {HISTORICO_CSV} nao encontrado.")
-        sys.exit(1)
+        return 1
 
-    with open(HISTORICO_CSV, encoding="utf-8", newline="") as f:
+    with HISTORICO_CSV.open(encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
-        fieldnames = reader.fieldnames
-        rows = list(reader)
+        colunas = reader.fieldnames
+        linhas = list(reader)
 
-    max_rodada = max(int(r["atletas.rodada_id"]) for r in rows if r["atletas.rodada_id"])
-    print(f"Rodada mais recente no historico: {max_rodada}")
+    # Trava de schema: e exatamente o que faltava antes. Se o arquivo mudar
+    # de formato de novo, para aqui com a diferenca na tela, em vez de
+    # quebrar com um KeyError obscuro (ou pior, gravar lixo).
+    if colunas != COLUNAS:
+        print("ERRO: o schema de "
+              f"{HISTORICO_CSV.name} nao e o esperado.")
+        print(f"  faltando: {sorted(set(COLUNAS) - set(colunas or []))}")
+        print(f"  sobrando: {sorted(set(colunas or []) - set(COLUNAS))}")
+        return 1
 
-    novas_rows = []
+    rodadas = [int(r["rodada"]) for r in linhas if r["rodada"]]
+    if not rodadas:
+        print(f"ERRO: {HISTORICO_CSV.name} sem nenhuma rodada.")
+        return 1
+    max_rodada = max(rodadas)
+    print(f"Historico local: {len(linhas)} linhas, rodada mais recente {max_rodada}")
+
+    novas = []
     for rodada in range(max_rodada + 1, max_rodada + 1 + MAX_RODADAS_A_FRENTE):
         url = f"{BASE_URL}/atletas/pontuados/{rodada}"
         print(f"Tentando rodada {rodada}: {url}")
         data, err = fetch_json(url)
         time.sleep(PAUSE_SECONDS)
         if err or not data or not data.get("atletas"):
-            print(f"  rodada {rodada} indisponivel ({err or 'sem atletas, ainda nao encerrada'}) -- parando aqui.")
+            print(f"  rodada {rodada} indisponivel "
+                  f"({err or 'sem atletas, ainda nao encerrada'}) -- parando aqui.")
             break
         atletas = data["atletas"]
-        for atleta_id_str, info in atletas.items():
-            novas_rows.append(linha_do_atleta(int(atleta_id_str), info, rodada))
+        for atleta_id, info in atletas.items():
+            novas.append(linha_do_atleta(int(atleta_id), info, rodada))
         print(f"  rodada {rodada}: {len(atletas)} jogadores coletados.")
 
-    if not novas_rows:
-        print("\nNenhuma rodada nova encontrada. Nada para adicionar.")
-        return
+    if not novas:
+        print("\nNenhuma rodada nova encerrada. Nada para adicionar.")
+        return 0
 
-    with open(HISTORICO_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
-        writer.writerows(novas_rows)
+    desconhecidos = {(l["clube"], l["posicao"]) for l in novas
+                     if l["clube"] == "?" or l["posicao"] == "?"}
+    if desconhecidos:
+        print(f"[aviso] {len(desconhecidos)} combinacao(oes) de clube/posicao "
+              f"nao mapeada(s) -- clube_id ou posicao_id novos na API?")
 
-    rodadas_novas = sorted(set(r["atletas.rodada_id"] for r in novas_rows))
-    print(f"\nOK: {len(novas_rows)} linhas novas adicionadas (rodadas {rodadas_novas}).")
+    rodadas_novas = sorted({l["rodada"] for l in novas})
+    if args.dry_run:
+        print(f"\n[DRY-RUN] {len(novas)} linhas novas (rodadas {rodadas_novas}). "
+              f"Nada gravado.")
+        return 0
+
+    with HISTORICO_CSV.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=COLUNAS)
+        w.writeheader()
+        w.writerows(linhas)
+        w.writerows(novas)
+
+    print(f"\n[OK] {len(novas)} linhas novas adicionadas "
+          f"(rodadas {rodadas_novas}). Total: {len(linhas) + len(novas)}.")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

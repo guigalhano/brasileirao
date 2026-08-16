@@ -4,27 +4,21 @@
   "data_fim": "17/08/2026",
   "jogos": [
     {
-      "home": "Atletico-MG",
-      "away": "Gremio",
-      "day": "Sábado",
-      "time": "16:30"
-    },
-    {
       "home": "Fluminense",
       "away": "Palmeiras",
-      "day": "Sábado",
+      "day": "Sabado",
       "time": "16:30"
     },
     {
       "home": "Atletico-PR",
       "away": "Bragantino",
-      "day": "Sábado",
+      "day": "Sabado",
       "time": "18:30"
     },
     {
       "home": "Sao Paulo",
       "away": "Coritiba",
-      "day": "Sábado",
+      "day": "Sabado",
       "time": "21:00"
     },
     {
@@ -36,6 +30,12 @@
     {
       "home": "Vasco",
       "away": "Santos",
+      "day": "Domingo",
+      "time": "16:00"
+    },
+    {
+      "home": "Atletico-MG",
+      "away": "Gremio",
       "day": "Domingo",
       "time": "16:00"
     },

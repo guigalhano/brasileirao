@@ -22,6 +22,7 @@ Uso:
 import argparse
 import csv
 import json
+import re
 import sys
 from datetime import date, datetime
 from pathlib import Path
@@ -156,6 +157,64 @@ def checar_pontuacao_cartola(repo, rel):
                  f"(ultima conferencia: {doc['_conferido_em']})")
 
 
+def checar_blocos_do_index(repo, rodada, rel):
+    """Os blocos embutidos no index.html batem com os dados que o pipeline mantem?
+
+    Ate agosto/2026 tres blocos do index.html nao tinham gerador e ninguem
+    percebia que envelheciam. O pior era o var RATINGS: a aba PREDITOR rodava
+    um blob congelado enquanto a aba "Proximos Jogos" lia o arquivo atualizado,
+    entao as duas respondiam coisas diferentes sobre o mesmo jogo -- e a errada
+    era a que abre primeiro. Agora scripts/sincronizar_index.py gera os tres, e
+    esta funcao confere que a geracao de fato aconteceu.
+    """
+    html = (repo / "index.html").read_text(encoding="utf-8")
+
+    m = re.search(r"var RATINGS = (\{.*?\});", html, re.DOTALL)
+    if not m:
+        rel.erro("index.html sem o bloco 'var RATINGS' -- a aba Preditor nao funciona")
+    else:
+        caminho = repo / "data" / "team_ratings_calibrado.json"
+        if not caminho.exists():
+            caminho = repo / "data" / "team_ratings_final_v2.json"
+        doc = json.loads(caminho.read_text(encoding="utf-8"))
+        try:
+            no_html = json.loads(m.group(1))
+        except json.JSONDecodeError as e:
+            rel.erro(f"var RATINGS do index.html nao e JSON valido: {e}")
+            no_html = None
+        if no_html is not None:
+            divergentes = [t for t, v in doc["teams"].items()
+                           if t not in no_html.get("teams", {})
+                           or abs(no_html["teams"][t]["attack"] - v["attack"]) > 1e-4
+                           or abs(no_html["teams"][t]["defense"] - v["defense"]) > 1e-4]
+            if divergentes:
+                rel.erro(f"var RATINGS do index.html esta defasado em relacao a "
+                         f"{caminho.name} ({len(divergentes)} time(s): "
+                         f"{', '.join(sorted(divergentes)[:4])}...) -- a aba Preditor "
+                         f"vai prever com modelo velho. Rode "
+                         f"scripts/sincronizar_index.py")
+
+    if not re.search(rf"<div class=\"bh-sub\">[^<]*?&middot; RODADA {rodada}\b", html):
+        atual = re.search(r"<div class=\"bh-sub\">[^<]*?&middot; RODADA (\d+)", html)
+        rel.erro(f"o cabecalho do site diz 'RODADA {atual.group(1) if atual else '?'}' "
+                 f"mas a rodada e {rodada} -- rode scripts/sincronizar_index.py")
+
+    # A classificacao do cabecalho e derivavel dos resultados, entao da pra
+    # conferir o valor, nao so a presenca -- foi um numero errado ("44 pts",
+    # de 27/07) que ficou meses no ar sem ninguem notar.
+    m = re.search(r"var SNAPSHOT = \[(.*?)\n  \];", html, re.DOTALL)
+    if not m:
+        rel.erro("index.html sem o bloco 'var SNAPSHOT' (classificacao do cabecalho)")
+    else:
+        from sincronizar_index import classificacao
+        esperado = [(t, d["pts"]) for t, d in classificacao(repo)[:3]]
+        no_html = [(nome, int(pts)) for nome, pts in
+                   re.findall(r'team:"([^"]+)", pts:(\d+)', m.group(1))]
+        if no_html != esperado:
+            rel.erro(f"o top 3 do cabecalho esta {no_html}, mas os resultados dizem "
+                     f"{esperado} -- rode scripts/sincronizar_index.py")
+
+
 def checar_ratings(repo, rel):
     caminho = repo / "data" / "team_ratings_calibrado.json"
     if not caminho.exists():
@@ -178,6 +237,7 @@ def main():
         checar_pontuacao_cartola(repo, rel)
         rodada = checar_confrontos(repo, rel)
         checar_analytics(repo, rodada, rel)
+        checar_blocos_do_index(repo, rodada, rel)
         checar_frescor(repo, rodada, rel)
     except Exception as e:
         print(f"[FALHOU] {type(e).__name__}: {e}")

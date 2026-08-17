@@ -31,30 +31,26 @@ Para cada rodada ja encerrada no intervalo pedido:
 
 COMO USAR
 ---------
-1. Precisa de Python 3.8+ e das bibliotecas requests e pandas
-   (pip install requests pandas).
-2. Rode (rodadas 1 a 18, por exemplo):
-       python comparar_historico_time.py --time-id 199236 --desde-rodada 1 --ate-rodada 18
-3. Suba aqui no chat o CSV gerado (e o que ele imprimir) pra eu analisar junto
-   com voce (ex: em que tipo de rodada voce mais perde pro mercado).
+1. Precisa de Python 3.8+ e da biblioteca requests (pip install requests).
+2. Rode (sem --ate-rodada ele vai ate a ultima rodada ja pontuada no historico):
+       python comparar_historico_time.py --time-id 199236 --saida data/meu_time_historico.csv
+3. Depois rode scripts/build_meu_time_tab.py pra embutir no index.html.
+
+Isto roda no GitHub Actions junto com o resto do pipeline -- o endpoint
+/time/id/{id}/{rodada} e publico e nao pede autenticacao.
 """
 
 import argparse
 import csv
 import sys
 import time
+from collections import defaultdict
 from pathlib import Path
 
 try:
     import requests
 except ImportError:
     print("Falta instalar a biblioteca 'requests'. Rode: pip install requests")
-    sys.exit(1)
-
-try:
-    import pandas as pd
-except ImportError:
-    print("Falta instalar a biblioteca 'pandas'. Rode: pip install pandas")
     sys.exit(1)
 
 BASE_URL = "https://api.cartolafc.globo.com"
@@ -65,6 +61,9 @@ HEADERS = {
 }
 PAUSE_SECONDS = 1.0
 HISTORICO_CSV = Path(__file__).resolve().parent.parent / "data" / "cartola_historico_2026_completo.csv"
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.pontuacao import jogou, scouts_do_historico
 
 
 def fetch_json(url):
@@ -96,20 +95,41 @@ TAMANHO_TIME = 12  # 11 titulares + 1 capitao (pontua em dobro, ~equivalente a m
 def carregar_medias_por_rodada():
     """Para cada rodada, media de pontos SO dos jogadores que entraram em campo
     (nosso historico ja coletado, sempre disponivel, nao depende da API),
-    e o "time medio" estimado (essa media vezes TAMANHO_TIME)."""
+    e o "time medio" estimado (essa media vezes TAMANHO_TIME).
+
+    SCHEMA (corrigido em agosto/2026): este script lia "atletas.rodada_id",
+    "atletas.pontos_num" e "atletas.entrou_em_campo" -- o schema antigo do
+    dataset caRtola. O CSV foi reescrito para rodada/pontos/scout_X e o script
+    passou a morrer no sys.exit(1) do "colunas esperadas nao encontradas".
+    Foi por isso que a aba "Meu Time" parou na rodada 20: mesma causa raiz que
+    congelou o atualizar_historico_cartola.py.
+
+    A coluna entrou_em_campo tambem sumiu, entao "jogou" agora e deduzido do
+    proprio scout (lib.pontuacao.jogou), igual ao resto do pipeline.
+    """
     if not HISTORICO_CSV.exists():
         print(f"ERRO: {HISTORICO_CSV} nao encontrado. Rode a partir da raiz do repo.")
         sys.exit(1)
-    df = pd.read_csv(HISTORICO_CSV)
-    col_rodada = "atletas.rodada_id"
-    col_pontos = "atletas.pontos_num"
-    col_jogou = "atletas.entrou_em_campo"
-    if col_rodada not in df.columns or col_pontos not in df.columns or col_jogou not in df.columns:
-        print("ERRO: colunas esperadas nao encontradas no historico.")
+
+    linhas = list(csv.DictReader(HISTORICO_CSV.open(encoding="utf-8")))
+    if not linhas:
+        print(f"ERRO: {HISTORICO_CSV.name} vazio.")
         sys.exit(1)
-    titulares = df[df[col_jogou] == True]  # noqa: E712
-    agg = titulares.groupby(col_rodada)[col_pontos].agg(["mean", "median", "count"])
-    agg["time_medio"] = agg["mean"] * TAMANHO_TIME
+    faltando = {"rodada", "pontos"} - set(linhas[0])
+    if faltando:
+        print(f"ERRO: {HISTORICO_CSV.name} sem as colunas {sorted(faltando)}. "
+              f"Colunas encontradas: {sorted(linhas[0])[:8]}...")
+        sys.exit(1)
+
+    scouts = scouts_do_historico(linhas)
+    por_rodada = defaultdict(list)
+    for r in linhas:
+        if jogou(r, scouts):
+            por_rodada[int(r["rodada"])].append(float(r["pontos"] or 0))
+
+    agg = {rod: {"mean": sum(v) / len(v), "count": len(v),
+                 "time_medio": (sum(v) / len(v)) * TAMANHO_TIME}
+           for rod, v in por_rodada.items() if v}
     return agg
 
 
@@ -119,23 +139,28 @@ def main():
     parser.add_argument("--time-id", type=int, required=True,
                          help="ID numerico do seu time (da URL cartola.globo.com/#!/time/ID)")
     parser.add_argument("--desde-rodada", type=int, default=1, help="Primeira rodada a comparar")
-    parser.add_argument("--ate-rodada", type=int, default=18, help="Ultima rodada ja encerrada a comparar")
+    parser.add_argument("--ate-rodada", type=int, default=None,
+                        help="Ultima rodada a comparar (padrao: a ultima ja "
+                             "pontuada no historico)")
     parser.add_argument("--saida", type=str, default="historico_meu_time.csv", help="Caminho do CSV de saida")
     args = parser.parse_args()
 
     medias = carregar_medias_por_rodada()
+    # Sem --ate-rodada, vai ate onde o historico de scouts alcanca. Assim o
+    # pipeline nao precisa saber a rodada: ela sai do proprio dado.
+    ate = args.ate_rodada if args.ate_rodada else max(medias)
 
     linhas = []
-    print(f"Buscando seu time (id={args.time_id}) da rodada {args.desde_rodada} a {args.ate_rodada}...")
-    for rodada in range(args.desde_rodada, args.ate_rodada + 1):
-        print(f"Rodada {rodada}/{args.ate_rodada}...")
+    print(f"Buscando seu time (id={args.time_id}) da rodada {args.desde_rodada} a {ate}...")
+    for rodada in range(args.desde_rodada, ate + 1):
+        print(f"Rodada {rodada}/{ate}...")
         meus_pontos = buscar_meu_time_na_rodada(args.time_id, rodada)
         time.sleep(PAUSE_SECONDS)
 
-        if rodada not in medias.index:
+        if rodada not in medias:
             print(f"  rodada {rodada}: sem dado de mercado no nosso historico, pulando.")
             continue
-        time_medio = medias.loc[rodada, "time_medio"]
+        time_medio = medias[rodada]["time_medio"]
 
         linha = {
             "rodada": rodada,

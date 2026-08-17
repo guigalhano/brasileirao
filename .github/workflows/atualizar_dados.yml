@@ -97,9 +97,27 @@ jobs:
       - name: Recalcular sinais por jogador (desarme, E[pts] por scout, forma)
         run: python scripts/compute_advanced_signals.py --repo-dir .
 
+      # Pontuacao do time do usuario, rodada a rodada, contra o "time medio".
+      # O endpoint /time/id/{id}/{rodada} e publico e nao pede autenticacao.
+      # Sem --ate-rodada, o script vai ate onde o historico de scouts alcanca.
+      - name: Atualizar o historico do meu time
+        run: |
+          python scripts/comparar_historico_time.py \
+            --time-id 199236 --saida data/meu_time_historico.csv
+
       # ---------- 4. MONTAGEM DO SITE ----------
       - name: Regenerar o array de jogadores no index.html
         run: python scripts/build_index.py
+
+      - name: Regenerar a aba "Meu Time"
+        run: python scripts/build_meu_time_tab.py
+
+      # Blocos que ate agosto/2026 nao tinham gerador nenhum e iam ficando
+      # para tras em silencio: os ratings que a aba PREDITOR usa (estavam
+      # divergindo do modelo em ate 1,6x no ataque), o top 3 do cabecalho
+      # ("as of 2026-07-27") e o rotulo "RODADA N".
+      - name: Sincronizar ratings, classificacao e rotulo da rodada
+        run: python scripts/sincronizar_index.py --repo-dir .
 
       # As duas etapas abaixo sao um par e precisam rodar NA ORDEM.
       # A primeira grava model/xg; a segunda repoe analysis/analysis_grid.

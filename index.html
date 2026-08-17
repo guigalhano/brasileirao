@@ -529,7 +529,7 @@
 <div class="bh-wrap">
   <h1 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Brasileirao Analytics: preditor de partidas, proximos jogos vs mercado e dificuldade de calendario.</h1>
   <div class="bh-h1">BRASILEIRAO ANALYTICS</div>
-  <div class="bh-sub">MODELO HIBRIDO ELO-ODDS + DIXON-COLES &middot; RODADA 21</div>
+  <div class="bh-sub">MODELO HIBRIDO ELO-ODDS + DIXON-COLES &middot; RODADA 23</div>
 
   <div class="bh-snapshot" id="bh-snapshot"></div>
 
@@ -1380,11 +1380,13 @@
     });
   }
 
-  // ---- Current season snapshot (top 3, as of 2026-07-27, pos-rodada 20) ----
+  // ---- Classificacao da temporada (top 3), derivada de
+  // data/matches_2012_2026.csv por scripts/sincronizar_index.py.
+  // NAO editar na mao: o pipeline reescreve a cada execucao.
   var SNAPSHOT = [
-    {pos:1, team:"Palmeiras", pts:44},
-    {pos:2, team:"Flamengo", pts:38},
-    {pos:3, team:"Atletico-PR", pts:36}
+    {pos:1, team:"Palmeiras", pts:48},
+    {pos:2, team:"Flamengo", pts:42},
+    {pos:3, team:"Atletico-PR", pts:40}
   ];
   var snapEl = document.getElementById('bh-snapshot');
   SNAPSHOT.forEach(function(s){
@@ -1395,9 +1397,9 @@
   });
 
   // ================= PREDICTOR (Elo-Odds + Dixon-Coles) =================
-  var RATINGS = {"home_advantage_log": 0.26445152947741524, "teams": {"Flamengo": {"attack": 0.7509, "defense": 0.3054}, "Botafogo": {"attack": 0.5643, "defense": 0.0812}, "Coritiba": {"attack": 0.2808, "defense": 0.1064}, "Palmeiras": {"attack": 0.2553, "defense": 0.6208}, "Internacional": {"attack": 0.2533, "defense": 0.1857}, "Sao Paulo": {"attack": 0.2376, "defense": -0.0235}, "Fluminense": {"attack": 0.2144, "defense": 0.128}, "Bragantino": {"attack": 0.2001, "defense": 0.1134}, "Santos": {"attack": 0.1948, "defense": 0.0365}, "Corinthians": {"attack": 0.1897, "defense": 0.1727}, "Bahia": {"attack": 0.1883, "defense": 0.0172}, "Mirassol": {"attack": 0.156, "defense": -0.0181}, "Atletico-PR": {"attack": 0.1526, "defense": 0.2571}, "Gremio": {"attack": 0.1209, "defense": -0.0633}, "Cruzeiro": {"attack": 0.0904, "defense": -0.3493}, "Vasco": {"attack": 0.0869, "defense": 0.0329}, "Vitoria": {"attack": -0.0782, "defense": 0.0075}, "Atletico-MG": {"attack": -0.0954, "defense": 0.281}, "Remo": {"attack": -0.1197, "defense": 0.0351}, "Chapecoense": {"attack": -0.28, "defense": -0.5257}}};
+  var RATINGS = {"home_advantage_log": 0.33920601003657774, "teams": {"Flamengo": {"attack": 0.5143, "defense": 0.2567}, "Palmeiras": {"attack": 0.1243, "defense": 0.2808}, "Botafogo": {"attack": 0.263, "defense": -0.1916}, "Mirassol": {"attack": 0.2022, "defense": 0.0008}, "Bahia": {"attack": 0.3259, "defense": -0.0497}, "Atletico-MG": {"attack": 0.3782, "defense": 0.0085}, "Gremio": {"attack": 0.0603, "defense": -0.0947}, "Fluminense": {"attack": 0.3424, "defense": 0.1026}, "Cruzeiro": {"attack": 0.232, "defense": 0.2216}, "Internacional": {"attack": 0.4677, "defense": 0.0729}, "Atletico-PR": {"attack": 0.3632, "defense": 0.2884}, "Vasco": {"attack": 0.4297, "defense": 0.1613}, "Sao Paulo": {"attack": 0.2404, "defense": 0.1109}, "Santos": {"attack": 0.1793, "defense": -0.0908}, "Bragantino": {"attack": 0.3823, "defense": 0.1884}, "Remo": {"attack": 0.1273, "defense": -0.1187}, "Corinthians": {"attack": -0.1867, "defense": 0.2729}, "Coritiba": {"attack": -0.0146, "defense": -0.0924}, "Vitoria": {"attack": 0.0589, "defense": -0.0224}, "Chapecoense": {"attack": 0.0526, "defense": -0.2458}}};
 
-  var ELO = {"omega": 60, "classes": ["A","D","H"], "coef": [-0.004096078497766547, -0.0003099761157177017, 0.0044060546134710695], "intercept": [-0.07924748736514504, -0.11358131727126212, 0.1928288046364261], "ratings": {"Flamengo": 1185.88, "Palmeiras": 1110.68, "Cruzeiro": 1106.7, "Corinthians": 1105.46, "Fluminense": 1084.4, "Sao Paulo": 1081.25, "Bragantino": 1075.17, "Vasco": 1071.82, "Internacional": 1069.09, "Bahia": 1063.12, "Santos": 1059.54, "Atletico-PR": 1048.33, "Atletico-MG": 1043.17, "Botafogo": 1039.79, "Gremio": 1026.76, "Mirassol": 1026.5, "Coritiba": 1008.49, "Remo": 995.49, "Vitoria": 986.34, "Chapecoense": 922.12}};
+  var ELO = {"omega": 60, "classes": ["A", "D", "H"], "coef": [-0.004096078497766547, -0.0003099761157177017, 0.0044060546134710695], "intercept": [-0.07924748736514504, -0.11358131727126212, 0.1928288046364261], "ratings": {"Flamengo": 1185.88, "Palmeiras": 1110.68, "Cruzeiro": 1106.7, "Corinthians": 1105.46, "Fluminense": 1084.4, "Sao Paulo": 1081.25, "Bragantino": 1075.17, "Vasco": 1071.82, "Internacional": 1069.09, "Bahia": 1063.12, "Santos": 1059.54, "Atletico-PR": 1048.33, "Atletico-MG": 1043.17, "Botafogo": 1039.79, "Gremio": 1026.76, "Mirassol": 1026.5, "Coritiba": 1008.49, "Remo": 995.49, "Vitoria": 986.34, "Chapecoense": 922.12}};
 
   function eloOddsPredict(home, away){
     var H = ELO.ratings[home], A = ELO.ratings[away];

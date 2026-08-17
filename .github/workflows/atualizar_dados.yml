@@ -129,6 +129,21 @@ jobs:
       - name: Repor as analises dos confrontos
         run: python scripts/generate_advanced_analytics.py --repo-dir .
 
+      # Odds PRE-JOGO da rodada que vem, pra coluna de "edge" da aba Proximos
+      # Jogos. As odds de FECHAMENTO dos jogos ja disputados nao passam por
+      # aqui -- vem de graca com o placar, no ingerir_resultados.py.
+      #
+      # Sem o secret ODDS_API_KEY o script sai com 0 e nao faz nada: odds
+      # pre-jogo enriquecem o site, nao o sustentam, e derrubar a atualizacao
+      # inteira por falta de uma chave opcional seria desproporcional.
+      # Para ligar: Settings > Secrets and variables > Actions > New repository
+      # secret, nome ODDS_API_KEY. Cota gratuita de 500 req/mes; 3 execucoes
+      # por dia consomem ~90.
+      - name: Odds de mercado dos proximos jogos (opcional)
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python scripts/atualizar_odds_mercado.py --repo-dir .
+
       # ---------- 5. PORTAO ----------
       # Confere confrontos, analises, frescor dos resultados e a tabela de
       # pontuacao do Cartola contra a oficial. Sai != 0 => nao publica.

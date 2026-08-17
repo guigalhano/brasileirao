@@ -1,139 +1,179 @@
 """
-Busca odds reais de mercado (The Odds API) pros confrontos ja listados em
-`var DATA` no index.html (Proximos Jogos) e preenche odds/mercado/horario.
+Busca odds de mercado PRE-JOGO (The Odds API) para os confrontos da rodada e
+preenche os campos odds/market do `var DATA` no index.html.
 
-NAO inventa jogos novos -- so preenche odds pros confrontos que ja estao no
-array DATA (mesma limitacao do build_fixtures.py). Pra trocar os confrontos
-em si (ex: nova rodada), edite `var DATA` primeiro (times/dia) e rode
-build_fixtures.py, depois este script pra trazer odds reais.
+O QUE ESTE SCRIPT COBRE, E O QUE JA E AUTOMATICO SEM ELE
+---------------------------------------------------------
+Odds de FECHAMENTO dos jogos ja disputados chegam de graca pelo
+scripts/ingerir_resultados.py, junto com o placar (colunas AvgC* do
+football-data.co.uk): 216 de 216 jogos de 2026, sem chave nenhuma. E delas que
+vivem o modelo Elo-Odds e a aba Value Betting.
 
-IMPORTANTE -- CHAVE DE API: nunca hardcode a chave aqui nem em nenhum
-arquivo commitado. Passe via variavel de ambiente:
+O que o football-data NAO da e odds de jogo que ainda nao aconteceu -- o
+BRA.csv so publica a partida depois de disputada (conferido: zero linhas sem
+placar). E por isso que a coluna de "edge" da aba Proximos Jogos fica vazia e o
+verificar_integridade.py avisa 10 vezes por rodada. Preencher isso exige uma
+fonte de odds ao vivo, que e o que este script faz.
 
-    set ODDS_API_KEY=sua_chave_aqui        (Windows cmd)
-    $env:ODDS_API_KEY="sua_chave_aqui"      (PowerShell)
-    export ODDS_API_KEY=sua_chave_aqui      (bash)
+CHAVE DE API: nunca hardcode a chave aqui nem em nenhum arquivo commitado.
+Passe via variavel de ambiente:
 
-A The Odds API tem cota gratuita limitada (checar https://the-odds-api.com/) --
-cada chamada deste script consome 1 requisicao.
+    export ODDS_API_KEY=sua_chave        (bash)
+    $env:ODDS_API_KEY="sua_chave"        (PowerShell)
+
+No GitHub Actions, cadastre como secret ODDS_API_KEY (Settings > Secrets and
+variables > Actions). Sem a chave o script SAI COM CODIGO 0 e nao faz nada:
+odds pre-jogo sao um enriquecimento, nao um requisito, e derrubar a atualizacao
+inteira do site por falta de uma chave opcional seria desproporcional.
+
+A The Odds API tem cota gratuita (500 requisicoes/mes no plano free); cada
+execucao consome 1. A 3 execucoes por dia da ~90 por mes, bem dentro da cota.
+
+DUAS CORRECOES (agosto/2026)
+-----------------------------
+1. Escrevia o `var DATA` com re.sub no array inteiro, por fora do
+   lib/index_data.py. Esse modulo existe exatamente para impedir isso -- foi
+   sobrescrita cega de DATA que matou a aba de analises no commit b69d041.
+   Agora usa write_data(merge=True), que preserva analysis/analysis_grid/
+   forecast/matchup e so encosta em odds/market.
+
+2. Sobrescrevia day/time com o horario da The Odds API. Desde que os confrontos
+   passaram a vir do /partidas do Cartola (atualizar_confrontos_cartola.py),
+   quem manda no calendario e o Cartola; deixar duas fontes disputando o mesmo
+   campo faz o dia do jogo oscilar a cada execucao. Este script nao toca mais
+   em day/time.
 
 Uso:
-    python scripts/atualizar_odds_mercado.py --repo-dir D:\\brasileirao
+    python scripts/atualizar_odds_mercado.py --repo-dir .
+    python scripts/atualizar_odds_mercado.py --repo-dir . --dry-run
 """
 import argparse
-import json
 import os
-import re
 import sys
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
 
-SPORT_KEY = "soccer_brazil_campeonato"
-DIAS = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.index_data import read_data, write_data
+from lib.teams import canonical_or_none
 
-# Nomes como aparecem na The Odds API -> nomes canonicos usados no projeto
-NAME_MAP = {
-    "Atletico Paranaense": "Atletico-PR", "Internacional": "Internacional", "Santos": "Santos",
-    "Chapecoense": "Chapecoense", "Vasco da Gama": "Vasco", "Mirassol": "Mirassol", "Bahia": "Bahia",
-    "Corinthians": "Corinthians", "Cruzeiro": "Cruzeiro", "Botafogo": "Botafogo",
-    "Bragantino-SP": "Bragantino", "Coritiba": "Coritiba", "Flamengo": "Flamengo", "Sao Paulo": "Sao Paulo",
-    "Grêmio": "Gremio", "Palmeiras": "Palmeiras", "Atletico Mineiro": "Atletico-MG",
-    "Remo": "Remo", "Vitoria": "Vitoria", "Fluminense": "Fluminense",
-}
+SPORT_KEY = "soccer_brazil_campeonato"
+API_URL = f"https://api.the-odds-api.com/v4/sports/{SPORT_KEY}/odds/"
 
 
 def fetch_odds(api_key):
-    url = (f"https://api.the-odds-api.com/v4/sports/{SPORT_KEY}/odds/"
-           f"?regions=uk,eu&markets=h2h&apiKey={api_key}")
-    resp = requests.get(url, timeout=30)
+    resp = requests.get(API_URL, params={"regions": "uk,eu", "markets": "h2h",
+                                         "apiKey": api_key}, timeout=30)
     resp.raise_for_status()
-    remaining = resp.headers.get("x-requests-remaining")
-    if remaining:
-        print(f"Requisicoes restantes na cota da API: {remaining}")
+    restantes = resp.headers.get("x-requests-remaining")
+    if restantes:
+        print(f"Cota da API: {restantes} requisicoes restantes")
     return resp.json()
 
 
-def process_event(ev):
-    home, away = ev["home_team"], ev["away_team"]
-    prices = {"H": [], "D": [], "A": []}
-    for bk in ev["bookmakers"]:
-        h2h = next((m for m in bk["markets"] if m["key"] == "h2h"), None)
+def media_do_evento(ev):
+    """Media das cotas entre as casas que cotaram os tres resultados."""
+    precos = {"H": [], "D": [], "A": []}
+    for casa in ev.get("bookmakers", []):
+        h2h = next((m for m in casa.get("markets", []) if m["key"] == "h2h"), None)
         if not h2h:
             continue
-        outcome = {}
+        cotas = {}
         for o in h2h["outcomes"]:
-            if o["name"] == home:
-                outcome["H"] = o["price"]
-            elif o["name"] == away:
-                outcome["A"] = o["price"]
+            if o["name"] == ev["home_team"]:
+                cotas["H"] = o["price"]
+            elif o["name"] == ev["away_team"]:
+                cotas["A"] = o["price"]
             elif o["name"].lower() == "draw":
-                outcome["D"] = o["price"]
-        if len(outcome) == 3:
-            for k, v in outcome.items():
-                prices[k].append(v)
-    if not prices["H"]:
+                cotas["D"] = o["price"]
+        # So aproveita a casa que cotou os tres -- media de 1X2 incompleto
+        # desalinha o overround e contamina a probabilidade implicita.
+        if len(cotas) == 3:
+            for k, v in cotas.items():
+                precos[k].append(v)
+    if not precos["H"]:
         return None
-    avg = {k: sum(v) / len(v) for k, v in prices.items()}
-    return {"home": home, "away": away, "commence_time": ev["commence_time"], "avg": avg, "n_books": len(prices["H"])}
+    return {k: sum(v) / len(v) for k, v in precos.items()}, len(precos["H"])
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--repo-dir", required=True)
+    ap.add_argument("--repo-dir", default=str(Path(__file__).resolve().parent.parent))
+    ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
-    repo = Path(args.repo_dir)
+    repo = Path(args.repo_dir).resolve()
 
     api_key = os.environ.get("ODDS_API_KEY")
     if not api_key:
-        print("ERRO: defina a variavel de ambiente ODDS_API_KEY antes de rodar (veja o topo deste arquivo).")
-        sys.exit(1)
+        print("ODDS_API_KEY nao definida -- pulando odds pre-jogo. "
+              "A coluna de edge da aba Proximos Jogos fica vazia; o resto do "
+              "site nao depende disso. Veja o cabecalho deste arquivo.")
+        return 0
 
-    raw = fetch_odds(api_key)
-    events = [process_event(ev) for ev in raw]
-    events = [e for e in events if e]
-    print(f"{len(events)} confrontos com odds encontrados na API.")
+    try:
+        bruto = fetch_odds(api_key)
+    except Exception as e:
+        print(f"ERRO ao buscar odds: {e}")
+        return 1
 
-    by_pair = {}
-    for e in events:
-        h = NAME_MAP.get(e["home"], e["home"])
-        a = NAME_MAP.get(e["away"], e["away"])
-        by_pair[(h, a)] = e
-
-    index_path = repo / "index.html"
-    content = index_path.read_text(encoding="utf-8")
-    m = re.search(r"var DATA = (\[.*?\]);", content, re.DOTALL)
-    if not m:
-        print("ERRO: nao encontrei 'var DATA = [...]' no index.html")
-        sys.exit(1)
-    fixtures = json.loads(m.group(1))
-
-    updated = 0
-    for fx in fixtures:
-        key = (fx["home"], fx["away"])
-        if key not in by_pair:
-            print(f"  sem odds pra {key}")
+    por_confronto = {}
+    nao_mapeados = set()
+    for ev in bruto:
+        resultado = media_do_evento(ev)
+        if not resultado:
             continue
-        e = by_pair[key]
-        avg = e["avg"]
-        inv = {k: 1 / v for k, v in avg.items()}
+        media, n_casas = resultado
+        casa = canonical_or_none(ev["home_team"])
+        fora = canonical_or_none(ev["away_team"])
+        if casa is None or fora is None:
+            nao_mapeados.add(f"{ev['home_team']} x {ev['away_team']}")
+            continue
+        por_confronto[(casa, fora)] = (media, n_casas)
+    print(f"{len(por_confronto)} confronto(s) com odds na API")
+    if nao_mapeados:
+        # Nome novo da API e problema de mapeamento, nao motivo pra parar:
+        # o jogo simplesmente fica sem edge. Mas tem que aparecer.
+        print(f"[aviso] {len(nao_mapeados)} confronto(s) com nome fora do "
+              f"lib/teams.py: {sorted(nao_mapeados)[:3]}")
+
+    jogos = read_data(repo / "index.html")
+    atualizados, sem_odds = [], []
+    for jogo in jogos:
+        chave = (jogo["home"], jogo["away"])
+        if chave not in por_confronto:
+            sem_odds.append(f"{jogo['home']} x {jogo['away']}")
+            continue
+        media, n_casas = por_confronto[chave]
+        inv = {k: 1 / v for k, v in media.items()}
         overround = sum(inv.values())
-        fx["odds"] = [round(avg["H"], 3), round(avg["D"], 3), round(avg["A"], 3)]
-        fx["market"] = [round(inv[k] / overround, 4) for k in ("H", "D", "A")]
+        jogo["odds"] = [round(media[k], 3) for k in ("H", "D", "A")]
+        # Probabilidade implicita ja sem a margem da casa (de-vig proporcional),
+        # mesma convencao usada no resto do projeto.
+        jogo["market"] = [round(inv[k] / overround, 4) for k in ("H", "D", "A")]
+        atualizados.append(
+            f"  {jogo['home']:14} x {jogo['away']:14} "
+            f"{jogo['odds'][0]:>6.2f} {jogo['odds'][1]:>6.2f} {jogo['odds'][2]:>6.2f} "
+            f"({n_casas} casas, margem {100 * (overround - 1):.1f}%)")
 
-        dt_utc = datetime.strptime(e["commence_time"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-        dt_br = dt_utc - timedelta(hours=3)
-        fx["day"] = DIAS[dt_br.weekday()] + " " + dt_br.strftime("%d/%m")
-        fx["time"] = dt_br.strftime("%H:%M")
-        updated += 1
-        print(f"  atualizado {key}: odds={fx['odds']} {fx['day']} {fx['time']}")
+    for linha in atualizados:
+        print(linha)
+    if sem_odds:
+        print(f"  sem odds ainda: {', '.join(sem_odds)}")
 
-    new_data_js = "var DATA = " + json.dumps(fixtures, ensure_ascii=False) + ";"
-    new_content = re.sub(r"var DATA = \[.*?\];", lambda mo: new_data_js, content, count=1, flags=re.DOTALL)
-    index_path.write_text(new_content, encoding="utf-8")
-    print(f"\nOK: {updated}/{len(fixtures)} confrontos atualizados com odds reais.")
+    if args.dry_run:
+        print(f"\n[DRY-RUN] {len(atualizados)}/{len(jogos)} teriam odds. Nada gravado.")
+        return 0
+    if not atualizados:
+        print("\nNenhum confronto da rodada tem odds publicadas ainda. "
+              "index.html nao foi alterado.")
+        return 0
+
+    preservados = write_data(repo / "index.html", jogos, merge=True)
+    print(f"\n[OK] {len(atualizados)}/{len(jogos)} confrontos com odds de mercado.")
+    print(f"[MERGE] {preservados} jogo(s) mantiveram os campos de analise.")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

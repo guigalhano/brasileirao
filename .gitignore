@@ -3,3 +3,15 @@ __pycache__/
 .DS_Store
 cache/
 *.log
+
+# Config local do Claude Code. O settings.local.json guarda regras de permissao
+# com o comando INTEIRO que foi aprovado -- inclusive curl com chave de API na
+# query string. Este repositorio e publico: um `git add -A` distraido publicaria
+# a chave. Fica fora do versionamento por padrao.
+.claude/settings.local.json
+
+# Nunca versionar segredo. No GitHub Actions use secrets do repositorio
+# (Settings > Secrets and variables > Actions), nunca arquivo commitado.
+.env
+*.key
+secrets.json

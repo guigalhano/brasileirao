@@ -38,11 +38,11 @@
           1.05
         ],
         [
-          "Corinthians",
+          "Vasco",
           1.09
         ],
         [
-          "Vasco",
+          "Corinthians",
           1.09
         ]
       ]
@@ -108,21 +108,21 @@
           41.0
         ],
         [
-          "Vitoria",
+          "Atletico-PR",
           36.0
         ],
         [
-          "Atletico-PR",
+          "Vitoria",
           36.0
         ]
       ],
       "bottom5": [
         [
-          "Chapecoense",
+          "Mirassol",
           5.0
         ],
         [
-          "Mirassol",
+          "Chapecoense",
           5.0
         ],
         [
@@ -130,11 +130,11 @@
           9.0
         ],
         [
-          "Botafogo",
+          "Remo",
           14.0
         ],
         [
-          "Remo",
+          "Botafogo",
           14.0
         ]
       ]

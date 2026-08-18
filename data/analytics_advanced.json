@@ -54,11 +54,11 @@
           0.73
         ],
         [
-          "Atletico-PR",
+          "Flamengo",
           0.86
         ],
         [
-          "Flamengo",
+          "Atletico-PR",
           0.86
         ],
         [
@@ -118,11 +118,11 @@
       ],
       "bottom5": [
         [
-          "Mirassol",
+          "Chapecoense",
           5.0
         ],
         [
-          "Chapecoense",
+          "Mirassol",
           5.0
         ],
         [
@@ -130,11 +130,11 @@
           9.0
         ],
         [
-          "Botafogo",
+          "Remo",
           14.0
         ],
         [
-          "Remo",
+          "Botafogo",
           14.0
         ]
       ]

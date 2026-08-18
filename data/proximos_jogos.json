@@ -1,65 +1,65 @@
 {
-  "rodada": 23,
-  "data_inicio": "15/08/2026",
-  "data_fim": "17/08/2026",
+  "rodada": 24,
+  "data_inicio": "22/08/2026",
+  "data_fim": "24/08/2026",
   "jogos": [
     {
       "home": "Fluminense",
-      "away": "Palmeiras",
+      "away": "Remo",
       "day": "Sabado",
-      "time": "16:30"
+      "time": "16:00"
     },
     {
-      "home": "Atletico-PR",
-      "away": "Bragantino",
+      "home": "Internacional",
+      "away": "Atletico-MG",
       "day": "Sabado",
       "time": "18:30"
     },
     {
-      "home": "Sao Paulo",
-      "away": "Coritiba",
+      "home": "Cruzeiro",
+      "away": "Flamengo",
       "day": "Sabado",
-      "time": "21:00"
+      "time": "20:30"
     },
     {
-      "home": "Chapecoense",
-      "away": "Bahia",
-      "day": "Domingo",
-      "time": "11:00"
-    },
-    {
-      "home": "Vasco",
-      "away": "Santos",
+      "home": "Palmeiras",
+      "away": "Vasco",
       "day": "Domingo",
       "time": "16:00"
     },
     {
-      "home": "Atletico-MG",
+      "home": "Bragantino",
       "away": "Gremio",
       "day": "Domingo",
       "time": "16:00"
     },
     {
-      "home": "Mirassol",
-      "away": "Flamengo",
-      "day": "Domingo",
-      "time": "18:30"
-    },
-    {
       "home": "Vitoria",
-      "away": "Botafogo",
+      "away": "Bahia",
+      "day": "Domingo",
+      "time": "16:00"
+    },
+    {
+      "home": "Santos",
+      "away": "Mirassol",
       "day": "Domingo",
       "time": "18:30"
     },
     {
-      "home": "Corinthians",
-      "away": "Cruzeiro",
+      "home": "Chapecoense",
+      "away": "Sao Paulo",
+      "day": "Domingo",
+      "time": "18:30"
+    },
+    {
+      "home": "Coritiba",
+      "away": "Corinthians",
       "day": "Domingo",
       "time": "19:30"
     },
     {
-      "home": "Internacional",
-      "away": "Remo",
+      "home": "Botafogo",
+      "away": "Atletico-PR",
       "day": "Segunda",
       "time": "20:00"
     }

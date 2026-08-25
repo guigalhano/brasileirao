@@ -5,45 +5,45 @@
       "top5": [
         [
           "Flamengo",
-          2.0
+          1.96
         ],
         [
           "Palmeiras",
-          1.74
+          1.83
         ],
         [
           "Botafogo",
-          1.59
+          1.61
         ],
         [
           "Fluminense",
-          1.48
+          1.5
         ],
         [
           "Santos",
-          1.45
+          1.43
         ]
       ],
       "bottom5": [
         [
           "Vitoria",
-          1.0
+          0.96
         ],
         [
           "Internacional",
-          1.04
+          1.0
         ],
         [
           "Vasco",
           1.04
         ],
         [
-          "Chapecoense",
-          1.05
+          "Gremio",
+          1.04
         ],
         [
-          "Gremio",
-          1.09
+          "Chapecoense",
+          1.04
         ]
       ]
     },
@@ -55,41 +55,41 @@
         ],
         [
           "Flamengo",
-          0.86
+          0.91
         ],
         [
           "Atletico-PR",
-          0.87
-        ],
-        [
-          "Corinthians",
-          0.96
+          0.92
         ],
         [
           "Bragantino",
-          1.05
+          1.0
+        ],
+        [
+          "Corinthians",
+          1.0
         ]
       ],
       "bottom5": [
         [
           "Chapecoense",
-          2.09
+          2.0
+        ],
+        [
+          "Vasco",
+          1.62
         ],
         [
           "Remo",
+          1.62
+        ],
+        [
+          "Botafogo",
           1.61
         ],
         [
           "Santos",
-          1.59
-        ],
-        [
-          "Mirassol",
           1.57
-        ],
-        [
-          "Botafogo",
-          1.55
         ]
       ]
     },
@@ -97,22 +97,22 @@
       "top5": [
         [
           "Corinthians",
-          43.0
+          42.0
         ],
         [
           "Flamengo",
-          41.0
-        ],
-        [
-          "Palmeiras",
           39.0
         ],
         [
           "Vitoria",
-          39.0
+          38.0
         ],
         [
-          "Atletico-PR",
+          "Palmeiras",
+          38.0
+        ],
+        [
+          "Bragantino",
           35.0
         ]
       ],
@@ -122,20 +122,20 @@
           4.0
         ],
         [
-          "Chapecoense",
-          5.0
+          "Vasco",
+          8.0
         ],
         [
-          "Vasco",
+          "Chapecoense",
           9.0
         ],
         [
           "Remo",
-          13.0
+          12.0
         ],
         [
           "Botafogo",
-          14.0
+          13.0
         ]
       ]
     }
@@ -147,24 +147,24 @@
       "forecast": {
         "top_10": [
           "2-1 (9.9%)",
-          "2-0 (9.6%)",
-          "1-1 (8.9%)",
+          "2-0 (9.4%)",
+          "1-1 (9.1%)",
           "1-0 (8.7%)",
-          "3-1 (7.3%)",
-          "3-0 (7.1%)",
-          "2-2 (5.1%)",
-          "1-2 (4.6%)",
-          "0-1 (4.0%)",
-          "4-1 (4.0%)"
+          "3-1 (7.1%)",
+          "3-0 (6.8%)",
+          "2-2 (5.2%)",
+          "1-2 (4.8%)",
+          "0-1 (4.2%)",
+          "0-0 (4.0%)"
         ],
         "combined_top10": 69.2,
-        "over_2_5": 62.5,
-        "under_2_5": 37.5,
-        "over_1_5": 83.1,
-        "btts": 57.0,
+        "over_2_5": 61.9,
+        "under_2_5": 38.1,
+        "over_1_5": 82.6,
+        "btts": 57.1,
         "xg": [
-          2.21,
-          1.03
+          2.16,
+          1.05
         ]
       },
       "matchup": {
@@ -172,7 +172,7 @@
         "away_matchup": "Visitante: Equilibrado",
         "home_advantage": "MEDIA",
         "home_multiplier": 0.46,
-        "away_multiplier": 0.46
+        "away_multiplier": 0.47
       },
       "value_betting": null
     },
@@ -183,23 +183,23 @@
         "top_10": [
           "2-1 (9.4%)",
           "1-1 (8.7%)",
-          "2-0 (7.0%)",
-          "3-1 (6.8%)",
+          "2-0 (6.9%)",
+          "3-1 (6.7%)",
           "1-0 (6.4%)",
-          "2-2 (6.3%)",
+          "2-2 (6.4%)",
           "1-2 (5.9%)",
-          "3-0 (5.1%)",
+          "3-0 (4.9%)",
           "3-2 (4.6%)",
           "0-1 (4.0%)"
         ],
-        "combined_top10": 64.2,
+        "combined_top10": 63.9,
         "over_2_5": 68.1,
         "under_2_5": 31.9,
         "over_1_5": 86.5,
-        "btts": 65.6,
+        "btts": 65.8,
         "xg": [
-          2.17,
-          1.35
+          2.15,
+          1.36
         ]
       },
       "matchup": {
@@ -207,7 +207,7 @@
         "away_matchup": "Visitante: Favoravel",
         "home_advantage": "BAIXA",
         "home_multiplier": 0.41,
-        "away_multiplier": 0.54
+        "away_multiplier": 0.53
       },
       "value_betting": null
     },
@@ -217,24 +217,24 @@
       "forecast": {
         "top_10": [
           "1-1 (12.2%)",
-          "1-0 (9.1%)",
           "0-1 (9.0%)",
+          "1-0 (9.0%)",
           "1-2 (8.3%)",
           "2-1 (8.3%)",
-          "0-0 (6.7%)",
+          "0-0 (6.6%)",
           "0-2 (6.1%)",
           "2-0 (6.1%)",
           "2-2 (5.6%)",
           "1-3 (3.7%)"
         ],
-        "combined_top10": 75.1,
-        "over_2_5": 50.5,
-        "under_2_5": 49.5,
-        "over_1_5": 74.9,
-        "btts": 54.7,
+        "combined_top10": 74.9,
+        "over_2_5": 50.8,
+        "under_2_5": 49.2,
+        "over_1_5": 75.2,
+        "btts": 54.8,
         "xg": [
           1.36,
-          1.35
+          1.36
         ]
       },
       "matchup": {
@@ -242,7 +242,7 @@
         "away_matchup": "Visitante: Favoravel",
         "home_advantage": "BAIXA",
         "home_multiplier": 0.66,
-        "away_multiplier": 0.72
+        "away_multiplier": 0.71
       },
       "value_betting": null
     },
@@ -251,32 +251,32 @@
       "away": "Vasco",
       "forecast": {
         "top_10": [
-          "1-1 (12.7%)",
-          "1-0 (11.3%)",
-          "0-1 (9.3%)",
-          "2-1 (8.7%)",
-          "0-0 (8.3%)",
-          "2-0 (7.7%)",
-          "1-2 (7.2%)",
-          "0-2 (5.2%)",
+          "1-1 (12.8%)",
+          "1-0 (11.0%)",
+          "0-1 (9.7%)",
+          "2-1 (8.5%)",
+          "0-0 (8.4%)",
+          "1-2 (7.5%)",
+          "2-0 (7.3%)",
+          "0-2 (5.7%)",
           "2-2 (4.9%)",
-          "3-1 (4.0%)"
+          "3-1 (3.7%)"
         ],
-        "combined_top10": 79.3,
-        "over_2_5": 45.4,
-        "under_2_5": 54.6,
-        "over_1_5": 71.0,
-        "btts": 50.3,
+        "combined_top10": 79.5,
+        "over_2_5": 45.0,
+        "under_2_5": 55.0,
+        "over_1_5": 70.8,
+        "btts": 50.2,
         "xg": [
-          1.37,
-          1.13
+          1.32,
+          1.16
         ]
       },
       "matchup": {
         "home_matchup": "Ataque forte vs Defesa fraca",
         "away_matchup": "Visitante: Desfavoravel",
         "home_advantage": "ALTA",
-        "home_multiplier": 0.57,
+        "home_multiplier": 0.56,
         "away_multiplier": 0.5
       },
       "value_betting": null
@@ -287,24 +287,24 @@
       "forecast": {
         "top_10": [
           "2-0 (11.0%)",
-          "1-0 (9.8%)",
-          "2-1 (9.7%)",
-          "1-1 (8.6%)",
-          "3-0 (8.3%)",
-          "3-1 (7.3%)",
-          "4-0 (4.7%)",
-          "0-0 (4.3%)",
-          "2-2 (4.3%)",
-          "4-1 (4.1%)"
+          "1-0 (9.9%)",
+          "2-1 (9.8%)",
+          "1-1 (8.8%)",
+          "3-0 (8.1%)",
+          "3-1 (7.2%)",
+          "4-0 (4.5%)",
+          "0-0 (4.4%)",
+          "2-2 (4.4%)",
+          "0-1 (4.0%)"
         ],
         "combined_top10": 72.1,
-        "over_2_5": 60.1,
-        "under_2_5": 39.9,
-        "over_1_5": 81.4,
-        "btts": 51.9,
+        "over_2_5": 59.7,
+        "under_2_5": 40.3,
+        "over_1_5": 81.3,
+        "btts": 52.4,
         "xg": [
-          2.25,
-          0.88
+          2.22,
+          0.89
         ]
       },
       "matchup": {
@@ -312,7 +312,7 @@
         "away_matchup": "Visitante: Favoravel",
         "home_advantage": "BAIXA",
         "home_multiplier": 0.45,
-        "away_multiplier": 0.47
+        "away_multiplier": 0.46
       },
       "value_betting": null
     },
@@ -322,32 +322,32 @@
       "forecast": {
         "top_10": [
           "1-1 (11.4%)",
-          "2-1 (8.8%)",
-          "1-0 (8.1%)",
-          "1-2 (7.9%)",
-          "0-1 (7.3%)",
-          "2-0 (6.3%)",
+          "2-1 (8.7%)",
+          "1-0 (8.0%)",
+          "1-2 (8.0%)",
+          "0-1 (7.4%)",
+          "2-0 (6.2%)",
           "2-2 (6.2%)",
-          "0-0 (5.3%)",
-          "0-2 (5.1%)",
+          "0-0 (5.2%)",
+          "0-2 (5.2%)",
           "3-1 (4.5%)"
         ],
-        "combined_top10": 70.9,
-        "over_2_5": 56.4,
-        "under_2_5": 43.6,
-        "over_1_5": 79.2,
+        "combined_top10": 70.8,
+        "over_2_5": 56.3,
+        "under_2_5": 43.7,
+        "over_1_5": 79.1,
         "btts": 59.2,
         "xg": [
-          1.55,
-          1.4
+          1.54,
+          1.41
         ]
       },
       "matchup": {
         "home_matchup": "Ataque fraco vs Defesa forte",
         "away_matchup": "Visitante: Favoravel",
         "home_advantage": "BAIXA",
-        "home_multiplier": 0.4,
-        "away_multiplier": 0.48
+        "home_multiplier": 0.39,
+        "away_multiplier": 0.49
       },
       "value_betting": null
     },
@@ -356,25 +356,25 @@
       "away": "Mirassol",
       "forecast": {
         "top_10": [
-          "1-1 (11.1%)",
-          "2-1 (9.2%)",
+          "1-1 (11.2%)",
+          "2-1 (9.1%)",
           "1-0 (8.3%)",
-          "1-2 (7.4%)",
+          "1-2 (7.5%)",
+          "0-1 (6.8%)",
           "2-0 (6.8%)",
-          "0-1 (6.7%)",
-          "2-2 (6.2%)",
-          "3-1 (5.1%)",
-          "0-0 (5.0%)",
-          "0-2 (4.5%)"
+          "2-2 (6.1%)",
+          "0-0 (5.1%)",
+          "3-1 (5.0%)",
+          "0-2 (4.6%)"
         ],
-        "combined_top10": 70.3,
-        "over_2_5": 57.3,
-        "under_2_5": 42.7,
-        "over_1_5": 79.7,
-        "btts": 59.5,
+        "combined_top10": 70.5,
+        "over_2_5": 57.0,
+        "under_2_5": 43.0,
+        "over_1_5": 79.6,
+        "btts": 59.4,
         "xg": [
-          1.65,
-          1.34
+          1.64,
+          1.35
         ]
       },
       "matchup": {
@@ -382,7 +382,7 @@
         "away_matchup": "Visitante: Equilibrado",
         "home_advantage": "MEDIA",
         "home_multiplier": 0.46,
-        "away_multiplier": 0.35
+        "away_multiplier": 0.36
       },
       "value_betting": null
     },
@@ -399,14 +399,14 @@
           "0-2 (6.9%)",
           "2-2 (6.0%)",
           "0-0 (5.4%)",
-          "1-3 (4.9%)",
+          "1-3 (4.8%)",
           "2-0 (4.7%)"
         ],
-        "combined_top10": 71.6,
-        "over_2_5": 55.9,
-        "under_2_5": 44.1,
-        "over_1_5": 78.9,
-        "btts": 58.5,
+        "combined_top10": 71.5,
+        "over_2_5": 55.7,
+        "under_2_5": 44.3,
+        "over_1_5": 78.7,
+        "btts": 58.3,
         "xg": [
           1.32,
           1.6
@@ -417,7 +417,7 @@
         "away_matchup": "Visitante: Favoravel",
         "home_advantage": "BAIXA",
         "home_multiplier": 0.42,
-        "away_multiplier": 0.25
+        "away_multiplier": 0.26
       },
       "value_betting": null
     },
@@ -426,32 +426,32 @@
       "away": "Corinthians",
       "forecast": {
         "top_10": [
-          "1-0 (14.9%)",
-          "0-0 (14.1%)",
-          "1-1 (13.4%)",
+          "1-0 (14.7%)",
+          "0-0 (13.9%)",
+          "1-1 (13.5%)",
           "0-1 (12.7%)",
-          "2-0 (7.9%)",
+          "2-0 (7.8%)",
           "2-1 (7.1%)",
-          "1-2 (6.1%)",
-          "0-2 (5.7%)",
+          "1-2 (6.2%)",
+          "0-2 (5.8%)",
           "2-2 (3.2%)",
-          "3-0 (2.8%)"
+          "3-0 (2.7%)"
         ],
-        "combined_top10": 87.9,
-        "over_2_5": 31.1,
-        "under_2_5": 68.9,
-        "over_1_5": 58.1,
-        "btts": 38.6,
+        "combined_top10": 87.6,
+        "over_2_5": 31.3,
+        "under_2_5": 68.7,
+        "over_1_5": 58.4,
+        "btts": 38.9,
         "xg": [
           1.06,
-          0.9
+          0.91
         ]
       },
       "matchup": {
         "home_matchup": "Ataque fraco vs Defesa forte",
         "away_matchup": "Visitante: Favoravel",
         "home_advantage": "BAIXA",
-        "home_multiplier": 0.55,
+        "home_multiplier": 0.56,
         "away_multiplier": 0.41
       },
       "value_betting": null
@@ -461,33 +461,33 @@
       "away": "Atletico-PR",
       "forecast": {
         "top_10": [
-          "1-1 (10.7%)",
-          "1-2 (9.2%)",
+          "1-1 (10.6%)",
+          "1-2 (9.3%)",
           "0-1 (7.8%)",
-          "2-1 (7.3%)",
-          "0-2 (6.7%)",
+          "2-1 (7.2%)",
+          "0-2 (6.9%)",
           "2-2 (6.3%)",
-          "1-0 (6.2%)",
-          "1-3 (5.3%)",
-          "0-0 (4.5%)",
-          "2-0 (4.2%)"
+          "1-0 (6.0%)",
+          "1-3 (5.5%)",
+          "0-0 (4.4%)",
+          "2-0 (4.1%)"
         ],
-        "combined_top10": 68.2,
-        "over_2_5": 59.8,
-        "under_2_5": 40.2,
-        "over_1_5": 81.4,
-        "btts": 61.3,
+        "combined_top10": 68.1,
+        "over_2_5": 60.2,
+        "under_2_5": 39.8,
+        "over_1_5": 81.8,
+        "btts": 61.6,
         "xg": [
-          1.37,
-          1.73
+          1.36,
+          1.76
         ]
       },
       "matchup": {
         "home_matchup": "Matchup equilibrado",
         "away_matchup": "Visitante: Equilibrado",
         "home_advantage": "MEDIA",
-        "home_multiplier": 0.75,
-        "away_multiplier": 0.43
+        "home_multiplier": 0.74,
+        "away_multiplier": 0.44
       },
       "value_betting": null
     }

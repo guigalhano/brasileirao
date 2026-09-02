@@ -20,7 +20,7 @@
           1.54
         ],
         [
-          "Bahia",
+          "Atletico-PR",
           1.48
         ]
       ],
@@ -28,6 +28,10 @@
         [
           "Vitoria",
           0.96
+        ],
+        [
+          "Internacional",
+          1.04
         ],
         [
           "Corinthians",
@@ -38,11 +42,7 @@
           1.04
         ],
         [
-          "Internacional",
-          1.04
-        ],
-        [
-          "Vasco",
+          "Gremio",
           1.12
         ]
       ]
@@ -104,11 +104,11 @@
           40.0
         ],
         [
-          "Palmeiras",
+          "Vitoria",
           36.0
         ],
         [
-          "Vitoria",
+          "Palmeiras",
           36.0
         ],
         [
@@ -122,11 +122,11 @@
           4.0
         ],
         [
-          "Vasco",
+          "Chapecoense",
           8.0
         ],
         [
-          "Chapecoense",
+          "Vasco",
           8.0
         ],
         [

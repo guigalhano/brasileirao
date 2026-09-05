@@ -30,11 +30,11 @@
           0.96
         ],
         [
-          "Corinthians",
+          "Chapecoense",
           1.04
         ],
         [
-          "Chapecoense",
+          "Corinthians",
           1.04
         ],
         [
@@ -50,19 +50,19 @@
     "defense": {
       "top5": [
         [
-          "Flamengo",
-          0.84
-        ],
-        [
           "Palmeiras",
           0.84
         ],
         [
-          "Corinthians",
-          1.0
+          "Flamengo",
+          0.84
         ],
         [
           "Atletico-PR",
+          1.0
+        ],
+        [
+          "Corinthians",
           1.0
         ],
         [

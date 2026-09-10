@@ -1,65 +1,65 @@
 {
-  "rodada": 26,
-  "data_inicio": "05/09/2026",
-  "data_fim": "07/09/2026",
+  "rodada": 27,
+  "data_inicio": "11/09/2026",
+  "data_fim": "14/09/2026",
   "jogos": [
     {
-      "home": "Bragantino",
-      "away": "Bahia",
+      "home": "Coritiba",
+      "away": "Atletico-PR",
+      "day": "Sexta",
+      "time": "21:00"
+    },
+    {
+      "home": "Atletico-MG",
+      "away": "Fluminense",
       "day": "Sabado",
       "time": "16:00"
     },
     {
-      "home": "Sao Paulo",
-      "away": "Atletico-MG",
+      "home": "Gremio",
+      "away": "Vasco",
+      "day": "Sabado",
+      "time": "16:00"
+    },
+    {
+      "home": "Chapecoense",
+      "away": "Internacional",
+      "day": "Sabado",
+      "time": "17:00"
+    },
+    {
+      "home": "Palmeiras",
+      "away": "Sao Paulo",
       "day": "Sabado",
       "time": "18:30"
     },
     {
-      "home": "Fluminense",
-      "away": "Vasco",
+      "home": "Botafogo",
+      "away": "Bragantino",
+      "day": "Sabado",
+      "time": "20:30"
+    },
+    {
+      "home": "Santos",
+      "away": "Cruzeiro",
       "day": "Sabado",
       "time": "21:00"
     },
     {
-      "home": "Coritiba",
-      "away": "Mirassol",
-      "day": "Domingo",
-      "time": "11:00"
-    },
-    {
-      "home": "Cruzeiro",
-      "away": "Atletico-PR",
+      "home": "Mirassol",
+      "away": "Vitoria",
       "day": "Domingo",
       "time": "16:00"
     },
     {
-      "home": "Internacional",
-      "away": "Santos",
+      "home": "Flamengo",
+      "away": "Corinthians",
       "day": "Domingo",
-      "time": "16:00"
+      "time": "17:30"
     },
     {
-      "home": "Remo",
-      "away": "Flamengo",
-      "day": "Domingo",
-      "time": "16:00"
-    },
-    {
-      "home": "Botafogo",
-      "away": "Palmeiras",
-      "day": "Domingo",
-      "time": "18:30"
-    },
-    {
-      "home": "Corinthians",
-      "away": "Chapecoense",
-      "day": "Domingo",
-      "time": "19:30"
-    },
-    {
-      "home": "Vitoria",
-      "away": "Gremio",
+      "home": "Bahia",
+      "away": "Remo",
       "day": "Segunda",
       "time": "20:00"
     }

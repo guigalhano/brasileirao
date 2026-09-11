@@ -35,11 +35,23 @@ jobs:
         run: pip install requests pandas numpy scipy
 
       # ---------- 1. COLETA (tudo que vem de fora) ----------
-      # NENHUMA etapa de coleta usa continue-on-error. Era o que mantinha o
-      # workflow verde enquanto o historico de scouts congelava na rodada 21:
-      # o atualizar_historico_cartola.py quebrava todo dia com KeyError e o
-      # resultado do job continuava "success". Falha de coleta agora derruba
-      # o job -- o site fica com o dado de ontem, que e o certo a fazer.
+      # Nenhuma etapa usa continue-on-error, e isso continua proposital: era
+      # o que mantinha o workflow verde enquanto o historico de scouts
+      # congelava na rodada 21 com KeyError todo dia.
+      #
+      # Mas em setembro descobrimos que so isso era rigido demais. O
+      # football-data.co.uk devolveu 503 por dois dias e, como e o primeiro
+      # passo, derrubou o job inteiro -- inclusive o mercado do Cartola, que
+      # nao depende dele. O site ficou cinco dias parado por causa de um
+      # terceiro fora do ar.
+      #
+      # A distincao agora e feita DENTRO de cada script (scripts/lib/rede.py),
+      # que e onde se sabe o que cada erro significa:
+      #   - 503/timeout/conexao  -> tenta 3x com espera crescente; se insistir,
+      #                             segue sem aquela fonte e avisa;
+      #   - KeyError/404/schema  -> quebra alto, como antes.
+      # A rede de seguranca e o portao no fim: se a degradacao deixar o dado
+      # velho demais, ele bloqueia a publicacao.
 
       - name: Resultados novos das partidas (football-data.co.uk)
         run: python scripts/ingerir_resultados.py
@@ -88,6 +100,15 @@ jobs:
       - name: Recalibrar ataque/defesa com o xG do WhoScored
         if: steps.resultados.outputs.mudou == 'true'
         run: python scripts/recalibrar_com_whoscored.py --repo-dir .
+
+      # O Elo-Odds alimenta a aba Preditor pelo bloco var ELO do index.html.
+      # Ate setembro/2026 o data/elo_odds_final.json era gerado a mao e ficou
+      # parado em 24/07: o Flamengo estava 40 pontos de Elo defasado, numa
+      # escala onde o mando de campo inteiro vale 60. Leva ~37s (faz busca em
+      # grade), por isso so roda quando entrou resultado novo.
+      - name: Reajustar o Elo-Odds
+        if: steps.resultados.outputs.mudou == 'true'
+        run: python scripts/elo_odds_model.py
 
       # ---------- 3. SINAIS POR JOGADOR ----------
       # PRECISA vir antes do build_index.py: e este script que grava o

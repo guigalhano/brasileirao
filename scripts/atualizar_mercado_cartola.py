@@ -14,8 +14,10 @@ import sys
 import unicodedata
 from pathlib import Path
 
-import requests
 import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.rede import FonteIndisponivel, buscar_json
 
 MERCADO_URL = "https://api.cartolafc.globo.com/atletas/mercado"
 HEADERS = {
@@ -44,9 +46,8 @@ def normalize(s):
 
 
 def fetch_mercado():
-    resp = requests.get(MERCADO_URL, headers=HEADERS, timeout=30)
-    resp.raise_for_status()
-    return resp.json()
+    return buscar_json(MERCADO_URL, headers=HEADERS, timeout=30,
+                       descricao="API do Cartola (mercado)")
 
 
 def build_current_players(mercado):
@@ -109,9 +110,12 @@ def main():
     print(f"Buscando {MERCADO_URL} ...")
     try:
         mercado = fetch_mercado()
-    except Exception as e:
-        print(f"ERRO ao buscar o mercado do Cartola: {e}")
-        sys.exit(1)
+    except FonteIndisponivel as e:
+        # A API caiu. O site segue com o mercado da coleta anterior em vez de
+        # nao atualizar nada -- ver o cabecalho de lib/rede.py.
+        print(f"[FONTE FORA DO AR] {e}")
+        print("Mantendo o mercado da ultima coleta. Nada foi reescrito.")
+        sys.exit(0)
 
     DATA_DIR.mkdir(exist_ok=True)
     with open(DATA_DIR / "mercado_cartola_raw.json", "w", encoding="utf-8") as f:

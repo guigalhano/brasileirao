@@ -634,7 +634,7 @@
       <label class="bp-picklabel" style="margin-top:10px;display:block;">Criterio de escolha</label>
       <select class="bp-select" id="ct-criteria-input">
         <option value="proximo_jogo">Previsao pro proximo jogo (cruza com o modelo de partidas)</option>
-        <option value="media">Media da temporada (18 rodadas)</option>
+        <option value="media">Media da temporada (26 rodadas)</option>
         <option value="ult5">Forma recente (media das ultimas 5 rodadas)</option>
         <option value="consistencia">Consistencia (media alta, menor variacao)</option>
         <option value="combinado">Combinado (65% previsao do modelo + 35% media dos outros 3 criterios)</option>
@@ -685,7 +685,7 @@
 
     <div class="bh-note">
       <b>Novo:</b> "Previsao pro proximo jogo" cruza o historico de cada jogador (media das ultimas 5 rodadas) com o modelo de partidas (Dixon-Coles) do confronto que o time dele vai enfrentar na rodada 21 — atacantes/meias ganham peso se o time tem xG alto no jogo; goleiros/zagueiros ganham peso se a chance de nao sofrer gol (SG) e alta; lateral e tecnico ficam no meio-termo. Fator limitado entre 0.5x e 1.8x pra nao distorcer com poucos dados.<br>
-      Base: dados oficiais da API do Cartola FC (mercado.json, rodada 19, 2026), enriquecida com o historico completo das 18 rodadas ja jogadas (repositorio henriquepgomide/caRtola no GitHub) — 569 jogadores com pelo menos 1 jogo, cobrindo os 20 times. "ult5" = media das ultimas 5 rodadas de cada jogador; consistencia penaliza jogadores com pontuacao muito variavel. Jogadores em duvida/suspenso/contundido ficam de fora por padrao (ative o filtro acima pra incluir mesmo assim; eles aparecem marcados em vermelho).<br>
+      Base: dados oficiais da API do Cartola FC (mercado.json, rodada 27, 2026), enriquecida com o historico completo das 26 rodadas ja jogadas (repositorio henriquepgomide/caRtola no GitHub) — 619 jogadores com pelo menos 1 jogo, cobrindo os 20 times. "ult5" = media das ultimas 5 rodadas de cada jogador; consistencia penaliza jogadores com pontuacao muito variavel. Jogadores em duvida/suspenso/contundido ficam de fora por padrao (ative o filtro acima pra incluir mesmo assim; eles aparecem marcados em vermelho).<br>
       Montagem por algoritmo guloso (maior media por posicao dentro do orcamento) &mdash; nao e um otimizador exato, e uma aproximacao rapida.<br>
       <b>Concentracao de gols e assistencias:</b> no criterio "Ameaca real de gol e assist.", 475 dos 569 jogadores do elenco (antes eram so 46, e so pra gols) agora recebem um ajuste baseado na fatia dos gols/assistencias do proprio TIME que eles concentraram na temporada -- dados reais do FBRef (via LanusStats), casados por nome+time. Cobre ATA, MEI e LAT pra assistencias (antes so MEI, e so quando havia dado de playmaking). Ambos os pesos (6x) sao heuristica, nao coeficiente calibrado por regressao como o do xG/playmaking -- mas o baseline (0.10 pra ambos) agora vem da media real observada nos dados, nao de um chute.<br><br>
       <b>Estatisticas por posicao (atualizado 18/07):</b> testamos cada sinal contra a media real de pontos de cada jogador (correlacao de Pearson) antes de deixar no ar. Validaram bem e estao ativos: goalShare (ATA/MEI, r=0.686), assistShare (ATA/MEI/LAT, r=0.441), playmaking (MEI, r=0.380), SoT/90 -- finalizacoes no alvo (ATA/MEI, r=0.498), e onGA/90 -- gols sofridos com o jogador em campo, proxy do scout SG (ZAG/LAT/GOL, r=-0.483). Testamos e REMOVEMOS por nao terem sinal real: cruzamentos/90 pra LAT (r=-0.035), desarmes+intercep/90 pra ZAG (r=0.176), faltas cometidas (r=-0.030), cartao amarelo (r=-0.093) e impedimento (r=0.087) -- nenhum desses passou no teste, mesmo alguns sendo scouts oficiais do Cartola (cartao e falta cometida sao negativos na pontuacao oficial, mas nao correlacionaram aqui, provavelmente porque titulares regulares cometem mais faltas so por jogarem mais minutos, cancelando o efeito).
@@ -899,8 +899,8 @@
   </div>
 
   <div class="panel" id="nextMatchesPanel">
-    <div class="panel-title">Pr&oacute;ximos jogos &middot; Rodada 22</div>
-    <div class="panel-desc">Previs&otilde;es do nosso modelo de partidas (Dixon-Coles calibrado) pros 10 jogos da rodada 21 (29-30/07). <b>6 dos 10 jogos j&aacute; t&ecirc;m odds reais de mercado</b> (The Odds API, m&eacute;dia de ~40 casas por jogo, com Pinnacle) &mdash; nesses, mostramos tamb&eacute;m a diverg&ecirc;ncia modelo-vs-mercado. Os outros 4 (Botafogo x Gr&ecirc;mio, S&atilde;o Paulo x Santos, Atl&eacute;tico-MG x Bragantino, Chapecoense x Vasco) ainda n&atilde;o tiveram odds abertas pelas casas &mdash; ser&atilde;o preenchidos quando abrirem. Isso n&atilde;o &eacute; recomenda&ccedil;&atilde;o de aposta: como vimos na aba anterior, diverg&ecirc;ncia grande entre modelo e mercado tende a refletir erro do modelo mais do que edge real, especialmente sem valida&ccedil;&atilde;o fora da amostra.<br><br>&Iacute;ndice de concentra&ccedil;&atilde;o de gols indispon&iacute;vel pra esta rodada (n&atilde;o recalculado ainda).</div>
+    <div class="panel-title">Pr&oacute;ximos jogos &middot; Rodada 27</div>
+    <div class="panel-desc">Previs&otilde;es do nosso modelo de partidas (Dixon-Coles calibrado) pros 10 jogos da rodada 27 (11/09/2026 a 14/09/2026). Nenhum jogo desta rodada tem odds de mercado coletadas ainda, ent&atilde;o a coluna de diverg&ecirc;ncia modelo-vs-mercado fica vazia &mdash; ela depende do secret ODDS_API_KEY estar configurado (veja scripts/atualizar_odds_mercado.py). Isso n&atilde;o &eacute; recomenda&ccedil;&atilde;o de aposta: como vimos na aba anterior, diverg&ecirc;ncia grande entre modelo e mercado tende a refletir erro do modelo mais do que edge real.</div>
     <div id="nextMatchesCards"></div>
   </div>
 
@@ -1399,7 +1399,7 @@
   // ================= PREDICTOR (Elo-Odds + Dixon-Coles) =================
   var RATINGS = {"home_advantage_log": 0.3337708618838051, "teams": {"Flamengo": {"attack": 0.5143, "defense": 0.2726}, "Palmeiras": {"attack": 0.1283, "defense": 0.3024}, "Botafogo": {"attack": 0.2773, "defense": -0.1667}, "Mirassol": {"attack": 0.2307, "defense": 0.0459}, "Bahia": {"attack": 0.3116, "defense": -0.0606}, "Cruzeiro": {"attack": 0.2415, "defense": 0.2262}, "Fluminense": {"attack": 0.3168, "defense": 0.0912}, "Atletico-PR": {"attack": 0.3704, "defense": 0.2916}, "Santos": {"attack": 0.1842, "defense": -0.0756}, "Atletico-MG": {"attack": 0.3587, "defense": -0.0099}, "Gremio": {"attack": 0.0422, "defense": -0.0959}, "Bragantino": {"attack": 0.3755, "defense": 0.1924}, "Vasco": {"attack": 0.4333, "defense": 0.1778}, "Internacional": {"attack": 0.4245, "defense": 0.0565}, "Sao Paulo": {"attack": 0.1881, "defense": 0.0779}, "Coritiba": {"attack": -0.0232, "defense": -0.0962}, "Remo": {"attack": 0.1218, "defense": -0.1099}, "Corinthians": {"attack": -0.2371, "defense": 0.2583}, "Chapecoense": {"attack": 0.0484, "defense": -0.254}, "Vitoria": {"attack": 0.0338, "defense": -0.0364}}};
 
-  var ELO = {"omega": 60, "classes": ["A", "D", "H"], "coef": [-0.004096078497766547, -0.0003099761157177017, 0.0044060546134710695], "intercept": [-0.07924748736514504, -0.11358131727126212, 0.1928288046364261], "ratings": {"Flamengo": 1185.88, "Palmeiras": 1110.68, "Cruzeiro": 1106.7, "Corinthians": 1105.46, "Fluminense": 1084.4, "Sao Paulo": 1081.25, "Bragantino": 1075.17, "Vasco": 1071.82, "Internacional": 1069.09, "Bahia": 1063.12, "Santos": 1059.54, "Atletico-PR": 1048.33, "Atletico-MG": 1043.17, "Botafogo": 1039.79, "Gremio": 1026.76, "Mirassol": 1026.5, "Coritiba": 1008.49, "Remo": 995.49, "Vitoria": 986.34, "Chapecoense": 922.12}};
+  var ELO = {"omega": 60, "classes": ["A", "D", "H"], "coef": [-0.004101077178933588, -0.0002973498832979117, 0.004398427062234125], "intercept": [-0.07797853769767628, -0.1118350347945703, 0.18981357249238653], "ratings": {"Flamengo": 1226.55, "Palmeiras": 1148.3, "Bragantino": 1096.3, "Vasco": 1090.76, "Cruzeiro": 1090.43, "Corinthians": 1081.98, "Fluminense": 1077.13, "Bahia": 1075.47, "Internacional": 1067.19, "Sao Paulo": 1063.6, "Santos": 1051.33, "Atletico-PR": 1047.05, "Atletico-MG": 1040.41, "Botafogo": 1035.48, "Mirassol": 1024.44, "Gremio": 1010.26, "Vitoria": 1006.42, "Remo": 978.38, "Coritiba": 977.59, "Chapecoense": 921.0}};
 
   function eloOddsPredict(home, away){
     var H = ELO.ratings[home], A = ELO.ratings[away];
@@ -2375,7 +2375,7 @@
   // manualmente a cada nova temporada/rodada, já que o site não recalcula
   // isso ao vivo. No inicio de uma temporada nova (poucos jogos), o peso
   // do historico sobe automaticamente pela formula.
-  var JOGOS_ATUAIS_APROX = 18;
+  var JOGOS_ATUAIS_APROX = 26;
   var K_SHRINKAGE = 10;
   function mediaAjustada(p){
     if (typeof p.media2025 !== 'number') return p.media; // sem dado do ano anterior, usa so a media atual

@@ -4,8 +4,8 @@ Modelo preditivo do Campeonato Brasileiro Série A 2026 + ferramenta de escalaç
 construído junto com o Claude ao longo de várias sessões. Este README é o mapa de tudo que existe
 no repositório e como cada peça se encaixa.
 
-**Página ao vivo** (depois de ativar o GitHub Pages, veja a seção "Publicar no GitHub Pages" abaixo):
-`https://SEU-USUARIO.github.io/NOME-DO-REPO/`
+**Página ao vivo**: https://guigalhano.github.io/brasileirao/ — publicada sozinha a cada push
+(GitHub Pages a partir do `main`), e o pipeline dá push 3x por dia.
 
 ## Estrutura do repositório
 
@@ -24,6 +24,9 @@ Duas partes que se complementam:
 
 1. **Elo-Odds** (resultado da partida: vitória/empate/derrota) — rating Elo atualizado pelas
    odds de fechamento do mercado em vez do placar (metodologia de Wunderlich & Memmert, 2018).
+   Reajustado automaticamente a cada rodada nova (`scripts/elo_odds_model.py`); até setembro/2026
+   o `data/elo_odds_final.json` era gerado à mão e ficou parado em 24/07, com o Flamengo 40 pontos
+   de Elo defasado — numa escala em que o mando de campo inteiro vale 60.
    Validado fora da amostra: log-loss 1.024 contra 1.001 do próprio mercado — o melhor modelo
    não-mercado testado, superando Dixon-Coles puro, Elo-Resultado, Elo-Gols e um Performance
    Rating à la soccerstats.
@@ -92,15 +95,16 @@ Achados relevantes ao longo do processo (todos com validação estatística, nã
 
 | Fonte | O que fornece | Como é obtida |
 |---|---|---|
-| football-data.co.uk (BRA.csv) | Resultados + odds 1X2, 2012-2026 | Upload manual (ver `data/matches_2012_2026.csv`) |
-| Cartola FC (API oficial) | Preço, média, status, scouts por jogador | `scripts/coletar_historico_cartola.py` (rodar local ou via Actions) |
+| football-data.co.uk (BRA.csv) | Resultados + odds **de fechamento** 1X2, 2012-2026 | `scripts/ingerir_resultados.py`, automático |
+| Cartola FC (API oficial) | Preço, média, status, scouts por jogador, confrontos da rodada | `atualizar_mercado_cartola.py`, `atualizar_historico_cartola.py`, `atualizar_confrontos_cartola.py` — todos automáticos |
+| The Odds API | Odds **pré-jogo** da rodada que vem (coluna de edge) | `scripts/atualizar_odds_mercado.py` — opcional, precisa do secret `ODDS_API_KEY` |
 | Transfermarkt (transfermarkt-scraper + endpoint de valor de mercado) | Valor de mercado e desempenho por jogador | `scripts/coletar_transfermarkt.py` + `scripts/coletar_valores_jogadores.py` (rodar local, ver aviso abaixo) |
 | CBF / ESPN | Calendário completo da temporada | Coletado manualmente via busca, embutido no `index.html` |
 
-**Aviso importante sobre as APIs do Cartola e do Transfermarkt**: esses domínios são bloqueados
-no sandbox do Claude (restrição de rede do próprio ambiente), então os scripts de coleta
-precisam rodar localmente (no seu computador) ou no GitHub Actions (que tem internet irrestrita).
-Veja a seção de automação abaixo.
+**Sobre rodar os coletores**: todos funcionam no GitHub Actions, que é onde o pipeline roda de
+verdade. A API do Cartola (`api.cartolafc.globo.com`) também responde localmente — o aviso antigo
+de que estaria bloqueada no ambiente do Claude não vale mais, foi verificado em setembro/2026. O
+Transfermarkt segue sendo coleta manual, mas por peso (~1000+ requisições), não por bloqueio.
 
 ## Rodando os scripts localmente
 
@@ -144,10 +148,29 @@ A ordem importa em dois pontos: `compute_advanced_signals.py` **antes** do `buil
 (senão o site publica os sinais da execução anterior), e `update_next_matches_dynamic.py`
 **antes** do `generate_advanced_analytics.py` (senão a aba de análises some).
 
-**Nenhuma etapa de coleta usa `continue-on-error`** — e isso é deliberado. Era exatamente o que
-mantinha o workflow verde enquanto o `atualizar_historico_cartola.py` quebrava todo dia com
-`KeyError` e o histórico de scouts congelava na rodada 21. Falha de coleta agora derruba o job;
-o site fica com o dado de ontem, que é o comportamento certo.
+**Falha de terceiro não é a mesma coisa que bug** — e a distinção custou caro para ser aprendida.
+Primeiro o pipeline usava `continue-on-error`, e isso mantinha o Actions verde enquanto o
+histórico de scouts congelava na rodada 21 com `KeyError` todo dia. Removemos. Aí, em setembro, o
+football-data.co.uk devolveu HTTP 503 por dois dias e, como é o primeiro passo, derrubou o job
+inteiro — inclusive o mercado do Cartola, que não depende dele. **O site ficou 5 dias parado por
+causa de um servidor de terceiro fora do ar.**
+
+A distinção agora é feita dentro de cada script, via [`scripts/lib/rede.py`](scripts/lib/rede.py),
+que é onde se sabe o que cada erro significa:
+
+| Sintoma | O que é | Resposta |
+|---|---|---|
+| 503, 429, timeout, conexão recusada | o terceiro caiu | tenta 3x com espera crescente; se insistir, segue sem aquela fonte e avisa |
+| 404, 401, 403 | URL ou chave errada | quebra alto, sem retentar (não melhora tentando) |
+| `KeyError`, coluna sumida, time desconhecido, JSON inválido | contrato mudou ou nosso código está errado | quebra alto |
+
+Degradar não é publicar qualquer coisa: a rede de segurança é o portão no fim. Se a degradação
+deixar o dado velho demais, `verificar_integridade.py` bloqueia a publicação.
+
+**O portão confere valor, não presença.** Ele recusa publicar se: a tabela de pontuação do Cartola
+divergir da oficial; os `RATINGS` embutidos no `index.html` divergirem do modelo; o rótulo da
+rodada, o top 3 do cabeçalho ou `JOGOS_ATUAIS_APROX` estiverem defasados; faltar análise em algum
+confronto; ou os resultados atrasarem mais de 2 rodadas.
 
 ### O que ainda não é automático
 

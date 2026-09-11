@@ -31,9 +31,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-import requests
-
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.rede import FonteIndisponivel, buscar_json
 from lib.teams import canonical_or_none
 
 BASE_URL = "https://api.cartolafc.globo.com"
@@ -57,9 +56,8 @@ JOGOS_POR_RODADA = 10
 
 
 def buscar_partidas():
-    resp = requests.get(f"{BASE_URL}/partidas", headers=HEADERS, timeout=30)
-    resp.raise_for_status()
-    return resp.json()
+    return buscar_json(f"{BASE_URL}/partidas", headers=HEADERS, timeout=30,
+                       descricao="API do Cartola (partidas)")
 
 
 def parse_data(txt):
@@ -135,9 +133,11 @@ def main():
     print(f"Buscando {BASE_URL}/partidas ...")
     try:
         doc = buscar_partidas()
-    except Exception as e:
-        print(f"ERRO ao buscar as partidas: {e}")
-        return 1
+    except FonteIndisponivel as e:
+        print(f"[FONTE FORA DO AR] {e}")
+        print("Mantendo os confrontos da rodada atual. Se a rodada tiver "
+              "virado, a proxima execucao corrige.")
+        return 0
 
     novo, problemas = montar(doc)
     if problemas:

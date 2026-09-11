@@ -194,6 +194,17 @@ def checar_blocos_do_index(repo, rodada, rel):
                          f"vai prever com modelo velho. Rode "
                          f"scripts/sincronizar_index.py")
 
+    # Constante que o proprio comentario no codigo mandava atualizar a mao a
+    # cada rodada -- e que ficou em 18 ate a rodada 26. Agora o
+    # sincronizar_index.py deriva, e aqui conferimos que derivou.
+    from sincronizar_index import rodadas_jogadas
+    jogadas = rodadas_jogadas(repo)
+    m_jogos = re.search(r"var JOGOS_ATUAIS_APROX = (\d+)", html)
+    if jogadas and m_jogos and int(m_jogos.group(1)) != jogadas:
+        rel.erro(f"JOGOS_ATUAIS_APROX esta {m_jogos.group(1)} mas a temporada tem "
+                 f"{jogadas} rodadas -- o peso da media de 2025 no mediaAjustada() "
+                 f"fica errado. Rode scripts/sincronizar_index.py")
+
     if not re.search(rf"<div class=\"bh-sub\">[^<]*?&middot; RODADA {rodada}\b", html):
         atual = re.search(r"<div class=\"bh-sub\">[^<]*?&middot; RODADA (\d+)", html)
         rel.erro(f"o cabecalho do site diz 'RODADA {atual.group(1) if atual else '?'}' "

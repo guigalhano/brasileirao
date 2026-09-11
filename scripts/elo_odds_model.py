@@ -29,8 +29,14 @@ df["result"] = np.where(df.home_goals > df.away_goals, "H", np.where(df.home_goa
 teams = sorted(set(df.home_team) | set(df.away_team))
 
 
-def run_elo(df, k, omega, mode="result", k0=None, lam=None, c=10.0, d=400.0):
-    """mode in {'result','goals','odds'}. Returns array of rating_diff (Hi - Ai + omega) BEFORE each match."""
+def run_elo(df, k, omega, mode="result", k0=None, lam=None, c=10.0, d=400.0,
+            retornar_ratings=False):
+    """mode in {'result','goals','odds'}. Returns array of rating_diff (Hi - Ai + omega) BEFORE each match.
+
+    Com retornar_ratings=True devolve (diffs, ratings_finais) -- e o que o
+    export para data/elo_odds_final.json precisa. O default nao muda nada para
+    quem ja chamava esta funcao.
+    """
     ratings = {t: 1000.0 for t in teams}
     diffs = np.zeros(len(df))
     for i, row in df.iterrows():
@@ -54,6 +60,8 @@ def run_elo(df, k, omega, mode="result", k0=None, lam=None, c=10.0, d=400.0):
             step = k
         ratings[row.home_team] = H + step * (aH - eH)
         ratings[row.away_team] = A + step * (aA - eA)
+    if retornar_ratings:
+        return diffs, ratings
     return diffs
 
 
@@ -148,3 +156,55 @@ print("\n" + "=" * 60)
 print(f"{'Modelo':<26}{'Parametro':<18}{'Log-loss (menor=melhor)'}")
 for name, param, ll in sorted(results_summary, key=lambda x: x[2]):
     print(f"{name:<26}{str(param):<18}{ll:.4f}")
+
+
+# ---------------------------------------------------------------------------
+# EXPORT para data/elo_odds_final.json
+#
+# Ate setembro/2026 este arquivo era gerado a mao: o script so imprimia a
+# comparacao de modelos e o JSON ficou parado em 24/07 enquanto o index.html
+# usava aqueles ratings na aba Preditor. Mesmo defeito que o var RATINGS teve
+# -- modelo congelado alimentando a aba que abre primeiro.
+#
+# Reajusta o logit no conjunto INTEIRO (nao so no fit_mask): o split
+# treino/teste acima existe para medir log-loss fora da amostra, mas o modelo
+# que vai pro site deve usar tudo que ha de informacao.
+# ---------------------------------------------------------------------------
+if __name__ == "__main__":
+    import json
+    import sys as _sys
+    from sklearn.linear_model import LogisticRegression
+
+    _sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from lib.teams import CANONICAL
+
+    diffs_final, ratings_final = run_elo(df, k=k_odds, omega=60, mode="odds",
+                                         retornar_ratings=True)
+    valido = ~pd.isna(result_arr)
+    clf_final = LogisticRegression(max_iter=1000)
+    clf_final.fit(diffs_final[valido].reshape(-1, 1), result_arr[valido])
+
+    destino = DATA / "elo_odds_final.json"
+    anterior = json.loads(destino.read_text(encoding="utf-8")) if destino.exists() else {}
+    doc = {
+        "method": anterior.get(
+            "method", "Elo driven by de-vigged closing odds (Wunderlich & Memmert 2018)"),
+        "note": anterior.get("note", ""),
+        "omega_home_advantage": 60,
+        "k": int(k_odds),
+        "logit_classes": [str(c) for c in clf_final.classes_],
+        "logit_coef": [float(c[0]) for c in clf_final.coef_],
+        "logit_intercept": [float(b) for b in clf_final.intercept_],
+        # So os 20 da Serie A atual. O df cobre 2012-2026, entao ratings_final
+        # traz tambem Portuguesa, Figueirense e companhia -- times que o site
+        # nem lista, e que so inchariam o bloco embutido no index.html.
+        "team_ratings": {t: round(float(r), 2) for t, r in sorted(
+            ratings_final.items(), key=lambda kv: -kv[1]) if t in CANONICAL},
+        "n_jogos": int(valido.sum()),
+        "ultimo_jogo": str(df.date.max().date()),
+    }
+    destino.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + chr(10),
+                       encoding="utf-8")
+    print(f"[OK] {destino.name} atualizado: k={k_odds}, "
+          f"{len(doc['team_ratings'])} times, {doc['n_jogos']} jogos, "
+          f"ultimo {doc['ultimo_jogo']}")

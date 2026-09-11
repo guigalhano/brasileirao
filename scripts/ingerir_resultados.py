@@ -25,9 +25,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-import requests
-
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.rede import FonteIndisponivel, buscar
 from lib.teams import canonical, UnknownTeamError
 
 FONTE = "https://www.football-data.co.uk/new/BRA.csv"
@@ -53,8 +52,7 @@ def _num(v):
 
 
 def baixar():
-    r = requests.get(FONTE, timeout=60)
-    r.raise_for_status()
+    r = buscar(FONTE, timeout=60, descricao="football-data.co.uk")
     texto = r.content.decode("utf-8-sig", errors="replace")
     return list(csv.DictReader(io.StringIO(texto)))
 
@@ -109,7 +107,20 @@ def main():
           f"(2026: {sum(1 for r in existentes if r['season'] == '2026')})")
 
     print(f"Baixando {FONTE} ...")
-    remotos, ignoradas = normalizar(baixar(), args.season)
+    try:
+        remotos, ignoradas = normalizar(baixar(), args.season)
+    except FonteIndisponivel as e:
+        # A fonte caiu. Isso NAO derruba o pipeline: entre 08 e 09/09 um 503
+        # de dois dias aqui travou tambem o mercado do Cartola, que nao
+        # depende desta fonte, e o site ficou cinco dias parado.
+        # Seguir sem resultados novos e seguro porque o
+        # verificar_integridade.py bloqueia a publicacao se o atraso passar
+        # de MAX_RODADAS_ATRASO -- degradar nao e publicar qualquer coisa.
+        print(f"[FONTE FORA DO AR] {e}")
+        print("Seguindo sem resultados novos. Os ratings ficam com os dados "
+              "da ultima coleta; se o atraso crescer, o portao de integridade "
+              "impede a publicacao.")
+        return 0
     if ignoradas:
         print(f"[ERRO] {len(ignoradas)} linha(s) da temporada {args.season} "
               f"com time desconhecido:")

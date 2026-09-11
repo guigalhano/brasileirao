@@ -19,7 +19,15 @@ foram ficando para tras sem que nada acusasse:
      codigo: "as of 2026-07-27, pos-rodada 20". Ficou ali enquanto o site
      publicava a rodada 23.
 
-  3. O rotulo "RODADA N" do cabecalho. O set_round_label() do lib/index_data.py
+  3. JOGOS_ATUAIS_APROX -- quantas rodadas a temporada atual ja tem, usado
+     pelo mediaAjustada() para decidir quanto peso a media de 2025 ainda
+     merece (peso = K/(K+jogos), K=10). O proprio comentario no codigo dizia
+     "precisa ser atualizado manualmente a cada nova temporada/rodada", e
+     ninguem atualizava: ficou em 18 ate a rodada 26, dando 35,7% de peso a
+     2025 quando o certo era 27,8%. Constante que envelhece sozinha e bug com
+     data marcada; agora sai do proprio historico.
+
+  4. O rotulo "RODADA N" do cabecalho. O set_round_label() do lib/index_data.py
      so trocava o titulo "Proximos jogos - Rodada N" e um comentario de JS; o
      cabecalho principal nao era tocado por ninguem.
 
@@ -41,6 +49,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lib.fixtures import load_fixtures
+from lib.index_data import read_data
 from lib.teams import canonical_or_none
 
 VITORIA, EMPATE = 3, 1
@@ -72,6 +81,59 @@ def classificacao(repo, season="2026"):
     # somadas aqui, entao usamos pontos > saldo > gols pro -- suficiente para
     # o top 3 do cabecalho e explicito sobre o que faz.
     return sorted(tab.items(), key=lambda kv: (-kv[1]["pts"], -kv[1]["sg"], -kv[1]["gp"]))
+
+
+def rodadas_jogadas(repo):
+    """Quantas rodadas a temporada atual ja tem no historico de scouts."""
+    caminho = repo / "data" / "cartola_historico_2026_completo.csv"
+    if not caminho.exists():
+        return None
+    with caminho.open(encoding="utf-8") as f:
+        rodadas = {int(r["rodada"]) for r in csv.DictReader(f) if r["rodada"]}
+    return max(rodadas) if rodadas else None
+
+
+def descricao_proximos_jogos(repo, rodada, meta):
+    """Texto do painel "Proximos Jogos", derivado do estado real.
+
+    Estava escrito a mao e congelou: descrevia "os 10 jogos da rodada 21
+    (29-30/07)" e afirmava que "6 dos 10 ja tem odds reais de mercado",
+    listando Botafogo x Gremio e mais tres como pendentes -- enquanto o site
+    publicava a rodada 27 e nenhum jogo tinha odds. Numero em prosa envelhece
+    igual a numero em constante; a diferenca e que ninguem confere prosa.
+    """
+    jogos = read_data(repo / "index.html")
+    com_odds = [j for j in jogos if j.get("market")]
+    periodo = meta.get("data_inicio", "")
+    if meta.get("data_fim") and meta["data_fim"] != periodo:
+        periodo = f"{periodo} a {meta['data_fim']}"
+
+    texto = (f"Previs&otilde;es do nosso modelo de partidas (Dixon-Coles "
+             f"calibrado) pros {len(jogos)} jogos da rodada {rodada}")
+    if periodo:
+        texto += f" ({periodo})"
+    texto += ". "
+
+    if not com_odds:
+        texto += ("Nenhum jogo desta rodada tem odds de mercado coletadas ainda, "
+                  "ent&atilde;o a coluna de diverg&ecirc;ncia modelo-vs-mercado "
+                  "fica vazia &mdash; ela depende do secret ODDS_API_KEY estar "
+                  "configurado (veja scripts/atualizar_odds_mercado.py). ")
+    elif len(com_odds) == len(jogos):
+        texto += ("Todos t&ecirc;m odds reais de mercado, ent&atilde;o mostramos "
+                  "tamb&eacute;m a diverg&ecirc;ncia modelo-vs-mercado. ")
+    else:
+        faltando = [f"{j['home']} x {j['away']}" for j in jogos if not j.get("market")]
+        texto += (f"<b>{len(com_odds)} dos {len(jogos)} jogos t&ecirc;m odds reais "
+                  f"de mercado</b> &mdash; nesses, mostramos tamb&eacute;m a "
+                  f"diverg&ecirc;ncia modelo-vs-mercado. Os outros "
+                  f"({', '.join(faltando)}) ainda n&atilde;o tiveram odds abertas "
+                  f"pelas casas. ")
+
+    texto += ("Isso n&atilde;o &eacute; recomenda&ccedil;&atilde;o de aposta: como "
+              "vimos na aba anterior, diverg&ecirc;ncia grande entre modelo e "
+              "mercado tende a refletir erro do modelo mais do que edge real.")
+    return texto
 
 
 def bloco_ratings(repo):
@@ -116,7 +178,7 @@ def main():
     index_path = repo / "index.html"
     html = index_path.read_text(encoding="utf-8")
 
-    rodada, _, _ = load_fixtures(repo / "data" / "proximos_jogos.json")
+    rodada, _, meta = load_fixtures(repo / "data" / "proximos_jogos.json")
 
     # 1. Ratings do Dixon-Coles usados pela aba Preditor
     ratings_js, fonte_ratings = bloco_ratings(repo)
@@ -148,7 +210,48 @@ def main():
           + ", ".join(f"{i}o {t} {d['pts']}pts" for i, (t, d) in enumerate(top3, 1))
           + f" ({jogos} jogos)")
 
-    # 4. Rotulo da rodada no cabecalho
+    # 4. Descricao do painel "Proximos Jogos"
+    index_path.write_text(html, encoding="utf-8")   # read_data le do disco
+    desc = descricao_proximos_jogos(repo, rodada, meta)
+    html = index_path.read_text(encoding="utf-8")
+    inicio = html.find('id="nextMatchesPanel"')
+    if inicio == -1:
+        raise SincronizacaoError("nao encontrei o painel nextMatchesPanel")
+    ini_desc = html.find('<div class="panel-desc">', inicio)
+    fim_desc = html.find("</div>", ini_desc)
+    if ini_desc == -1 or fim_desc == -1:
+        raise SincronizacaoError("nao encontrei a descricao do painel de proximos jogos")
+    html = (html[:ini_desc] + '<div class="panel-desc">' + desc + html[fim_desc:])
+    print(f"Descricao do painel <- rodada {rodada}, "
+          f"{len([j for j in read_data(index_path) if j.get('market')])} com odds")
+
+    # 5. Peso do historico da temporada anterior (mediaAjustada)
+    jogos = rodadas_jogadas(repo)
+    if jogos:
+        html, n = re.subn(r"(var JOGOS_ATUAIS_APROX = )\d+", rf"\g<1>{jogos}",
+                          html, count=1)
+        if n != 1:
+            raise SincronizacaoError("nao encontrei JOGOS_ATUAIS_APROX no index.html")
+        print(f"JOGOS_ATUAIS_APROX <- {jogos} rodadas jogadas "
+              f"(peso da temporada 2025: {100 * 10 / (10 + jogos):.0f}%)")
+
+    # 6. Numeros soltos em prosa que descrevem o estado atual. Sao poucos e
+    # tem formato fixo, entao da pra derivar em vez de deixar envelhecer:
+    # o rotulo do criterio "media" dizia "18 rodadas" na rodada 26, e o texto
+    # da base citava "rodada 19" e "569 jogadores" (hoje sao outros numeros).
+    n_jogadores = len(re.findall(r"\{name:", html))
+    substituicoes = [
+        (r"(Media da temporada \()\d+( rodadas\))", rf"\g<1>{jogos}\g<2>"),
+        (r"(mercado\.json, rodada )\d+", rf"\g<1>{rodada}"),
+        (r"(historico completo das )\d+( rodadas ja jogadas)", rf"\g<1>{jogos}\g<2>"),
+        (r"(— )\d+( jogadores com pelo menos 1 jogo)", rf"\g<1>{n_jogadores}\g<2>"),
+    ]
+    for padrao, troca in substituicoes:
+        html = re.sub(padrao, troca, html)
+    print(f"Prosa <- rodada {rodada}, {jogos} rodadas jogadas, "
+          f"{n_jogadores} jogadores")
+
+    # 7. Rotulo da rodada no cabecalho
     html, n = re.subn(r"(<div class=\"bh-sub\">[^<]*?&middot; RODADA )\d+",
                       rf"\g<1>{rodada}", html, count=1)
     if n != 1:

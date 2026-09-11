@@ -112,12 +112,32 @@ def write_data(index_path, jogos, *, merge=True):
 
 
 def set_round_label(index_path, rodada):
-    """Atualiza o titulo 'Proximos jogos - Rodada N' e o comentario do bloco."""
+    """Atualiza o titulo 'Proximos jogos - Rodada N' e o comentario do bloco.
+
+    O titulo do painel esta escrito com ENTIDADE HTML ("Pr&oacute;ximos jogos
+    &middot; Rodada 22"), nao com o caractere acentuado. A versao anterior
+    procurava so "Próximos jogos" literal, entao nunca casava -- e re.sub nao
+    reclama quando nao encontra nada. Resultado: o painel ficou congelado na
+    rodada 22 enquanto o resto do site ja publicava a 27, sem nenhum sinal.
+
+    Agora cobre as duas formas e LEVANTA ERRO se nao substituir nada. Um
+    rotulo que falha em silencio e como nao ter rotulo.
+    """
     index_path = Path(index_path)
     html = index_path.read_text(encoding="utf-8")
-    html = re.sub(r"Próximos jogos.*?Rodada \d+",
-                  f"Próximos jogos · Rodada {rodada}", html)
+
+    # Aceita "Próximos"/"Proximos"/"Pr&oacute;ximos" e o separador em entidade.
+    padrao_titulo = r"(Pr(?:ó|o|&oacute;)ximos jogos\s*(?:·|&middot;)\s*Rodada )\d+"
+    html, n_titulo = re.subn(padrao_titulo, rf"\g<1>{rodada}", html)
+
     # O comentario do JS ficou congelado em "rodada 19" por varias rodadas.
-    html = re.sub(r"(// ---- Próximos jogos \(.*?\), )rodada \d+",
-                  rf"\g<1>rodada {rodada}", html)
+    padrao_comentario = r"(// ---- Pr(?:ó|o)ximos jogos \(.*?\), )rodada \d+"
+    html, n_comentario = re.subn(padrao_comentario, rf"\g<1>rodada {rodada}", html)
+
+    if not n_titulo:
+        raise IndexDataError(
+            "nao encontrei o titulo 'Proximos jogos - Rodada N' no index.html; "
+            "o rotulo ficaria numa rodada antiga sem avisar")
+
     index_path.write_text(html, encoding="utf-8")
+    return n_titulo + n_comentario

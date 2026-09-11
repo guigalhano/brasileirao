@@ -36,7 +36,8 @@ import sys
 import time
 from pathlib import Path
 
-import requests
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.rede import FonteIndisponivel, RespostaInvalida, buscar_json
 
 BASE_URL = "https://api.cartolafc.globo.com"
 HEADERS = {
@@ -64,14 +65,17 @@ COLUNAS = ["atleta_id", "nome", "clube", "posicao", "rodada", "pontos"] + \
           [f"scout_{s}" for s in SCOUTS]
 
 
-def fetch_json(url):
+def fetch_json(url, rodada):
+    """(dados, erro). Rodada ainda nao encerrada devolve 404/vazio -- isso e
+    esperado e nao e falha. Fonte fora do ar propaga, para o chamador decidir."""
     try:
-        resp = requests.get(url, headers=HEADERS, timeout=20)
-        if resp.status_code == 200:
-            return resp.json(), None
-        return None, f"HTTP {resp.status_code}"
-    except Exception as e:
-        return None, str(e)
+        return buscar_json(url, headers=HEADERS, timeout=20,
+                           descricao=f"Cartola /atletas/pontuados/{rodada}"), None
+    except RespostaInvalida:
+        # 400/404 aqui NAO e defeito: e como a API responde rodada que ainda
+        # nao foi pontuada. E o sinal normal de "chegamos no fim", entao vira
+        # uma mensagem mansa em vez do texto alarmante de contrato quebrado.
+        return None, "rodada ainda nao pontuada"
 
 
 def linha_do_atleta(atleta_id, info, rodada):
@@ -127,19 +131,29 @@ def main():
     print(f"Historico local: {len(linhas)} linhas, rodada mais recente {max_rodada}")
 
     novas = []
-    for rodada in range(max_rodada + 1, max_rodada + 1 + MAX_RODADAS_A_FRENTE):
-        url = f"{BASE_URL}/atletas/pontuados/{rodada}"
-        print(f"Tentando rodada {rodada}: {url}")
-        data, err = fetch_json(url)
-        time.sleep(PAUSE_SECONDS)
-        if err or not data or not data.get("atletas"):
-            print(f"  rodada {rodada} indisponivel "
-                  f"({err or 'sem atletas, ainda nao encerrada'}) -- parando aqui.")
-            break
-        atletas = data["atletas"]
-        for atleta_id, info in atletas.items():
-            novas.append(linha_do_atleta(int(atleta_id), info, rodada))
-        print(f"  rodada {rodada}: {len(atletas)} jogadores coletados.")
+    try:
+        for rodada in range(max_rodada + 1, max_rodada + 1 + MAX_RODADAS_A_FRENTE):
+            url = f"{BASE_URL}/atletas/pontuados/{rodada}"
+            print(f"Tentando rodada {rodada}: {url}")
+            data, err = fetch_json(url, rodada)
+            time.sleep(PAUSE_SECONDS)
+            if err or not data or not data.get("atletas"):
+                print(f"  rodada {rodada} indisponivel "
+                      f"({err or 'sem atletas, ainda nao encerrada'}) -- parando aqui.")
+                break
+            atletas = data["atletas"]
+            for atleta_id, info in atletas.items():
+                novas.append(linha_do_atleta(int(atleta_id), info, rodada))
+            print(f"  rodada {rodada}: {len(atletas)} jogadores coletados.")
+    except FonteIndisponivel as e:
+        # API fora do ar: grava o que ja veio (se veio) e sai sem erro. O
+        # historico e incremental, entao a proxima execucao continua de onde
+        # parou -- ver o cabecalho de lib/rede.py.
+        print(f"  [FONTE FORA DO AR] {e}")
+        if not novas:
+            print("Nenhuma rodada coletada. Historico mantido como esta.")
+            return 0
+        print(f"Gravando as {len(novas)} linhas que deram tempo de vir.")
 
     if not novas:
         print("\nNenhuma rodada nova encerrada. Nada para adicionar.")

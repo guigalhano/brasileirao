@@ -32,6 +32,7 @@ COMO USAR
 """
 
 import argparse
+import csv
 import json
 import sys
 import time
@@ -63,6 +64,9 @@ ENDPOINTS_CANDIDATOS_RODADA = [
     "/mercado/destaques",
     "/rodada/{rodada}/destaques",
 ]
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.pontuacao import jogou, scouts_do_historico
 
 HISTORICO_CSV = Path(__file__).resolve().parent.parent / "data" / "cartola_historico_2026_completo.csv"
 
@@ -99,23 +103,40 @@ def media_da_rodada_no_historico(rodada):
     if not HISTORICO_CSV.exists():
         print(f"Aviso: {HISTORICO_CSV} nao encontrado, pulando comparacao com historico.")
         return None
-    df = pd.read_csv(HISTORICO_CSV)
-    col_rodada = "atletas.rodada_id"
-    col_pontos = "atletas.pontos_num"
-    col_jogou = "atletas.entrou_em_campo"
-    if col_rodada not in df.columns or col_pontos not in df.columns or col_jogou not in df.columns:
-        print("Aviso: colunas esperadas nao encontradas no historico.")
+    # SCHEMA (corrigido em setembro/2026): lia "atletas.rodada_id" /
+    # "atletas.pontos_num" / "atletas.entrou_em_campo", o schema antigo do
+    # dataset caRtola. O CSV foi reescrito para rodada/pontos/scout_X e este
+    # script passou a cair no "colunas esperadas nao encontradas" e devolver
+    # None sem reclamar. Quarta ocorrencia do mesmo bug: o
+    # atualizar_historico_cartola.py, o comparar_historico_time.py e o
+    # compute_advanced_signals.py tinham todos a mesma quebra.
+    # "entrou em campo" agora e deduzido do proprio scout (lib.pontuacao.jogou).
+    linhas = list(csv.DictReader(HISTORICO_CSV.open(encoding="utf-8")))
+    if not linhas:
+        print(f"Aviso: {HISTORICO_CSV.name} vazio.")
         return None
-    sub = df[(df[col_rodada] == rodada) & (df[col_jogou] == True)]  # noqa: E712
-    if sub.empty:
+    faltando = {"rodada", "pontos"} - set(linhas[0])
+    if faltando:
+        print(f"Aviso: {HISTORICO_CSV.name} sem as colunas {sorted(faltando)}.")
+        return None
+
+    scouts = scouts_do_historico(linhas)
+    pontos = sorted((float(r["pontos"] or 0) for r in linhas
+                     if r["rodada"] and int(r["rodada"]) == rodada and jogou(r, scouts)),
+                    reverse=True)
+    if not pontos:
         print(f"Aviso: rodada {rodada} nao encontrada no historico.")
         return None
-    media_pontos = sub[col_pontos].mean()
+
+    n = len(pontos)
+    media_pontos = sum(pontos) / n
+    meio = n // 2
+    mediana = pontos[meio] if n % 2 else (pontos[meio - 1] + pontos[meio]) / 2
     return {
-        "n_jogadores": len(sub),
+        "n_jogadores": n,
         "media_pontos": media_pontos,
-        "mediana_pontos": sub[col_pontos].median(),
-        "top10_media": sub.sort_values(col_pontos, ascending=False).head(10)[col_pontos].mean(),
+        "mediana_pontos": mediana,
+        "top10_media": sum(pontos[:10]) / min(10, n),
         "time_medio": media_pontos * TAMANHO_TIME,
     }
 

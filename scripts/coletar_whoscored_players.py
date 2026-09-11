@@ -9,12 +9,40 @@ Cartola. Cru, ele correlaciona (r~0.37 pra ATA+MEI), mas controlando pelos
 gols reais a correlacao parcial fica NEGATIVA -- ou seja, o xG so re-codifica
 gol, que a `media` ja captura. Conclusao: nao entra no criterio... POR ENQUANTO.
 
-O unico teste que poderia mudar isso e um backtest WALK-FORWARD: o xG
+O unico teste que poderia mudar isso era um backtest WALK-FORWARD: o xG
 acumulado ate a rodada N-1 preve os pontos da rodada N melhor que os gols ja
-feitos ate N-1? Pra isso precisamos do xG COMO ESTAVA em cada rodada passada
+feitos ate N-1? Pra isso precisavamos do xG COMO ESTAVA em cada rodada passada
 -- e o WhoScored so da a foto cumulativa atual. Entao a unica forma de ter
-esse historico e salvar um snapshot a cada rodada, daqui pra frente. Este
-script faz isso.
+esse historico era salvar um snapshot a cada rodada. Este script faz isso.
+
+RESPOSTA (setembro/2026): NAO. O xG nao entra no criterio.
+-----------------------------------------------------------
+Com snapshots das rodadas 20, 21, 22 e 26, rodamos o teste em 3 transicoes
+(20->21, 21->22, 22->23; a de 26 preveria a rodada 27, ainda nao pontuada).
+533 observacoes, 358 delas de ATA/MEI, casadas com o Cartola por nome+time
+(92% de cobertura, pares ambiguos descartados).
+
+Sozinho o xG ate correlaciona com a rodada seguinte (r=+0,176 pra ATA+MEI),
+mas e a mesma informacao que a media ja tem. Numa regressao dos pontos da
+rodada N contra media, gol/jogo e xG/jogo ate N-1, o coeficiente do xG fica em:
+
+    ATA+MEI  t=+0,53      ATA  t=+0,08      MEI  t=+1,15
+
+e o R2 sai de 0,0601 pra 0,0609 em ATA+MEI -- ganho nenhum. Testamos tambem
+chutes/jogo, que tinha a maior correlacao SIMPLES entre os meias (r=+0,258,
+acima da propria media): controlando pela media ele tambem nao sobrevive
+(t=+1,57 em MEI, +0,77 em ATA+MEI, -0,29 em ATA). Media e chutes sao
+colineares -- medem a mesma coisa por caminhos diferentes.
+
+RESSALVA DE PODER: 3 transicoes e pouco. Com n=358 so dariamos por
+significativo um r incremental de ~0,15 (80% de poder a 5%); em MEI, ~0,19.
+Entao "nao significativo" aqui e mais perto de "nao da pra saber" do que de
+"e exatamente zero". O que da confianca na conclusao nao e este teste sozinho,
+e ele concordar com o achado anterior (correlacao parcial NEGATIVA controlando
+por gols) por um caminho metodologicamente diferente.
+
+Vale seguir coletando: mais snapshots aumentam o poder, e o dado serve pra
+outras perguntas. Mas o xG nao entra no criterio de escalacao.
 
 RODAR LOCALMENTE (nao no GitHub Actions)
 ----------------------------------------

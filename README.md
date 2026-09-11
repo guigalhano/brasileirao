@@ -86,6 +86,16 @@ Achados relevantes ao longo do processo (todos com validação estatística, nã
   site desde sempre; (c) o código diferenciava scouts consecutivos achando que vinham
   cumulativos, o que é falso (em 24% dos pares o scout diminui, e a regressão dá R²=1,0 exato
   com os valores crus) — a "correção" é que corrompia o dado.
+- **xG individual do WhoScored não entra no critério de escalação** — testado duas vezes, por
+  caminhos diferentes, com o mesmo resultado. O teste decisivo (walk-forward, 3 transições,
+  snapshots das rodadas 20/21/22, 358 observações de ATA/MEI) mostra que o xG acumulado até N−1
+  não acrescenta nada à média para prever a rodada N: o coeficiente fica em t=+0,53 (ATA+MEI),
+  +0,08 (ATA), +1,15 (MEI), e o R² sai de 0,0601 para 0,0609. Chutes/jogo, que tinha a maior
+  correlação *simples* entre os meias (r=+0,258, acima da própria média), também não sobrevive ao
+  controle pela média — as duas são colineares. Ressalva honesta: com 3 transições só detectaríamos
+  um r incremental de ~0,15, então "não significativo" aqui está mais perto de "não dá pra saber"
+  do que de "é zero"; o que dá confiança é concordar com o achado anterior (correlação parcial
+  negativa controlando por gols) por um caminho metodologicamente distinto.
 - Valor de mercado (Transfermarkt) não melhora a previsão de partidas nesse ponto da temporada
   (18 rodadas de dados reais já dominam qualquer prior financeiro), e tem uma relação estatisticamente
   significativa mas **negativa** com a pontuação no Cartola (controlando pelo preço) — reflete

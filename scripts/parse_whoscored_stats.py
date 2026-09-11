@@ -5,23 +5,39 @@ parse_whoscored_stats.py
 Extrai a tabela "Team xG" (aba xG > For, em Team Statistics) de um dump de
 texto do WhoScored.com salvo em arquivo, e grava em CSV estruturado.
 
-POR QUE ISSO EXISTE EM VEZ DE UM SCRAPER DE VERDADE
------------------------------------------------------
-WhoScored carrega essas tabelas via JS/AJAX e usa protecao anti-bot (Cloudflare
-+ paginas montadas em runtime), entao um scraper simples com requests/urllib
-geralmente NAO funciona -- ele recebe a pagina "casca" sem os dados. A forma
-confiavel de atualizar isso hoje e manual:
+COMO ATUALIZAR A TABELA DE TIMES (atualizado em setembro/2026)
+--------------------------------------------------------------
+O WhoScored carrega essas tabelas via JS/AJAX e protege o endpoint. Medido:
 
-  1. Abra a pagina "Team Statistics > Summary > xG > For" do Brasileirao no
-     WhoScored.com.
-  2. Selecione TODO o texto da pagina (Ctrl+A) e copie (Ctrl+C).
-  3. Cole em um arquivo de texto, ex: whoscored_raw.txt.
-  4. Rode: python3 parse_whoscored_stats.py whoscored_raw.txt
+  - /statisticsfeed/1/getplayerstatistics  -> RESPONDE (e o que o
+    coletar_whoscored_players.py usa, de IP residencial);
+  - /statisticsfeed/1/getteamstatistics    -> devolve a pagina "verify-client"
+    (anti-bot) em todas as variantes testadas: com e sem X-Requested-With,
+    referer de time e de jogador, com e sem numberOfTeamsToPick.
 
-Se no futuro voce tiver acesso a API interna do WhoScored (alguns planos
-WhoScored+ expoem isso) ou um servico de scraping que renderize JS (Selenium/
-Playwright), este script pode ser adaptado para receber o HTML renderizado
-em vez do texto colado -- a funcao parse_xg_table() e a parte reutilizavel.
+Entao o caminho que funciona hoje e um NAVEGADOR DE VERDADE na pagina
+"Team Statistics", clicando a aba xG e alternando For/Against. Em setembro de
+2026 isso foi feito pelo navegador do Claude Code, extraindo direto do DOM:
+
+    painel = document.querySelector('#stage-team-stats-xg')
+    // dentro dele, os links <a> "For" e "Against" alternam a tabela;
+    // cada <tr> do tbody da: nome (com "N. " na frente), xG, Goals, xGDiff,
+    // Shots, xG/Shots, Rating.
+
+CONFERENCIA QUE VALE A PENA FAZER: num campeonato fechado, a soma do xG For de
+todos os times TEM que bater com a soma do xG Against. Na coleta de setembro
+deu 721,32 contra 721,30 -- diferenca de arredondamento. Se esses dois totais
+divergirem de verdade, a extracao pegou tabela errada ou incompleta.
+
+NAO TENTE DERIVAR O xG DE TIME SOMANDO O xG DOS JOGADORES. Parece obvio e esta
+errado: o feed de jogadores vem truncado (isMinApp), entao a soma subestima
+TODO time -- medido contra a tabela oficial da rodada 20, erro medio de 9,6%,
+variando de 1,8% (Sao Paulo) a 28,3% (Remo). A variacao acompanha rotacao de
+elenco, entao nem um fator de correcao unico resolve; usar isso corromperia a
+calibracao por time, que e justamente o que este dado serve pra ajustar.
+
+O caminho manual antigo continua valendo como reserva: abrir a pagina,
+Ctrl+A / Ctrl+C, colar num .txt e rodar este script nele.
 
 Uso:
     python3 parse_whoscored_stats.py caminho/para/whoscored_raw.txt [--out data/whoscored_xg_2026.csv]

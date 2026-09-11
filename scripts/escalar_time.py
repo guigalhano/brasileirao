@@ -43,6 +43,22 @@ O que este script faz:
      para cada uma das 7 formacoes. Nao e "pegue os melhores de cada
      posicao" -- e a melhor combinacao que cabe nas cartoletas.
 
+QUANDO VOCE PRECISA ARRISCAR (--risco)
+--------------------------------------
+Maximizar pontuacao esperada e o certo pra nao perder, e o errado pra ganhar.
+Quem esta atras na liga nao precisa do time com maior media -- precisa do time
+com maior chance de fazer uma rodada MUITO alta, porque empatar com o pelotao
+nao recupera posicao nenhuma.
+
+--risco L troca o criterio de E[pts] para E[pts] + L * desvio, onde o desvio e
+o do proprio jogador, medido nas rodadas em que ele jogou. Com L=0 nada muda.
+L entre 0,3 e 0,7 ja reordena bastante sem cair no lixo.
+
+O script mostra a distribuicao dos dois times por BOOTSTRAP: reamostra a
+pontuacao real de cada jogador nas rodadas que ele jogou, soma o time, repete
+20 mil vezes. Nao assume normalidade -- usa a cara real da distribuicao do
+Cartola, que e torta (muita rodada perto de zero, poucas explosoes).
+
 Uso:
     python scripts/escalar_time.py --orcamento 120
     python scripts/escalar_time.py --orcamento 120 --formacao 4-3-3
@@ -88,6 +104,72 @@ ESPECIAIS = {"SG", "GS", "DE", "DP"}
 POSICOES_DESARME = ("ZAG", "LAT")
 
 GRAO = 0.1        # granularidade do orcamento na DP, em cartoletas
+
+
+def norm_nome(s):
+    import unicodedata
+    s = unicodedata.normalize("NFD", str(s))
+    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
+    return " ".join(s.lower().replace(".", " ").replace("-", " ").split())
+
+
+def amostras_de_pontos(hist, scouts):
+    """{atleta_id: {rodada: pontos}} das rodadas em que o jogador atuou.
+
+    E a materia-prima do bootstrap: em vez de assumir que a pontuacao do
+    jogador e normal em torno da media, reamostramos o que ele realmente fez.
+    A distribuicao do Cartola e torta -- muita rodada perto de zero e poucas
+    explosoes -- e e justamente a cauda direita que interessa a quem precisa
+    arriscar.
+
+    Guardamos POR RODADA, nao so a lista de valores, porque o bootstrap
+    precisa saber quem pontuou junto com quem -- ver bootstrap_time.
+    """
+    por = defaultdict(dict)
+    for r in hist:
+        if r["posicao"] in POSICOES and jogou(r, scouts):
+            por[r["atleta_id"]][int(r["rodada"])] = float(r["pontos"] or 0)
+    return por
+
+
+def bootstrap_time(grupos, n=20000, semente=42, independente=False):
+    """Distribuicao do total do time, respeitando quem pontua junto com quem.
+
+    O PONTO: pontuacoes NAO sao independentes dentro de uma partida. Quatro
+    jogadores do mesmo jogo sobem e descem juntos -- se o Flamengo golear, o
+    atacante, o meia e o zagueiro pontuam na mesma rodada; se travar, todos
+    travam. E isso importa exatamente pra quem quer arriscar, porque EMPILHAR
+    um time e em si uma estrategia de variancia.
+
+    Metodo: agrupa os escalados por PARTIDA da proxima rodada. Para cada grupo
+    sorteia uma rodada passada e soma o que aqueles jogadores REALMENTE
+    fizeram naquela rodada (quem nao jogou entra com a propria media). Grupos
+    diferentes sorteiam rodadas diferentes, de forma independente.
+
+    Assim a correlacao entra sozinha, do jeito que aconteceu, sem estimar
+    matriz de covariancia nenhuma -- e, por recombinar partidas distintas,
+    ainda gera muito mais combinacoes do que sortear a rodada inteira (que so
+    tem ~26 blocos e nao consegue enxergar cauda alguma alem do ja observado).
+
+    `grupos` e uma lista de listas de {rodada: pontos}. Com independente=True
+    cada jogador vira seu proprio grupo, que e a versao ingenua -- serve pra
+    medir quanto a correlacao esta pesando.
+    """
+    rng = np.random.default_rng(semente)
+    if independente:
+        grupos = [[jogador] for grupo in grupos for jogador in grupo]
+
+    total = np.zeros(n)
+    for grupo in grupos:
+        grupo = [p for p in grupo if p]
+        if not grupo:
+            continue
+        rodadas = sorted({rod for p in grupo for rod in p})
+        medias = [np.mean(list(p.values())) for p in grupo]
+        totais = np.array([sum(p.get(rod, m) for p, m in zip(grupo, medias))
+                           for rod in rodadas], dtype=float)
+        total += rng.choice(totais, n, replace=True)
+    return total
 
 
 def medir_elasticidades(hist):
@@ -329,6 +411,12 @@ def main():
                     help="fixa uma formacao; sem isso, testa todas")
     ap.add_argument("--incluir-duvidas", action="store_true",
                     help="alem de Provavel, aceita jogadores em Duvida")
+    ap.add_argument("--risco", type=float, default=0.0,
+                    help="peso do desvio no criterio (0 = so media; 0.3-0.7 = "
+                         "busca upside). Ver o cabecalho do arquivo.")
+    ap.add_argument("--evitar", default="",
+                    help="nomes a excluir, separados por virgula -- pra fugir "
+                         "dos mais escalados e diferenciar de verdade")
     ap.add_argument("--min-jogos", type=int, default=3,
                     help="minimo de jogos na temporada (padrao 3)")
     args = ap.parse_args()
@@ -381,6 +469,11 @@ def main():
         if (s, "ZAG") in K)
     print(f"Encolhimento por scout (Bayes empirico, K de zagueiro): {amostra_k}")
 
+    amostras = amostras_de_pontos(hist, scouts)
+    evitar = {norm_nome(x) for x in args.evitar.split(",") if x.strip()}
+    if evitar:
+        print(f"Evitando {len(evitar)} nome(s) a pedido (diferenciacao)")
+
     rodada, meta, ctx_time, sem_pontuar = contexto_da_rodada()
     if sem_pontuar:
         print(f"Fora da rodada do Cartola (jogo nao pontua): "
@@ -417,10 +510,20 @@ def main():
         if info is None or info["n"] < args.min_jogos:
             fora[f"menos de {args.min_jogos} jogos"] += 1
             continue
+        if norm_nome(r["name"]) in evitar:
+            fora["evitados"] += 1
+            continue
         pts, parcelas = pontos_esperados(info["taxas"], r["pos"], ctx, xg_medio)
         parcelas["ds_observado"] = info["cru"].get("DS", 0.0)
-        cands[r["pos"]].append((r["atleta_id"], r["name"], time, preco, pts,
-                                parcelas))
+        amostra = amostras.get(r["atleta_id"], {})
+        desvio = float(np.std(list(amostra.values()))) if len(amostra) >= 3 else 0.0
+        parcelas["desvio"] = desvio
+        parcelas["amostra"] = amostra
+        # O criterio que a otimizacao maximiza. Com --risco 0 e a propria
+        # pontuacao esperada, como sempre foi.
+        criterio = pts + args.risco * desvio
+        cands[r["pos"]].append((r["atleta_id"], r["name"], time, preco, criterio,
+                                parcelas, pts))
 
     print("Elegiveis: " + ", ".join(f"{p}={len(cands[p])}" for p in POSICOES)
           + f", TEC={len(tecnicos)}")
@@ -493,28 +596,59 @@ def main():
         return 1
 
     pontos, formacao, tec, escalacao, custo = melhor_geral
-    largura = 92
+    largura = 100
     print("=" * largura)
     print(f"TIME IDEAL DA RODADA {rodada}  |  formacao {formacao}")
     print("=" * largura)
     print(f"{'POS':<5}{'JOGADOR':<24}{'TIME':<14}{'PRECO':>7}{'E[pts]':>9}"
-          f"{'DS/jogo':>9}{'pts DS':>8}  CONFRONTO")
+          f"{'desvio':>8}{'DS/jogo':>9}{'pts DS':>8}  CONFRONTO")
     print("-" * largura)
     total_ds = 0.0
+    grupos = {}
+    soma_epts = 0.0
     for p in POSICOES:
-        for aid, nome, time, preco, pts, parc in escalacao.get(p, []):
+        for aid, nome, time, preco, criterio, parc, pts in escalacao.get(p, []):
             adv = ctx_time[time]["adv"]
             casa = "x" if ctx_time[time]["casa"] else "@"
             total_ds += parc["DS"]
+            chave = frozenset((time, ctx_time[time]["adv"]))
+            grupos.setdefault(chave, []).append(parc.get("amostra", {}))
+            soma_epts += pts
             print(f"{p:<5}{nome[:23]:<24}{time[:13]:<14}{preco:>7.2f}{pts:>9.2f}"
-                  f"{parc['ds_observado']:>9.2f}{parc['DS']:>8.2f}  {casa} {adv}")
+                  f"{parc['desvio']:>8.2f}{parc['ds_observado']:>9.2f}"
+                  f"{parc['DS']:>8.2f}  {casa} {adv}")
     print(f"{'TEC':<5}{tec[1][:23]:<24}{tec[2][:13]:<14}{tec[3]:>7.2f}{tec[4]:>9.2f}")
+    grupos.setdefault(frozenset((tec[2], ctx_time[tec[2]]["adv"])), []).append(
+        amostras.get(tec[0], {}))
+    soma_epts += tec[4]
     print("-" * largura)
     print(f"{'':<43}{custo:>7.2f}{pontos:>9.2f}{'':>9}{total_ds:>8.2f}")
     print(f"\nOrcamento {args.orcamento:.2f} | gasto {custo:.2f} | "
           f"sobra {args.orcamento - custo:.2f}")
-    print(f"Pontuacao esperada: {pontos:.2f} "
-          f"({total_ds:.2f} vem de desarme, {100 * total_ds / pontos:.0f}%)")
+    print(f"Pontuacao esperada: {soma_epts:.2f} "
+          f"({total_ds:.2f} vem de desarme, {100 * total_ds / soma_epts:.0f}%)")
+    if args.risco:
+        print(f"Criterio otimizado: E[pts] + {args.risco:g} x desvio "
+              f"(= {pontos:.2f}); a coluna E[pts] acima e so a media.")
+
+    # Distribuicao do total, por bootstrap das rodadas que cada um jogou.
+    limpos = {k: [a for a in v if len(a) >= 3] for k, v in grupos.items()}
+    limpos = {k: v for k, v in limpos.items() if v}
+    n_jog = sum(len(v) for v in limpos.values())
+    if n_jog >= 8:
+        dist = bootstrap_time(list(limpos.values()))
+        indep = bootstrap_time(list(limpos.values()), independente=True)
+        faltam = sum(len(v) for v in grupos.values()) - n_jog
+        amostra_time = [a for v in limpos.values() for a in v]
+        print()
+        print(f"DISTRIBUICAO ({n_jog} jogadores em {len(limpos)} partidas"
+              + (f", {faltam} sem amostra suficiente" if faltam else "") + ")")
+        p10, p50, p90 = np.percentile(dist, [10, 50, 90])
+        print(f"  mediana {p50:.0f} | 10% pior {p10:.0f} | 10% melhor {p90:.0f} "
+              f"| desvio {dist.std():.1f}")
+        for alvo in (80, 100, 120):
+            print(f"  P(fazer mais de {alvo} pontos) = {100 * (dist > alvo).mean():.1f}%"
+                  f"   (ignorando a correlacao daria {100 * (indep > alvo).mean():.1f}%)")
     print("DS/jogo = desarmes por jogo observados na temporada (sem encolher); "
           "pts DS = quanto\ndisso entra na pontuacao esperada, ja encolhido e "
           "ajustado ao confronto.")

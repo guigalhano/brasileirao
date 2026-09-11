@@ -2,6 +2,12 @@
 Regenera o array PLAYERS embutido no index.html a partir de
 data/cartola_players_enriched.csv (gerado por atualizar_mercado_cartola.py).
 
+O xg90 do FootyStats saiu daqui em setembro/2026: o bonus que o consumia foi
+removido do index.html (nao sobreviveu ao backtest walk-forward, cobria 2,6%
+dos jogadores e era enviesado -- so os artilheiros tinham o dado, entao todos
+ganhavam bonus positivo). data/player_xg90_footystats.csv continua no repo,
+sem leitor.
+
 Uso:
     python scripts/build_index.py
 """
@@ -14,7 +20,6 @@ import pandas as pd
 REPO_ROOT = Path(__file__).resolve().parent.parent
 INDEX_PATH = REPO_ROOT / "index.html"
 DATA_PATH = REPO_ROOT / "data" / "cartola_players_enriched.csv"
-XG90_PATH = REPO_ROOT / "data" / "player_xg90_footystats.csv"
 ADV_PATH = REPO_ROOT / "data" / "advanced_signals.csv"
 
 
@@ -24,16 +29,6 @@ def main():
         return 1
 
     df = pd.read_csv(DATA_PATH)
-
-    xg90_by_id = {}
-    if XG90_PATH.exists():
-        xg_df = pd.read_csv(XG90_PATH)
-        xg90_by_id = dict(zip(xg_df["atleta_id"].astype(str), xg_df["xg90"]))
-        print(f"Usando xG individual do FootyStats para {len(xg90_by_id)} jogadores "
-              f"(rode scripts/enrich_players_footystats.py para atualizar essa lista).")
-    else:
-        print("AVISO: data/player_xg90_footystats.csv nao encontrado -- PLAYERS vai sem xg90 "
-              "(rode scripts/enrich_players_footystats.py primeiro se quiser esse dado).")
 
     adv_by_id = {}
     if ADV_PATH.exists():
@@ -55,9 +50,6 @@ def main():
     for _, p in df.iterrows():
         name = str(p["name"]).replace('"', '\\"')
         extra_fields = ""
-        xg90 = xg90_by_id.get(str(p["atleta_id"]))
-        if xg90 is not None:
-            extra_fields += ", xg90:%s" % xg90
         adv = adv_by_id.get(str(p["atleta_id"]))
         if adv is not None:
             if pd.notna(adv.get("ult5_sos")):

@@ -70,6 +70,19 @@ NAME_MAP = {
 }
 
 
+# Nomes como o DATA do site escreve (football-data.co.uk cru), por canonico.
+# Conferido contra os 5518 jogos ja no array em setembro/2026.
+NAME_MAP.update({
+    "Flamengo": "Flamengo RJ",
+    "Botafogo": "Botafogo RJ",
+    "Sport": "Sport Recife",
+    "Chapecoense": "Chapecoense-SC",
+    "Atletico-PR": "Athletico-PR",
+    "America-MG": "America MG",
+    "Atletico-GO": "Atletico GO",
+})
+
+
 def canon_to_raw(t):
     return NAME_MAP.get(t, t)
 
@@ -200,8 +213,32 @@ def main():
     matches_all["home"] = matches_all.home_team.map(canon_to_raw)
     matches_all["away"] = matches_all.away_team.map(canon_to_raw)
 
+    # TRAVA DE NOME (setembro/2026). O canon_to_raw estava incompleto -- faltavam
+    # Flamengo->"Flamengo RJ", Botafogo->"Botafogo RJ", Sport->"Sport Recife",
+    # Chapecoense->"Chapecoense-SC", Atletico-PR->"Athletico-PR",
+    # America-MG->"America MG", Atletico-GO->"Atletico GO". Quando o mapa nao
+    # tem a chave, .map() devolve NaN, a comparacao com `already` nunca casa e o
+    # jogo ANTIGO e reinserido como se fosse novo. Numa execucao real isso
+    # duplicou 742 jogos historicos (2012 virou 454 jogos, 2021 virou 622) e o
+    # script imprimiu "OK" no fim.
+    nomes_site = set(hist.home) | set(hist.away)
+    nomes_mapeados = set(matches_all.home) | set(matches_all.away)
+    orfaos = sorted(n for n in nomes_mapeados if n not in nomes_site)
+    if orfaos:
+        raise SystemExit(
+            "ERRO: estes times do matches_2012_2026.csv nao correspondem a nenhum "
+            f"nome usado no DATA do site: {orfaos}. "
+            "Adicione-os ao NAME_MAP. Sem isso, jogos antigos seriam duplicados.")
+
+    # SEGUNDA TRAVA, independente do nome: so entra jogo POSTERIOR ao ultimo que
+    # ja esta no array. Mesmo que um mapeamento escape, nada historico volta.
+    ultimo = hist.dateSort.max().strftime("%Y-%m-%d")
     already = set(zip(hist.dateSort.dt.strftime("%Y-%m-%d"), hist.home, hist.away))
-    new_df = matches_all[~matches_all.apply(lambda r: (r.date, r.home, r.away) in already, axis=1)].copy()
+    new_df = matches_all[
+        (matches_all.date > ultimo)
+        & ~matches_all.apply(lambda r: (r.date, r.home, r.away) in already, axis=1)
+    ].copy()
+    print(f"DATA vai ate {ultimo}; considerando so jogos posteriores.")
     if args.new_dates:
         wanted = set(args.new_dates.split(","))
         new_df = new_df[new_df.date.isin(wanted)]

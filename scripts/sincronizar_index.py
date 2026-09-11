@@ -240,16 +240,34 @@ def main():
     # o rotulo do criterio "media" dizia "18 rodadas" na rodada 26, e o texto
     # da base citava "rodada 19" e "569 jogadores" (hoje sao outros numeros).
     n_jogadores = len(re.findall(r"\{name:", html))
+    # Contagem de jogos da aba Value Betting, derivada do proprio array dela.
+    # Estava escrita a mao ("5508 jogos", "199 jogos de 2026") e envelheceu
+    # junto com o array, que so foi estendido em setembro/2026.
+    i_vb = html.find('id="panel-valuebet"')
+    n_vb = n_vb_2026 = None
+    if i_vb != -1:
+        m_vb = re.search(r"const DATA = \[", html[i_vb:])
+        if m_vb:
+            ini_vb = i_vb + m_vb.start()
+            datas_vb = re.findall(r'"(20\d\d-\d\d-\d\d)"',
+                                  html[ini_vb:html.find("];", ini_vb)])
+            n_vb, n_vb_2026 = len(datas_vb), sum(1 for d in datas_vb if d[:4] == "2026")
     substituicoes = [
         (r"(Media da temporada \()\d+( rodadas\))", rf"\g<1>{jogos}\g<2>"),
         (r"(mercado\.json, rodada )\d+", rf"\g<1>{rodada}"),
         (r"(historico completo das )\d+( rodadas ja jogadas)", rf"\g<1>{jogos}\g<2>"),
         (r"(— )\d+( jogadores com pelo menos 1 jogo)", rf"\g<1>{n_jogadores}\g<2>"),
     ]
+    if n_vb:
+        substituicoes += [
+            (r"\d+ jogos(?= &middot; 2012)", f"{n_vb} jogos"),
+            (r"(cobrem os )\d+( jogos de 2026)", rf"\g<1>{n_vb_2026}\g<2>"),
+        ]
     for padrao, troca in substituicoes:
         html = re.sub(padrao, troca, html)
     print(f"Prosa <- rodada {rodada}, {jogos} rodadas jogadas, "
-          f"{n_jogadores} jogadores")
+          f"{n_jogadores} jogadores"
+          + (f", Value Betting {n_vb} jogos ({n_vb_2026} de 2026)" if n_vb else ""))
 
     # 7. Rotulo da rodada no cabecalho
     html, n = re.subn(r"(<div class=\"bh-sub\">[^<]*?&middot; RODADA )\d+",

@@ -126,6 +126,24 @@ jobs:
           python scripts/comparar_historico_time.py \
             --time-id 199236 --saida data/meu_time_historico.csv
 
+      # Estende o backtest de 4 modelos da aba Value Betting com os jogos
+      # novos. Ficou 7 semanas parado (199 de 257 jogos de 2026) porque nunca
+      # esteve no workflow. So roda quando entra resultado novo.
+      #
+      # O --max-odds-csv mantem a metodologia: todos os modelos apostam na
+      # MELHOR cota (Max), nao na media. O BRA.csv do football-data traz
+      # MaxCH/MaxCD/MaxCA, e o ingerir_resultados.py ja baixou esse arquivo.
+      - name: Estender o backtest de Value Betting
+        if: steps.resultados.outputs.mudou == 'true'
+        run: |
+          curl -sS -o /tmp/BRA.csv https://www.football-data.co.uk/new/BRA.csv || true
+          if [ -s /tmp/BRA.csv ]; then
+            python scripts/estender_valuebet_2026.py --repo-dir . --max-odds-csv /tmp/BRA.csv
+          else
+            echo "BRA.csv indisponivel -- estendendo com a cota media como preco."
+            python scripts/estender_valuebet_2026.py --repo-dir .
+          fi
+
       # ---------- 4. MONTAGEM DO SITE ----------
       - name: Regenerar o array de jogadores no index.html
         run: python scripts/build_index.py

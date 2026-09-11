@@ -31,10 +31,18 @@ Duas partes que se complementam:
    não-mercado testado, superando Dixon-Coles puro, Elo-Resultado, Elo-Gols e um Performance
    Rating à la soccerstats.
 2. **Dixon-Coles Poisson** (gols esperados e placar) — ajustado com decaimento temporal
-   (meia-vida de 450 dias, testamos várias e essa é próxima do ótimo) e um ajuste seletivo de
-   peso extra (6x) para jogos disputados sob um técnico confirmado como novo, para os times que
-   trocaram de comando em 2026 (Atlético-MG, Vasco, São Paulo, Flamengo, Cruzeiro, Santos,
-   Botafogo, Corinthians, Chapecoense).
+   (meia-vida de 450 dias, testamos várias e essa é próxima do ótimo).
+
+   **Correção de setembro/2026**: este README dizia que o modelo também aplicava um "ajuste
+   seletivo de peso extra (6x) para jogos sob técnico novo" em 9 times. Duas coisas estavam
+   erradas. Primeiro, o `refit_with_coach_boost.py` escreve um arquivo que **nenhum script lê** —
+   a cadeia que chega ao site é `fit_model_v2` → `final_v2` → `recalibrar_com_whoscored` →
+   `calibrado`. Segundo, e ainda bem: medido fora da amostra em 8 cortes de abril a agosto
+   (`scripts/validar_coach_boost.py` reproduz), o boost **piora** a previsão em todos eles, por
+   0,03 a 0,09 de log-loss — enorme num contexto onde a distância entre o nosso melhor modelo e o
+   próprio mercado é de 0,02. O motivo: as trocas foram de fevereiro a abril, então na rodada 27
+   quase todo jogo de 2026 desses times já é pós-troca, e o 6x deixou de destacar um período novo
+   para simplesmente inflar a temporada inteira de 9 times. O ajuste não entra no modelo.
 
 ## Pontuação do Cartola e o desarme
 
@@ -78,7 +86,8 @@ Achados relevantes ao longo do processo (todos com validação estatística, nã
 - Nenhuma estratégia de aposta simples nem o modelo batem o mercado de forma consistente
   (o mercado brasileiro é bem calibrado).
 - Encurtar a meia-vida do Dixon-Coles piora a calibração geral, mesmo resolvendo casos
-  pontuais (ex: Chapecoense) — por isso o ajuste de técnico é seletivo, não global.
+  pontuais (ex: Chapecoense). A tentativa de contornar isso com um peso extra por troca de
+  técnico também não funciona — ver a correção na seção "O modelo, em resumo" acima.
 - Três falhas silenciosas encontradas em agosto/2026 no `compute_advanced_signals.py`, todas
   corrigidas: (a) o script vinha morrendo com `KeyError` desde 29/07 e o site servia um arquivo
   congelado com cara de atual; (b) a leitura de scout procurava a coluna `G` quando o CSV tem

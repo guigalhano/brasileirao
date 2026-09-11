@@ -1,4 +1,21 @@
 """
+SUPERADO (setembro/2026) -- NAO ENTRA NO MODELO PUBLICADO.
+
+O arquivo que este script gera (team_ratings_coach_adjusted.json) nunca foi
+lido por nenhum outro script: a cadeia que chega no site e fit_model_v2 ->
+team_ratings_final_v2.json -> recalibrar_com_whoscored.py ->
+team_ratings_calibrado.json. Era um ramo morto, e o README descrevia como se
+fosse metade do modelo.
+
+Ao medir, descobrimos que ser um ramo morto foi sorte: o boost PIORA a
+previsao fora da amostra nos 8 cortes testados, de abril a agosto de 2026
+(0,03 a 0,09 de log-loss a mais). Ver scripts/validar_coach_boost.py, que
+reproduz a medicao e explica por que.
+
+Mantido no repositorio porque a pergunta pode voltar a fazer sentido com uma
+troca de tecnico recente de verdade. Mas hoje, nao rode isto esperando que
+melhore o modelo.
+
 Refit final do Dixon-Coles com um ajuste seletivo: jogos disputados sob um
 tecnico CONFIRMADO como novo (data oficial de troca, via Transfermarkt) ganham
 peso extra multiplicativo, alem do decaimento temporal normal (meia-vida 450

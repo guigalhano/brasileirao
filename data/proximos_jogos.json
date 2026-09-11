@@ -7,61 +7,71 @@
       "home": "Coritiba",
       "away": "Atletico-PR",
       "day": "Sexta",
-      "time": "21:00"
+      "time": "21:00",
+      "vale_cartola": false
     },
     {
       "home": "Atletico-MG",
       "away": "Fluminense",
       "day": "Sabado",
-      "time": "16:00"
+      "time": "16:00",
+      "vale_cartola": true
     },
     {
       "home": "Gremio",
       "away": "Vasco",
       "day": "Sabado",
-      "time": "16:00"
+      "time": "16:00",
+      "vale_cartola": true
     },
     {
       "home": "Chapecoense",
       "away": "Internacional",
       "day": "Sabado",
-      "time": "17:00"
+      "time": "17:00",
+      "vale_cartola": true
     },
     {
       "home": "Palmeiras",
       "away": "Sao Paulo",
       "day": "Sabado",
-      "time": "18:30"
+      "time": "18:30",
+      "vale_cartola": true
     },
     {
       "home": "Botafogo",
       "away": "Bragantino",
       "day": "Sabado",
-      "time": "20:30"
+      "time": "20:30",
+      "vale_cartola": true
     },
     {
       "home": "Santos",
       "away": "Cruzeiro",
       "day": "Sabado",
-      "time": "21:00"
+      "time": "21:00",
+      "vale_cartola": true
     },
     {
       "home": "Mirassol",
       "away": "Vitoria",
       "day": "Domingo",
-      "time": "16:00"
+      "time": "16:00",
+      "vale_cartola": true
     },
     {
       "home": "Flamengo",
       "away": "Corinthians",
       "day": "Domingo",
-      "time": "17:30"
+      "time": "17:30",
+      "vale_cartola": true
     },
     {
       "home": "Bahia",
       "away": "Remo",
       "day": "Segunda",
-      "time": "20:00"
+      "time": "20:00",
+      "vale_cartola": true
     }
   ]
 }

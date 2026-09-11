@@ -101,8 +101,13 @@ def montar(doc):
         if dt is None:
             problemas.append(f"jogo #{i}: data invalida ({p.get('partida_data')!r})")
             continue
+        # `valida` = a partida conta pontos no Cartola. Jogo antecipado para
+        # antes do fechamento do mercado acontece de verdade (entra no modelo
+        # de partidas), mas NAO pontua -- escalar alguem dele e garantir zero.
+        # Na rodada 27 foi o caso de Coritiba x Athletico, antecipado pra sexta.
         marcados.append((dt, {"home": h, "away": a, "day": DIAS[dt.weekday()],
-                              "time": dt.strftime("%H:%M")}))
+                              "time": dt.strftime("%H:%M"),
+                              "vale_cartola": bool(p.get("valida", True))}))
 
     times = [t for _, j in marcados for t in (j["home"], j["away"])]
     if len(set(times)) != len(times):

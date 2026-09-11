@@ -213,18 +213,29 @@ def medir_resposta_desarme(hist, scouts):
 
 
 def contexto_da_rodada():
-    """xG e probabilidades de cada time nesta rodada, vindos do modelo."""
+    """xG e probabilidades de cada time nesta rodada, vindos do modelo.
+
+    Times cujo jogo NAO pontua no Cartola ficam de fora. Partida antecipada
+    para antes do fechamento do mercado acontece de verdade (e continua no
+    modelo de partidas do site), mas nao rende ponto nenhum -- escalar alguem
+    dela e garantir zero. Na rodada 27 foi Coritiba x Athletico, antecipado
+    pra sexta; o modelo estava disposto a recomendar esses jogadores.
+    """
     rodada, fixtures, meta = load_fixtures()
+    nao_valem = {t for j in fixtures if not j.get("vale_cartola", True)
+                 for t in (j["home"], j["away"])}
     por_time = {}
     for jogo in read_data(REPO / "index.html"):
         h, a = canonical(jogo["home"]), canonical(jogo["away"])
+        if h in nao_valem or a in nao_valem:
+            continue
         xg_h, xg_a = jogo["xg"]
         p_h, p_d, p_a = jogo["model"]
         por_time[h] = {"adv": a, "casa": True, "xg_pro": xg_h, "xg_contra": xg_a,
                        "p_vit": p_h, "p_emp": p_d}
         por_time[a] = {"adv": h, "casa": False, "xg_pro": xg_a, "xg_contra": xg_h,
                        "p_vit": p_a, "p_emp": p_d}
-    return rodada, meta, por_time
+    return rodada, meta, por_time, sorted(nao_valem)
 
 
 def pontos_esperados(taxa, pos, ctx, xg_medio):
@@ -370,7 +381,10 @@ def main():
         if (s, "ZAG") in K)
     print(f"Encolhimento por scout (Bayes empirico, K de zagueiro): {amostra_k}")
 
-    rodada, meta, ctx_time = contexto_da_rodada()
+    rodada, meta, ctx_time, sem_pontuar = contexto_da_rodada()
+    if sem_pontuar:
+        print(f"Fora da rodada do Cartola (jogo nao pontua): "
+              f"{', '.join(sem_pontuar)}")
     xg_medio = float(np.mean([c["xg_pro"] for c in ctx_time.values()]))
     print(f"Rodada {rodada} ({meta['data_inicio']} - {meta['data_fim']}), "
           f"xG medio da rodada {xg_medio:.2f}\n")

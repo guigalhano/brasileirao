@@ -102,6 +102,9 @@ def load_fixtures(path=None):
             "away": away,
             "day": j.get("day", ""),
             "time": j.get("time", ""),
+            # Ausente = conta. So o /partidas do Cartola sabe dizer que nao, e
+            # arquivo antigo (anterior a setembro/2026) nao tem o campo.
+            "vale_cartola": j.get("vale_cartola", True),
         })
 
     if not jogos:

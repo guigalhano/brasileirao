@@ -12,15 +12,15 @@
           1.73
         ],
         [
-          "Fluminense",
-          1.54
-        ],
-        [
           "Bahia",
           1.54
         ],
         [
-          "Santos",
+          "Fluminense",
+          1.54
+        ],
+        [
+          "Botafogo",
           1.48
         ]
       ],
@@ -34,7 +34,7 @@
           1.04
         ],
         [
-          "Vasco",
+          "Chapecoense",
           1.08
         ],
         [
@@ -50,11 +50,11 @@
     "defense": {
       "top5": [
         [
-          "Flamengo",
+          "Palmeiras",
           0.81
         ],
         [
-          "Palmeiras",
+          "Flamengo",
           0.81
         ],
         [
@@ -104,11 +104,11 @@
           38.0
         ],
         [
-          "Palmeiras",
+          "Corinthians",
           38.0
         ],
         [
-          "Corinthians",
+          "Palmeiras",
           38.0
         ],
         [
@@ -122,11 +122,11 @@
           4.0
         ],
         [
-          "Vasco",
+          "Chapecoense",
           8.0
         ],
         [
-          "Chapecoense",
+          "Vasco",
           8.0
         ],
         [

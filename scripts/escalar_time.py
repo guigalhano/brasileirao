@@ -540,6 +540,14 @@ def main():
     ap.add_argument("--risco", type=float, default=0.0,
                     help="peso do desvio no criterio (0 = so media; 0.3-0.7 = "
                          "busca upside). Ver o cabecalho do arquivo.")
+    ap.add_argument("--hack-goleiro", action="store_true",
+                    help="escala um goleiro que NAO deve jogar e poe o bom no "
+                         "banco: o reserva so entra se pontuar acima de zero, "
+                         "entao o lado negativo fica truncado. Ver o cabecalho.")
+    ap.add_argument("--hack-prob-jogar", type=float, default=0.10,
+                    help="chance de o falso titular acabar jogando (padrao 0.10). "
+                         "NAO e medido -- nao temos historico de status. Use 0 "
+                         "para suspenso, que e regra e nao previsao.")
     ap.add_argument("--evitar", default="",
                     help="nomes a excluir, separados por virgula -- pra fugir "
                          "dos mais escalados e diferenciar de verdade")
@@ -616,9 +624,16 @@ def main():
                                   .open(encoding="utf-8")))
     cands = defaultdict(list)
     tecnicos = []
+    goleiros_fora = []
     fora = defaultdict(int)
     for r in mercado:
         if r["status"] not in ok_status:
+            # Goleiro que NAO deve jogar e materia-prima do --hack-goleiro.
+            if r["pos"] == "GOL" and r["status"] in ("Suspenso", "Contundido", "Nulo"):
+                t_fake = canonical_or_none(r["team"])
+                if t_fake in ctx_time:
+                    goleiros_fora.append((r["atleta_id"], r["name"], t_fake,
+                                          float(r["price"]), r["status"]))
             fora["status"] += 1
             continue
         time = canonical_or_none(r["team"])
@@ -838,6 +853,42 @@ def main():
             print(f"  P(fazer mais de {alvo} pontos) = {100 * (dist > alvo).mean():.1f}%"
                   f"   (ignorando a correlacao daria {100 * (indep > alvo).mean():.1f}%)")
 
+        # ---------- HACK DO GOLEIRO ----------
+        # Troca o goleiro titular por um que NAO deve jogar e manda o bom pro
+        # banco. Como o reserva so entra se pontuar ACIMA DE ZERO (secao 2.9),
+        # o lado negativo fica truncado: você fica com 0 em vez de pontuacao
+        # negativa. Medido nos 503 jogos de goleiro de 2026, isso vale
+        # E[max(X,0)] - E[X] = +0,175 ponto -- goleiro so pontua negativo em
+        # 14,1% das rodadas, e por -1,24 em media.
+        #
+        # A RESTRICAO que decide se compensa: o reserva tem que custar <= o
+        # titular, entao o falso titular precisa ser MAIS CARO que o goleiro
+        # que você quer. Você paga o preco do bom goleiro de qualquer jeito,
+        # mais o premio do falso.
+        #
+        # O RISCO: se o falso titular jogar, você fica com a pontuacao dele e o
+        # bom goleiro nunca entra. O break-even exige de 84% (goleiro medio) a
+        # 94% (goleiro bom) de certeza de que ele nao joga -- a barra SOBE
+        # quanto melhor o goleiro do banco, que e justo o caso em que você mais
+        # quer usar isto.
+        hack = None
+        if args.hack_goleiro and "GOL" in escalacao and goleiros_fora:
+            gol_bom = escalacao["GOL"][0]
+            sobra_atual = args.orcamento - custo
+            viaveis = [g for g in goleiros_fora
+                       if g[3] >= gol_bom[3] - 1e-9
+                       and g[3] - gol_bom[3] <= sobra_atual + 1e-9]
+            if viaveis:
+                hack = min(viaveis, key=lambda g: g[3])   # o mais barato serve
+                print()
+                print("HACK DO GOLEIRO")
+                print(f"  titular (nao deve jogar): {hack[1]} ({hack[2]}, "
+                      f"{hack[3]:.2f}C, {hack[4]})")
+                print(f"  banco (o que voce quer):  {gol_bom[1]} ({gol_bom[2]}, "
+                      f"{gol_bom[3]:.2f}C, E[pts] {gol_bom[6]:.2f})")
+                print(f"  custo extra: {hack[3] - gol_bom[3]:.2f}C de "
+                      f"{sobra_atual:.2f}C que sobravam")
+
         # ---------- BANCO DE RESERVAS ----------
         req_f = dict(zip(POSICOES, FORMACOES[formacao]))
         ja = {t[4] for t in titulares_sim}
@@ -866,6 +917,23 @@ def main():
                 if g > melhor_ganho:
                     melhor_luxo, melhor_ganho = pos, g
             print()
+            if hack:
+                # Simula a troca: o falso titular fica com a amostra DELE (pro
+                # caso de acabar jogando) e taxa de ausencia = 1 - prob_jogar;
+                # o bom goleiro vai pro banco no lugar do reserva comum.
+                tit_hack = [list(t) for t in titulares_sim]
+                amo_hack = dict(amostras_banco)
+                for t in tit_hack:
+                    if t[0] == "GOL":
+                        t[2] = amostras.get(hack[0], {})
+                        t[1] = frozenset((hack[2], ctx_time[hack[2]]["adv"]))
+                        break
+                amo_hack["GOL"] = escalacao["GOL"][0][5].get("amostra", {})
+                salvo = TAXA_AUSENCIA["GOL"]
+                TAXA_AUSENCIA["GOL"] = 1.0 - args.hack_prob_jogar
+                com_hack = simular_com_banco(tit_hack, amo_hack)
+                TAXA_AUSENCIA["GOL"] = salvo
+
             print(f"  sem banco:  media {sem.mean():.1f} | P(>80) {100*(sem>80).mean():.1f}%")
             print(f"  com banco:  media {com.mean():.1f} | P(>80) {100*(com>80).mean():.1f}%"
                   f"   (+{com.mean()-sem.mean():.2f} ponto)")
@@ -873,6 +941,32 @@ def main():
                 dl = simular_com_banco(titulares_sim, amostras_banco, luxo_pos=melhor_luxo)
                 print(f"  Reserva de Luxo em {melhor_luxo}: media {dl.mean():.1f}"
                       f"   (+{melhor_ganho:.2f} ponto sobre o banco comum)")
+            if hack:
+                d = com_hack.mean() - com.mean()
+                print(f"  com hack:   media {com_hack.mean():.1f} | P(>80) "
+                      f"{100*(com_hack>80).mean():.1f}%   ({d:+.2f} ponto, "
+                      f"supondo {100*args.hack_prob_jogar:.0f}% de chance de o "
+                      f"falso titular jogar)")
+                if d < 0:
+                    print("  => NAO compensa com essa probabilidade. O hack so "
+                          "paga se o titular falso for quase certeza de nao jogar.")
+                # Se o falso titular tem historico MELHOR que o goleiro do
+                # banco, parte do "ganho" nao vem do truncamento -- vem de ele
+                # ser um bom goleiro que pode acabar jogando. O sinal disso e o
+                # ganho CRESCER com a probabilidade de ele jogar, que e o
+                # contrario do que a estrategia deveria fazer.
+                m_fake = np.mean(list(amostras.get(hack[0], {}).values()) or [0])
+                m_bom = np.mean(list(amo_hack["GOL"].values()) or [0])
+                print(f"     historico: {hack[1]} {m_fake:.2f} x {m_bom:.2f} "
+                      f"{escalacao['GOL'][0][1]}")
+                if m_fake > m_bom:
+                    print("     ATENCAO: o falso titular pontua MAIS que o do "
+                          "banco. Parte deste")
+                    print("     ganho e ele poder jogar, nao o truncamento -- e "
+                          "por isso o numero")
+                    print("     sobe quando voce aumenta --hack-prob-jogar. O "
+                          "truncamento sozinho")
+                    print("     vale +0,17, medido em 503 jogos de goleiro.")
     print("DS/jogo = desarmes por jogo observados na temporada (sem encolher); "
           "pts DS = quanto\ndisso entra na pontuacao esperada, ja encolhido e "
           "ajustado ao confronto.")

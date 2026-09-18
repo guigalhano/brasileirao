@@ -43,6 +43,21 @@ O que este script faz:
      para cada uma das 7 formacoes. Nao e "pegue os melhores de cada
      posicao" -- e a melhor combinacao que cabe nas cartoletas.
 
+  5. SEGUE AS REGRAS OFICIAIS de tecnico e capitao (conferidas em
+     cartola.globo.com/#!/entenda-mais em setembro/2026):
+
+     TECNICO -- "soma de todos os seus jogadores que pontuaram dividida por
+     11, acrescida de 1 ponto em caso de vitoria". Usavamos
+     3,42 + 4,34 * P(vitoria), tirado da media historica; aquele 4,34
+     confundia o bonus de vitoria (que e 1) com o fato de que time que vence
+     tambem pontua mais. Nas 461 observacoes de 2026 a formula oficial tem
+     erro MEDIANO de 0,004 ponto (R2=0,944) contra 1,010 do modelo antigo.
+
+     CAPITAO -- multiplica por 1,5, nao por 2, e multiplica tambem a
+     pontuacao NEGATIVA. O script sugere dois: o de maior E[pts] (melhor pela
+     media) e o de maior desvio (melhor pra quem precisa de cauda). A
+     braçadeira entra no bootstrap tambem.
+
 QUANDO VOCE PRECISA ARRISCAR (--risco)
 --------------------------------------
 Maximizar pontuacao esperada e o certo pra nao perder, e o errado pra ganhar.
@@ -502,9 +517,9 @@ def main():
         ctx = ctx_time[time]
         preco = float(r["price"])
         if r["pos"] == "TEC":
-            # tecnico: 7.76 com vitoria, 3.42 sem (medido no historico 2026)
-            pts = 3.42 + (7.76 - 3.42) * ctx["p_vit"]
-            tecnicos.append((r["atleta_id"], r["name"], time, preco, pts))
+            # Pontuado no segundo passo: a regra oficial depende dos jogadores
+            # do clube, que ainda nao foram todos processados aqui.
+            tecnicos.append([r["atleta_id"], r["name"], time, preco, None])
             continue
         info = taxas.get(r["atleta_id"])
         if info is None or info["n"] < args.min_jogos:
@@ -524,6 +539,30 @@ def main():
         criterio = pts + args.risco * desvio
         cands[r["pos"]].append((r["atleta_id"], r["name"], time, preco, criterio,
                                 parcelas, pts))
+
+    # TECNICO PELA REGRA OFICIAL (cartola.globo.com, secao 2.6/3.1):
+    # "a pontuacao do tecnico e a soma de todos os seus jogadores que pontuaram
+    # dividida por 11, acrescida de 1 ponto em caso de vitoria".
+    #
+    # Usavamos 3.42 + 4.34 * P(vitoria), tirado da media historica. O numero
+    # 4.34 conflundia duas coisas: o bonus de vitoria (que e 1, nao 4.34) e o
+    # fato de que time que vence tambem pontua mais no total. Conferido nas 461
+    # observacoes de 2026, a formula oficial acerta com erro MEDIANO de 0.004
+    # ponto (R2=0.944) contra 1.010 do modelo antigo.
+    #
+    # E[soma do clube] aproximado pelos 11 maiores E[pts] elegiveis do clube --
+    # os melhores tendem a ser os titulares. E aproximacao, e a unica parte
+    # desta conta que nao vem direto da regra.
+    por_clube = defaultdict(list)
+    for p in POSICOES:
+        for c in cands[p]:
+            por_clube[c[2]].append(c[6])
+    for t in tecnicos:
+        time_tec = t[2]
+        melhores = sorted(por_clube.get(time_tec, []), reverse=True)[:11]
+        soma = sum(melhores)
+        t[4] = soma / 11.0 + ctx_time[time_tec]["p_vit"]
+    tecnicos = [tuple(t) for t in tecnicos if t[4] is not None]
 
     print("Elegiveis: " + ", ".join(f"{p}={len(cands[p])}" for p in POSICOES)
           + f", TEC={len(tecnicos)}")
@@ -606,6 +645,7 @@ def main():
     total_ds = 0.0
     grupos = {}
     soma_epts = 0.0
+    candidatos_cap = []   # o tecnico nao pode ser capitao (regra 2.7)
     for p in POSICOES:
         for aid, nome, time, preco, criterio, parc, pts in escalacao.get(p, []):
             adv = ctx_time[time]["adv"]
@@ -613,6 +653,8 @@ def main():
             total_ds += parc["DS"]
             chave = frozenset((time, ctx_time[time]["adv"]))
             grupos.setdefault(chave, []).append(parc.get("amostra", {}))
+            candidatos_cap.append((nome, pts, parc["desvio"], chave,
+                                   parc.get("amostra", {})))
             soma_epts += pts
             print(f"{p:<5}{nome[:23]:<24}{time[:13]:<14}{preco:>7.2f}{pts:>9.2f}"
                   f"{parc['desvio']:>8.2f}{parc['ds_observado']:>9.2f}"
@@ -625,6 +667,35 @@ def main():
     print(f"{'':<43}{custo:>7.2f}{pontos:>9.2f}{'':>9}{total_ds:>8.2f}")
     print(f"\nOrcamento {args.orcamento:.2f} | gasto {custo:.2f} | "
           f"sobra {args.orcamento - custo:.2f}")
+    # CAPITAO (regra 2.7): pontuacao multiplicada por 1,5 -- inclusive a
+    # negativa. Some 0,5 x a pontuacao dele ao total, nao 1,0: a conta de
+    # "dobra" que fizemos na rodada 27 estava errada.
+    #
+    # Por expectativa, capitao e quem tem o maior E[pts]. Por upside, e quem
+    # tem o maior desvio -- a braçadeira amplifica a cauda nos dois sentidos,
+    # entao os dois candidatos aparecem.
+    if candidatos_cap:
+        por_media = max(candidatos_cap, key=lambda c: c[1])
+        por_upside = max(candidatos_cap, key=lambda c: c[2])
+        print()
+        print("CAPITAO (x1,5 -- some metade da pontuacao dele de novo)")
+        print(f"  por expectativa: {por_media[0]:<22} +{0.5 * por_media[1]:.2f} "
+              f"(E[pts] {por_media[1]:.2f})")
+        if por_upside[0] != por_media[0]:
+            print(f"  por upside:      {por_upside[0]:<22} +{0.5 * por_upside[1]:.2f} "
+                  f"(desvio {por_upside[2]:.2f}, o maior do time)")
+        soma_epts += 0.5 * por_media[1]
+        # A braçadeira entra no bootstrap tambem: multiplica as pontuacoes
+        # reais do capitao por 1,5, inclusive as negativas. Sem isso a
+        # distribuicao subestima as duas caudas.
+        cap_chave, cap_amostra = por_media[3], por_media[4]
+        if cap_amostra and cap_chave in grupos:
+            grupo = grupos[cap_chave]
+            for i, a in enumerate(grupo):
+                if a is cap_amostra:
+                    grupo[i] = {rod: v * 1.5 for rod, v in a.items()}
+                    break
+
     print(f"Pontuacao esperada: {soma_epts:.2f} "
           f"({total_ds:.2f} vem de desarme, {100 * total_ds / soma_epts:.0f}%)")
     if args.risco:

@@ -58,6 +58,27 @@ O que este script faz:
      media) e o de maior desvio (melhor pra quem precisa de cauda). A
      braçadeira entra no bootstrap tambem.
 
+     BANCO DE RESERVAS (secao 2.9) -- um reserva por posicao, com preco menor
+     ou igual ao titular mais barato daquela posicao. Como nunca custa mais
+     que quem substitui, o banco NAO consome patrimonio: e opcao de graca, e
+     o modelo simplesmente nao a usava. A troca e automatica quando o titular
+     nao entra em campo, e nao acontece se o reserva pontuar zero ou negativo.
+
+     RESERVA DE LUXO (secao 2.9.4) -- um dos reservas pode substituir o
+     titular de PIOR pontuacao da posicao (nao so quem faltou), desde que
+     todos os titulares daquela posicao tenham jogado e ele tenha pontuado
+     mais. Dispara muito mais vezes que uma ausencia.
+
+E POR QUE E[pts] NAO E A PREVISAO DO TIME
+------------------------------------------
+E[pts] soma a pontuacao esperada de cada jogador DADO QUE ELE JOGA. Mas
+jogador que atuou na rodada anterior falta na seguinte com taxa medida de
+5,1% (LAT/ZAG), 6,6% (ATA), 7,3% (MEI) e 0,0% (GOL) -- 4.739 transicoes de
+2026. Num XI inteiro isso tira uns 4,5 pontos da conta.
+
+A simulacao do banco e que da o numero honesto: sorteia as ausencias, aplica
+as substituicoes e devolve a distribuicao real.
+
 QUANDO VOCE PRECISA ARRISCAR (--risco)
 --------------------------------------
 Maximizar pontuacao esperada e o certo pra nao perder, e o errado pra ganhar.
@@ -145,6 +166,96 @@ def amostras_de_pontos(hist, scouts):
         if r["posicao"] in POSICOES and jogou(r, scouts):
             por[r["atleta_id"]][int(r["rodada"])] = float(r["pontos"] or 0)
     return por
+
+
+# Taxa de ausencia por posicao: jogador que atuou na rodada anterior e nao
+# entra em campo na seguinte. Medido nas 4.739 transicoes de 2026. E o unico
+# numero do banco que nao vem da regra -- vem dos dados.
+TAXA_AUSENCIA = {"GOL": 0.000, "LAT": 0.051, "ZAG": 0.051,
+                 "MEI": 0.073, "ATA": 0.066}
+
+
+def escolher_banco(cands, escalacao, req, ja_escalados):
+    """Um reserva por posicao, respeitando a regra de preco.
+
+    REGRA (secao 2.9.1): "O atleta deve ter valor menor ou igual ao titular
+    mais barato da posicao". Como o reserva nunca custa mais que o titular que
+    substitui, o banco NAO consome patrimonio a mais -- e opcao de graca.
+
+    O reserva so entra se o titular nao entrar em campo E se ele proprio
+    pontuar acima de zero (secao 2.9: "a substituicao nao acontecera caso o
+    reserva faca pontuacao nula ou negativa").
+    """
+    banco = {}
+    for pos, k in req.items():
+        if k == 0 or pos not in escalacao:
+            continue
+        teto = min(j[3] for j in escalacao[pos])
+        opcoes = [c for c in cands[pos]
+                  if c[3] <= teto + 1e-9 and c[0] not in ja_escalados]
+        if opcoes:
+            banco[pos] = max(opcoes, key=lambda c: c[6])
+    return banco
+
+
+def simular_com_banco(titulares, banco, luxo_pos=None, n=20000, semente=7):
+    """Distribuicao do time COM banco, simulando ausencias e substituicoes.
+
+    titulares: lista de [posicao, chave_da_partida, amostra, fator_capitao, id]
+    banco:     {posicao: amostra}
+    luxo_pos:  posicao do Reserva de Luxo, ou None
+
+    Ausencia e sorteada por jogador, com a taxa medida da posicao. O reserva
+    daquela posicao cobre no maximo UM titular ausente, que e a regra.
+    """
+    rng = np.random.default_rng(semente)
+    grupos = defaultdict(list)
+    for i, t in enumerate(titulares):
+        grupos[t[1]].append(i)
+
+    # Pontuacao sorteada de cada titular, preservando a correlacao por partida
+    pontos = np.zeros((len(titulares), n))
+    for chave, idxs in grupos.items():
+        amostras = [titulares[i][2] for i in idxs]
+        rodadas = sorted({rod for a in amostras for rod in a})
+        if not rodadas:
+            continue
+        medias = [np.mean(list(a.values())) if a else 0.0 for a in amostras]
+        matriz = np.array([[a.get(rod, m) for rod in rodadas]
+                           for a, m in zip(amostras, medias)], dtype=float)
+        sorteio = rng.integers(0, len(rodadas), n)
+        for j, i in enumerate(idxs):
+            pontos[i] = matriz[j][sorteio] * titulares[i][3]
+
+    # Quem nao entrou em campo zera
+    jogou_m = np.ones((len(titulares), n), dtype=bool)
+    for i, t in enumerate(titulares):
+        jogou_m[i] = rng.random(n) > TAXA_AUSENCIA.get(t[0], 0.05)
+    total = np.where(jogou_m, pontos, 0.0).sum(axis=0)
+
+    # Reserva entra no lugar de UM ausente da sua posicao, se pontuar > 0
+    for pos, amostra in banco.items():
+        if not amostra:
+            continue
+        v = np.asarray(list(amostra.values()), dtype=float)
+        pts_res = rng.choice(v, n, replace=True)
+        idxs = [i for i, t in enumerate(titulares) if t[0] == pos]
+        faltou = ~jogou_m[idxs].all(axis=0) if idxs else np.zeros(n, bool)
+        entra = faltou & (pts_res > 0)
+        total += np.where(entra, pts_res, 0.0)
+
+    # Reserva de Luxo: todos os titulares da posicao jogaram e ele pontuou
+    # mais que o pior deles (secao 2.9.4)
+    if luxo_pos and banco.get(luxo_pos):
+        v = np.asarray(list(banco[luxo_pos].values()), dtype=float)
+        pts_luxo = rng.choice(v, n, replace=True)
+        idxs = [i for i, t in enumerate(titulares) if t[0] == luxo_pos]
+        if idxs:
+            todos_jogaram = jogou_m[idxs].all(axis=0)
+            pior = pontos[idxs].min(axis=0)
+            troca = todos_jogaram & (pts_luxo > pior)
+            total += np.where(troca, pts_luxo - pior, 0.0)
+    return total
 
 
 def bootstrap_time(grupos, n=20000, semente=42, independente=False):
@@ -646,6 +757,7 @@ def main():
     grupos = {}
     soma_epts = 0.0
     candidatos_cap = []   # o tecnico nao pode ser capitao (regra 2.7)
+    titulares_sim = []
     for p in POSICOES:
         for aid, nome, time, preco, criterio, parc, pts in escalacao.get(p, []):
             adv = ctx_time[time]["adv"]
@@ -655,6 +767,7 @@ def main():
             grupos.setdefault(chave, []).append(parc.get("amostra", {}))
             candidatos_cap.append((nome, pts, parc["desvio"], chave,
                                    parc.get("amostra", {})))
+            titulares_sim.append([p, chave, parc.get("amostra", {}), 1.0, aid])
             soma_epts += pts
             print(f"{p:<5}{nome[:23]:<24}{time[:13]:<14}{preco:>7.2f}{pts:>9.2f}"
                   f"{parc['desvio']:>8.2f}{parc['ds_observado']:>9.2f}"
@@ -688,6 +801,10 @@ def main():
         # A braçadeira entra no bootstrap tambem: multiplica as pontuacoes
         # reais do capitao por 1,5, inclusive as negativas. Sem isso a
         # distribuicao subestima as duas caudas.
+        for t in titulares_sim:
+            if t[2] is por_media[4]:
+                t[3] = 1.5
+                break
         cap_chave, cap_amostra = por_media[3], por_media[4]
         if cap_amostra and cap_chave in grupos:
             grupo = grupos[cap_chave]
@@ -720,6 +837,42 @@ def main():
         for alvo in (80, 100, 120):
             print(f"  P(fazer mais de {alvo} pontos) = {100 * (dist > alvo).mean():.1f}%"
                   f"   (ignorando a correlacao daria {100 * (indep > alvo).mean():.1f}%)")
+
+        # ---------- BANCO DE RESERVAS ----------
+        req_f = dict(zip(POSICOES, FORMACOES[formacao]))
+        ja = {t[4] for t in titulares_sim}
+        banco = escolher_banco(cands, escalacao, req_f, ja)
+        if banco:
+            print()
+            print("BANCO DE RESERVAS (1 por posicao, preco <= titular mais barato)")
+            print(f"{'POS':<5}{'JOGADOR':<24}{'TIME':<14}{'PRECO':>7}{'E[pts]':>9}"
+                  f"{'teto':>7}   ausencia da posicao")
+            for pos in POSICOES:
+                if pos not in banco:
+                    continue
+                aid_b, nome_b, time_b, preco_b, _, parc_b, pts_b = banco[pos]
+                teto = min(j[3] for j in escalacao[pos])
+                print(f"{pos:<5}{nome_b[:23]:<24}{time_b[:13]:<14}{preco_b:>7.2f}"
+                      f"{pts_b:>9.2f}{teto:>7.2f}   {100*TAXA_AUSENCIA.get(pos,0):.1f}%")
+
+            amostras_banco = {pos: b[5].get("amostra", {}) for pos, b in banco.items()}
+            sem = simular_com_banco(titulares_sim, {})
+            com = simular_com_banco(titulares_sim, amostras_banco)
+            # Reserva de Luxo: testa cada posicao e fica com a melhor
+            melhor_luxo, melhor_ganho = None, 0.0
+            for pos in banco:
+                d = simular_com_banco(titulares_sim, amostras_banco, luxo_pos=pos)
+                g = d.mean() - com.mean()
+                if g > melhor_ganho:
+                    melhor_luxo, melhor_ganho = pos, g
+            print()
+            print(f"  sem banco:  media {sem.mean():.1f} | P(>80) {100*(sem>80).mean():.1f}%")
+            print(f"  com banco:  media {com.mean():.1f} | P(>80) {100*(com>80).mean():.1f}%"
+                  f"   (+{com.mean()-sem.mean():.2f} ponto)")
+            if melhor_luxo:
+                dl = simular_com_banco(titulares_sim, amostras_banco, luxo_pos=melhor_luxo)
+                print(f"  Reserva de Luxo em {melhor_luxo}: media {dl.mean():.1f}"
+                      f"   (+{melhor_ganho:.2f} ponto sobre o banco comum)")
     print("DS/jogo = desarmes por jogo observados na temporada (sem encolher); "
           "pts DS = quanto\ndisso entra na pontuacao esperada, ja encolhido e "
           "ajustado ao confronto.")

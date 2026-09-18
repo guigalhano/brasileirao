@@ -31,8 +31,27 @@ jobs:
         with:
           python-version: "3.12"
 
+      # scikit-learn entrou em 18/09: o elo_odds_model.py e o
+      # estender_valuebet_2026.py usam LogisticRegression e foram adicionados
+      # ao workflow sem que a dependencia viesse junto. Como os dois so rodam
+      # quando entra RESULTADO NOVO, a falha era intermitente -- verde nos dias
+      # sem jogo, ModuleNotFoundError nos dias com jogo.
       - name: Instalar dependencias
-        run: pip install requests pandas numpy scipy
+        run: pip install requests pandas numpy scipy scikit-learn
+
+      # Confere os imports ANTES de coletar nada. Dependencia faltando falhava
+      # so la na frente, depois de mais de um minuto de coleta, e num passo
+      # condicional -- o jeito mais caro possivel de descobrir.
+      - name: Conferir dependencias
+        run: |
+          python - <<'EOF'
+          import importlib, sys
+          faltando = [m for m in ("requests","pandas","numpy","scipy","sklearn")
+                      if not importlib.util.find_spec(m)]
+          if faltando:
+              sys.exit(f"Dependencia faltando: {', '.join(faltando)}")
+          print("dependencias OK")
+          EOF
 
       # ---------- 1. COLETA (tudo que vem de fora) ----------
       # Nenhuma etapa usa continue-on-error, e isso continua proposital: era

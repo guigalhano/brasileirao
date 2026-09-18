@@ -43,15 +43,7 @@ jobs:
       # so la na frente, depois de mais de um minuto de coleta, e num passo
       # condicional -- o jeito mais caro possivel de descobrir.
       - name: Conferir dependencias
-        run: |
-          python - <<'EOF'
-          import importlib, sys
-          faltando = [m for m in ("requests","pandas","numpy","scipy","sklearn")
-                      if not importlib.util.find_spec(m)]
-          if faltando:
-              sys.exit(f"Dependencia faltando: {', '.join(faltando)}")
-          print("dependencias OK")
-          EOF
+        run: python -c "import requests, pandas, numpy, scipy, sklearn; print('dependencias OK')"
 
       # ---------- 1. COLETA (tudo que vem de fora) ----------
       # Nenhuma etapa usa continue-on-error, e isso continua proposital: era

@@ -9,37 +9,37 @@
     "H"
   ],
   "logit_coef": [
-    -0.0041153653090241155,
-    -0.000299946604779728,
-    0.004415311913803585
+    -0.004119196316574743,
+    -0.00030037377894022265,
+    0.004419570095512605
   ],
   "logit_intercept": [
-    -0.07794005786084465,
-    -0.11133739705319982,
-    0.1892774549141994
+    -0.07740676653018826,
+    -0.11167708510638837,
+    0.18908385163641067
   ],
   "team_ratings": {
-    "Flamengo": 1246.24,
-    "Palmeiras": 1164.24,
-    "Vasco": 1104.52,
-    "Cruzeiro": 1093.11,
-    "Bragantino": 1091.25,
-    "Bahia": 1085.4,
-    "Internacional": 1066.44,
-    "Corinthians": 1062.29,
-    "Fluminense": 1061.53,
-    "Atletico-MG": 1056.01,
-    "Atletico-PR": 1051.88,
-    "Santos": 1048.65,
-    "Sao Paulo": 1047.66,
-    "Botafogo": 1044.89,
-    "Mirassol": 1033.12,
-    "Vitoria": 997.74,
-    "Gremio": 992.15,
-    "Coritiba": 972.76,
-    "Remo": 968.46,
-    "Chapecoense": 921.75
+    "Flamengo": 1253.13,
+    "Palmeiras": 1157.55,
+    "Vasco": 1113.78,
+    "Cruzeiro": 1092.84,
+    "Bahia": 1085.28,
+    "Bragantino": 1084.36,
+    "Sao Paulo": 1063.25,
+    "Fluminense": 1062.55,
+    "Atletico-MG": 1061.73,
+    "Corinthians": 1061.27,
+    "Santos": 1052.83,
+    "Atletico-PR": 1051.99,
+    "Internacional": 1050.85,
+    "Botafogo": 1040.94,
+    "Mirassol": 1037.07,
+    "Gremio": 998.83,
+    "Vitoria": 998.0,
+    "Remo": 964.29,
+    "Coritiba": 963.5,
+    "Chapecoense": 916.02
   },
-  "n_jogos": 5587,
-  "ultimo_jogo": "2026-09-16"
+  "n_jogos": 5597,
+  "ultimo_jogo": "2026-09-20"
 }

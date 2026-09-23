@@ -16,11 +16,11 @@
           1.57
         ],
         [
-          "Bahia",
+          "Atletico-PR",
           1.54
         ],
         [
-          "Atletico-PR",
+          "Bahia",
           1.54
         ]
       ],
@@ -34,7 +34,7 @@
           1.04
         ],
         [
-          "Gremio",
+          "Chapecoense",
           1.07
         ],
         [
@@ -42,7 +42,7 @@
           1.07
         ],
         [
-          "Chapecoense",
+          "Gremio",
           1.07
         ]
       ]
@@ -96,19 +96,19 @@
     "clean_sheets": {
       "top5": [
         [
-          "Palmeiras",
-          43.0
-        ],
-        [
           "Flamengo",
           43.0
         ],
         [
-          "Vitoria",
-          36.0
+          "Palmeiras",
+          43.0
         ],
         [
           "Corinthians",
+          36.0
+        ],
+        [
+          "Vitoria",
           36.0
         ],
         [
@@ -118,11 +118,11 @@
       ],
       "bottom5": [
         [
-          "Mirassol",
+          "Chapecoense",
           7.0
         ],
         [
-          "Chapecoense",
+          "Mirassol",
           7.0
         ],
         [

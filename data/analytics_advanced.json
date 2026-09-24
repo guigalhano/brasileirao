@@ -16,11 +16,11 @@
           1.57
         ],
         [
-          "Atletico-PR",
+          "Bahia",
           1.54
         ],
         [
-          "Bahia",
+          "Atletico-PR",
           1.54
         ]
       ],
@@ -34,7 +34,7 @@
           1.04
         ],
         [
-          "Chapecoense",
+          "Gremio",
           1.07
         ],
         [
@@ -42,7 +42,7 @@
           1.07
         ],
         [
-          "Gremio",
+          "Chapecoense",
           1.07
         ]
       ]
@@ -62,11 +62,11 @@
           1.11
         ],
         [
-          "Atletico-PR",
+          "Corinthians",
           1.14
         ],
         [
-          "Corinthians",
+          "Atletico-PR",
           1.14
         ]
       ],
@@ -96,11 +96,11 @@
     "clean_sheets": {
       "top5": [
         [
-          "Flamengo",
+          "Palmeiras",
           43.0
         ],
         [
-          "Palmeiras",
+          "Flamengo",
           43.0
         ],
         [

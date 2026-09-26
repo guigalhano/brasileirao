@@ -38,11 +38,11 @@
           1.07
         ],
         [
-          "Gremio",
+          "Chapecoense",
           1.07
         ],
         [
-          "Chapecoense",
+          "Gremio",
           1.07
         ]
       ]
@@ -88,7 +88,7 @@
           1.54
         ],
         [
-          "Vitoria",
+          "Vasco",
           1.5
         ]
       ]
@@ -96,19 +96,19 @@
     "clean_sheets": {
       "top5": [
         [
-          "Palmeiras",
-          43.0
-        ],
-        [
           "Flamengo",
           43.0
         ],
         [
-          "Vitoria",
-          36.0
+          "Palmeiras",
+          43.0
         ],
         [
           "Corinthians",
+          36.0
+        ],
+        [
+          "Vitoria",
           36.0
         ],
         [

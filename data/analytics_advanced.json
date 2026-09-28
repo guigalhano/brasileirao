@@ -34,7 +34,7 @@
           1.04
         ],
         [
-          "Gremio",
+          "Internacional",
           1.07
         ],
         [
@@ -42,7 +42,7 @@
           1.07
         ],
         [
-          "Internacional",
+          "Gremio",
           1.07
         ]
       ]
@@ -96,11 +96,11 @@
     "clean_sheets": {
       "top5": [
         [
-          "Flamengo",
+          "Palmeiras",
           43.0
         ],
         [
-          "Palmeiras",
+          "Flamengo",
           43.0
         ],
         [
@@ -118,19 +118,19 @@
       ],
       "bottom5": [
         [
-          "Chapecoense",
-          7.0
-        ],
-        [
           "Mirassol",
           7.0
         ],
         [
-          "Vasco",
-          11.0
+          "Chapecoense",
+          7.0
         ],
         [
           "Remo",
+          11.0
+        ],
+        [
+          "Vasco",
           11.0
         ],
         [

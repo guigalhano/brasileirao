@@ -34,15 +34,15 @@
           1.04
         ],
         [
-          "Gremio",
-          1.07
-        ],
-        [
           "Internacional",
           1.07
         ],
         [
           "Chapecoense",
+          1.07
+        ],
+        [
+          "Gremio",
           1.07
         ]
       ]
@@ -62,11 +62,11 @@
           1.11
         ],
         [
-          "Corinthians",
+          "Atletico-PR",
           1.14
         ],
         [
-          "Atletico-PR",
+          "Corinthians",
           1.14
         ]
       ],
@@ -104,11 +104,11 @@
           43.0
         ],
         [
-          "Corinthians",
+          "Vitoria",
           36.0
         ],
         [
-          "Vitoria",
+          "Corinthians",
           36.0
         ],
         [
@@ -118,19 +118,19 @@
       ],
       "bottom5": [
         [
-          "Mirassol",
-          7.0
-        ],
-        [
           "Chapecoense",
           7.0
         ],
         [
-          "Remo",
-          11.0
+          "Mirassol",
+          7.0
         ],
         [
           "Vasco",
+          11.0
+        ],
+        [
+          "Remo",
           11.0
         ],
         [

@@ -20,7 +20,7 @@
           1.54
         ],
         [
-          "Atletico-PR",
+          "Bahia",
           1.54
         ]
       ],
@@ -34,11 +34,11 @@
           1.04
         ],
         [
-          "Gremio",
+          "Internacional",
           1.07
         ],
         [
-          "Internacional",
+          "Gremio",
           1.07
         ],
         [
@@ -58,15 +58,15 @@
           0.82
         ],
         [
-          "Atletico-PR",
-          1.14
-        ],
-        [
-          "Sao Paulo",
-          1.14
-        ],
-        [
           "Bragantino",
+          1.14
+        ],
+        [
+          "Atletico-MG",
+          1.14
+        ],
+        [
+          "Corinthians",
           1.14
         ]
       ],
@@ -88,7 +88,7 @@
           1.54
         ],
         [
-          "Vasco",
+          "Vitoria",
           1.5
         ]
       ]
@@ -112,25 +112,25 @@
           36.0
         ],
         [
-          "Atletico-PR",
+          "Bragantino",
           29.0
         ]
       ],
       "bottom5": [
         [
-          "Chapecoense",
-          7.0
-        ],
-        [
           "Mirassol",
           7.0
         ],
         [
-          "Vasco",
-          11.0
+          "Chapecoense",
+          7.0
         ],
         [
           "Remo",
+          11.0
+        ],
+        [
+          "Vasco",
           11.0
         ],
         [

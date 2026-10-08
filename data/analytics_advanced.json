@@ -16,11 +16,11 @@
           1.57
         ],
         [
-          "Santos",
+          "Bahia",
           1.54
         ],
         [
-          "Bahia",
+          "Atletico-PR",
           1.54
         ]
       ],
@@ -34,15 +34,15 @@
           1.04
         ],
         [
+          "Chapecoense",
+          1.07
+        ],
+        [
           "Internacional",
           1.07
         ],
         [
           "Gremio",
-          1.07
-        ],
-        [
-          "Chapecoense",
           1.07
         ]
       ]
@@ -58,15 +58,15 @@
           0.82
         ],
         [
+          "Sao Paulo",
+          1.14
+        ],
+        [
           "Bragantino",
           1.14
         ],
         [
           "Atletico-MG",
-          1.14
-        ],
-        [
-          "Corinthians",
           1.14
         ]
       ],
@@ -96,11 +96,11 @@
     "clean_sheets": {
       "top5": [
         [
-          "Palmeiras",
+          "Flamengo",
           43.0
         ],
         [
-          "Flamengo",
+          "Palmeiras",
           43.0
         ],
         [
@@ -112,17 +112,17 @@
           36.0
         ],
         [
-          "Bragantino",
+          "Bahia",
           29.0
         ]
       ],
       "bottom5": [
         [
-          "Mirassol",
+          "Chapecoense",
           7.0
         ],
         [
-          "Chapecoense",
+          "Mirassol",
           7.0
         ],
         [

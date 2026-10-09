@@ -80,11 +80,11 @@
           1.66
         ],
         [
-          "Coritiba",
+          "Botafogo",
           1.62
         ],
         [
-          "Botafogo",
+          "Coritiba",
           1.62
         ],
         [
@@ -118,19 +118,19 @@
       ],
       "bottom5": [
         [
-          "Chapecoense",
-          7.0
-        ],
-        [
           "Mirassol",
           7.0
         ],
         [
-          "Vasco",
-          10.0
+          "Chapecoense",
+          7.0
         ],
         [
           "Remo",
+          10.0
+        ],
+        [
+          "Vasco",
           10.0
         ],
         [

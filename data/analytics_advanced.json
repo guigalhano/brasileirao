@@ -34,11 +34,11 @@
           1.04
         ],
         [
-          "Gremio",
+          "Chapecoense",
           1.07
         ],
         [
-          "Chapecoense",
+          "Gremio",
           1.07
         ],
         [
@@ -58,15 +58,15 @@
           0.82
         ],
         [
-          "Atletico-MG",
+          "Sao Paulo",
+          1.14
+        ],
+        [
+          "Atletico-PR",
           1.14
         ],
         [
           "Corinthians",
-          1.14
-        ],
-        [
-          "Sao Paulo",
           1.14
         ]
       ],
@@ -88,7 +88,7 @@
           1.54
         ],
         [
-          "Vasco",
+          "Vitoria",
           1.5
         ]
       ]
@@ -96,19 +96,19 @@
     "clean_sheets": {
       "top5": [
         [
-          "Flamengo",
-          43.0
-        ],
-        [
           "Palmeiras",
           43.0
         ],
         [
-          "Corinthians",
-          36.0
+          "Flamengo",
+          43.0
         ],
         [
           "Vitoria",
+          36.0
+        ],
+        [
+          "Corinthians",
           36.0
         ],
         [
@@ -118,11 +118,11 @@
       ],
       "bottom5": [
         [
-          "Mirassol",
+          "Chapecoense",
           7.0
         ],
         [
-          "Chapecoense",
+          "Mirassol",
           7.0
         ],
         [

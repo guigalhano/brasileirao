@@ -8,19 +8,19 @@
           1.97
         ],
         [
-          "Fluminense",
-          1.66
-        ],
-        [
           "Palmeiras",
           1.66
         ],
         [
-          "Santos",
-          1.55
+          "Fluminense",
+          1.66
         ],
         [
           "Atletico-PR",
+          1.55
+        ],
+        [
+          "Santos",
           1.55
         ]
       ],
@@ -38,11 +38,11 @@
           1.07
         ],
         [
-          "Vitoria",
+          "Internacional",
           1.1
         ],
         [
-          "Internacional",
+          "Vitoria",
           1.1
         ]
       ]
@@ -62,11 +62,11 @@
           1.14
         ],
         [
-          "Corinthians",
+          "Atletico-PR",
           1.17
         ],
         [
-          "Atletico-MG",
+          "Corinthians",
           1.17
         ]
       ],
@@ -112,7 +112,7 @@
           34.0
         ],
         [
-          "Bahia",
+          "Atletico-PR",
           28.0
         ]
       ],

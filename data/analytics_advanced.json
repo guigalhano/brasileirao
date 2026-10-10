@@ -16,11 +16,11 @@
           1.66
         ],
         [
-          "Atletico-PR",
+          "Santos",
           1.55
         ],
         [
-          "Santos",
+          "Atletico-PR",
           1.55
         ]
       ],
@@ -62,11 +62,11 @@
           1.14
         ],
         [
-          "Atletico-PR",
+          "Corinthians",
           1.17
         ],
         [
-          "Corinthians",
+          "Sao Paulo",
           1.17
         ]
       ],
@@ -112,25 +112,25 @@
           34.0
         ],
         [
-          "Atletico-PR",
+          "Bragantino",
           28.0
         ]
       ],
       "bottom5": [
         [
-          "Chapecoense",
-          7.0
-        ],
-        [
           "Mirassol",
           7.0
         ],
         [
-          "Vasco",
-          10.0
+          "Chapecoense",
+          7.0
         ],
         [
           "Remo",
+          10.0
+        ],
+        [
+          "Vasco",
           10.0
         ],
         [

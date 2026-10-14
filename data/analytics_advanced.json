@@ -38,11 +38,11 @@
           1.07
         ],
         [
-          "Internacional",
+          "Vitoria",
           1.1
         ],
         [
-          "Vitoria",
+          "Internacional",
           1.1
         ]
       ]
@@ -58,15 +58,15 @@
           0.83
         ],
         [
-          "Atletico-MG",
+          "Bragantino",
+          1.17
+        ],
+        [
+          "Sao Paulo",
           1.17
         ],
         [
           "Atletico-PR",
-          1.17
-        ],
-        [
-          "Bragantino",
           1.17
         ]
       ],
@@ -80,11 +80,11 @@
           1.6
         ],
         [
-          "Remo",
+          "Coritiba",
           1.6
         ],
         [
-          "Coritiba",
+          "Remo",
           1.6
         ],
         [
@@ -96,11 +96,11 @@
     "clean_sheets": {
       "top5": [
         [
-          "Palmeiras",
+          "Flamengo",
           43.0
         ],
         [
-          "Flamengo",
+          "Palmeiras",
           43.0
         ],
         [

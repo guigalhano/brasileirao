@@ -20,7 +20,7 @@
           1.6
         ],
         [
-          "Cruzeiro",
+          "Santos",
           1.53
         ]
       ],
@@ -38,11 +38,11 @@
           1.07
         ],
         [
-          "Remo",
+          "Vitoria",
           1.1
         ],
         [
-          "Vitoria",
+          "Internacional",
           1.1
         ]
       ]
@@ -62,7 +62,7 @@
           1.17
         ],
         [
-          "Sao Paulo",
+          "Atletico-PR",
           1.17
         ],
         [
@@ -80,11 +80,11 @@
           1.6
         ],
         [
-          "Botafogo",
+          "Remo",
           1.6
         ],
         [
-          "Remo",
+          "Botafogo",
           1.6
         ],
         [
@@ -96,11 +96,11 @@
     "clean_sheets": {
       "top5": [
         [
-          "Flamengo",
+          "Palmeiras",
           43.0
         ],
         [
-          "Palmeiras",
+          "Flamengo",
           43.0
         ],
         [
@@ -126,15 +126,15 @@
           7.0
         ],
         [
-          "Botafogo",
-          13.0
-        ],
-        [
           "Remo",
           13.0
         ],
         [
           "Vasco",
+          13.0
+        ],
+        [
+          "Botafogo",
           13.0
         ]
       ]

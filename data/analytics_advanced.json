@@ -58,15 +58,15 @@
           0.83
         ],
         [
-          "Bragantino",
-          1.17
-        ],
-        [
           "Atletico-PR",
           1.17
         ],
         [
-          "Sao Paulo",
+          "Bragantino",
+          1.17
+        ],
+        [
+          "Atletico-MG",
           1.17
         ]
       ],
@@ -80,11 +80,11 @@
           1.6
         ],
         [
-          "Remo",
+          "Botafogo",
           1.6
         ],
         [
-          "Botafogo",
+          "Remo",
           1.6
         ],
         [
@@ -126,15 +126,15 @@
           7.0
         ],
         [
+          "Botafogo",
+          13.0
+        ],
+        [
           "Vasco",
           13.0
         ],
         [
           "Remo",
-          13.0
-        ],
-        [
-          "Botafogo",
           13.0
         ]
       ]

@@ -20,17 +20,17 @@
           1.6
         ],
         [
-          "Cruzeiro",
+          "Santos",
           1.53
         ]
       ],
       "bottom5": [
         [
-          "Corinthians",
+          "Chapecoense",
           1.03
         ],
         [
-          "Chapecoense",
+          "Corinthians",
           1.03
         ],
         [
@@ -38,11 +38,11 @@
           1.07
         ],
         [
-          "Vitoria",
+          "Internacional",
           1.1
         ],
         [
-          "Internacional",
+          "Vitoria",
           1.1
         ]
       ]
@@ -58,15 +58,15 @@
           0.83
         ],
         [
-          "Bragantino",
-          1.17
-        ],
-        [
-          "Atletico-PR",
+          "Atletico-MG",
           1.17
         ],
         [
           "Sao Paulo",
+          1.17
+        ],
+        [
+          "Bragantino",
           1.17
         ]
       ],
@@ -76,11 +76,11 @@
           2.1
         ],
         [
-          "Coritiba",
+          "Botafogo",
           1.6
         ],
         [
-          "Botafogo",
+          "Coritiba",
           1.6
         ],
         [
@@ -130,11 +130,11 @@
           13.0
         ],
         [
-          "Vasco",
+          "Remo",
           13.0
         ],
         [
-          "Remo",
+          "Vasco",
           13.0
         ]
       ]

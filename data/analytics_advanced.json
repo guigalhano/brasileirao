@@ -38,11 +38,11 @@
           1.06
         ],
         [
-          "Remo",
+          "Gremio",
           1.1
         ],
         [
-          "Gremio",
+          "Remo",
           1.1
         ]
       ]
@@ -58,11 +58,11 @@
           0.81
         ],
         [
-          "Atletico-MG",
+          "Sao Paulo",
           1.13
         ],
         [
-          "Sao Paulo",
+          "Atletico-MG",
           1.13
         ],
         [
@@ -88,7 +88,7 @@
           1.55
         ],
         [
-          "Santos",
+          "Cruzeiro",
           1.48
         ]
       ]
@@ -96,11 +96,11 @@
     "clean_sheets": {
       "top5": [
         [
-          "Palmeiras",
+          "Flamengo",
           45.0
         ],
         [
-          "Flamengo",
+          "Palmeiras",
           45.0
         ],
         [

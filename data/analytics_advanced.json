@@ -38,11 +38,11 @@
           1.06
         ],
         [
-          "Gremio",
+          "Vitoria",
           1.1
         ],
         [
-          "Vitoria",
+          "Gremio",
           1.1
         ]
       ]
@@ -58,11 +58,11 @@
           0.81
         ],
         [
-          "Sao Paulo",
+          "Atletico-MG",
           1.13
         ],
         [
-          "Atletico-MG",
+          "Sao Paulo",
           1.13
         ],
         [
@@ -76,11 +76,11 @@
           2.07
         ],
         [
-          "Remo",
+          "Coritiba",
           1.58
         ],
         [
-          "Coritiba",
+          "Remo",
           1.58
         ],
         [
@@ -96,11 +96,11 @@
     "clean_sheets": {
       "top5": [
         [
-          "Flamengo",
+          "Palmeiras",
           45.0
         ],
         [
-          "Palmeiras",
+          "Flamengo",
           45.0
         ],
         [
@@ -126,11 +126,11 @@
           9.0
         ],
         [
-          "Remo",
+          "Vasco",
           13.0
         ],
         [
-          "Vasco",
+          "Remo",
           13.0
         ],
         [

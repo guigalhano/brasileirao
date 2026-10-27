@@ -1,77 +1,77 @@
 {
-  "rodada": 32,
-  "data_inicio": "23/10/2026",
-  "data_fim": "26/10/2026",
+  "rodada": 33,
+  "data_inicio": "28/10/2026",
+  "data_fim": "31/10/2026",
   "jogos": [
     {
-      "home": "Cruzeiro",
-      "away": "Remo",
-      "day": "Sexta",
-      "time": "20:00",
-      "vale_cartola": false
-    },
-    {
-      "home": "Mirassol",
-      "away": "Sao Paulo",
-      "day": "Sabado",
-      "time": "16:30",
-      "vale_cartola": true
-    },
-    {
-      "home": "Internacional",
-      "away": "Botafogo",
-      "day": "Sabado",
-      "time": "16:30",
-      "vale_cartola": true
-    },
-    {
-      "home": "Vitoria",
-      "away": "Atletico-PR",
-      "day": "Sabado",
-      "time": "16:30",
-      "vale_cartola": true
-    },
-    {
-      "home": "Vasco",
-      "away": "Corinthians",
-      "day": "Sabado",
-      "time": "18:30",
-      "vale_cartola": true
-    },
-    {
-      "home": "Palmeiras",
-      "away": "Bragantino",
-      "day": "Sabado",
-      "time": "18:30",
-      "vale_cartola": true
-    },
-    {
-      "home": "Chapecoense",
-      "away": "Fluminense",
-      "day": "Sabado",
+      "home": "Fluminense",
+      "away": "Internacional",
+      "day": "Quarta",
       "time": "19:30",
       "vale_cartola": true
     },
     {
       "home": "Santos",
-      "away": "Bahia",
-      "day": "Sabado",
-      "time": "21:00",
-      "vale_cartola": true
-    },
-    {
-      "home": "Coritiba",
-      "away": "Gremio",
-      "day": "Segunda",
+      "away": "Palmeiras",
+      "day": "Quarta",
       "time": "19:30",
       "vale_cartola": true
     },
     {
-      "home": "Flamengo",
-      "away": "Atletico-MG",
-      "day": "Segunda",
+      "home": "Bragantino",
+      "away": "Chapecoense",
+      "day": "Quarta",
+      "time": "19:30",
+      "vale_cartola": true
+    },
+    {
+      "home": "Bahia",
+      "away": "Sao Paulo",
+      "day": "Quarta",
+      "time": "21:30",
+      "vale_cartola": true
+    },
+    {
+      "home": "Remo",
+      "away": "Botafogo",
+      "day": "Quarta",
+      "time": "21:30",
+      "vale_cartola": true
+    },
+    {
+      "home": "Atletico-MG",
+      "away": "Cruzeiro",
+      "day": "Quinta",
+      "time": "19:30",
+      "vale_cartola": true
+    },
+    {
+      "home": "Vasco",
+      "away": "Flamengo",
+      "day": "Quinta",
       "time": "20:00",
       "vale_cartola": true
+    },
+    {
+      "home": "Gremio",
+      "away": "Atletico-PR",
+      "day": "Quinta",
+      "time": "21:30",
+      "vale_cartola": true
+    },
+    {
+      "home": "Corinthians",
+      "away": "Mirassol",
+      "day": "Sexta",
+      "time": "20:00",
+      "vale_cartola": true
+    },
+    {
+      "home": "Coritiba",
+      "away": "Vitoria",
+      "day": "Sabado",
+      "time": "16:00",
+      "vale_cartola": false
     }
   ]
 }

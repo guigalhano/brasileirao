@@ -1,86 +1,86 @@
 {
   "generated_note": "Dixon-Coles Poisson model fit on matches_2012_2026.csv, time-decayed, half-life 450.0 days. Regularizado em torno dos ratings calibrados por xG real (team_ratings_calibrado.json) quando disponivel.",
-  "home_advantage_log": 0.33703731733063136,
+  "home_advantage_log": 0.34162241376547436,
   "teams": {
     "Flamengo": {
-      "attack": 0.5575,
-      "defense": 0.4205
+      "attack": 0.5574,
+      "defense": 0.4227
     },
     "Palmeiras": {
-      "attack": 0.4257,
-      "defense": 0.5606
+      "attack": 0.4255,
+      "defense": 0.5629
     },
     "Botafogo": {
       "attack": 0.2492,
-      "defense": 0.1389
+      "defense": 0.1411
     },
     "Cruzeiro": {
-      "attack": 0.2458,
-      "defense": 0.2498
-    },
-    "Mirassol": {
-      "attack": 0.2275,
-      "defense": 0.1478
+      "attack": 0.2459,
+      "defense": 0.2521
     },
     "Bahia": {
-      "attack": 0.222,
-      "defense": 0.0862
+      "attack": 0.2217,
+      "defense": 0.0883
     },
     "Atletico-PR": {
-      "attack": 0.2169,
-      "defense": 0.1453
+      "attack": 0.2176,
+      "defense": 0.1483
     },
     "Fluminense": {
-      "attack": 0.2134,
-      "defense": 0.2154
+      "attack": 0.2137,
+      "defense": 0.218
+    },
+    "Mirassol": {
+      "attack": 0.2106,
+      "defense": 0.1388
     },
     "Santos": {
-      "attack": 0.1965,
-      "defense": 0.0438
+      "attack": 0.1955,
+      "defense": 0.0408
     },
     "Vasco": {
-      "attack": 0.1666,
-      "defense": -0.0617
+      "attack": 0.1665,
+      "defense": -0.0596
     },
     "Atletico-MG": {
       "attack": 0.1614,
-      "defense": 0.1885
+      "defense": 0.191
     },
     "Bragantino": {
-      "attack": 0.136,
-      "defense": 0.1047
+      "attack": 0.1413,
+      "defense": 0.108
     },
     "Gremio": {
-      "attack": 0.1287,
-      "defense": 0.0526
+      "attack": 0.1289,
+      "defense": 0.055
     },
     "Internacional": {
-      "attack": 0.128,
-      "defense": 0.1272
+      "attack": 0.1279,
+      "defense": 0.1296
     },
     "Sao Paulo": {
       "attack": 0.0906,
-      "defense": 0.1868
+      "defense": 0.189
     },
     "Corinthians": {
-      "attack": 0.0765,
-      "defense": 0.1269
+      "attack": 0.0841,
+      "defense": 0.1412
     },
     "Coritiba": {
-      "attack": 0.0372,
-      "defense": -0.1529
+      "attack": 0.0499,
+      "defense": -0.1326
     },
     "Remo": {
       "attack": -0.0056,
-      "defense": -0.0533
+      "defense": -0.0514
     },
     "Vitoria": {
-      "attack": -0.0172,
-      "defense": 0.0278
+      "attack": -0.0356,
+      "defense": 0.0235
     },
     "Chapecoense": {
-      "attack": -0.0967,
-      "defense": -0.3402
+      "attack": -0.0958,
+      "defense": -0.3374
     }
   }
 }

@@ -30,11 +30,11 @@
           1.0
         ],
         [
-          "Vitoria",
+          "Corinthians",
           1.06
         ],
         [
-          "Corinthians",
+          "Vitoria",
           1.06
         ],
         [
@@ -58,11 +58,11 @@
           0.85
         ],
         [
-          "Bragantino",
+          "Sao Paulo",
           1.15
         ],
         [
-          "Sao Paulo",
+          "Bragantino",
           1.15
         ],
         [
@@ -84,11 +84,11 @@
           1.56
         ],
         [
-          "Coritiba",
+          "Vasco",
           1.5
         ],
         [
-          "Vasco",
+          "Coritiba",
           1.5
         ]
       ]
@@ -126,15 +126,15 @@
           9.0
         ],
         [
-          "Remo",
-          12.0
-        ],
-        [
           "Vasco",
           12.0
         ],
         [
-          "Botafogo",
+          "Remo",
+          12.0
+        ],
+        [
+          "Fluminense",
           18.0
         ]
       ]

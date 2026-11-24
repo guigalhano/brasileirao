@@ -34,15 +34,15 @@
           1.08
         ],
         [
-          "Gremio",
-          1.11
-        ],
-        [
           "Sao Paulo",
           1.11
         ],
         [
-          "Remo",
+          "Gremio",
+          1.11
+        ],
+        [
+          "Corinthians",
           1.14
         ]
       ]
@@ -62,11 +62,11 @@
           1.14
         ],
         [
-          "Sao Paulo",
+          "Bragantino",
           1.14
         ],
         [
-          "Bragantino",
+          "Sao Paulo",
           1.14
         ]
       ],
@@ -112,7 +112,7 @@
           31.0
         ],
         [
-          "Gremio",
+          "Bahia",
           28.0
         ]
       ],

@@ -1,77 +1,77 @@
 {
-  "rodada": 36,
-  "data_inicio": "21/11/2026",
-  "data_fim": "25/11/2026",
+  "rodada": 37,
+  "data_inicio": "24/11/2026",
+  "data_fim": "29/11/2026",
   "jogos": [
     {
-      "home": "Palmeiras",
-      "away": "Flamengo",
-      "day": "Sabado",
-      "time": "16:30",
-      "vale_cartola": true
-    },
-    {
-      "home": "Bahia",
-      "away": "Coritiba",
-      "day": "Sabado",
-      "time": "17:30",
-      "vale_cartola": true
-    },
-    {
       "home": "Chapecoense",
+      "away": "Palmeiras",
+      "day": "Terca",
+      "time": "18:00",
+      "vale_cartola": false
+    },
+    {
+      "home": "Sao Paulo",
+      "away": "Remo",
+      "day": "Quinta",
+      "time": "20:00",
+      "vale_cartola": false
+    },
+    {
+      "home": "Fluminense",
       "away": "Cruzeiro",
+      "day": "Sexta",
+      "time": "20:00",
+      "vale_cartola": false
+    },
+    {
+      "home": "Botafogo",
+      "away": "Bahia",
       "day": "Sabado",
       "time": "21:00",
       "vale_cartola": true
     },
     {
-      "home": "Atletico-PR",
-      "away": "Remo",
+      "home": "Coritiba",
+      "away": "Flamengo",
       "day": "Domingo",
       "time": "16:00",
       "vale_cartola": true
     },
     {
-      "home": "Fluminense",
-      "away": "Mirassol",
+      "home": "Vitoria",
+      "away": "Santos",
+      "day": "Domingo",
+      "time": "16:00",
+      "vale_cartola": true
+    },
+    {
+      "home": "Corinthians",
+      "away": "Gremio",
       "day": "Domingo",
       "time": "18:30",
       "vale_cartola": true
     },
     {
-      "home": "Bragantino",
-      "away": "Vasco",
+      "home": "Mirassol",
+      "away": "Atletico-PR",
       "day": "Domingo",
-      "time": "19:30",
+      "time": "18:30",
       "vale_cartola": true
     },
     {
       "home": "Internacional",
-      "away": "Vitoria",
-      "day": "Segunda",
-      "time": "19:30",
-      "vale_cartola": true
-    },
-    {
-      "home": "Botafogo",
-      "away": "Sao Paulo",
-      "day": "Segunda",
-      "time": "20:00",
-      "vale_cartola": true
-    },
-    {
-      "home": "Santos",
-      "away": "Gremio",
-      "day": "Segunda",
-      "time": "21:00",
+      "away": "Bragantino",
+      "day": "Domingo",
+      "time": "18:30",
       "vale_cartola": true
     },
     {
       "home": "Atletico-MG",
-      "away": "Corinthians",
-      "day": "Quarta",
-      "time": "20:00",
-      "vale_cartola": false
+      "away": "Vasco",
+      "day": "Domingo",
+      "time": "19:30",
+      "vale_cartola": true
     }
   ]
 }

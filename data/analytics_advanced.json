@@ -34,15 +34,15 @@
           1.08
         ],
         [
-          "Sao Paulo",
-          1.11
-        ],
-        [
           "Gremio",
           1.11
         ],
         [
-          "Remo",
+          "Sao Paulo",
+          1.11
+        ],
+        [
+          "Corinthians",
           1.14
         ]
       ]
@@ -58,15 +58,15 @@
           0.86
         ],
         [
-          "Bragantino",
-          1.14
-        ],
-        [
           "Sao Paulo",
           1.14
         ],
         [
           "Atletico-MG",
+          1.14
+        ],
+        [
+          "Bragantino",
           1.14
         ]
       ],
@@ -112,7 +112,7 @@
           31.0
         ],
         [
-          "Bragantino",
+          "Gremio",
           28.0
         ]
       ],
@@ -126,11 +126,11 @@
           11.0
         ],
         [
-          "Vasco",
+          "Remo",
           14.0
         ],
         [
-          "Remo",
+          "Vasco",
           14.0
         ],
         [
